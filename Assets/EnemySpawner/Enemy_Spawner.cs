@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
-struct spawnPoint{
-    public string name; 
-    public Vector3 position; 
-}
 public class Enemy_Spawner : MonoBehaviour
 {
     [SerializeField] private GameObject[] enemies; 
@@ -53,6 +50,16 @@ public class Enemy_Spawner : MonoBehaviour
                 // use spawn point to get the spawn position and rotation 
                 Instantiate(enemy, spawnPoint.transform.position, spawnPoint.transform.localRotation);
             }  
+        }
+    }
+
+    private void OnTriggerEnter(Collider col){
+        Debug.Log("Trigger");
+
+        if(col.tag == "SpawnTrigger"){
+            SpawnTrigger trigger = col.GetComponent<SpawnTrigger>();
+            SpawnEnemy(trigger.spawnPointName, trigger.enemyIndex); 
+            col.enabled = false; 
         }
     }
 }

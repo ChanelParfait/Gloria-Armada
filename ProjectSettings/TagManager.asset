@@ -8,6 +8,8 @@ TagManager:
   - Bottom
   - Left
   - Right
+  - EnemySpawner
+  - EnemyTrigger
   layers:
   - Default
   - TransparentFX
