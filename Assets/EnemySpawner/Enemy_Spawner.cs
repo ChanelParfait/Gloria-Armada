@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ public class Enemy_Spawner : MonoBehaviour
         }
 
 
-        SpawnEnemy("Top_Middle", 0); 
+        //SpawnEnemy("Top_Middle", 0); 
 
     }
 
@@ -35,8 +36,14 @@ public class Enemy_Spawner : MonoBehaviour
         
     }
 
-    public void SpawnEnemies(string spawnPointName, int enemyIndex, int spawnAmount){
-
+    private IEnumerator SpawnEnemies(string spawnPointName, int enemyIndex, int spawnAmount){
+        for(int i = 0; i < spawnAmount; i++){
+            // Spawn enemy 
+            Debug.Log("Spawn"); 
+            SpawnEnemy(spawnPointName, enemyIndex); 
+            // then wait _ seconds
+            yield return new WaitForSeconds(3);
+        }
     }
 
     private void SpawnEnemy(string spawnPointName, int enemyIndex){
@@ -57,8 +64,9 @@ public class Enemy_Spawner : MonoBehaviour
         Debug.Log("Trigger");
 
         if(col.tag == "SpawnTrigger"){
+            // upon colliding with trigger, retrieve spawn parameters and start spawning coroutine
             SpawnTrigger trigger = col.GetComponent<SpawnTrigger>();
-            SpawnEnemy(trigger.spawnPointName, trigger.enemyIndex); 
+            StartCoroutine(SpawnEnemies(trigger.spawnPointName, trigger.enemyIndex, trigger.spawnAmount));
             col.enabled = false; 
         }
     }
