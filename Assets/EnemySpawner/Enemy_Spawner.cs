@@ -1,17 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TextCore;
 
 
 public class Enemy_Spawner : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform; 
-    public enum Perspective {Top_Down, Side_On};
-    Perspective currentPerspective = Perspective.Side_On; 
+    private enum Perspective {Top_Down, Side_On};
+    [SerializeField] private Perspective currentPerspective = Perspective.Side_On; 
     [SerializeField] private GameObject[] enemies; 
 
     [SerializeField] private Camera mainCamera; 
