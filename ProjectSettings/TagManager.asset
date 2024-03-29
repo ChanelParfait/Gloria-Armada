@@ -10,6 +10,7 @@ TagManager:
   - Right
   - EnemySpawner
   - SpawnTrigger
+  - PlayerProjectile
   layers:
   - Default
   - TransparentFX
