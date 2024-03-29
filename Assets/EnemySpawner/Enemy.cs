@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        shootInterval = 5;
+        shootInterval = 3;
     }
 
     // Update is called once per frame
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
 
     void Shoot(){
         // get the position 4 units in front of the enemy 
-        Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.right * 4;
+        Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.right * 8;
         Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
         // provide a reference to self  
     }
