@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class Enemy_Spawner : MonoBehaviour
 {
+    // enemy spawner is parented to the camera for dynamic spawning
+    // spawning plane must be parallel and aligned with the player to ensure
+    // that enemies are spawned on the same plane and their movement is fixed to that plane
+    // if camera position or angle is changed, the spawner / spawn points must be moved to align with the player plane 
     [SerializeField] private Transform cameraTransform; 
     private enum Perspective {Top_Down, Side_On};
     [SerializeField] private Perspective currentPerspective = Perspective.Side_On; 
