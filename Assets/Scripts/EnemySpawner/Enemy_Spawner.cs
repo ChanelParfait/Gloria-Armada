@@ -10,11 +10,11 @@ public class Enemy_Spawner : MonoBehaviour
     // that enemies are spawned on the same plane and their movement is fixed to that plane
     // if camera position or angle is changed, the spawner / spawn points must be moved to align with the player plane 
     [SerializeField] private Transform cameraTransform; 
-    private enum Perspective {Top_Down, Side_On};
+    //private enum Perspective {Top_Down, Side_On};
     [SerializeField] private Perspective currentPerspective = Perspective.Side_On; 
     [SerializeField] private GameObject[] enemies; 
 
-    [SerializeField] private Camera mainCamera; 
+    [SerializeField] private Camera mainCamera ; 
     [SerializeField] Dictionary<string, GameObject> spawnPoints = new Dictionary<string, GameObject>();
 
 
