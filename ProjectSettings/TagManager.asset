@@ -12,6 +12,8 @@ TagManager:
   - SpawnTrigger
   - PlayerProjectile
   - TransitionPoint
+  - Enemy
+  - EnemyProjectile
   layers:
   - Default
   - TransparentFX
