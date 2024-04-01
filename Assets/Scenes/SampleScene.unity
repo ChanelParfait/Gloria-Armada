@@ -1253,8 +1253,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0387d8f8c31aacd4898c75327c5985d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initPerspective: 0
+  initPerspective: 1
   anim: {fileID: 864017070}
+  enemySpawner: {fileID: 1704886797}
 --- !u!54 &864017073
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2196,6 +2197,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5214197653691540729, guid: c1b7717d19f33d0428793fd10ba9ce66, type: 3}
   m_PrefabInstance: {fileID: 1704886793}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1704886797 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4785971375508989861, guid: c1b7717d19f33d0428793fd10ba9ce66, type: 3}
+  m_PrefabInstance: {fileID: 1704886793}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aefb0e9b1f25924d849a8de761049b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1721150495
 GameObject:
   m_ObjectHideFlags: 0

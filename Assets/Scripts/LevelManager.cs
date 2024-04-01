@@ -9,14 +9,17 @@ public class LevelManager : MonoBehaviour
 {
     // Keep track of level perspective and update all other objects 
     [SerializeField] Perspective initPerspective; 
-    static Perspective currentPerspective; 
+    private Perspective currentPerspective; 
     [SerializeField] private Animator anim; 
+
+    [SerializeField] private Enemy_Spawner enemySpawner;
 
     // Player, Enemy Spawner, and Camera will all need to update when perspective changes 
     // Start is called before the first frame update
     void Start()
     {
         currentPerspective = initPerspective; 
+        enemySpawner.UpdatePerspective(currentPerspective);
     }
 
     // Update is called once per frame
@@ -34,6 +37,8 @@ public class LevelManager : MonoBehaviour
     private void UpdatePerspective(Perspective pers){
         currentPerspective = pers; 
         anim.SetInteger("Perspective", (int)currentPerspective);
+
+        enemySpawner.UpdatePerspective(currentPerspective); 
     }
 
 }

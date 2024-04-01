@@ -10,7 +10,6 @@ public class Enemy_Spawner : MonoBehaviour
     // that enemies are spawned on the same plane and their movement is fixed to that plane
     // if camera position or angle is changed, the spawner / spawn points must be moved to align with the player plane 
     [SerializeField] private Transform cameraTransform; 
-    //private enum Perspective {Top_Down, Side_On};
     [SerializeField] private Perspective currentPerspective = Perspective.Side_On; 
     [SerializeField] private GameObject[] enemies; 
 
@@ -33,8 +32,9 @@ public class Enemy_Spawner : MonoBehaviour
     {
         
     }
+
     // Spawn a given amount of enemies at a certain spawn point 
-    private IEnumerator SpawnEnemies(string spawnPointName, int enemyIndex, int spawnAmount){
+    private IEnumerator SpawnEnemies(SpawnPointName spawnPointName, int enemyIndex, int spawnAmount){
         for(int i = 0; i < spawnAmount; i++){
             // Spawn enemy 
             SpawnEnemy(spawnPointName, enemyIndex); 
@@ -44,10 +44,10 @@ public class Enemy_Spawner : MonoBehaviour
     }
 
     //Spawn an enemy of given type(index) at a given spawn point 
-    private void SpawnEnemy(string spawnPointName, int enemyIndex){
+    private void SpawnEnemy(SpawnPointName spawnPointName, int enemyIndex){
         // given a spawn position name, find the corresponding spawn point gameobject from the list of spawn points
         GameObject spawnPoint;
-        if (spawnPoints.TryGetValue(spawnPointName, out spawnPoint)){
+        if (spawnPoints.TryGetValue(spawnPointName.ToString(), out spawnPoint)){
             // check if given enemy index is valid 
             if(enemyIndex < enemies.Length){
                 GameObject enemy = enemies[enemyIndex]; 
@@ -100,12 +100,15 @@ public class Enemy_Spawner : MonoBehaviour
             }
 
         }
-        else if(currentPerspective == Perspective.Side_On){
+        if(currentPerspective == Perspective.Side_On){
             // face towards left side of camera 
             return cameraTransform.forward  * -1;
-
         }
-        return new Vector3(); 
+        else
+        {
+            Debug.Log("Invalid Perspective Given");
+            return new Vector3(); 
+        }
     }
 
     // get the appropriate movement direction of the enemy based on its spawn point
@@ -130,5 +133,9 @@ public class Enemy_Spawner : MonoBehaviour
             else{
                 return new Vector3();
             }
+    }
+
+    public void UpdatePerspective(Perspective newPers){
+        currentPerspective = newPers; 
     }
 }
