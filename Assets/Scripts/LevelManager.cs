@@ -27,9 +27,13 @@ public class LevelManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider col){
         if(col.tag == "TransitionPoint"){
-            currentPerspective = col.GetComponent<TransitionPoint>().GetPerspective(); 
-            anim.SetInteger("Perspective", (int)currentPerspective);
+            UpdatePerspective(col.GetComponent<TransitionPoint>().GetPerspective());
         }
+    }
+
+    private void UpdatePerspective(Perspective pers){
+        currentPerspective = pers; 
+        anim.SetInteger("Perspective", (int)currentPerspective);
     }
 
 }
