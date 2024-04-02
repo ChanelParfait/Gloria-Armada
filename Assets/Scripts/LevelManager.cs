@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Animator anim; 
 
     [SerializeField] private Enemy_Spawner enemySpawner;
+    [SerializeField] private JetControl jetControl;
 
     // Player, Enemy Spawner, and Camera will all need to update when perspective changes 
     // Start is called before the first frame update
@@ -39,6 +40,7 @@ public class LevelManager : MonoBehaviour
         anim.SetInteger("Perspective", (int)currentPerspective);
 
         enemySpawner.UpdatePerspective(currentPerspective); 
+        jetControl.ResetPosition(5f);
     }
 
 }
