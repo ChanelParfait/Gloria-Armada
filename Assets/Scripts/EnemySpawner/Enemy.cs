@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "PlayerProjectile"){
             // Take Damage? / Die
-            Debug.Log("Die");
+            //Debug.Log("Die");
             Destroy(gameObject);
             // increase player score 
         }
