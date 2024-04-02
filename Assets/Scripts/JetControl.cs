@@ -8,12 +8,17 @@ public class JetControl : MonoBehaviour
     [SerializeField] float wingspan = 10;
     [SerializeField] float negativeGLimit = -20;
 
-    IEnumerator set_view_overTime(Vector3 newForward, Vector3 newUp, float duration) {
-        var target = Quaternion.LookRotation(newForward, newUp);
-        var elapsedTime = 0;
+    public void ResetPosition(float duration) {
+        StartCoroutine(ResetPosition_async(duration));
+    }
+    IEnumerator ResetPosition_async(float duration) {
+        Vector3 target = Vector3.zero;
+        float elapsedTime = 0;
         while(elapsedTime < duration) {
-            var completion = elapsedTime / duration;
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, target, completion);
+            elapsedTime += Time.deltaTime;
+            float completion = elapsedTime / duration;
+            virtualCursor = Vector2.Lerp(virtualCursor, new Vector2(0, 0), completion);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, target, completion);
             yield return null;
         }
     }
@@ -32,10 +37,10 @@ public class JetControl : MonoBehaviour
     }
 
 
+    Vector3 bakedVelocity = new Vector3(1, 0, 0) * 800;
     Vector2 virtualCursor = Vector2.right * 5; //could implement better
     void FixedUpdate() {
         virtualCursor.x += Input.GetAxis("Mouse X");
-        //virtualCursor.x = Mathf.Clamp(virtualCursor.x, 1, 50);
         virtualCursor.y += Input.GetAxis("Mouse Y");
 
         //again, could implement better with perhaps a 3D cursor but this is fine for now
@@ -43,7 +48,7 @@ public class JetControl : MonoBehaviour
         Debug.DrawRay(transform.localPosition, targetDirection);
 
         //We should probably do something about this
-        Vector3 bakedVelocity = new Vector3(1, 0, 0) * 800;
+
         Vector3 velocity = bakedVelocity + rb.velocity;
 
         //split the inputs
