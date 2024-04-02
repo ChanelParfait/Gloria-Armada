@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum Perspective {Null = 0, Side_On = 1, Top_Down = 2};
 
@@ -15,7 +17,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Enemy_Spawner enemySpawner;
     [SerializeField] private JetControl jetControl;
 
-    [SerializeField] private GameObject gameOver; 
+    [SerializeField] private GameObject gameOverPnl; 
+    [SerializeField] private GameObject youWinPnl; 
+
     bool isGameOver = false;
 
     // Player, Enemy Spawner, and Camera will all need to update when perspective changes 
@@ -24,6 +28,8 @@ public class LevelManager : MonoBehaviour
     {
         currentPerspective = initPerspective; 
         enemySpawner.UpdatePerspective(currentPerspective);
+        //retryBtn.onClick.AddListener(Restart);
+
     }
 
     // Update is called once per frame
@@ -33,11 +39,20 @@ public class LevelManager : MonoBehaviour
             GameOver();
             isGameOver = true;
         }
+
+        if(isGameOver){
+            if(Input.GetKeyDown(KeyCode.Return)){
+                Restart();
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider col){
         if(col.tag == "TransitionPoint"){
             UpdatePerspective(col.GetComponent<TransitionPoint>().GetPerspective());
+        }
+        if(col.tag == "WinPoint"){
+            YouWin();
         }
     }
 
@@ -51,8 +66,18 @@ public class LevelManager : MonoBehaviour
 
     private void GameOver(){
         //Debug.Log("Game Over");
-        gameOver.SetActive(true);
+        gameOverPnl.SetActive(true);
         Time.timeScale = 0; 
+    }
+
+    private void YouWin(){
+        youWinPnl.SetActive(true);
+        Time.timeScale = 0; 
+    }
+
+    private void Restart(){
+        SceneManager.LoadScene(1);
+        Time.timeScale = 1; 
     }
 
 }
