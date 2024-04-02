@@ -13,6 +13,7 @@ public class JetControl : MonoBehaviour
     [SerializeField] float negativeGLimit = -20;
 
     // Player Health / Life
+    public int health = 3; 
     public bool isDead = false; 
 
 
@@ -111,7 +112,10 @@ public class JetControl : MonoBehaviour
     private void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "EnemyProjectile"){
             // Take Damage? / Die
-            isDead = true; 
+            health--; 
+            if(health <= 0){
+                isDead = true; 
+            }
         }
     }
 }

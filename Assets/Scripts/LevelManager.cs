@@ -19,6 +19,8 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private GameObject gameOverPnl; 
     [SerializeField] private GameObject youWinPnl; 
+    [SerializeField] private Text CurrentHealthTxt; 
+    private int playerHealth; 
 
     bool isGameOver = false;
 
@@ -28,7 +30,8 @@ public class LevelManager : MonoBehaviour
     {
         currentPerspective = initPerspective; 
         enemySpawner.UpdatePerspective(currentPerspective);
-        //retryBtn.onClick.AddListener(Restart);
+        playerHealth = jetControl.health; 
+        
 
     }
 
@@ -44,6 +47,11 @@ public class LevelManager : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Return)){
                 Restart();
             }
+        }
+
+        if(playerHealth != jetControl.health){
+            playerHealth = jetControl.health;
+            UpdateHealthTxt(playerHealth.ToString());
         }
     }
 
@@ -62,6 +70,10 @@ public class LevelManager : MonoBehaviour
 
         enemySpawner.UpdatePerspective(currentPerspective); 
         jetControl.ResetPosition(5f);
+    }
+
+    private void UpdateHealthTxt(string health){
+        CurrentHealthTxt.text = health;
     }
 
     private void GameOver(){
