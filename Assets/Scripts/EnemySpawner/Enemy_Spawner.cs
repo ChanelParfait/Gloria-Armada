@@ -84,25 +84,25 @@ public class Enemy_Spawner : MonoBehaviour
         if(currentPerspective == Perspective.Top_Down){
             if(spawnPoint.name == "Left_Bottom" || spawnPoint.name == "Right_Bottom"){
                 // face toward top of screen
-                return cameraTransform.right * -1;
+                return cameraTransform.up;
             }
             if(spawnPoint.name == "Left_Top" || spawnPoint.name == "Right_Top"){
                 // face toward bottom of screen 
-                return cameraTransform.right;
+                return cameraTransform.up * -1;
             }
             if(spawnPoint.name == "Top_Right" || spawnPoint.name == "Bottom_Right"){
                 // face toward left side of screen 
-                return cameraTransform.up  * -1;
+                return cameraTransform.right  * -1;
             }
             if(spawnPoint.name == "Top_Left" || spawnPoint.name == "Bottom_Left"){
                 // face toward right side of screen
-                return cameraTransform.up;
+                return cameraTransform.right;
             }
 
         }
         if(currentPerspective == Perspective.Side_On){
             // face towards left side of camera 
-            return cameraTransform.forward  * -1;
+            return cameraTransform.right  * -1;
         }
         else
         {
