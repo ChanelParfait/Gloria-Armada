@@ -15,6 +15,6 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         //Vector3 nextPos = gameObject.transform.position + ; 
-        gameObject.transform.position += gameObject.transform.right * Time.deltaTime * speed; 
+        gameObject.transform.position += gameObject.transform.forward * Time.deltaTime * speed; 
     }
 }

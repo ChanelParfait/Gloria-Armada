@@ -29,15 +29,14 @@ public class Enemy : MonoBehaviour
 
     void Shoot(){
         // get the position 4 units in front of the enemy 
-        Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.right * 8;
-        Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
-        fireSound.Play();
+        Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
+        Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
     }
 
     private void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "PlayerProjectile"){
             // Take Damage? / Die
-            Debug.Log("Die");
+            //Debug.Log("Die");
             Destroy(gameObject);
             // increase player score 
         }

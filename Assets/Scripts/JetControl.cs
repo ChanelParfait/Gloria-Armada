@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class JetControl : MonoBehaviour
 {
+    // Player Shooting
+    [SerializeField] GameObject projectile; 
+
+    // Player Movement
     [SerializeField] float aerodynamicEfficiency = 1f;
     [SerializeField] float aerodynamicDrag = 1f;
     [SerializeField] float wingspan = 10;
@@ -34,6 +38,14 @@ public class JetControl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         lastViewportPosition = viewport.position;
+    }
+
+        // Update is called once per frame
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space)){
+            Shoot();
+        }
     }
 
 
@@ -85,4 +97,24 @@ public class JetControl : MonoBehaviour
 
         rb.AddForce(normalAccel);
     }
+
+    void Shoot(){
+        // get the position 4 units in front of the enemy 
+        Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
+        Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+    }
+
+    private void OnTriggerEnter(Collider col){
+        if(col.gameObject.tag == "EnemyProjectile"){
+            // Take Damage? / Die
+        }
+    }
 }
+
+
+
+
+
+
+
+
