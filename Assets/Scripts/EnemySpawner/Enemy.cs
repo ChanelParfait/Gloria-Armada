@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour
     // Base Class for enemies 
     [SerializeField] GameObject projectile; 
     [SerializeField] float shootInterval = 5.0f;
-    private float timer = 0; 
+    private float timer = 0;
+    [SerializeField] AudioSource fireSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +30,8 @@ public class Enemy : MonoBehaviour
     void Shoot(){
         // get the position 4 units in front of the enemy 
         Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.right * 8;
-        Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+        Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
+        fireSound.Play();
     }
 
     private void OnTriggerEnter(Collider col){
