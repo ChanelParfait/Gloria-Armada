@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum Perspective {Null = 0, Side_On = 1, Top_Down = 2};
 
@@ -15,23 +17,50 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Enemy_Spawner enemySpawner;
     [SerializeField] private JetControl jetControl;
 
+    [SerializeField] private GameObject gameOverPnl; 
+    [SerializeField] private GameObject youWinPnl; 
+    [SerializeField] private Text CurrentHealthTxt; 
+    private int playerHealth; 
+
+    bool isGameOver = false;
+
     // Player, Enemy Spawner, and Camera will all need to update when perspective changes 
     // Start is called before the first frame update
     void Start()
     {
         currentPerspective = initPerspective; 
         enemySpawner.UpdatePerspective(currentPerspective);
+        playerHealth = jetControl.health; 
+        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(jetControl.isDead && !isGameOver){
+            GameOver();
+            isGameOver = true;
+        }
+
+        if(isGameOver){
+            if(Input.GetKeyDown(KeyCode.Return)){
+                Restart();
+            }
+        }
+
+        if(playerHealth != jetControl.health){
+            playerHealth = jetControl.health;
+            UpdateHealthTxt(playerHealth.ToString());
+        }
     }
 
     private void OnTriggerEnter(Collider col){
         if(col.tag == "TransitionPoint"){
             UpdatePerspective(col.GetComponent<TransitionPoint>().GetPerspective());
+        }
+        if(col.tag == "WinPoint"){
+            YouWin();
         }
     }
 
@@ -41,6 +70,26 @@ public class LevelManager : MonoBehaviour
 
         enemySpawner.UpdatePerspective(currentPerspective); 
         jetControl.ResetPosition(5f);
+    }
+
+    private void UpdateHealthTxt(string health){
+        CurrentHealthTxt.text = health;
+    }
+
+    private void GameOver(){
+        //Debug.Log("Game Over");
+        gameOverPnl.SetActive(true);
+        Time.timeScale = 0; 
+    }
+
+    private void YouWin(){
+        youWinPnl.SetActive(true);
+        Time.timeScale = 0; 
+    }
+
+    private void Restart(){
+        SceneManager.LoadScene(1);
+        Time.timeScale = 1; 
     }
 
 }

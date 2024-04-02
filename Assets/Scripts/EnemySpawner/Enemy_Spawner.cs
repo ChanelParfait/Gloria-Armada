@@ -34,12 +34,12 @@ public class Enemy_Spawner : MonoBehaviour
     }
 
     // Spawn a given amount of enemies at a certain spawn point 
-    private IEnumerator SpawnEnemies(SpawnPointName spawnPointName, int enemyIndex, int spawnAmount){
+    private IEnumerator SpawnEnemies(SpawnPointName spawnPointName, int enemyIndex, int spawnAmount, int spawnInterval){
         for(int i = 0; i < spawnAmount; i++){
             // Spawn enemy 
             SpawnEnemy(spawnPointName, enemyIndex); 
             // then wait 3 seconds before next spawn 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(spawnInterval);
         }
     }
 
@@ -60,7 +60,7 @@ public class Enemy_Spawner : MonoBehaviour
                 GameObject spawnedEnemy = Instantiate(enemy, spawnPoint.transform.position, Quaternion.LookRotation(orientation, Vector3.up));
                 // set initial velocity of enemy in the approriate movement direction 
                 // this may later be changed to use the enemy class or provide the enemy with a particular path //
-                spawnedEnemy.GetComponent<Rigidbody>().velocity = moveDir * 5;
+                spawnedEnemy.GetComponent<Rigidbody>().velocity = moveDir * 6;
             }  
         }
     }
@@ -71,7 +71,7 @@ public class Enemy_Spawner : MonoBehaviour
         if(col.tag == "SpawnTrigger"){
             // upon colliding with a spawn trigger, retrieve spawn parameters and start the spawning coroutine
             SpawnTrigger trigger = col.GetComponent<SpawnTrigger>();
-            StartCoroutine(SpawnEnemies(trigger.spawnPointName, trigger.enemyIndex, trigger.spawnAmount));
+            StartCoroutine(SpawnEnemies(trigger.spawnPointName, trigger.enemyIndex, trigger.spawnAmount, trigger.spawnInterval));
             // disable this collider so it only executes once
             col.enabled = false; 
         }

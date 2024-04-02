@@ -10,4 +10,6 @@ public class SpawnTrigger : MonoBehaviour
     public int enemyIndex;
     public int spawnAmount;
 
+    public int spawnInterval;
+
 }

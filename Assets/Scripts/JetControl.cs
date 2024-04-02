@@ -13,6 +13,11 @@ public class JetControl : MonoBehaviour
     [SerializeField] float negativeGLimit = -20;
     [SerializeField] AudioSource firingSound;
 
+    // Player Health / Life
+    public int health = 3; 
+    public bool isDead = false; 
+
+
     public void ResetPosition(float duration) {
         StartCoroutine(ResetPosition_async(duration));
     }
@@ -109,6 +114,10 @@ public class JetControl : MonoBehaviour
     private void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "EnemyProjectile"){
             // Take Damage? / Die
+            health--; 
+            if(health <= 0){
+                isDead = true; 
+            }
         }
     }
 }
