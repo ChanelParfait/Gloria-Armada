@@ -11,6 +11,7 @@ public class JetControl : MonoBehaviour
     [SerializeField] float aerodynamicDrag = 1f;
     [SerializeField] float wingspan = 10;
     [SerializeField] float negativeGLimit = -20;
+    [SerializeField] AudioSource firingSound;
 
     public void ResetPosition(float duration) {
         StartCoroutine(ResetPosition_async(duration));
@@ -101,7 +102,8 @@ public class JetControl : MonoBehaviour
     void Shoot(){
         // get the position 4 units in front of the enemy 
         Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
-        Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+        Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
+        firingSound.Play();
     }
 
     private void OnTriggerEnter(Collider col){
