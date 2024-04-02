@@ -12,6 +12,10 @@ public class JetControl : MonoBehaviour
     [SerializeField] float wingspan = 10;
     [SerializeField] float negativeGLimit = -20;
 
+    // Player Health / Life
+    public bool isDead = false; 
+
+
     public void ResetPosition(float duration) {
         StartCoroutine(ResetPosition_async(duration));
     }
@@ -107,6 +111,7 @@ public class JetControl : MonoBehaviour
     private void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "EnemyProjectile"){
             // Take Damage? / Die
+            isDead = true; 
         }
     }
 }

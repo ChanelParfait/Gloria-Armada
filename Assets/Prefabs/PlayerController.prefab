@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1005888897509260889}
   - component: {fileID: 7238442878657003467}
   - component: {fileID: 6705802291743627497}
+  - component: {fileID: 3371560836860139555}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -73,13 +74,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 623d47cf705fc37adae13a768a2b2edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectile: {fileID: 0}
   aerodynamicEfficiency: 0.1
   aerodynamicDrag: 0
   wingspan: 10
   negativeGLimit: -20
+  isDead: 0
   turnMultiplier: 0.1
   thrustMultiplier: 0
   viewport: {fileID: 0}
+--- !u!65 &3371560836860139555
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8754366938149064170}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7, y: 2, z: 6.5}
+  m_Center: {x: 0, y: 0.2, z: 0.2}
 --- !u!1001 &4082585045916529662
 PrefabInstance:
   m_ObjectHideFlags: 0

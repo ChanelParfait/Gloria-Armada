@@ -15,6 +15,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Enemy_Spawner enemySpawner;
     [SerializeField] private JetControl jetControl;
 
+    [SerializeField] private GameObject gameOver; 
+    bool isGameOver = false;
+
     // Player, Enemy Spawner, and Camera will all need to update when perspective changes 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +29,10 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(jetControl.isDead && !isGameOver){
+            GameOver();
+            isGameOver = true;
+        }
     }
 
     private void OnTriggerEnter(Collider col){
@@ -41,6 +47,12 @@ public class LevelManager : MonoBehaviour
 
         enemySpawner.UpdatePerspective(currentPerspective); 
         jetControl.ResetPosition(5f);
+    }
+
+    private void GameOver(){
+        //Debug.Log("Game Over");
+        gameOver.SetActive(true);
+        Time.timeScale = 0; 
     }
 
 }
