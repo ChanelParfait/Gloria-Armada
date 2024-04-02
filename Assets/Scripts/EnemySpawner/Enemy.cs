@@ -30,7 +30,8 @@ public class Enemy : MonoBehaviour
     void Shoot(){
         // get the position 4 units in front of the enemy 
         Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
-        Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+        Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
+        fireSound.Play();
     }
 
     private void OnTriggerEnter(Collider col){
