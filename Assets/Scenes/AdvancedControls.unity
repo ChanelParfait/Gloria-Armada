@@ -287,7 +287,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 25000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -315,11 +315,11 @@ Transform:
   m_GameObject: {fileID: 602213500}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -59.10003}
+  m_LocalPosition: {x: -69, y: 140.3, z: -496}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1874666674}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1517650084
 PrefabInstance:
@@ -331,19 +331,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -201
       objectReference: {fileID: 0}
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 75.6
+      value: 223
       objectReference: {fileID: 0}
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -144
       objectReference: {fileID: 0}
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalRotation.x
@@ -351,7 +351,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalRotation.z
@@ -363,7 +363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -383,7 +383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238442878657003467, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_ImplicitCom
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7238442878657003467, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_CollisionDetection
@@ -396,10 +396,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 6705802291743627497, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 602213503}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8754366938149064170, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       insertIndex: 1
@@ -509,11 +506,6 @@ Rigidbody:
   m_CorrespondingSourceObject: {fileID: 7238442878657003467, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
   m_PrefabInstance: {fileID: 1517650084}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1874666674 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
-  m_PrefabInstance: {fileID: 1517650084}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1874666675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,15 +523,16 @@ MonoBehaviour:
   Left: 97
   Right: 100
   throttleUp: 304
-  wingArea: 78.04
-  weight: 19670
+  wingArea: 7.804
+  weight: 200
   thrust: 232000
   centerOfLift: {x: 0, y: 0, z: 0}
   centerOfMass: {x: 0, y: 0, z: 0}
   throttle: 0.7
+  AoA: 0
+  internalVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   acceleration: {x: 0, y: 0, z: 0}
-  p: 0
   rb: {fileID: 1874666672}
 --- !u!1 &2109324615
 GameObject:
@@ -650,6 +643,7 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 602213503}
   - {fileID: 1848085064}
   - {fileID: 529712604}
   - {fileID: 1517650084}

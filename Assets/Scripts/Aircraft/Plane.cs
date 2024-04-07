@@ -13,28 +13,27 @@ public class Plane : MonoBehaviour
 
     public KeyCode throttleUp = KeyCode.LeftShift;
 
-    //Default surfaces
-    LiftingBody wingL;
-    LiftingBody wingR;
-    LiftingBody tail;
-    LiftingBody horizontalStab;
+    
 
     // Aircraft parameters
     [SerializeField] float wingArea = 30.04f;  // Area of the wing (m^2)
-    [SerializeField] float weight = 19670;    // Weight of the aircraft (kg)
-    [SerializeField] float thrust = 232000;   // Maximum thrust (N)
+    [SerializeField] float weight = 100;    // Weight of the aircraft (kg)
+    [SerializeField] float thrust = 200;   // Maximum thrust (N)
     // [SerializeField] float wingSpan = 22;      // Wing span (meters)
     // [SerializeField] float aspectRatio = 7.5f; // Aspect ratio
     [SerializeField] Vector3 centerOfLift;  // Center of lift (relative to the object's origin)
     [SerializeField] Vector3 centerOfMass;  // Center of mass (relative to the object's origin)
 
+    Vector2 controlInputs;
+
     // Aircraft state
     public float throttle = 0.7f;
 
-    public Vector3 localVelocity;      // Velocity of the aircraft (m/s)
+    public float AoA;
+    public Vector3 internalVelocity;   // Velocity of the aircraft (not passed to RB) (m/s)
+    public Vector3 localVelocity;      // Velocity of the aircraft from local (m/s)
     public Vector3 acceleration;  // Acceleration of the aircraft (m/s^2)
 
-    public float p = 1.225f; // air density
 
     // Unity
     [SerializeField] Rigidbody rb;
@@ -50,60 +49,65 @@ public class Plane : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.centerOfMass = centerOfMass;
         rb.mass = weight;
-        rb.velocity = transform.forward * 35;
-
-        // Add lifting bodies to the aircraft
-        wingL = LiftingBody.AddLiftingBody(gameObject, "Wing Left", new Vector3(-2.5f, -0.0f, -0.05f), new Vector3(0.0f, 0, 0), wingArea, 1.0f);
-        wingR = LiftingBody.AddLiftingBody(gameObject, "Wing Right", new Vector3(2.5f, -0.0f, -0.05f), new Vector3(0.0f, 0, 0), wingArea, 1.0f);
-        //tail = LiftingBody.AddLiftingBody(gameObject, "Tail", new Vector3(0, 0.20f, -4f), new Vector3(0.0f, 00.0f, 90.0f), wingArea / 2.0f, 1.0f);
-        horizontalStab = LiftingBody.AddLiftingBody(gameObject, "Horizontal Stabilizer", new Vector3(0, 0, -4.5f), new Vector3(0.0f, 0, 0), wingArea/6, 1.0f);
+        rb.velocity = transform.forward * 20;
         
     }
     
     void FixedUpdate(){
         // Calculate the local velocity
-        localVelocity = transform.InverseTransformDirection(rb.velocity);
+        internalVelocity = Mathf.Min(rb.velocity.magnitude * 10, 250) * rb.velocity.normalized;
+        localVelocity = transform.InverseTransformDirection(internalVelocity);
 
-        // Calculate the lift and drag forces
-        Vector3 liftForce = Vector3.zero;
+  
         Vector3 dragForce = Vector3.zero;
 
         // Calculate the thrust force
         Vector3 thrustForce = throttle * thrust * transform.forward;
-
-        // Calculate the weight force
-        Vector3 weightForce = Vector3.down * weight;
-        
-
-        //rb.AddForceAtPosition(weightForce, transform.position + centerOfMass);
-        foreach (LiftingBody lb in GetComponents<LiftingBody>())
+        if (localVelocity.z >= 0)
         {
-            Vector3 lift = new Vector3();
-            Vector3 drag = new Vector3();
-            
-            rb.AddForceAtPosition(lb.CalculateForces(localVelocity), transform.TransformPoint(lb.relativePosition));
-            //rb.AddForceAtPosition(lb.CalculateDrag(localVelocity), transform.TransformPoint(lb.relativePosition));
+            AoA = Mathf.Rad2Deg * Mathf.Atan2(localVelocity.y, Mathf.Max(localVelocity.z, float.Epsilon));
+        }
+        else
+        {
+            AoA = 180 + Mathf.Rad2Deg * Mathf.Atan2(-localVelocity.y, Mathf.Max(-localVelocity.z, float.Epsilon));
+        }
+        //AoA = Mathf.Rad2Deg * Mathf.Atan2(localVelocity.y, Mathf.Max(localVelocity.z, 0.01f));
+
+/*        //Forward Velocity Limiter
+        float forwardVelocity = Vector3.Dot(rb.velocity, Vector3.right);
+        float straightening = 0.0f;
+        if (rb.velocity.z < 1.0f) {
+            // Adjust control inputs to align with velocity
+            Vector3 forwardVelocityDirection = rb.velocity.normalized;
+            float angleToVelocity = Vector3.SignedAngle(transform.forward, Vector3.right, Vector3.up);
+            straightening = Mathf.Sign(angleToVelocity) * Mathf.Clamp(Mathf.Abs(angleToVelocity) / 180, 0, 1);
         }
 
-        // Apply the acceleration to the aircraft
-        //rb.AddForce(acceleration);
-    }
+        //LERP between control input and straighten as velocity approaches 0 (so t is 1.0 at 0, 0.0 at 0.5f)
+        float t = Mathf.Clamp01(rb.velocity.z / 0.5f);
+        controlInputs.x = Mathf.Lerp(straightening, controlInputs.x, t);*/
 
-    void OnDrawGizmos(){
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(transform.position + centerOfMass, 0.1f);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(transform.position + centerOfLift, 0.1f);
-        Gizmos.color = Color.green;
+        //Elevator force becomes less effective at abs(AoA) > 20
+        Vector3 elevatorForce = controlInputs.x * transform.up * localVelocity.sqrMagnitude * 0.1f * Mathf.Cos(Mathf.Abs(AoA) * Mathf.Deg2Rad);
+        acceleration = elevatorForce / rb.mass;
+        rb.AddForceAtPosition(elevatorForce, transform.TransformPoint(new Vector3(0, 0, -4)));
 
-        if (wingL != null)
+
+ 
+        // Add a force at the tail of the plane that corresponds to the deflection of controlInputs.x
+        Vector3 restoringForce = -2*Mathf.Sin(0.5f*AoA * Mathf.Deg2Rad) * transform.up * localVelocity.sqrMagnitude * 0.01f;
+        // Vector3 restoringForce = (-AoA/180) * transform.up * localVelocity.sqrMagnitude * 2.0f;
+/*        if (localVelocity.z < 0)
         {
-            Gizmos.DrawCube(transform.TransformPoint(wingL.relativePosition), new Vector3(3.0f , 1 , 0.1f));
-            Gizmos.DrawCube(transform.TransformPoint(wingR.relativePosition), new Vector3(3.0f , 1 , 0.1f));
-            Gizmos.color = Color.yellow;
-            //Gizmos.DrawCube(transform.TransformPoint(tail.relativePosition), new Vector3(3.0f, 1, .1f));
-            //Gizmos.DrawCube(transform.TransformPoint(horizontalStab.relativePosition), new Vector3(3.0f, 1, 0.1f));
-        }
+            restoringForce *= -1;
+        }*/
+        rb.AddForceAtPosition(restoringForce, transform.TransformPoint(new Vector3(0, 0, -1)));
+
+        // Add a lift force at the center of the plane that corresponds to AoA and velocity
+        Vector3 liftForce = localVelocity.sqrMagnitude * wingArea * 0.1f * -Mathf.Sin(AoA * Mathf.Deg2Rad) * transform.up;
+        rb.AddForceAtPosition(liftForce, transform.TransformPoint(new Vector3(0, 0, -1.0f)));
+
+
     }
 
 
@@ -113,19 +117,27 @@ public class Plane : MonoBehaviour
         //Get key inputs
         if (Input.GetKey(Up))
         {
-            horizontalStab.relativeRotation = Quaternion.Euler(new Vector3(0, 30, 0));
+            controlInputs.x = 1;
         }
         else if (Input.GetKey(Down))
         {
-             horizontalStab.relativeRotation = Quaternion.Euler(new Vector3(0, -30, 0));
+             controlInputs.x = -1;
         }
         else
         {
-            horizontalStab.relativeRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            controlInputs.x = 0;
         }
-        if (Input.GetKey(throttleUp))
+        if (Input.GetKey(Left))
         {
-            throttle = 1.0f;
+            controlInputs.y = -0.2f;
+        }
+        else if (Input.GetKey(Right))
+        {
+            controlInputs.y = 1;
+        }
+        else
+        {
+            controlInputs.y = 0.5f;
         }
 
         //Draw Debug sphere for CoM/CoL
