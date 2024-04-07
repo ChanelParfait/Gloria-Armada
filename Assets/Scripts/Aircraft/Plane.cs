@@ -18,11 +18,9 @@ public class Plane : MonoBehaviour
     // Aircraft parameters
     [SerializeField] float wingArea = 30.04f;  // Area of the wing (m^2)
     [SerializeField] float weight = 100;    // Weight of the aircraft (kg)
-    [SerializeField] float thrust = 200;   // Maximum thrust (N)
+    [SerializeField] float thrust = 1800;   // Maximum thrust (N)
     // [SerializeField] float wingSpan = 22;      // Wing span (meters)
     // [SerializeField] float aspectRatio = 7.5f; // Aspect ratio
-    [SerializeField] Vector3 centerOfLift;  // Center of lift (relative to the object's origin)
-    [SerializeField] Vector3 centerOfMass;  // Center of mass (relative to the object's origin)
 
     Vector2 controlInputs;
 
@@ -47,7 +45,6 @@ public class Plane : MonoBehaviour
     {
         // Set the center of mass
         rb = GetComponent<Rigidbody>();
-        rb.centerOfMass = centerOfMass;
         rb.mass = weight;
         rb.velocity = transform.forward * 20;
         
@@ -87,27 +84,24 @@ public class Plane : MonoBehaviour
         float t = Mathf.Clamp01(rb.velocity.z / 0.5f);
         controlInputs.x = Mathf.Lerp(straightening, controlInputs.x, t);*/
 
-        //Elevator force becomes less effective at abs(AoA) > 20
-        Vector3 elevatorForce = controlInputs.x * transform.up * localVelocity.sqrMagnitude * 0.1f * Mathf.Cos(Mathf.Abs(AoA) * Mathf.Deg2Rad);
-        acceleration = elevatorForce / rb.mass;
-        rb.AddForceAtPosition(elevatorForce, transform.TransformPoint(new Vector3(0, 0, -4)));
+            //Elevator force becomes less effective at abs(AoA) > 20
+            Vector3 elevatorForce = controlInputs.x * transform.up * localVelocity.sqrMagnitude * 0.1f * Mathf.Cos(Mathf.Abs(AoA) * Mathf.Deg2Rad);
+            acceleration = elevatorForce / rb.mass;
+            rb.AddForceAtPosition(elevatorForce, transform.TransformPoint(new Vector3(0, 0, -4)));
+    
+            // Add a force at the tail of the plane that corresponds to the deflection of controlInputs.x
+            Vector3 restoringForce = -2*Mathf.Sin(0.5f*AoA * Mathf.Deg2Rad) * transform.up * localVelocity.sqrMagnitude * 0.01f;
+            rb.AddForceAtPosition(restoringForce, transform.TransformPoint(new Vector3(0, 0, -1)));
 
+            // Lift force at the center of the plane that corresponds to AoA and velocity
+            Vector3 liftForce = localVelocity.sqrMagnitude * wingArea * 0.1f * -Mathf.Sin(AoA * Mathf.Deg2Rad) * transform.up;
+            rb.AddForceAtPosition(liftForce, transform.TransformPoint(new Vector3(0, 0, -1.0f)));
+    
+            throttle = controlInputs.y; 
+            rb.AddForceAtPosition(throttle * thrust * transform.forward, transform.TransformPoint(new Vector3(0, 0, -4)));
 
- 
-        // Add a force at the tail of the plane that corresponds to the deflection of controlInputs.x
-        Vector3 restoringForce = -2*Mathf.Sin(0.5f*AoA * Mathf.Deg2Rad) * transform.up * localVelocity.sqrMagnitude * 0.01f;
-        // Vector3 restoringForce = (-AoA/180) * transform.up * localVelocity.sqrMagnitude * 2.0f;
-/*        if (localVelocity.z < 0)
-        {
-            restoringForce *= -1;
-        }*/
-        rb.AddForceAtPosition(restoringForce, transform.TransformPoint(new Vector3(0, 0, -1)));
-
-        // Add a lift force at the center of the plane that corresponds to AoA and velocity
-        Vector3 liftForce = localVelocity.sqrMagnitude * wingArea * 0.1f * -Mathf.Sin(AoA * Mathf.Deg2Rad) * transform.up;
-        rb.AddForceAtPosition(liftForce, transform.TransformPoint(new Vector3(0, 0, -1.0f)));
-
-
+            //float drag = 0.5f * 1.225f * localVelocity.sqrMagnitude * 0.01f * wingArea;
+            //rb.AddForce(drag * -localVelocity.normalized, ForceMode.Force);
     }
 
 
@@ -129,7 +123,7 @@ public class Plane : MonoBehaviour
         }
         if (Input.GetKey(Left))
         {
-            controlInputs.y = -0.2f;
+            controlInputs.y = 0.0f;
         }
         else if (Input.GetKey(Right))
         {
@@ -137,7 +131,7 @@ public class Plane : MonoBehaviour
         }
         else
         {
-            controlInputs.y = 0.5f;
+            controlInputs.y = 0.7f;
         }
 
         //Draw Debug sphere for CoM/CoL
