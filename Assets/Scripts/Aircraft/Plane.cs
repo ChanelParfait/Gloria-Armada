@@ -18,9 +18,21 @@ struct Surfaces{
 }
 
 [Serializable]
-public struct PID{
+struct PID{
     public float Kp, Ki, Kd;
     public float integral, lastError;
+    public float getInt(){
+        return integral;
+    }
+    public float getLastError(){
+        return lastError;
+    }
+    public void setInt(float i){
+        integral = i;
+    }
+    public void setLastError(float e){
+        lastError = e;
+    }
 }
 
 public class Plane : MonoBehaviour
@@ -98,7 +110,7 @@ public class Plane : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.mass = weight;
         rb.velocity = transform.forward * 20;
-        targetObject = GameObject.Find("TargetPoint");
+        //targetObject = GameObject.Find("TargetPoint");
 
         PIDTerms = new float[] { Kp_pitch, Ki_pitch, Kd_pitch, Kp_yaw, Ki_yaw, Kd_yaw, Kp_vel, Ki_vel, Kd_vel, integral_pitch, lastError_pitch, integral_yaw, lastError_yaw, integral_vel, lastError_vel };        
     }
@@ -149,13 +161,13 @@ public class Plane : MonoBehaviour
         Vector3 hosForce = CalculateLift(AoA + controlDeflection.x,     
                                         surfaces.horizontalStabilizer.orientation, 
                                         liftPower * surfaces.horizontalStabilizer.area);
-        Vector3 rudForce = CalculateLift(AoAYaw + controlDeflection.y,  
+        Vector3 rudForce = CalculateLift(AoAYaw + controlDeflection.z,  
                                         surfaces.rudder.orientation, 
                                         liftPower * surfaces.rudder.area);
-        Vector3 ailForceR = CalculateLift(AoA + controlDeflection.z,
+        Vector3 ailForceR = CalculateLift(AoA + controlDeflection.y,
                                         surfaces.aileron.orientation, 
                                         liftPower * surfaces.aileron.area);
-        Vector3 ailForceL = CalculateLift(AoA - controlDeflection.z,
+        Vector3 ailForceL = CalculateLift(AoA - controlDeflection.y,
                                         surfaces.aileron.orientation, 
                                         liftPower * surfaces.aileron.area);
 
@@ -234,7 +246,7 @@ public class Plane : MonoBehaviour
     void FixedUpdate(){
         float dt = Time.fixedDeltaTime;
 
-        controlDeflection = new Vector3(controlInputs.x * 30f - 0.26f, controlInputs.y * 5f, controlInputs.z);
+        controlDeflection = new Vector3(controlInputs.x * 30f - 0.26f, controlInputs.y * 2f, controlInputs.z * 4f);
         CalculateState(dt);
         CalculateAoA();
 
@@ -245,13 +257,14 @@ public class Plane : MonoBehaviour
 
     }
 
-    float PIDSolve(float error, PID pid){
+    float PIDSolve(float error, ref PID pid){
         float proportional = error * pid.Kp;
         pid.integral += error * Time.deltaTime;
         float integralTerm = pid.integral * pid.Ki;
         float derivative = (error - pid.lastError) / Time.deltaTime;
         float derivativeTerm = derivative * pid.Kd;
-
+        // Debug.Log("error" + error);
+        // Debug.Log(pid);
         // Update last error
         pid.lastError = error;
 
@@ -262,11 +275,13 @@ public class Plane : MonoBehaviour
         Transform targetPoint = targetObject.transform;
         Vector3 targetDirection = (targetPoint.position - rb.transform.position).normalized;
         // Get the angle between the target point and the aircraft's forward in the vertical plane
-        float angleUp = Vector3.SignedAngle(transform.forward, -targetDirection, transform.right);
-        // Get the angle between the target point and the aircraft's forward in the horizontal plane
-        float angleRight = Vector3.SignedAngle(transform.forward, -targetDirection, transform.up);
+        // Max pull is when 90 degrees or more offset from target
+        float angleUp = Vector3.SignedAngle(transform.forward, targetDirection, transform.right) / 180f;
         // Get the roll angle to the target point
-        float angleRoll = Vector3.SignedAngle(transform.up, targetDirection, transform.forward);
+        float angleRoll = Vector3.SignedAngle(transform.up, targetDirection, transform.forward) /180f;
+        // Get the angle between the target point and the aircraft's forward in the horizontal plane
+        float angleRight = Vector3.SignedAngle(transform.forward, targetDirection, transform.up) / 180f * 2f;
+        
 
         //Draw debug line for target direction
         Debug.DrawRay(transform.position, targetDirection * angleUp, Color.yellow);
@@ -275,9 +290,12 @@ public class Plane : MonoBehaviour
         Debug.DrawRay(transform.position, transform.right * angleRight, Color.red);
         Debug.DrawRay(transform.position, transform.up * angleUp, Color.blue);
 
-        float autoXInput = -Mathf.Clamp(PIDSolve(angleUp, pitchPID), -1.0f, 1.0f);
-        float autoZInput = Mathf.Clamp(PIDSolve(angleRight, yawPID), -1.0f, 1.0f);
-        float autoYInput = Mathf.Clamp(PIDSolve(angleRoll, rollPID), -1.0f, 1.0f);
+        float autoXInput = Mathf.Clamp(PIDSolve(angleUp, ref pitchPID), -1, 1);
+        float autoYInput = Mathf.Clamp(PIDSolve(angleRoll, ref rollPID), -1.0f, 1.0f);
+        float autoZInput = Mathf.Clamp(PIDSolve(angleRight, ref yawPID), -1.0f, 1.0f);
+
+        //PID errors
+        Debug.Log("PID Errors: " + pitchPID.lastError + ", " + yawPID.lastError + ", " + rollPID.lastError);
 
         return new Vector3(autoXInput,autoYInput, autoZInput);
     }
