@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.42104837, g: 0.45083684, b: 0.47111386, a: 1}
+  m_IndirectSpecularColor: {r: 0.43923864, g: 0.48752952, b: 0.56777614, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -159,7 +159,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -222,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 156246522}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 376, z: -144}
+  m_LocalPosition: {x: 81.4, y: 447.2, z: -144}
   m_LocalScale: {x: 15, y: 15, z: 15}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -256,8 +256,7 @@ Transform:
   m_LocalPosition: {x: -109.9039, y: 112.09999, z: -73.7563}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 602213503}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &529712600
@@ -425,7 +424,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 25000
-  field of view: 60
+  field of view: 35.2
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -451,13 +450,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 602213500}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 40.9039, y: 28.200012, z: -422.2437}
+  m_LocalRotation: {x: -0.059045054, y: 0, z: 0, w: 0.9982553}
+  m_LocalPosition: {x: -69, y: 73.3, z: -577.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 312080150}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: -6.77, y: 0, z: 0}
 --- !u!1001 &1517650084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -468,15 +467,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -216.73
+      value: -216.72144
       objectReference: {fileID: 0}
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 223
+      value: 172.92775
       objectReference: {fileID: 0}
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -144
+      value: -143.84671
       objectReference: {fileID: 0}
     - target: {fileID: 1005888897509260889, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_LocalRotation.w
@@ -512,7 +511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238442878657003467, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7238442878657003467, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_Constraints
@@ -520,6 +519,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7238442878657003467, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
       propertyPath: m_ImplicitCom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238442878657003467, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
+      propertyPath: m_Interpolate
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7238442878657003467, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
@@ -636,13 +639,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1848085062}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.8679507, y: 0.025028383, z: -0.4940669, w: 0.043968547}
+  m_LocalRotation: {x: 0.7036218, y: 0.29035833, z: -0.4005253, w: 0.51008624}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 174.2, y: 59.3, z: 0}
+  m_LocalEulerAnglesHint: {x: 108.12, y: 59.3, z: 0}
 --- !u!1 &1874666669 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8754366938149064170, guid: 1b564e449bdf87aba8393801de646c49, type: 3}
@@ -669,27 +672,222 @@ MonoBehaviour:
   Down: 115
   Left: 97
   Right: 100
+  YawRight: 101
+  YawLeft: 113
   throttleUp: 304
   throttleDown: 306
-  wingArea: 7
-  weight: 200
-  thrust: 1800
+  controlDeflection: {x: 0, y: 0, z: 0}
   throttle: 0.7
+  liftPower: 5
+  weight: 1000
+  surfaces:
+    wing:
+      area: 2
+      position: {x: 0, y: 0, z: 0.25}
+      orientation: {x: 1, y: 0, z: 0}
+    tail:
+      area: 1
+      position: {x: 0, y: 0, z: -3.5}
+      orientation: {x: 0, y: 1, z: 0}
+    rudder:
+      area: 1
+      position: {x: 0, y: 0.5, z: -4}
+      orientation: {x: 0, y: 1, z: 0}
+    horizontalStabilizer:
+      area: 1
+      position: {x: 0, y: 0, z: -4}
+      orientation: {x: 1, y: 0, z: 0}
+    aileron:
+      area: 1
+      position: {x: 4, y: 0, z: 0}
+      orientation: {x: 1, y: 0, z: 0}
+  thrust: 1800
   AoA: 0
+  AoAYaw: 0
   internalVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   acceleration: {x: 0, y: 0, z: 0}
   autoTargetPoint: 0
   autopilotState: 0
-  Kp_pitch: 0.2
-  Ki_pitch: 0.1
-  Kd_pitch: 0.1
-  Kp_yaw: 1
-  Ki_yaw: 0.1
-  Kd_yaw: 0.5
-  Kp_vel: 1
-  Ki_vel: 0.1
-  Kd_vel: 0.5
+  AoATrim: 24
+  cd: 0.2
+  cl:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -180
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: -166
+      value: 0.8
+      inSlope: 0.022571841
+      outSlope: 0.022571841
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: -164
+      value: 0.3
+      inSlope: 0.00866518
+      outSlope: 0.00866518
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: -134
+      value: 0.8
+      inSlope: -0.013972036
+      outSlope: -0.013972036
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.2906007
+    - serializedVersion: 3
+      time: -90
+      value: 0
+      inSlope: -0.021389721
+      outSlope: -0.021389721
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.191108
+      outWeight: 0.21711317
+    - serializedVersion: 3
+      time: -44
+      value: -1
+      inSlope: 0.00014251917
+      outSlope: 0.00014251917
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15832429
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: -20
+      value: -0.6
+      inSlope: 0.010385431
+      outSlope: 0.010385431
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: -16
+      value: -0.6
+      inSlope: -0.028319607
+      outSlope: -0.028319607
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: -10.947943
+      value: -1.0042272
+      inSlope: -0.0009930258
+      outSlope: -0.0009930258
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.37405345
+    - serializedVersion: 3
+      time: 0.096069336
+      value: 0.037231445
+      inSlope: 0.12500688
+      outSlope: 0.12500688
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.021709455
+    - serializedVersion: 3
+      time: 14
+      value: 1.2
+      inSlope: -0.10818562
+      outSlope: -0.10818562
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 16
+      value: 0.6
+      inSlope: -0.028804623
+      outSlope: -0.028804623
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.8561206
+    - serializedVersion: 3
+      time: 19.848999
+      value: 0.6444031
+      inSlope: 0.02061552
+      outSlope: 0.02061552
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 39.166016
+      value: 1.2180176
+      inSlope: 0.0028670402
+      outSlope: 0.0028670402
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 90
+      value: 0
+      inSlope: -0.021553852
+      outSlope: -0.021553852
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15238704
+      outWeight: 0.24372621
+    - serializedVersion: 3
+      time: 134
+      value: -0.8
+      inSlope: 0.00007368498
+      outSlope: 0.00007368498
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 164
+      value: -0.3
+      inSlope: -0.005853353
+      outSlope: -0.005853353
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 166
+      value: -0.8
+      inSlope: 0.017769141
+      outSlope: 0.017769141
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 180
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 0
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   targetObject: {fileID: 0}
   rb: {fileID: 1874666672}
 --- !u!199 &1874666676
@@ -5598,6 +5796,7 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 602213503}
   - {fileID: 312080150}
   - {fileID: 1848085064}
   - {fileID: 529712604}
