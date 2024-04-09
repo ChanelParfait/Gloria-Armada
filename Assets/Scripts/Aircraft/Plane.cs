@@ -18,7 +18,7 @@ struct Surfaces{
 }
 
 [Serializable]
-struct PID{
+public struct PID{
     public float Kp, Ki, Kd;
     public float integral, lastError;
 }
@@ -67,7 +67,7 @@ public class Plane : MonoBehaviour
     [SerializeField] float cd = 0.2f;
     [SerializeField] AnimationCurve cl = new AnimationCurve();
 
-    [SerializeField] PID pitchPID, yawPID, velPID;
+    [SerializeField] PID pitchPID, yawPID, rollPID, velPID;
     // PID parameters for pitch and yaw
     float Kp_pitch = 0.05f, Ki_pitch = 0.02f, Kd_pitch = 0.02f;
     float Kp_yaw = 1.0f, Ki_yaw = 0.1f, Kd_yaw = 0.5f;
@@ -133,8 +133,6 @@ public class Plane : MonoBehaviour
 
     void UpdateAngularDrag(){
         //Resist rotation around Z axis
-        //Debug.DrawRay(transform.position, rb.angularVelocity * 100, Color.red);
-        Debug.DrawRay(transform.position, Vector3.up * rb.angularVelocity.z * 100, Color.red);
         rb.AddTorque(-transform.InverseTransformDirection(rb.angularVelocity).z* 1000f * transform.forward);
     }
 
@@ -249,7 +247,7 @@ public class Plane : MonoBehaviour
 
     float PIDSolve(float error, PID pid){
         float proportional = error * pid.Kp;
-        pid.integral += error * Time.fixedDeltaTime;
+        pid.integral += error * Time.deltaTime;
         float integralTerm = pid.integral * pid.Ki;
         float derivative = (error - pid.lastError) / Time.deltaTime;
         float derivativeTerm = derivative * pid.Kd;
@@ -260,21 +258,28 @@ public class Plane : MonoBehaviour
         return proportional + integralTerm + derivativeTerm;
     }
 
-    Vector2 AutoTargetPoint(){
+    Vector3 AutoTargetPoint(){
         Transform targetPoint = targetObject.transform;
         Vector3 targetDirection = (targetPoint.position - rb.transform.position).normalized;
-        // Get the angle between the target point and the aircraft's forward direction in the X/Y plane
-        float angleUp = Vector3.SignedAngle(transform.forward, targetDirection, Vector3.forward);
-        float angleRight = Vector3.SignedAngle(transform.forward, targetDirection, Vector3.up);
+        // Get the angle between the target point and the aircraft's forward in the vertical plane
+        float angleUp = Vector3.SignedAngle(transform.forward, -targetDirection, transform.right);
+        // Get the angle between the target point and the aircraft's forward in the horizontal plane
+        float angleRight = Vector3.SignedAngle(transform.forward, -targetDirection, transform.up);
+        // Get the roll angle to the target point
+        float angleRoll = Vector3.SignedAngle(transform.up, targetDirection, transform.forward);
 
         //Draw debug line for target direction
-        Debug.DrawRay(transform.position, targetDirection * angleUp, Color.green);
-        Debug.DrawRay(transform.position, targetDirection * angleRight, Color.blue);
+        Debug.DrawRay(transform.position, targetDirection * angleUp, Color.yellow);
+        Debug.DrawRay(transform.position, targetDirection * angleRight, Color.green);
 
-        float autoXInput = Mathf.Clamp(PIDSolve(angleUp, pitchPID), -1, 1);
-        float autoZInput = Mathf.Clamp(PIDSolve(angleRight, yawPID), -1, 1);
+        Debug.DrawRay(transform.position, transform.right * angleRight, Color.red);
+        Debug.DrawRay(transform.position, transform.up * angleUp, Color.blue);
 
-        return -autoXInput;
+        float autoXInput = -Mathf.Clamp(PIDSolve(angleUp, pitchPID), -1.0f, 1.0f);
+        float autoZInput = Mathf.Clamp(PIDSolve(angleRight, yawPID), -1.0f, 1.0f);
+        float autoYInput = Mathf.Clamp(PIDSolve(angleRoll, rollPID), -1.0f, 1.0f);
+
+        return new Vector3(autoXInput,autoYInput, autoZInput);
     }
 
     float AutoTargetStabilize(){
@@ -330,7 +335,8 @@ public class Plane : MonoBehaviour
 
         if (state == AutopilotState.targetPoint){
             autopilotDeflection.x = AutoTargetPoint().x;
-            autopilotDeflection.z = AutoTargetPoint().y;
+            autopilotDeflection.y = AutoTargetPoint().y;
+            autopilotDeflection.z = AutoTargetPoint().z;
         }
         else if (state == AutopilotState.targetStabilize){
             //autoXInput = AutoTargetStabilize();
