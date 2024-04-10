@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 756333059307113752}
   - component: {fileID: 2951336494503559052}
+  - component: {fileID: 674909139210087522}
   - component: {fileID: 6182760409746918969}
   - component: {fileID: 4620936127489192187}
   - component: {fileID: 7001200819396208791}
@@ -59,7 +60,6 @@ MonoBehaviour:
   throttleUp: 304
   throttleDown: 306
   controlDeflection: {x: 0, y: 0, z: 0}
-  autopilotDeflection: {x: 0, y: 0, z: 0}
   throttle: 0.7
   liftPower: 0.7
   weight: 200
@@ -85,13 +85,12 @@ MonoBehaviour:
       position: {x: 4, y: 0, z: 0}
       orientation: {x: 1, y: 0, z: 0}
   thrust: 1800
-  AoA: 0
-  AoAYaw: 0
+  shotSpeed: 100
+  fireRate: 100
+  burstLength: 30
+  health: 6
   internalVelocity: {x: 0, y: 0, z: 0}
-  localVelocity: {x: 0, y: 0, z: 0}
   acceleration: {x: 0, y: 0, z: 0}
-  autoArm: 1
-  autopilotState: 1
   AoATrim: 24
   cd: 0.2
   cl:
@@ -271,32 +270,48 @@ MonoBehaviour:
     m_PreInfinity: 0
     m_PostInfinity: 2
     m_RotationOrder: 4
+  rb: {fileID: 6182760409746918969}
+  ap: {fileID: 674909139210087522}
+  gun: {fileID: 1955615125115568952, guid: 93478ce0210976544bb1a24947eb49e2, type: 3}
+  smoke: {fileID: 7478675707473442564}
+--- !u!114 &674909139210087522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168509773419960114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff6ba0c3da1b3b459e613bf95331bdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autopilotDeflection: {x: 0, y: 0, z: 0}
+  autopilotState: 1
+  autoArm: 1
   pitchPID:
     Kp: 1
     Ki: 0.01
-    Kd: 3
+    Kd: 0.2
     integral: 0
     lastError: 0
   yawPID:
     Kp: 1
-    Ki: 0.1
-    Kd: 0.05
+    Ki: 0.01
+    Kd: 0.2
     integral: 0
     lastError: 0
   rollPID:
     Kp: 1
     Ki: 0.01
-    Kd: 6
-    integral: 0
-    lastError: 0
-  velPID:
-    Kp: 0
-    Ki: 0
-    Kd: 0
+    Kd: 0.2
     integral: 0
     lastError: 0
   targetObject: {fileID: 0}
-  rb: {fileID: 6182760409746918969}
+  targetLocation: {x: 0, y: 0, z: 0}
+  aimVector: {x: 0, y: 0, z: 0}
+  rangeToTarget: 3.4028235e+38
+  shotSpeed: 300
 --- !u!54 &6182760409746918969
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -575,7 +590,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -1835,7 +1850,7 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 1, g: 0.9536621, b: 0.1566037, a: 1}
         key1: {r: 1, g: 0.5435245, b: 0.15686274, a: 1}
-        key2: {r: 1, g: 0.27338305, b: 0.15686274, a: 0}
+        key2: {r: 1, g: 0.27338305, b: 0.15686274, a: 0.023529412}
         key3: {r: 0.22264141, g: 0.22264141, b: 0.22264141, a: 0}
         key4: {r: 0.5018867, g: 0.5018867, b: 0.5018867, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1851,8 +1866,8 @@ ParticleSystem:
         ctime7: 0
         atime0: 0
         atime1: 1184
-        atime2: 45308
-        atime3: 64379
+        atime2: 8688
+        atime3: 63484
         atime4: 0
         atime5: 0
         atime6: 0
@@ -1860,7 +1875,7 @@ ParticleSystem:
         m_Mode: 2
         m_ColorSpace: 0
         m_NumColorKeys: 4
-        m_NumAlphaKeys: 3
+        m_NumAlphaKeys: 4
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

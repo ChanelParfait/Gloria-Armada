@@ -19,12 +19,11 @@ struct Surfaces{
 
 }
 
-
-
 public class Plane : MonoBehaviour
 {
 
     public KeyCode Up = KeyCode.W, Down = KeyCode.S, Left = KeyCode.A, Right = KeyCode.D, YawRight = KeyCode.E, YawLeft = KeyCode.Q;
+    private KeyCode Fire = KeyCode.Space;
     public KeyCode throttleUp = KeyCode.Tab, throttleDown = KeyCode.LeftShift;
 
     [SerializeField] Vector3 controlDeflection = Vector3.zero;
@@ -38,25 +37,28 @@ public class Plane : MonoBehaviour
     [SerializeField] float thrust = 1800;   // Maximum thrust (N)
 
     [SerializeField] float shotSpeed = 500f;
+    [SerializeField] float fireRate = 100f;
+    [SerializeField] float burstLength = 30f;
 
     Vector3 controlInputs;
+
+    [SerializeField] int health = 6;
+    public bool isAlive = true;
 
     // Aircraft state
     [Space(10)]
     [Header("Aircraft State")]
-    public float AoA;
-    public float AoAYaw;
+    private float AoA;
+    private float AoAYaw;
     public Vector3 internalVelocity;   // Velocity of the aircraft (not passed to RB) (m/s)
-    public Vector3 localVelocity;      // Velocity of the aircraft from local (m/s)
+    private Vector3 localVelocity;      // Velocity of the aircraft from local (m/s)
     private Vector3 localAngularVelocity; // Angular velocity of the aircraft (rad/s)
     
-    [SerializeField] private Vector3 lastVelocity;
-    [SerializeField] private Vector3 lastRBAngularVelocity;
+    private Vector3 lastVelocity;
+    private Vector3 lastRBAngularVelocity;
 
     public Vector3 acceleration; // Acceleration of the aircraft (m/s^2)
     public Vector3 angularAcceleration { get; private set; } // Angular acceleration of the aircraft (rad/s^2)
-
-    public float AoATrim = 24.0f;
 
     [SerializeField] float cd = 0.2f;
     [SerializeField] AnimationCurve cl = new AnimationCurve();
@@ -64,7 +66,32 @@ public class Plane : MonoBehaviour
     // Unity
     [SerializeField] Rigidbody rb;
     [SerializeField] Autopilot ap;
+    [SerializeField] Bullet gun;
+    [SerializeField] ParticleSystem smoke;
+
+    public void ApplyDamage(float _damage){
+        if (health <= 0){
+            return;
+        } 
+        else if (health - (int)_damage <= 5){
+            health = 0;
+            smoke.Play();
+        }
+        if (health - (int)_damage <= 0){
+            health = 0;
+            isAlive = false;
+            smoke.Play();
+            surfaces.wing.position += new Vector3(UnityEngine.Random.Range(-5f, 5f), surfaces.wing.position.y, UnityEngine.Random.Range(-1f, 1f));
+            surfaces.tail.area *= UnityEngine.Random.Range(0f, 0.9f);
+            ap.autopilotState = Autopilot.AutopilotState.targetStabilize;
+        }
+        health -= (int)_damage;
+    }
     
+    void Shoot(){
+        Bullet bullet = Instantiate(gun, transform.position + transform.forward, transform.rotation);
+        bullet.GetComponent<Bullet>().Fire(this);
+    }
 
     private void Awake()
     {
@@ -254,6 +281,18 @@ public class Plane : MonoBehaviour
         else
         {
             throttle = 0.7f;
+        }
+
+        if (Input.GetKey(Fire) ){
+            Shoot();
+        }
+        if (ap.autopilotState != Autopilot.AutopilotState.Off && ap.HasTarget() ){
+            if (ap.aimVector.magnitude < 0.1f && ap.rangeToTarget < 100){
+                Shoot();
+            }
+        }
+        else if (Input.GetKey(KeyCode.F)){
+            ap.autopilotState = Autopilot.AutopilotState.Off;
         }
 
         controlInputs = ap.GetAPInput(controlInputs);

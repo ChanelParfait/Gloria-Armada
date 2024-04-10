@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
 using UnityEngine;
 
 
@@ -65,12 +67,22 @@ public class Autopilot : MonoBehaviour
     [SerializeField] PID rollPID =  new PID(1.0f, 0.01f, 0.2f);
 
 
+    [Space(10)]
+    [Header("Targets")]
+    [SerializeField] GameObject[] targetObjects;
+
+    Dictionary<string, GameObject> targetDict = new Dictionary<string, GameObject>();
+
     [Space(10)] 
     [Header("Target")]
     [SerializeField] GameObject targetObject;
-    Vector3 targetLocation = new Vector3(0, 0, 0);
+    public Vector3 targetLocation = new Vector3(0, 0, 0);
+    public Vector3 aimVector = new Vector3(0, 0, 0);
+    public float rangeToTarget = float.MaxValue;
 
-    [SerializeField] float shotSpeed = 100f;
+    public float shotSpeed = 100f;
+
+
 
 
 
@@ -79,32 +91,66 @@ public class Autopilot : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         p = GetComponent<Plane>(); 
+
+        //based on the tag
+        if (tag == "Player"){
+            targetObjects = GameObject.FindGameObjectsWithTag("Enemy");
+        }
+        else{
+            targetObjects = GameObject.FindGameObjectsWithTag("Player");
+        }
+        foreach(GameObject target in targetObjects){
+            targetDict.Add(target.name, target);
+        }
     }
+
+    public bool HasTarget(){
+        if (targetObject != null){
+            if (targetObject.GetComponent<Plane>() != null){
+                if (!targetObject.GetComponent<Plane>().isAlive){
+                    targetDict.Remove(targetObject.name);
+                    if (targetDict.Count > 0){
+                        targetObject = targetDict.FirstOrDefault().Value;
+                    }
+                    else{
+
+                        targetObject = null;
+                    }   
+
+                }
+                aimVector = tPosition(targetObject.transform.position);
+                rangeToTarget = Vector3.Distance(transform.position, targetObject.transform.position);
+                return true;
+            }
+        }
+        aimVector = new Vector3(0, 0, 0);
+        rangeToTarget = float.MaxValue;
+        return false;
+    }
+
+
 
     // Update is called once per frame
     void Update()
     {
-        if (autopilotState != AutopilotState.Off){
-            if (autopilotState != lastAutopilotState){
-                lastAutopilotState = autopilotState;
-                switch (autopilotState){
-                case AutopilotState.targetPoint:
-                    targetLocation = targetObject.transform.position;
-                    break;
-                case AutopilotState.targetFlat:
-                    targetLocation = transform.position;
-                    break;
-                case AutopilotState.targetStabilize:
-                    break;
-                case AutopilotState.targetVelocity:
-                    break;
-                case AutopilotState.targetForward:
-                    break;
-                default:
-                    break;
-                }
+        if (autopilotState != lastAutopilotState){
+            lastAutopilotState = autopilotState;
+            switch (autopilotState){
+            case AutopilotState.targetPoint:
+                targetLocation = targetObject.transform.position;
+                break;
+            case AutopilotState.targetFlat:
+                targetLocation = transform.position;
+                break;
+            case AutopilotState.targetStabilize:
+                break;
+            case AutopilotState.targetVelocity:
+                break;
+            case AutopilotState.targetForward:
+                break;
+            default:
+                break;
             }
-            controlInputs = AutopilotControl(autopilotState);
         }
         
     }
@@ -126,7 +172,7 @@ public class Autopilot : MonoBehaviour
         return proportional + integralTerm + derivativeTerm;
     }
 
-    Vector3 AutoTargetPoint(Vector3 targetPoint){
+    Vector3 tPosition(Vector3 targetPoint){
         // Get the plane component of the target object
         Plane e = targetObject.GetComponent<Plane>();
         Vector3 ip = Utilities.FirstOrderIntercept(rb.transform.position, rb.velocity, rb.velocity.magnitude + shotSpeed, targetPoint, e.getRBVelocity());
@@ -168,7 +214,7 @@ public class Autopilot : MonoBehaviour
         return new Vector3(autoXInput,autoYInput, autoZInput);
     }
 
-    Vector3 AutoTargetVelocityVector(Vector3 targetVelocity){
+    Vector3 tVelocityVec(Vector3 targetVelocity){
         Vector3 curVelocity = p.internalVelocity;
         Vector3 velocityError = targetVelocity - curVelocity.normalized;
 
@@ -242,9 +288,13 @@ public class Autopilot : MonoBehaviour
     Vector3 AutopilotControl(AutopilotState state){
         
         autopilotDeflection = controlInputs;
+        if (state == AutopilotState.Off){
+            return controlInputs;
+        }
+        else
 
         if (state == AutopilotState.targetPoint){
-            autopilotDeflection = AutoTargetPoint(targetObject.transform.position);
+            autopilotDeflection = tPosition(targetObject.transform.position);
         }
         else if (state == AutopilotState.targetStabilize){
             autopilotDeflection.x = AutoTargetStabilize();
@@ -253,8 +303,10 @@ public class Autopilot : MonoBehaviour
             autopilotDeflection = AutoTargetPlane('Y');
         }
         else if (state == AutopilotState.targetVelocity){
-            autopilotDeflection = AutoTargetVelocityVector((targetObject.transform.position - rb.transform.position).normalized);
-            //autopilotDeflection = AutoTargetVelocityVector(new Vector3(0, 0, 1));
+            if (HasTarget()){
+                autopilotDeflection = tVelocityVec((targetObject.transform.position - rb.transform.position).normalized);
+            }  
+            autopilotDeflection = tVelocityVec(new Vector3(0, 0, 1));
         }
         else if (state == AutopilotState.targetForward){
             autopilotDeflection = AutoTargetPlane('Z');
