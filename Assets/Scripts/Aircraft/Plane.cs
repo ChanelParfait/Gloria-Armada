@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -66,8 +68,19 @@ public class Plane : MonoBehaviour
     public Vector3 acceleration;  // Acceleration of the aircraft (m/s^2)
 
 
-    public bool autoTargetPoint = false;
-    bool autoTargetFlat = false;
+    [SerializeField] bool autoArm = true;
+
+    [SerializeField] Dictionary<string, bool> APSystems = new() {
+        {"AutoPilot", false},
+        {"AutoThrottle", false},
+        {"AutoTrim", false},
+        {"AutoYaw", false},
+        {"AutoRoll", false},
+        {"AutoPitch", false},
+        {"AutoStabilize", false},
+        {"AutoVelocity", false},
+        {"AutoForward", false}
+    };
 
     public enum AutopilotState {Off = 0, targetPoint = 1, targetFlat = 2, targetVelocity = 3, targetStabilize = 4, targetForward = 5};
 
@@ -91,6 +104,8 @@ public class Plane : MonoBehaviour
     private float integral_vel, lastError_vel;
 
     [SerializeField] GameObject targetObject;
+    Vector3 targetLocation = Vector3.zero;
+    Vector3 targetAngle = Vector3.up;
 
 
     float[] PIDTerms = new float[15];
@@ -164,10 +179,10 @@ public class Plane : MonoBehaviour
         Vector3 rudForce = CalculateLift(AoAYaw + controlDeflection.z,  
                                         surfaces.rudder.orientation, 
                                         liftPower * surfaces.rudder.area);
-        Vector3 ailForceR = CalculateLift(AoA + controlDeflection.y,
+        Vector3 ailForceR = CalculateLift(AoA - controlDeflection.y,
                                         surfaces.aileron.orientation, 
                                         liftPower * surfaces.aileron.area);
-        Vector3 ailForceL = CalculateLift(AoA - controlDeflection.y,
+        Vector3 ailForceL = CalculateLift(AoA + controlDeflection.y,
                                         surfaces.aileron.orientation, 
                                         liftPower * surfaces.aileron.area);
 
@@ -207,46 +222,11 @@ public class Plane : MonoBehaviour
         //var inducedDrag = dragDirection * v2 * dragForce * this.inducedDrag * inducedDragCurve.Evaluate(Mathf.Max(0, LocalVelocity.z));
         return lift + inducedDrag;
     }
-
-
-    void PGCalc(){
-        // Calculate the local velocity
-        internalVelocity = Mathf.Min(rb.velocity.magnitude * 10, 450) * rb.velocity.normalized;
-        localVelocity = transform.InverseTransformDirection(internalVelocity);
-
-        Vector3 dragForce = Vector3.zero;
-
-        // Calculate the thrust force
-        Vector3 thrustForce = throttle * thrust * transform.forward;
-        if (localVelocity.z >= 0)
-        {
-            AoA = Mathf.Rad2Deg * Mathf.Atan2(localVelocity.y, Mathf.Max(localVelocity.z, float.Epsilon));
-        }
-        else
-        {
-            AoA = 180 + Mathf.Rad2Deg * Mathf.Atan2(-localVelocity.y, Mathf.Max(-localVelocity.z, float.Epsilon));
-        }
-
-        //Elevator force becomes less effective at abs(AoA) > 20
-        Vector3 elevatorForce = controlInputs.x * transform.up * localVelocity.sqrMagnitude * 0.1f * Mathf.Cos(Mathf.Abs(AoA) * Mathf.Deg2Rad);
-        rb.AddForceAtPosition(elevatorForce, transform.TransformPoint(new Vector3(0, 0, -4)));
-
-        // Add a force at the tail of the plane that corresponds to the deflection of controlInputs.x
-        Vector3 restoringForce = -2*Mathf.Sin(0.5f*AoA * Mathf.Deg2Rad) * transform.up * localVelocity.sqrMagnitude * 0.05f;
-        rb.AddForceAtPosition(restoringForce, transform.TransformPoint(new Vector3(0, 0, -1)));
-
-        // Lift force at the center of the plane that corresponds to AoA and velocity
-        Vector3 liftForce = localVelocity.sqrMagnitude * surfaces.wing.area * 0.1f * -Mathf.Sin(AoA * Mathf.Deg2Rad) * transform.up;
-        rb.AddForceAtPosition(liftForce, transform.TransformPoint(new Vector3(0, 0, -1.0f)));
-
-        throttle = controlInputs.y; 
-        rb.AddForceAtPosition(throttle * thrust * transform.forward, transform.TransformPoint(new Vector3(0, 0, -4)));
-    }
     
     void FixedUpdate(){
         float dt = Time.fixedDeltaTime;
 
-        controlDeflection = new Vector3(controlInputs.x * 30f - 0.26f, controlInputs.y * 2f, controlInputs.z * 4f);
+        controlDeflection = new Vector3(controlInputs.x * 30f - 0.0f, controlInputs.y * 20f, controlInputs.z * 20f);
         CalculateState(dt);
         CalculateAoA();
 
@@ -263,22 +243,19 @@ public class Plane : MonoBehaviour
         float integralTerm = pid.integral * pid.Ki;
         float derivative = (error - pid.lastError) / Time.deltaTime;
         float derivativeTerm = derivative * pid.Kd;
-        // Debug.Log("error" + error);
-        // Debug.Log(pid);
-        // Update last error
         pid.lastError = error;
 
         return proportional + integralTerm + derivativeTerm;
     }
 
-    Vector3 AutoTargetPoint(){
-        Transform targetPoint = targetObject.transform;
-        Vector3 targetDirection = (targetPoint.position - rb.transform.position).normalized;
+    Vector3 AutoTargetPoint(Vector3 targetPoint){
+        //Vector3 targetPoint = targetObject.transform.position;
+        Vector3 targetDirection = (targetPoint - rb.transform.position).normalized;
         // Get the angle between the target point and the aircraft's forward in the vertical plane
         // Max pull is when 90 degrees or more offset from target
         float angleUp = Vector3.SignedAngle(transform.forward, targetDirection, transform.right) / 180f;
         // Get the roll angle to the target point
-        float angleRoll = Vector3.SignedAngle(transform.up, targetDirection, transform.forward) /180f;
+        float angleRoll = -Vector3.SignedAngle(transform.up, targetDirection, transform.forward) /180f;
         // Get the angle between the target point and the aircraft's forward in the horizontal plane
         float angleRight = Vector3.SignedAngle(transform.forward, targetDirection, transform.up) / 180f * 2f;
         
@@ -294,10 +271,39 @@ public class Plane : MonoBehaviour
         float autoYInput = Mathf.Clamp(PIDSolve(angleRoll, ref rollPID), -1.0f, 1.0f);
         float autoZInput = Mathf.Clamp(PIDSolve(angleRight, ref yawPID), -1.0f, 1.0f);
 
-        //PID errors
-        Debug.Log("PID Errors: " + pitchPID.lastError + ", " + yawPID.lastError + ", " + rollPID.lastError);
+        
 
         return new Vector3(autoXInput,autoYInput, autoZInput);
+    }
+
+    Vector3 AutoTargetVelocityVector(Vector3 targetVelocity){
+        Vector3 curVelocity = internalVelocity;
+        Vector3 velocityError = targetVelocity - curVelocity.normalized;
+
+        //Get signed angles for angle up, roll, right
+        float anglePitch       = Vector3.SignedAngle(rb.transform.forward, velocityError, rb.transform.right) / 180f;
+        float angleLiftVUp    = -Vector3.SignedAngle(rb.transform.up, Vector3.up, rb.transform.forward)       / 180f;
+        float angleAlignLiftV = -Vector3.SignedAngle(rb.transform.up, velocityError, rb.transform.forward)    / 180f;
+        float angleYaw         = Vector3.SignedAngle(rb.transform.forward, velocityError, rb.transform.up)    / 180f;
+
+
+
+        // Multiple signed angle by the magnitude of the error projected in that direction
+        anglePitch *= Vector3.Cross(velocityError, rb.transform.right).magnitude;
+        angleAlignLiftV *= Vector3.Cross(velocityError, rb.transform.forward).magnitude;
+        angleYaw *= Vector3.Cross(velocityError, rb.transform.up).magnitude;
+
+        
+        //blend between a roll angle of "Up" when velocity is close to target and a roll angle that points to target when not
+        float angleRoll = Mathf.Lerp(angleLiftVUp, angleAlignLiftV, Mathf.Clamp01(velocityError.magnitude));
+
+        //Debug.DrawRay(transform.position, velocityError * 100.0f, Color.yellow);
+        //Debug.DrawRay(transform.position, targetVelocity * 100.0f, Color.red);
+
+        float x = PIDSolve(anglePitch, ref pitchPID);
+        float y = PIDSolve(angleRoll, ref rollPID);
+        float z = PIDSolve(angleYaw, ref yawPID);
+        return new Vector3(x, y, z);
     }
 
     float AutoTargetStabilize(){
@@ -340,31 +346,99 @@ public class Plane : MonoBehaviour
     }
 
     // Target a 2D plane
-    float AutoTargetPlane(){
+    Vector3 AutoTargetPlane(char plane = 'Y'){
+        //E.g. target the YZ plane with no deviation in X
+        Char.ToLower(plane); //Ensure plane is lowercase (e.g. 'Y' -> 'y')
 
-        return -1;
+        //Draw a 45 degree angle from current position to the target plane and find an intercept point
+        //This will be the target angle
+        Vector3 interceptRay;
+        Vector3 pos = transform.position;
+        Vector3 invPosSigns = new Vector3(-Mathf.Sign(pos.x), -Mathf.Sign(pos.y), -Mathf.Sign(pos.z)); 
+        Vector3 targetPosition;
+        switch (plane){
+            case 'y':
+                interceptRay = new Vector3(1, 0, 1);
+                //plot the interception point from our pos + interceptRay to reach X = 0
+                targetPosition = pos + interceptRay * (pos.x / interceptRay.x);
+                break;
+            case 'x':
+                interceptRay = new Vector3(0, 1, 1);
+                targetPosition = pos + interceptRay * (pos.y / interceptRay.y);
+                break;
+            case 'z':
+                interceptRay = new Vector3(1, 1, 0);
+                targetPosition = pos + interceptRay * (pos.z / interceptRay.z);
+                break;
+            default:
+                interceptRay = new Vector3(1, 0, 1);
+                targetPosition = pos + interceptRay * (pos.x / interceptRay.x);
+                break;
+        }
+        Debug.Log("Target Position: " + targetPosition);
+        return AutoTargetPoint(targetPosition);
+        // float offsetPos;
+        // // Get the roll angle to the target point
+        // float angleRoll = Vector3.SignedAngle(transform.up, targetAngle, transform.forward) /180f;
+        // switch (plane){
+        //     case 'y':
+        //         offsetPos = transform.position.y;
+        //         float x, y, z;
+        //         x = PIDSolve(offsetPos, ref yawPID);
+        //         y = PIDSolve(angleRoll , ref rollPID);
+        //         z = PIDSolve(targetPosition.z, ref pitchPID);
+        //         return new Vector3(x, y, z);
+        //     case 'x':
+        //         offsetPos = transform.position.x;
+        //         x = PIDSolve(offsetPos, ref yawPID);
+        //         y = PIDSolve(angleRoll , ref rollPID);
+        //         z = PIDSolve(targetLocation.z, ref pitchPID);
+        //         return new Vector3(x, y, z);
+        //     case 'z':
+        //         offsetPos = transform.position.z;
+        //         x = PIDSolve(offsetPos, ref yawPID);
+        //         y = PIDSolve(angleRoll , ref rollPID);
+        //         z = PIDSolve(targetLocation.z, ref pitchPID);
+        //         return new Vector3(x, y, z);
+        //     default:
+        //         offsetPos = transform.position.y;
+        //         x = PIDSolve(offsetPos, ref yawPID);
+        //         y = PIDSolve(angleRoll , ref rollPID);
+        //         z = PIDSolve(targetPosition.z, ref pitchPID);
+        //         return new Vector3(x, y, z);
+        //}
     }
 
     Vector3 AutopilotControl(AutopilotState state){
         
-        autopilotDeflection.x = 0.0f;
-        autopilotDeflection.y = 0.1f;
-        autopilotDeflection.z = 0.2f;
+        autopilotDeflection.x = controlInputs.x;
+        autopilotDeflection.y = controlInputs.y;
+        autopilotDeflection.z = controlInputs.z;
 
         if (state == AutopilotState.targetPoint){
-            autopilotDeflection.x = AutoTargetPoint().x;
-            autopilotDeflection.y = AutoTargetPoint().y;
-            autopilotDeflection.z = AutoTargetPoint().z;
+            autopilotDeflection = AutoTargetPoint(targetObject.transform.position);
         }
         else if (state == AutopilotState.targetStabilize){
-            //autoXInput = AutoTargetStabilize();
+            autopilotDeflection.x = AutoTargetStabilize();
         }
         else if (state == AutopilotState.targetFlat){
-            //autoXInput = AutoTargetPlane();
+            autopilotDeflection = AutoTargetPlane('Y');
+        }
+        else if (state == AutopilotState.targetVelocity){
+            autopilotDeflection = AutoTargetVelocityVector((targetObject.transform.position - rb.transform.position).normalized);
+            //autopilotDeflection = AutoTargetVelocityVector(new Vector3(0, 0, 1));
+        }
+        else if (state == AutopilotState.targetForward){
+            autopilotDeflection = AutoTargetPlane('Z');
+        }
+        else{
+            autopilotDeflection = controlInputs;
         }
 
-        return autopilotDeflection;
+        //PID errors
+        Debug.Log("PID Errors: " + pitchPID.lastError + ", " + yawPID.lastError + ", " + rollPID.lastError);
 
+        return autopilotDeflection;
     }
 
     
@@ -373,7 +447,8 @@ public class Plane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Get key inputs
+        //Get key inputs -> these can be overridden by autopilot
+        //Currently control inputs for all controls, we will simplify this later
         if (Input.GetKey(Up))
         {
             controlInputs.x = 1;
@@ -386,13 +461,13 @@ public class Plane : MonoBehaviour
         {
             controlInputs.x = 0;
         }
-        if (Input.GetKey(Left))
-        {
-            controlInputs.y = -1;
-        }
-        else if (Input.GetKey(Right))
+        if (Input.GetKey(Right))
         {
             controlInputs.y = 1;
+        }
+        else if (Input.GetKey(Left))
+        {
+            controlInputs.y = -1;
         }
         else
         {
@@ -423,17 +498,27 @@ public class Plane : MonoBehaviour
             throttle = 0.7f;
         }
 
-        if (autopilotState != AutopilotState.Off)
-        {
-            controlInputs = AutopilotControl(autopilotState);
-        }
-
-        // If autopilot is toggled between modes reset the PID terms
-        if (autopilotState != lastAutopilotState){
-            for (int i = 0 ; i < PIDTerms.Length; i++){
-               PIDTerms[i] = 0.0f;
+        if (autopilotState != AutopilotState.Off){
+            if (autopilotState != lastAutopilotState){
+                lastAutopilotState = autopilotState;
+                switch (autopilotState){
+                case AutopilotState.targetPoint:
+                    targetLocation = targetObject.transform.position;
+                    break;
+                case AutopilotState.targetFlat:
+                    targetLocation = transform.position;
+                    break;
+                case AutopilotState.targetStabilize:
+                    break;
+                case AutopilotState.targetVelocity:
+                    break;
+                case AutopilotState.targetForward:
+                    break;
+                default:
+                    break;
+                }
             }
-            lastAutopilotState = autopilotState;
+            controlInputs = AutopilotControl(autopilotState);
         }
 
         //Draw debug line for velocity
