@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 438082369763269174}
   - component: {fileID: 7353514579875575749}
   m_Layer: 0
-  m_Name: Player_Projectile_Prefab
+  m_Name: Plasma_Player
   m_TagString: PlayerProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
