@@ -16,7 +16,6 @@ struct AeroSurface {
 [Serializable]
 struct Surfaces{
     public AeroSurface wing, tail, rudder, horizontalStabilizer, aileron;
-
 }
 
 public class Plane : MonoBehaviour
@@ -37,7 +36,8 @@ public class Plane : MonoBehaviour
     [SerializeField] float thrust = 1800;   // Maximum thrust (N)
 
     [SerializeField] float shotSpeed = 500f;
-    [SerializeField] float fireRate = 100f;
+    [SerializeField] float fireRate = 20f;
+    float lastShotTime = 0f;    
     [SerializeField] float burstLength = 30f;
 
     Vector3 controlInputs;
@@ -48,10 +48,10 @@ public class Plane : MonoBehaviour
     // Aircraft state
     [Space(10)]
     [Header("Aircraft State")]
-    private float AoA;
     private float AoAYaw;
+    public float AoA {get; private set;}
     public Vector3 internalVelocity;   // Velocity of the aircraft (not passed to RB) (m/s)
-    private Vector3 localVelocity;      // Velocity of the aircraft from local (m/s)
+    public Vector3 localVelocity;      // Velocity of the aircraft from local (m/s)
     private Vector3 localAngularVelocity; // Angular velocity of the aircraft (rad/s)
     
     private Vector3 lastVelocity;
@@ -68,6 +68,7 @@ public class Plane : MonoBehaviour
     [SerializeField] Autopilot ap;
     [SerializeField] Bullet gun;
     [SerializeField] ParticleSystem smoke;
+    [SerializeField] ParticleSystem[] wingtipVortices;
 
     public void ApplyDamage(float _damage){
         if (health <= 0){
@@ -89,8 +90,12 @@ public class Plane : MonoBehaviour
     }
     
     void Shoot(){
+        if (Time.time - lastShotTime < 1/fireRate){
+            return;
+        }
         Bullet bullet = Instantiate(gun, transform.position + transform.forward, transform.rotation);
         bullet.GetComponent<Bullet>().Fire(this);
+        lastShotTime = Time.time;
     }
 
     private void Awake()
@@ -107,6 +112,11 @@ public class Plane : MonoBehaviour
         rb.velocity = transform.forward * 20;
         //targetObject = GameObject.Find("TargetPoint");   
         ap = GetComponent<Autopilot>();    
+        foreach (Transform child in transform){
+            if (child.name == "Smoke"){
+                smoke = child.GetComponent<ParticleSystem>();
+            }
+        }
     }
 
     public Vector3 getRBVelocity(){
@@ -227,8 +237,7 @@ public class Plane : MonoBehaviour
         UpdateAngularDrag();
 
     }
-
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -287,7 +296,7 @@ public class Plane : MonoBehaviour
             Shoot();
         }
         if (ap.autopilotState != Autopilot.AutopilotState.Off && ap.HasTarget() ){
-            if (ap.aimVector.magnitude < 0.1f && ap.rangeToTarget < 100){
+            if (ap.aimVector.magnitude < 0.08 && ap.rangeToTarget < 200){
                 Shoot();
             }
         }
@@ -299,6 +308,20 @@ public class Plane : MonoBehaviour
         //Draw debug line for velocity
         Debug.DrawRay(transform.position, transform.TransformDirection(localVelocity), Color.magenta);
         Debug.DrawRay(transform.position, acceleration, Color.cyan);
+
+        // if AoA > 10, add wingtip vortices
+        if (AoA > 10){
+            foreach (ParticleSystem vortex in wingtipVortices){
+                vortex.Play();
+            }
+        }
+        else{
+            foreach (ParticleSystem vortex in wingtipVortices){
+                vortex.Stop();
+            }
+        }
         
     }
 }
+
+

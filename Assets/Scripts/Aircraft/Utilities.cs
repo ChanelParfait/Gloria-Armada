@@ -150,4 +150,13 @@ public static class Utilities
 
         return secondOrderIntercept;
     }
+
+    public static Vector3 ClampVec3(Vector3 vec, float min, float max)
+    {
+        return new Vector3(
+            Mathf.Clamp(vec.x, min, max),
+            Mathf.Clamp(vec.y, min, max),
+            Mathf.Clamp(vec.z, min, max)
+        );
+    }
 }
