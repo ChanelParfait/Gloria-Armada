@@ -29,7 +29,7 @@ public class Plane : MonoBehaviour
     [SerializeField] float weight = 200;    // Weight of the aircraft (kg)
     [SerializeField] Surfaces surfaces;
     [SerializeField] float thrust = 1800;   // Maximum thrust (N)
-    [SerializeField] float fireRate = 20f;
+    [SerializeField] float fireRate = 10f;
     float lastShotTime = 0f;    
     Vector3 controlInputs;
 
@@ -119,6 +119,7 @@ public class Plane : MonoBehaviour
     void CalculateState(float dt){
         var InverseRotation = Quaternion.Inverse(transform.rotation);
         internalVelocity = rb.velocity + new Vector3(60, 0, 0);
+        //internalVelocity = rb.velocity;
         localVelocity = InverseRotation * internalVelocity;
         localAngularVelocity = InverseRotation * rb.angularVelocity;
         
@@ -235,53 +236,55 @@ public class Plane : MonoBehaviour
     {
         //Get key inputs -> these can be overridden by autopilot
         //Currently control inputs for all controls, we will simplify this later
-        if (Input.GetKey(Up))
-        {
-            controlInputs.x = 1;
-        }
-        else if (Input.GetKey(Down))
-        {
-             controlInputs.x = -1;
-        }
-        else
-        {
-            controlInputs.x = 0;
-        }
-        if (Input.GetKey(Right))
-        {
-            controlInputs.y = 1;
-        }
-        else if (Input.GetKey(Left))
-        {
-            controlInputs.y = -1;
-        }
-        else
-        {
-            controlInputs.y = 0.0f;
-        }
-        if (Input.GetKey(YawRight))
-        {
-            controlInputs.z = 1;
-        }
-        else if (Input.GetKey(YawLeft))
-        {
-            controlInputs.z = -1;
-        }
-        else
-        {
-            controlInputs.z = 0;
-        }
-        if (Input.GetKey(throttleUp))
-        {
-            throttle = 1f;
-        }
-        else if (Input.GetKey(throttleDown))
-        {
-            throttle = 0;
-        }
-        else
-        {
-            throttle = 0.7f;
+        if (tag =="Player" && isAlive){
+            if (Input.GetKey(Up))
+            {
+                controlInputs.x = 1;
+            }
+            else if (Input.GetKey(Down))
+            {
+                controlInputs.x = -1;
+            }
+            else
+            {
+                controlInputs.x = 0;
+            }
+            if (Input.GetKey(Right))
+            {
+                controlInputs.y = 1;
+            }
+            else if (Input.GetKey(Left))
+            {
+                controlInputs.y = -1;
+            }
+            else
+            {
+                controlInputs.y = 0.0f;
+            }
+            if (Input.GetKey(YawRight))
+            {
+                controlInputs.z = 1;
+            }
+            else if (Input.GetKey(YawLeft))
+            {
+                controlInputs.z = -1;
+            }
+            else
+            {
+                controlInputs.z = 0;
+            }
+            if (Input.GetKey(throttleUp))
+            {
+                throttle = 1f;
+            }
+            else if (Input.GetKey(throttleDown))
+            {
+                throttle = 0;
+            }
+            else
+            {
+                throttle = 0.7f;
+            }
         }
 
         if (Input.GetKey(Fire) ){

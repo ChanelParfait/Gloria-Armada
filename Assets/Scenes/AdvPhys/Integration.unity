@@ -1982,7 +1982,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 2000
-  field of view: 13
+  field of view: 23
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2814,7 +2814,7 @@ PrefabInstance:
     - target: {fileID: 4785971375508989861, guid: c1b7717d19f33d0428793fd10ba9ce66, type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 2721721924403181, guid: 97601bb8b9452bd4783eb1cca757f0ef, type: 3}
+      objectReference: {fileID: 2478794409158260108, guid: 92e18f0e983422e468fad8ba8833c1d5, type: 3}
     - target: {fileID: 5142218218985203205, guid: c1b7717d19f33d0428793fd10ba9ce66, type: 3}
       propertyPath: m_LocalPosition.x
       value: -60
