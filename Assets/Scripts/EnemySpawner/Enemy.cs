@@ -6,13 +6,14 @@ public class Enemy : MonoBehaviour
 {
     
     // Base Class for enemies 
-    [SerializeField] GameObject projectile; 
+    //[SerializeField] GameObject projectile; 
+    WeaponManager weaponManager; 
     [SerializeField] float shootInterval = 5.0f;
     private float timer = 0;
-    [SerializeField] AudioSource fireSound;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        weaponManager = gameObject.GetComponent<WeaponManager>();
         shootInterval = 3;
     }
 
@@ -21,7 +22,7 @@ public class Enemy : MonoBehaviour
     {
         timer += Time.deltaTime; 
         if(timer >= shootInterval){
-            Shoot();
+            weaponManager.FirePrimaryWeapon();
             timer = 0; 
         }
     }
@@ -29,9 +30,9 @@ public class Enemy : MonoBehaviour
 
     void Shoot(){
         // get the position 4 units in front of the enemy 
-        Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
-        Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
-        fireSound.Play();
+        //Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
+        //Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
+        //fireSound.Play();
     }
 
     private void OnTriggerEnter(Collider col){

@@ -10,7 +10,6 @@ public class MissileLauncher : Weapon
     private int currentAmmo = maxAmmo; 
     private float cooldownTimer = 0; 
     private float reloadTimer = 0; 
-    private bool canFire = true;
     private bool reloading = false;
     // a short delay time between the player being able to fire
     // to prevent spamming a weapon
@@ -26,8 +25,10 @@ public class MissileLauncher : Weapon
     void Start()
     {
         // Find and Retrieve Missile Prefab from Resources Folder
-        Object prefab = Resources.Load("Projectiles/Missile");
-        projectile = (GameObject)prefab;
+        Object projectilePrefab = Resources.Load("Projectiles/Missile");
+        projectile = (GameObject)projectilePrefab;
+        Object audioPrefab = Resources.Load("Audio/Enemy_Plasma");
+        SetupAudio((AudioClip)audioPrefab);
     }
 
     // Update is called once per frame
