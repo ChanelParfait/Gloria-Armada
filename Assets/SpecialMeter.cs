@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SpecialMeter : MonoBehaviour
 {
-    public Image meterLeft, meterRight;
+    public Image meter;
     public float meterLevel;
     private float meterCooldown = 3;
 
@@ -40,17 +40,14 @@ public class SpecialMeter : MonoBehaviour
 
         if (meterLevel < 0.25f)
         {
-            meterLeft.color = uncharged;
-            meterRight.color = uncharged;
+            meter.color = uncharged;
         }
         else
         {
-            meterLeft.color = charged;
-            meterRight.color = charged;
+            meter.color = charged;
         }
 
-        meterLeft.fillAmount = meterLevel;
-        meterRight.fillAmount = meterLevel;
+        meter.fillAmount = meterLevel;
 
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
