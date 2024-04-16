@@ -1,20 +1,15 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
-struct AeroSurface {
+class AeroSurface {
     public float area;
     public Vector3 position;
     public Vector3 orientation;
 }
 
 [Serializable]
-struct Surfaces{
+class Surfaces{
     public AeroSurface wing, tail, rudder, horizontalStabilizer, aileron;
 }
 
@@ -34,15 +29,11 @@ public class Plane : MonoBehaviour
     [SerializeField] float weight = 200;    // Weight of the aircraft (kg)
     [SerializeField] Surfaces surfaces;
     [SerializeField] float thrust = 1800;   // Maximum thrust (N)
-
-    [SerializeField] float shotSpeed = 500f;
     [SerializeField] float fireRate = 20f;
     float lastShotTime = 0f;    
-    [SerializeField] float burstLength = 30f;
-
     Vector3 controlInputs;
 
-    [SerializeField] int health = 6;
+    public int health = 6;
     public bool isAlive = true;
 
     // Aircraft state
@@ -70,6 +61,31 @@ public class Plane : MonoBehaviour
     [SerializeField] ParticleSystem smoke;
     [SerializeField] ParticleSystem[] wingtipVortices;
 
+    private void Awake()
+    {
+        rb.drag = float.Epsilon;
+        rb.angularDrag = 0.2f ;
+    }
+ 
+    void Start()
+    {
+        // Set the center of mass
+        rb = GetComponent<Rigidbody>();
+        rb.mass = weight;
+        rb.velocity = transform.forward * 2;
+        //targetObject = GameObject.Find("TargetPoint");   
+        ap = GetComponent<Autopilot>();    
+        foreach (Transform child in transform){
+            if (child.name == "Smoke"){
+                smoke = child.GetComponent<ParticleSystem>();
+            }
+        }
+    }
+
+    public Vector3 getRBVelocity(){
+        return rb.velocity;
+    }
+
     public void ApplyDamage(float _damage){
         if (health <= 0){
             return;
@@ -84,7 +100,7 @@ public class Plane : MonoBehaviour
             smoke.Play();
             surfaces.wing.position += new Vector3(UnityEngine.Random.Range(-5f, 5f), surfaces.wing.position.y, UnityEngine.Random.Range(-1f, 1f));
             surfaces.tail.area *= UnityEngine.Random.Range(0f, 0.9f);
-            ap.autopilotState = Autopilot.AutopilotState.targetStabilize;
+            ap.autopilotState = Autopilot.AutopilotState.targetFlat;
         }
         health -= (int)_damage;
     }
@@ -98,41 +114,17 @@ public class Plane : MonoBehaviour
         lastShotTime = Time.time;
     }
 
-    private void Awake()
-    {
-        rb.drag = float.Epsilon;
-        rb.angularDrag = 0.2f ;
-    }
- 
-    void Start()
-    {
-        // Set the center of mass
-        rb = GetComponent<Rigidbody>();
-        rb.mass = weight;
-        rb.velocity = transform.forward * 20;
-        //targetObject = GameObject.Find("TargetPoint");   
-        ap = GetComponent<Autopilot>();    
-        foreach (Transform child in transform){
-            if (child.name == "Smoke"){
-                smoke = child.GetComponent<ParticleSystem>();
-            }
-        }
-    }
-
-    public Vector3 getRBVelocity(){
-        return rb.velocity;
-    }
 
     #region physics
     void CalculateState(float dt){
         var InverseRotation = Quaternion.Inverse(transform.rotation);
-        internalVelocity = rb.velocity;
+        internalVelocity = rb.velocity + new Vector3(60, 0, 0);
         localVelocity = InverseRotation * internalVelocity;
         localAngularVelocity = InverseRotation * rb.angularVelocity;
         
-        acceleration = (rb.velocity - lastVelocity) / dt;
+        acceleration = (internalVelocity - lastVelocity) / dt;
         angularAcceleration = (rb.angularVelocity - lastRBAngularVelocity) / dt;
-        lastVelocity = rb.velocity;
+        lastVelocity = internalVelocity;
         lastRBAngularVelocity = rb.angularVelocity;
     }
 
@@ -306,8 +298,9 @@ public class Plane : MonoBehaviour
 
         controlInputs = ap.GetAPInput(controlInputs);
         //Draw debug line for velocity
-        Debug.DrawRay(transform.position, transform.TransformDirection(localVelocity), Color.magenta);
+        Debug.DrawRay(transform.position, internalVelocity, Color.magenta);
         Debug.DrawRay(transform.position, acceleration, Color.cyan);
+
 
         // if AoA > 10, add wingtip vortices
         if (AoA > 10){

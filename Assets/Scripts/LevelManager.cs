@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -17,31 +19,37 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Enemy_Spawner enemySpawner;
     [SerializeField] private JetControl jetControl;
 
+    [SerializeField] private GameObject playerPlane;
+
     [SerializeField] private GameObject gameOverPnl; 
     [SerializeField] private GameObject youWinPnl; 
     [SerializeField] private Text CurrentHealthTxt; 
     private int playerHealth; 
 
+    public static event Action<int> OnPerspectiveChange;
+
     bool isGameOver = false;
+
+    void Awake(){
+        currentPerspective = initPerspective;
+    }
 
     // Player, Enemy Spawner, and Camera will all need to update when perspective changes 
     // Start is called before the first frame update
     void Start()
     {
-        currentPerspective = initPerspective; 
+        UpdatePerspective(initPerspective);
         enemySpawner.UpdatePerspective(currentPerspective);
-        playerHealth = jetControl.health; 
-        
-
+        playerHealth = playerPlane.GetComponent<Plane>().health;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(jetControl.isDead && !isGameOver){
-            GameOver();
-            isGameOver = true;
-        }
+        // if(jetControl.isDead && !isGameOver){
+        //     GameOver();
+        //     isGameOver = true;
+        // }
 
         if(isGameOver){
             if(Input.GetKeyDown(KeyCode.Return)){
@@ -49,10 +57,10 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        if(playerHealth != jetControl.health){
-            playerHealth = jetControl.health;
-            UpdateHealthTxt(playerHealth.ToString());
-        }
+        // if(playerHealth != jetControl.health){
+        //     playerHealth = jetControl.health;
+        //     UpdateHealthTxt(playerHealth.ToString());
+        // }
     }
 
     private void OnTriggerEnter(Collider col){
@@ -69,8 +77,12 @@ public class LevelManager : MonoBehaviour
         anim.SetInteger("Perspective", (int)currentPerspective);
 
         enemySpawner.UpdatePerspective(currentPerspective); 
-        jetControl.ResetPosition(5f);
+        //jetControl.ResetPosition(5f);
+        //Invoke action to update others without storing references to all objects
+        OnPerspectiveChange?.Invoke((int)currentPerspective);
     }
+
+    //public delegate void OnPerspectiveChange(Perspective pers);
 
     private void UpdateHealthTxt(string health){
         CurrentHealthTxt.text = health;

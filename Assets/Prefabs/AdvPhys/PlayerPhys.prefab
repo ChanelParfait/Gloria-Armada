@@ -294,6 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autopilotDeflection: {x: 0, y: 0, z: 0}
   autopilotState: 1
+  rb: {fileID: 6182760409746918969}
   autoArm: 0
   pitchPID:
     Kp: 1
@@ -353,10 +354,10 @@ MonoBehaviour:
   targetObject: {fileID: 0}
   targetLocation: {x: 0, y: 0, z: 1}
   aimVector: {x: 0, y: 0}
-  rangeToTarget: 3.4028235e+38
-  hasTarget: 0
+  rangeToTarget: 106.31768
+  hasTarget: 1
   shotSpeed: 100
-  targetAngularSize: 0
+  targetAngularSize: 1.0776951
 --- !u!54 &6182760409746918969
 Rigidbody:
   m_ObjectHideFlags: 0
