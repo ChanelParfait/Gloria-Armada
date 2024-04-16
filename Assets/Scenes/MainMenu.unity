@@ -5997,7 +5997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4748370fd0ecbbb4b9ae26f7b91c945a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorTexture: {fileID: 2800000, guid: 92330d42fcd8ea14fa713c00b24930a8, type: 3}
+  cursorTexture: {fileID: 2800000, guid: 9ef64c34378463e41bc3aa07083cb98c, type: 3}
 --- !u!4 &1278394281
 Transform:
   m_ObjectHideFlags: 0
@@ -6009,7 +6009,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 4.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
