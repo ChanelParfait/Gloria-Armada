@@ -53,7 +53,7 @@ public class Enemy_Spawner : MonoBehaviour
                 GameObject enemy = enemies[enemyIndex]; 
 
                 //get movement direction and rotation
-                Vector3 orientation = GetOrientation(spawnPoint);
+                Vector3 orientation = -GetOrientation(spawnPoint);
                 Vector3 moveDir = GetMoveDirection(spawnPoint);
 
                 // spawn enemy at the position of given spawn point 

@@ -111,6 +111,8 @@ public class Autopilot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        pers = lm.currentPerspective;
         mainPIDs = new PID[] {pitchPID, yawPID, rollPID};
         autoPIDs = new PID[] {aPitchPID, aYawPID, aRollPID};
         stabilityPIDs = new PID[] {sPitchPID, sYawPID, sRollPID};
@@ -165,7 +167,14 @@ public class Autopilot : MonoBehaviour
         controlInputs = onAxes ? _controlInputs : new Vector3(0, 0, 0);
         Vector3 apInputs = AutopilotControl(autopilotState);
         if (tag == "Player"){
-            controlInputs.y *= RestrictRoll();  
+            //
+            if (pers == Perspective.Top_Down && onAxes){
+                // controlInputs.y *= RestrictRoll();    
+                // controlInputs.x += AutoTurn();
+                // controlInputs.y += Upright();
+                // Mathf.Clamp(controlInputs.y, -1, 1);    
+            }
+               
         }
 
 
@@ -321,9 +330,15 @@ public class Autopilot : MonoBehaviour
         // only allow the player to roll up to 90 degrees left/right
         float angle = Vector3.SignedAngle(rb.transform.up, Vector3.up, rb.transform.forward);
         if (Mathf.Abs(angle) > 70){
+            Debug.Log("Angle: " + angle);
             return 0;
         }
         return 1;
+    }
+
+    float AutoTurn(){
+        float angle = Vector3.SignedAngle(rb.transform.up, Vector3.up, rb.transform.forward) / 180f;
+        return Mathf.Abs(angle);
     }
 
     void AvoidGround(){
@@ -342,7 +357,7 @@ public class Autopilot : MonoBehaviour
             float roll = Upright();
             float pitch = -0.7f;
             float t = Mathf.Clamp01((timeToHit - 6) * -1 / 5);
-            Debug.Log(t + ": pitch: " + pitch + ", roll: " + roll + ", timeToHit: " + timeToHit + ", distance: " + hit.distance);
+            //Debug.Log(t + ": pitch: " + pitch + ", roll: " + roll + ", timeToHit: " + timeToHit + ", distance: " + hit.distance);
             //LERP between auto inputs and ground avoidance based on timeToHit < 3seconds -> 0 seconds
             autopilotDeflection = new Vector3(Mathf.Lerp(controlInputs.x, pitch, t), Mathf.Lerp(controlInputs.y, roll, t), controlInputs.z);
         }
@@ -382,8 +397,8 @@ public class Autopilot : MonoBehaviour
         float signZ = Mathf.Sign(z);
         float smoothing = 200.0f;
 
-        //Vector3 targetVector = new Vector3(60, 0, Mathf.Min(signZ * -z * z, smoothing)); //As a direction
-        Vector3 targetVector = new Vector3(60, 0, 0); //As a position
+        Vector3 targetVector = new Vector3(smoothing, Mathf.Min(signY * -y * y, smoothing), Mathf.Min(signZ * -z * z, smoothing)); //As a direction
+        //Vector3 targetVector = new Vector3(60, 0, 0); //As a position
 
         if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 2 && (rb.velocity.normalized - Vector3.right).magnitude < 1f){
             transform.position.Set(x, 0, z);
@@ -402,8 +417,13 @@ public class Autopilot : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None;
         }
 
+
+
         Debug.DrawRay(rb.transform.position, targetVector * 100.0f, Color.red);
-        Vector3 vecToPlane =  VectorAt(targetVector, mainPIDs, VectorType.position);
+        Vector3 vecToPlane =  VectorAt(targetVector, mainPIDs, VectorType.direction);
+        if (onAxes){
+            vecToPlane *= 0.3f;
+        }
         return vecToPlane;
     }
 

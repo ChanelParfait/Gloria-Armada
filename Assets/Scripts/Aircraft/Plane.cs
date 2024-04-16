@@ -51,7 +51,7 @@ public class Plane : MonoBehaviour
     public Vector3 acceleration; // Acceleration of the aircraft (m/s^2)
     public Vector3 angularAcceleration { get; private set; } // Angular acceleration of the aircraft (rad/s^2)
 
-    [SerializeField] float cd = 0.2f;
+    [SerializeField] float cd = 25f; //0.2f
     [SerializeField] AnimationCurve cl = new AnimationCurve();
 
     // Unity
@@ -72,7 +72,7 @@ public class Plane : MonoBehaviour
         // Set the center of mass
         rb = GetComponent<Rigidbody>();
         rb.mass = weight;
-        rb.velocity = transform.forward * 2;
+        rb.velocity = transform.forward * 20;
         //targetObject = GameObject.Find("TargetPoint");   
         ap = GetComponent<Autopilot>();    
         foreach (Transform child in transform){
@@ -118,8 +118,8 @@ public class Plane : MonoBehaviour
     #region physics
     void CalculateState(float dt){
         var InverseRotation = Quaternion.Inverse(transform.rotation);
-        internalVelocity = rb.velocity + new Vector3(60, 0, 0);
-        //internalVelocity = rb.velocity;
+        //internalVelocity = rb.velocity + new Vector3(60, 0, 0);
+        internalVelocity = rb.velocity;
         localVelocity = InverseRotation * internalVelocity;
         localAngularVelocity = InverseRotation * rb.angularVelocity;
         

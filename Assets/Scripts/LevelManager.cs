@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
 {
     // Keep track of level perspective and update all other objects 
     [SerializeField] Perspective initPerspective; 
-    private Perspective currentPerspective; 
+    public Perspective currentPerspective { get; private set;} 
     [SerializeField] private Animator anim; 
 
     [SerializeField] private Enemy_Spawner enemySpawner;
@@ -26,11 +26,19 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Text CurrentHealthTxt; 
     private int playerHealth; 
 
+    Rigidbody rb;
+    public float maxDistance = 5.0f; // Distance at which camera starts moving
+    public float smoothTime = 0.1f; // Smoother transition time
+    public float minHorizontalSpeed = 20.0f; // Minimum horizontal speed
+    public float maxHorizontalSpeed = 75.0f; // Maximum horizontal speed
+    public Vector3 velocity = Vector3.zero;
+
     public static event Action<int> OnPerspectiveChange;
 
     bool isGameOver = false;
 
     void Awake(){
+        rb = GetComponent<Rigidbody>();
         currentPerspective = initPerspective;
     }
 
@@ -41,6 +49,47 @@ public class LevelManager : MonoBehaviour
         UpdatePerspective(initPerspective);
         enemySpawner.UpdatePerspective(currentPerspective);
         playerHealth = playerPlane.GetComponent<Plane>().health;
+
+        //This is the minimum velocity to keep the player moving
+        //rb.velocity = Vector3.right * 20;
+    }
+
+    void FixedUpdate(){
+        // Calculate the current distance from the target to the camera's position
+        Vector3 targetPosition = playerPlane.transform.position + new Vector3(43f, 0, 0);   
+        Vector3 cameraPosition = transform.position;
+        Vector3 offset = targetPosition - cameraPosition;
+
+        // Calculate how much to move per fixed frame
+        float horizontalMove = Mathf.Clamp(offset.x, minHorizontalSpeed * Time.fixedDeltaTime, maxHorizontalSpeed * Time.fixedDeltaTime);
+
+        // Calculate the new position to move towards using smooth damping
+        Vector3 targetCameraPos = new Vector3(cameraPosition.x + horizontalMove, cameraPosition.y, cameraPosition.z);
+
+        // If the player is outside the maximum distance, adjust the target camera position
+        if (offset.magnitude > maxDistance)
+        {
+            targetCameraPos = Vector3.SmoothDamp(cameraPosition, new Vector3(targetPosition.x - maxDistance, targetPosition.y, targetPosition.z), ref velocity, smoothTime, maxHorizontalSpeed);
+        }
+
+        // Update the camera position
+        transform.position = targetCameraPos;
+
+    //     // If the player is not in the center of the rigidbody, accel the rigidbody towards the player
+    //     // Proportional to how far away the player is from the center
+    //     Vector3 playerPos = playerPlane.transform.position;
+    //     Vector3 rbPos = transform.position;
+    //     Vector3 diff = playerPos - rbPos;
+    //     float dist = diff.magnitude;
+    //     if (rb.velocity.x < minSpeed)
+    //     {
+    //         rb.velocity = Vector3.right * minSpeed;
+    //     }
+    //     else if (rb.velocity.x >= minSpeed)
+    //     {
+    //         rb.AddForce(diff.x * Vector3.right * 5);
+    //     }
+
     }
 
     // Update is called once per frame
@@ -50,6 +99,9 @@ public class LevelManager : MonoBehaviour
         //     GameOver();
         //     isGameOver = true;
         // }
+
+
+
 
         if(isGameOver){
             if(Input.GetKeyDown(KeyCode.Return)){
@@ -81,8 +133,6 @@ public class LevelManager : MonoBehaviour
         //Invoke action to update others without storing references to all objects
         OnPerspectiveChange?.Invoke((int)currentPerspective);
     }
-
-    //public delegate void OnPerspectiveChange(Perspective pers);
 
     private void UpdateHealthTxt(string health){
         CurrentHealthTxt.text = health;
