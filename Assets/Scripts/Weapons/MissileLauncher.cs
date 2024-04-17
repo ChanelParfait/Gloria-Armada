@@ -28,7 +28,7 @@ public class MissileLauncher : Weapon
         Object projectilePrefab = Resources.Load("Projectiles/Missile");
         projectile = (GameObject)projectilePrefab;
         Object audioPrefab = Resources.Load("Audio/Enemy_Plasma");
-        SetupAudio((AudioClip)audioPrefab);
+        //SetupAudio((AudioClip)audioPrefab);
     }
 
     // Update is called once per frame

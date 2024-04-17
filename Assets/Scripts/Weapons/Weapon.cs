@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum WeaponCategories {Primary, Special, Additional};  
@@ -7,16 +8,15 @@ public class Weapon : MonoBehaviour
 {
     // Base Weapon Class 
     public bool isEnemyWeapon = false; 
-    public  GameObject projectile; 
+    [SerializeReference] protected GameObject projectile; 
     public WeaponCategories weaponCategory;  
     public bool canFire = true;
-    public AudioSource audioSource;
-    public AudioClip fireSound;
+    protected AudioSource audioSource;
+    [SerializeReference] protected AudioClip fireSound;
 
-    // Start is called before the first frame update
+    // Start is called before the first frame  update
     void Start()
     {
-        SetupAudio(fireSound);
     }
 
     // Update is called once per frame
@@ -26,18 +26,27 @@ public class Weapon : MonoBehaviour
     }
 
     public virtual void Fire(){
-        if(canFire){
-            Debug.Log("Fire Base Weapon");
-            Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
-            Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
-            audioSource.Play();
-        }   
+        Debug.Log("Fire Base Weapon");
     }
 
-    public void SetupAudio(AudioClip clip){
-        audioSource = GetComponent<AudioSource>();
-        audioSource.clip = clip;
+    public GameObject GetProjectile(){
+        return projectile; 
     }
 
+    public void SetProjectile(GameObject obj){
+        projectile = obj;
+    }
+    
+    public void SetupAudio(){
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = fireSound;
+    }
 
+    public void SetFireSound(AudioClip clip){
+        fireSound = clip;
+    }
+    
+    public AudioClip GetFireSound(){
+        return fireSound;
+    }
 }

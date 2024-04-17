@@ -24,6 +24,7 @@ public class WeaponManager : MonoBehaviour
 
     public virtual void FirePrimaryWeapon(){
         if(primaryWeapon){
+            //Debug.Log("Fire Primary Weapon");
             primaryWeapon.Fire();
         }
         

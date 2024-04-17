@@ -22,8 +22,8 @@ public class Enemy : MonoBehaviour
     {
         timer += Time.deltaTime; 
         if(timer >= shootInterval){
-            weaponManager.FirePrimaryWeapon();
             timer = 0; 
+            weaponManager.FirePrimaryWeapon();
         }
     }
 

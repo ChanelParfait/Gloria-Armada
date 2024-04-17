@@ -30,9 +30,11 @@ public class PlayerWeaponManager : WeaponManager
     public void SetPrimaryWeapon(Weapon weapon){
         // add a weapon component to this object
         Type weaponType = weapon.GetType();
-        gameObject.AddComponent(weaponType); 
-        // store it as the primary weapon 
-        primaryWeapon = (Weapon)gameObject.GetComponent(weaponType);
+        // store it as the primary weapon
+        primaryWeapon = (Weapon)gameObject.AddComponent(weaponType); 
+        // use this line to setup the weapon component using a prefab object
+        primaryWeapon.SetProjectile(weapon.GetProjectile());
+        primaryWeapon.SetFireSound(weapon.GetFireSound());
     }
 
     public void SetSpecialWeapon(Weapon weapon){
@@ -41,5 +43,8 @@ public class PlayerWeaponManager : WeaponManager
         gameObject.AddComponent(weaponType); 
         // store it as the special weapon 
         specialWeapon = (Weapon)gameObject.GetComponent(weaponType);
+        // use this line to setup the weapon component using a prefab object
+        primaryWeapon.SetProjectile(weapon.GetProjectile());
+
     }
 }

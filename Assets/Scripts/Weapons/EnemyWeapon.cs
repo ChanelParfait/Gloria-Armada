@@ -15,4 +15,11 @@ public class EnemyWeapon : Weapon
     {
         
     }
+
+    public override void Fire()
+    {
+            Debug.Log("Enemy Gun Fire");
+            Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
+            Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+    }
 }

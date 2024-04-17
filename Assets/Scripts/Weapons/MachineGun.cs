@@ -10,13 +10,15 @@ public class MachineGun : Weapon
     // Start is called before the first frame update
     void Start()
     {
-        if(!isEnemyWeapon){
+        SetupAudio();
+        // if projectile is null
+        if(!projectile){
             // Find and Retrieve Player Projectile Prefab from Resources Folder
             Object prefab = Resources.Load("Projectiles/Plasma_Player");
             projectile = (GameObject)prefab;
             Object audioPrefab = Resources.Load("Audio/Enemy_Plasma");
-            SetupAudio((AudioClip)audioPrefab);
-
+            fireSound = (AudioClip)audioPrefab;
+            SetupAudio();
         }
         
     }
