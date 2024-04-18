@@ -24,11 +24,15 @@ public class MissileLauncher : Weapon
     // Start is called before the first frame update
     void Start()
     {
-        // Find and Retrieve Missile Prefab from Resources Folder
-        Object projectilePrefab = Resources.Load("Projectiles/Missile");
-        projectile = (GameObject)projectilePrefab;
-        Object audioPrefab = Resources.Load("Audio/Enemy_Plasma");
-        //SetupAudio((AudioClip)audioPrefab);
+        audioSource = gameObject.GetComponent<AudioSource>();
+        if(!projectile){
+            // Find and Retrieve Missile Prefab from Resources Folder
+            projectile = (GameObject)Resources.Load("Projectiles/Missile_Player");
+        }
+        if(!fireSound){
+            fireSound = (AudioClip)Resources.Load("Audio/Rocket_Sound");
+            SetupAudio();
+        }
     }
 
     // Update is called once per frame
@@ -82,6 +86,8 @@ public class MissileLauncher : Weapon
             Debug.Log("Missle Launched");
             Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
             Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
+            audioSource.clip = fireSound;
+            audioSource.Play();
             canFire = false;
             currentAmmo --;
             reloadTimer = 0;

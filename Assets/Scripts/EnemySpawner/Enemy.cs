@@ -23,16 +23,13 @@ public class Enemy : MonoBehaviour
         timer += Time.deltaTime; 
         if(timer >= shootInterval){
             timer = 0; 
-            weaponManager.FirePrimaryWeapon();
+            Fire();
         }
     }
 
 
-    void Shoot(){
-        // get the position 4 units in front of the enemy 
-        //Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
-        //Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
-        //fireSound.Play();
+    public void Fire(){
+        weaponManager.FirePrimaryWeapon();
     }
 
     private void OnTriggerEnter(Collider col){

@@ -10,7 +10,7 @@ public class MachineGun : Weapon
     // Start is called before the first frame update
     void Start()
     {
-        SetupAudio();
+        audioSource = gameObject.GetComponent<AudioSource>();
         // if projectile is null
         if(!projectile){
             // Find and Retrieve Player Projectile Prefab from Resources Folder
@@ -18,7 +18,6 @@ public class MachineGun : Weapon
             projectile = (GameObject)prefab;
             Object audioPrefab = Resources.Load("Audio/Enemy_Plasma");
             fireSound = (AudioClip)audioPrefab;
-            SetupAudio();
         }
         
     }
@@ -41,7 +40,8 @@ public class MachineGun : Weapon
             Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
             timer = 0;
             canFire = false;
-            audioSource.Play(); 
+            audioSource.clip = fireSound;
+            audioSource.Play();
 
         }
     }

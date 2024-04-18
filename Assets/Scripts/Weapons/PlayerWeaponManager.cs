@@ -10,6 +10,7 @@ public class PlayerWeaponManager : WeaponManager
     void Start()
     {
         SetPrimaryWeapon(testWeapon1);
+        SetSpecialWeapon(testWeapon2);
         //SetPrimaryWeapon(testWeapon2);
     }
 
