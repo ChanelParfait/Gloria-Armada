@@ -59,6 +59,7 @@ public class Plane : MonoBehaviour
     [SerializeField] Autopilot ap;
     [SerializeField] Bullet gun;
     [SerializeField] ParticleSystem smoke;
+    [SerializeField] ParticleSystem fire;
     [SerializeField] ParticleSystem[] wingtipVortices;
 
     private void Awake()
@@ -91,16 +92,19 @@ public class Plane : MonoBehaviour
             return;
         } 
         else if (health - (int)_damage <= 5){
-            health = 0;
-            smoke.Play();
+            smoke.Play();   
         }
         if (health - (int)_damage <= 0){
             health = 0;
             isAlive = false;
-            smoke.Play();
+            fire.Play();
+            rb.constraints = RigidbodyConstraints.None;
+            thrust = 0;
             surfaces.wing.position += new Vector3(UnityEngine.Random.Range(-5f, 5f), surfaces.wing.position.y, UnityEngine.Random.Range(-1f, 1f));
             surfaces.tail.area *= UnityEngine.Random.Range(0f, 0.9f);
+            surfaces.horizontalStabilizer.position += new Vector3(UnityEngine.Random.Range(-3f, 3f), surfaces.horizontalStabilizer.position.y, UnityEngine.Random.Range(-3f, 3f));
             ap.autopilotState = Autopilot.AutopilotState.targetFlat;
+            
         }
         health -= (int)_damage;
     }

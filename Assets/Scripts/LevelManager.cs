@@ -50,6 +50,7 @@ public class LevelManager : MonoBehaviour
         UpdatePerspective(initPerspective);
         enemySpawner.UpdatePerspective(currentPerspective);
         playerHealth = playerPlane.GetComponent<Plane>().health;
+        rb.velocity = Vector3.right * 20;
 
         //This is the minimum velocity to keep the player moving
         //rb.velocity = Vector3.right * 20;
@@ -60,40 +61,27 @@ public class LevelManager : MonoBehaviour
         
         //Modify X of target position based on rb velocity between minSpeed and maxSpeed
         float range = maxHorizontalSpeed - minHorizontalSpeed;
-        minSpeedXOffset = -((playerPlane.GetComponent<Plane>().getRBVelocity().x - minHorizontalSpeed)/range - 1)* 43f;
+        minSpeedXOffset = -((playerPlane.GetComponent<Plane>().getRBVelocity().x - minHorizontalSpeed)/range - 1)* 30f;
 
         Vector3 targetPosition = playerPlane.transform.position + new Vector3(minSpeedXOffset, 0, 0);   
         Vector3 cameraPosition = transform.position;
         Vector3 offset = targetPosition - cameraPosition;
 
-        // Calculate the desired speed based on the horizontal offset
-        float desiredSpeed = offset.x / Time.fixedDeltaTime;
-        
-        // Clamp the speed to ensure it's between min and max speeds
-        float clampedSpeed = Mathf.Clamp(desiredSpeed, minHorizontalSpeed, maxHorizontalSpeed);
+        float dist = Mathf.Abs(offset.x);
+        if (rb.velocity.x < minHorizontalSpeed)
+        {
+            rb.AddForce(Vector3.right * 20);
+        }
+        else if (rb.velocity.x > maxHorizontalSpeed)
+        {
+            rb.AddForce(-Vector3.right * 20);
+        }
 
-        // Calculate how much to move per fixed frame based on the clamped speed
-        float horizontalMove = clampedSpeed * Time.fixedDeltaTime;
-
-        // Calculate the new position to move towards using smooth damping
-        Vector3 targetCameraPos = new Vector3(cameraPosition.x + horizontalMove, cameraPosition.y, cameraPosition.z);
-        // Update the camera position
-        transform.position = targetCameraPos;
-
-    //     // If the player is not in the center of the rigidbody, accel the rigidbody towards the player
-    //     // Proportional to how far away the player is from the center
-    //     Vector3 playerPos = playerPlane.transform.position;
-    //     Vector3 rbPos = transform.position;
-    //     Vector3 diff = playerPos - rbPos;
-    //     float dist = diff.magnitude;
-    //     if (rb.velocity.x < minSpeed)
-    //     {
-    //         rb.velocity = Vector3.right * minSpeed;
-    //     }
-    //     else if (rb.velocity.x >= minSpeed)
-    //     {
-    //         rb.AddForce(diff.x * Vector3.right * 5);
-    //     }
+        else {
+            float speed = offset.x > 0 ? offset.x : offset.x * -10;
+            speed *= 0.1f;
+            rb.AddForce( new Vector3(offset.x, 0, 0) * speed);
+        }
 
     }
 

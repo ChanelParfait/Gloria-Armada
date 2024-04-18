@@ -6678,12 +6678,12 @@ MonoBehaviour:
   anim: {fileID: 942464416}
   enemySpawner: {fileID: 1704886797}
   jetControl: {fileID: 0}
-  playerPlane: {fileID: 1349989416}
-  gameOverPnl: {fileID: 1252248902}
-  youWinPnl: {fileID: 266493969}
-  CurrentHealthTxt: {fileID: 627022314}
+  playerPlane: {fileID: 0}
+  gameOverPnl: {fileID: 0}
+  youWinPnl: {fileID: 0}
+  CurrentHealthTxt: {fileID: 0}
   maxDistance: 5
-  smoothTime: 0.3
+  smoothTime: 0.1
   minHorizontalSpeed: 20
   maxHorizontalSpeed: 75
   minSpeedXOffset: 43
@@ -6696,7 +6696,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864017069}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -6711,7 +6711,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -7748,16 +7748,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 674909139210087522, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: pitchPID.Ki
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 674909139210087522, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: pitchPID.Kp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 674909139210087522, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: targetObject
       value: 
       objectReference: {fileID: 336662586}
     - target: {fileID: 756333059307113752, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -43.1
+      value: -14.5
       objectReference: {fileID: 0}
     - target: {fileID: 756333059307113752, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 17.71
       objectReference: {fileID: 0}
     - target: {fileID: 756333059307113752, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7794,6 +7802,10 @@ PrefabInstance:
     - target: {fileID: 1168509773419960114, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_Name
       value: PlayerPhys
+      objectReference: {fileID: 0}
+    - target: {fileID: 6182760409746918969, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9246,11 +9258,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1349989416 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1168509773419960114, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
-  m_PrefabInstance: {fileID: 1025606771}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1353595272
 PrefabInstance:
   m_ObjectHideFlags: 0
