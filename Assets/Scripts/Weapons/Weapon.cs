@@ -7,12 +7,12 @@ public enum WeaponCategories {Primary, Special, Additional};
 public class Weapon : MonoBehaviour
 {
     // Base Weapon Class 
-    public bool isEnemyWeapon = false; 
     [SerializeReference] protected GameObject projectile; 
+    [SerializeReference] protected AudioClip fireSound;
+
     public WeaponCategories weaponCategory;  
     public bool canFire = true;
     protected AudioSource audioSource;
-    [SerializeReference] protected AudioClip fireSound;
 
     // Start is called before the first frame  update
     void Start()

@@ -13,15 +13,12 @@ public class WeaponManager : MonoBehaviour
     public Weapon specialWeapon;
     // indicates who this manager belongs to
     // by default the base class belongs to an enemy
-    public bool isEnemyManager = true; 
 
     // Start is called before the first frame update
     void Start()
     {
 
     }
-
-
     public virtual void FirePrimaryWeapon(){
         if(primaryWeapon){
             //Debug.Log("Fire Primary Weapon");

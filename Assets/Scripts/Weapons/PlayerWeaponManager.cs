@@ -9,7 +9,6 @@ public class PlayerWeaponManager : WeaponManager
     // Start is called before the first frame update
     void Start()
     {
-        isEnemyManager = false;
         SetPrimaryWeapon(testWeapon1);
         //SetPrimaryWeapon(testWeapon2);
     }
@@ -32,6 +31,7 @@ public class PlayerWeaponManager : WeaponManager
         Type weaponType = weapon.GetType();
         // store it as the primary weapon
         primaryWeapon = (Weapon)gameObject.AddComponent(weaponType); 
+        primaryWeapon.weaponCategory = WeaponCategories.Primary;
         // use this line to setup the weapon component using a prefab object
         primaryWeapon.SetProjectile(weapon.GetProjectile());
         primaryWeapon.SetFireSound(weapon.GetFireSound());
@@ -43,8 +43,11 @@ public class PlayerWeaponManager : WeaponManager
         gameObject.AddComponent(weaponType); 
         // store it as the special weapon 
         specialWeapon = (Weapon)gameObject.GetComponent(weaponType);
+        specialWeapon.weaponCategory = WeaponCategories.Special;
         // use this line to setup the weapon component using a prefab object
-        primaryWeapon.SetProjectile(weapon.GetProjectile());
+        specialWeapon.SetProjectile(weapon.GetProjectile());
+        specialWeapon.SetFireSound(weapon.GetFireSound());
+
 
     }
 }
