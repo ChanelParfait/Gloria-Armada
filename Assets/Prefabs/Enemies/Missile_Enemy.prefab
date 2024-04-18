@@ -98,7 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2a22a1813d6d84cb1ccafe385a5e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootInterval: 0
+  fireInterval: 4
+  totalHealth: 4
 --- !u!82 &4763586288305748271
 AudioSource:
   m_ObjectHideFlags: 0

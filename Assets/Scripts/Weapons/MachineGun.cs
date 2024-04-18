@@ -10,18 +10,8 @@ public class MachineGun : Weapon
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = gameObject.GetComponent<AudioSource>();
-        audioSource.clip = fireSound;
 
-        // if projectile is null
-        if(!projectile){
-            // Find and Retrieve Player Projectile Prefab from Resources Folder
-            Object prefab = Resources.Load("Projectiles/Plasma_Player");
-            projectile = (GameObject)prefab;
-            Object audioPrefab = Resources.Load("Audio/Enemy_Plasma");
-            fireSound = (AudioClip)audioPrefab;
-        }
-        
+        SetupWeapon();
     }
 
     // Update is called once per frame
@@ -35,11 +25,13 @@ public class MachineGun : Weapon
 
     public override void Fire()
     {
-        // base.Fire();
         if(canFire){
-            Debug.Log("Machine Gun Fire");
+            //Debug.Log("Machine Gun Fire");
+            Debug.Log(weaponStats.projectileStats.damage);
             spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
-            Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+            GameObject clone = Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+            clone.GetComponent<Projectile>().SetStats(weaponStats.projectileStats); 
+
             timer = 0;
             canFire = false;
             audioSource.clip = fireSound;
@@ -49,9 +41,29 @@ public class MachineGun : Weapon
 
     public override void EnemyFire()
     {
-        Debug.Log("Enemy Machine Gun Fire");
+        //Debug.Log("Enemy Machine Gun Fire");
         spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
-        Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+        GameObject clone = Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+        clone.GetComponent<Projectile>().SetStats(weaponStats.projectileStats);
         audioSource.Play();
+    }
+
+    public override void SetupWeapon(){
+        weaponStats.projectileStats.damage = 1;
+        weaponStats.projectileStats.speed = 5;
+
+
+        if(!projectile){
+            Object prefab = Resources.Load("Projectiles/Plasma_Player");
+            projectile = (GameObject)prefab;
+        }
+
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = fireSound;
+
+        if(!fireSound){
+           Object audioPrefab = Resources.Load("Audio/Enemy_Plasma");
+            fireSound = (AudioClip)audioPrefab;
+        }
     }
 }

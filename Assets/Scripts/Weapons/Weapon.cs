@@ -6,11 +6,8 @@ using UnityEngine;
 
 public struct WeaponStats{
     public string WeaponName; 
-    public int Damage;
     public int FireRate; 
     public int MaxAmmo;
-    public int Range; 
-
     public ProjectileStats projectileStats;
 
 }

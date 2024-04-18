@@ -3,28 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public struct EnemyStats{
-    public int MaxHealth; 
-}
 public class Enemy : MonoBehaviour
 {
     
     // Base Class for enemies 
     EnemyWeaponManager weaponManager; 
-    [SerializeField] private float shootInterval;
+    [SerializeField] private float fireInterval = 3;
+    [SerializeField] private int totalHealth = 3;
+    private int currentHealth;
     private float timer = 0;
     // Start is called before the first frame update
     void Start()
     {   
         weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
-        shootInterval = 3;
+        currentHealth = totalHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime; 
-        if(timer >= shootInterval){
+        if(timer >= fireInterval){
             timer = 0; 
             Fire();
         }
@@ -37,10 +36,17 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "PlayerProjectile"){
-            // Take Damage? / Die
-            //Debug.Log("Die");
-            Destroy(gameObject);
-            // increase player score 
+            // Take Damage
+
+            currentHealth -= col.gameObject.GetComponent<Projectile>().projectileStats.damage;
+
+            Debug.Log(currentHealth);
+            if(currentHealth <= 0){
+                // Die
+                // increase player score
+                Destroy(gameObject);
+            }
+             
         }
     }
 

@@ -53,8 +53,7 @@ public class MissileLauncher : Weapon
 
                 currentAmmo ++;
                 reloadTimer = 0;
-                Debug.Log(currentAmmo);
-
+                Debug.Log("Ammo: " + currentAmmo);
             }
         }
         else{
@@ -73,22 +72,23 @@ public class MissileLauncher : Weapon
     {
         // base.Fire();
         if(canFire){
-            Debug.Log("Missle Launched");
+            //Debug.Log("Missle Launched");
             Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
-            Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
+            GameObject clone = Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
+            clone.GetComponent<Projectile>().SetStats(weaponStats.projectileStats);
             audioSource.Play();
             canFire = false;
             currentAmmo --;
             reloadTimer = 0;
             cooldownTimer = 0;
         }
-        Debug.Log(currentAmmo);
+        Debug.Log("Ammo: " + currentAmmo);
 
     }
 
     public override void EnemyFire()
     {
-        Debug.Log("Enemy Missile Fire");
+        //Debug.Log("Enemy Missile Fire");
         // switch between left and right between spawn positions on enemy model
         if(fireLeft){
             spawnPosition = gameObject.transform.position + gameObject.transform.forward * 1.32f + gameObject.transform.right * -2.055f;
@@ -99,12 +99,16 @@ public class MissileLauncher : Weapon
             fireLeft = true;
         }
         
-        Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+        GameObject clone = Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+        clone.GetComponent<Projectile>().SetStats(weaponStats.projectileStats);
+
         audioSource.Play();
     }
 
     public override void SetupWeapon(){
-        weaponStats.Damage = 1;
+        weaponStats.projectileStats.damage = 2;
+        weaponStats.projectileStats.speed = 4;
+
 
         if(!projectile){
             // Find and Retrieve Missile Prefab from Resources Folder
