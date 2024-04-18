@@ -6,14 +6,13 @@ public class Enemy : MonoBehaviour
 {
     
     // Base Class for enemies 
-    //[SerializeField] GameObject projectile; 
-    WeaponManager weaponManager; 
-    [SerializeField] float shootInterval = 5.0f;
+    EnemyWeaponManager weaponManager; 
+    [SerializeField] float shootInterval;
     private float timer = 0;
     // Start is called before the first frame update
     void Start()
     {   
-        weaponManager = gameObject.GetComponent<WeaponManager>();
+        weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
         shootInterval = 3;
     }
 
@@ -29,7 +28,7 @@ public class Enemy : MonoBehaviour
 
 
     public void Fire(){
-        weaponManager.FirePrimaryWeapon();
+        weaponManager.FireActiveWeapon();
     }
 
     private void OnTriggerEnter(Collider col){

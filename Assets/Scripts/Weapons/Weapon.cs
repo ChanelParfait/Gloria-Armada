@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+struct WeaponStats{
+    public string WeaponName;
+    public int Damage;
+    public int FireRate; 
+    public int MaxAmmo;
+    public int Range; 
+    
+}
 public enum WeaponCategories {Primary, Special, Additional};  
 public class Weapon : MonoBehaviour
 {
