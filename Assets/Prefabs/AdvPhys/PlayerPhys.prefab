@@ -35,7 +35,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1084848977594486349}
-  - {fileID: 1668983836120721198}
   - {fileID: 8070367808183339508}
   - {fileID: 4283415266244329837}
   - {fileID: 6979668402942296204}
@@ -53,22 +52,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b371005f31e5d41b27b17755b83699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Up: 119
-  Down: 115
-  Left: 97
-  Right: 100
-  YawRight: 101
-  YawLeft: 113
   throttleUp: 304
   throttleDown: 306
   controlDeflection: {x: 0, y: 0, z: 0}
   throttle: 0.7
-  liftPower: 0.7
+  liftPower: 1
   weight: 200
   surfaces:
     wing:
-      area: 2
-      position: {x: 0, y: 0, z: 0.25}
+      area: 1.5
+      position: {x: 0, y: 0, z: 1}
       orientation: {x: 1, y: 0, z: 0}
     tail:
       area: 1
@@ -87,15 +80,13 @@ MonoBehaviour:
       position: {x: 4, y: 0, z: 0}
       orientation: {x: 1, y: 0, z: 0}
   thrust: 1800
-  shotSpeed: 100
   fireRate: 20
-  burstLength: 30
   health: 6
   isAlive: 1
   internalVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   acceleration: {x: 0, y: 0, z: 0}
-  cd: 0.2
+  cd: 0.5
   cl:
     serializedVersion: 2
     m_Curve:
@@ -293,71 +284,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autopilotDeflection: {x: 0, y: 0, z: 0}
-  autopilotState: 1
+  autopilotState: 0
   rb: {fileID: 6182760409746918969}
   autoArm: 0
-  pitchPID:
-    Kp: 1
-    Ki: 0.01
-    Kd: 0.2
-    integral: 0
-    lastError: 0
-  yawPID:
-    Kp: 1
-    Ki: 0.01
-    Kd: 0.2
-    integral: 0
-    lastError: 0
-  rollPID:
-    Kp: 1
-    Ki: 0.01
-    Kd: 0.2
-    integral: 0
-    lastError: 0
-  aPitchPID:
-    Kp: 1.4
-    Ki: 0.1
-    Kd: 0.3
-    integral: 0
-    lastError: 0
-  aYawPID:
-    Kp: 1
-    Ki: 0.01
-    Kd: 0.2
-    integral: 0
-    lastError: 0
-  aRollPID:
-    Kp: 1
-    Ki: 0.01
-    Kd: 0.1
-    integral: 0
-    lastError: 0
-  sPitchPID:
-    Kp: 1
-    Ki: 0.01
-    Kd: 0.2
-    integral: 0
-    lastError: 0
-  sYawPID:
-    Kp: 1
-    Ki: 0.01
-    Kd: 0.2
-    integral: 0
-    lastError: 0
-  sRollPID:
-    Kp: 1
-    Ki: 0.01
-    Kd: 0.2
-    integral: 0
-    lastError: 0
   targetObjects: []
   targetObject: {fileID: 0}
-  targetLocation: {x: 0, y: 0, z: 1}
+  targetLocation: {x: -211.57149, y: -33.942234, z: 14.53293}
   aimVector: {x: 0, y: 0}
   rangeToTarget: 106.31768
-  hasTarget: 1
+  hasTarget: 0
+  onAxes: 0
   shotSpeed: 100
   targetAngularSize: 1.0776951
+  pers: 0
 --- !u!54 &6182760409746918969
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -382,7 +321,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!82 &4620936127489192187
@@ -611,7 +550,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -10279,98 +10218,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!1 &7517886555558753068
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1668983836120721198}
-  - component: {fileID: 30478624332104151}
-  - component: {fileID: 7216011221937148164}
-  m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1668983836120721198
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7517886555558753068}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.000000016298142, w: -1}
-  m_LocalPosition: {x: -0.000044703484, y: 4.300166, z: -18.49003}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 756333059307113752}
-  m_LocalEulerAnglesHint: {x: -90, y: 180, z: 0}
---- !u!20 &30478624332104151
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7517886555558753068}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 100000
-  field of view: 52.1
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!81 &7216011221937148164
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7517886555558753068}
-  m_Enabled: 1
 --- !u!1 &8931380740068753388
 GameObject:
   m_ObjectHideFlags: 0
@@ -15248,6 +15095,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 6681356c8ffd5e04c99b39adc097ef49, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6681356c8ffd5e04c99b39adc097ef49, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6681356c8ffd5e04c99b39adc097ef49, type: 3}
       propertyPath: m_Name

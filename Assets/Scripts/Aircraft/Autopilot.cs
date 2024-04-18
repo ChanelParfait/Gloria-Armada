@@ -47,9 +47,9 @@ public class Autopilot : MonoBehaviour
 
     [Space(10)]
     [Header("PID Controllers")]
-    PID pitchPID = new PID(1.0f, 0.01f, 0.2f);
-    PID yawPID =   new PID(1.0f, 0.01f, 0.2f);
-    PID rollPID =  new PID(1.0f, 0.01f, 0.2f);
+    [SerializeField] PID pitchPID = new PID(1.0f, 0.01f, 0.2f);
+    [SerializeField] PID yawPID =   new PID(1.0f, 0.01f, 0.2f);
+    [SerializeField] PID rollPID =  new PID(1.0f, 0.01f, 0.2f);
 
     PID[] mainPIDs;
 
@@ -112,7 +112,9 @@ public class Autopilot : MonoBehaviour
     void Start()
     {
         LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-        pers = lm.currentPerspective;
+        if (lm != null){
+            pers = lm.currentPerspective;
+        }
         mainPIDs = new PID[] {pitchPID, yawPID, rollPID};
         autoPIDs = new PID[] {aPitchPID, aYawPID, aRollPID};
         stabilityPIDs = new PID[] {sPitchPID, sYawPID, sRollPID};
@@ -137,7 +139,7 @@ public class Autopilot : MonoBehaviour
                 targetObject = targetDict.FirstOrDefault().Value;
             }
             else{
-                autopilotState = AutopilotState.targetFlat;
+                autopilotState = autopilotState == AutopilotState.Off ? AutopilotState.Off : AutopilotState.targetFlat; 
                 return hasTarget = false;
             }
         }
@@ -154,7 +156,7 @@ public class Autopilot : MonoBehaviour
             }
             else{
                 targetObject = null;
-                autopilotState = AutopilotState.targetFlat; 
+                autopilotState = autopilotState == AutopilotState.Off ? AutopilotState.Off : AutopilotState.targetFlat; 
                 return false;                     
             }   
         }
@@ -395,9 +397,10 @@ public class Autopilot : MonoBehaviour
         float signX = Mathf.Sign(x);
         float signY = Mathf.Sign(y);
         float signZ = Mathf.Sign(z);
-        float smoothing = 200.0f;
+        float smoothing = 100.0f;
 
-        Vector3 targetVector = new Vector3(smoothing, Mathf.Min(signY * -y * y, smoothing), Mathf.Min(signZ * -z * z, smoothing)); //As a direction
+        float ty = onAxes ? 0 : Mathf.Min(signY * -y * y, smoothing);
+        Vector3 targetVector = new Vector3(smoothing, ty, Mathf.Min(signZ * -z * z, smoothing)); //As a direction
         //Vector3 targetVector = new Vector3(60, 0, 0); //As a position
 
         if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 2 && (rb.velocity.normalized - Vector3.right).magnitude < 1f){
@@ -422,7 +425,7 @@ public class Autopilot : MonoBehaviour
         Debug.DrawRay(rb.transform.position, targetVector * 100.0f, Color.red);
         Vector3 vecToPlane =  VectorAt(targetVector, mainPIDs, VectorType.direction);
         if (onAxes){
-            vecToPlane *= 0.3f;
+            vecToPlane *= 0.1f;
         }
         return vecToPlane;
     }

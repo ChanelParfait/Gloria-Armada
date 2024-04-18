@@ -16,7 +16,7 @@ class Surfaces{
 public class Plane : MonoBehaviour
 {
 
-    public KeyCode Up = KeyCode.W, Down = KeyCode.S, Left = KeyCode.A, Right = KeyCode.D, YawRight = KeyCode.E, YawLeft = KeyCode.Q;
+    //public KeyCode Up = KeyCode.W, Down = KeyCode.S, Left = KeyCode.A, Right = KeyCode.D, YawRight = KeyCode.E, YawLeft = KeyCode.Q;
     private KeyCode Fire = KeyCode.Space;
     public KeyCode throttleUp = KeyCode.Tab, throttleDown = KeyCode.LeftShift;
 
@@ -237,42 +237,9 @@ public class Plane : MonoBehaviour
         //Get key inputs -> these can be overridden by autopilot
         //Currently control inputs for all controls, we will simplify this later
         if (tag =="Player" && isAlive){
-            if (Input.GetKey(Up))
-            {
-                controlInputs.x = 1;
-            }
-            else if (Input.GetKey(Down))
-            {
-                controlInputs.x = -1;
-            }
-            else
-            {
-                controlInputs.x = 0;
-            }
-            if (Input.GetKey(Right))
-            {
-                controlInputs.y = 1;
-            }
-            else if (Input.GetKey(Left))
-            {
-                controlInputs.y = -1;
-            }
-            else
-            {
-                controlInputs.y = 0.0f;
-            }
-            if (Input.GetKey(YawRight))
-            {
-                controlInputs.z = 1;
-            }
-            else if (Input.GetKey(YawLeft))
-            {
-                controlInputs.z = -1;
-            }
-            else
-            {
-                controlInputs.z = 0;
-            }
+            controlInputs.y = Input.GetAxis("P1_Horizontal");
+            controlInputs.x = Input.GetAxis("P1_Vertical");
+
             if (Input.GetKey(throttleUp))
             {
                 throttle = 1f;
@@ -285,11 +252,12 @@ public class Plane : MonoBehaviour
             {
                 throttle = 0.7f;
             }
+            if (Input.GetKey(Fire) ){
+            Shoot();
+            }
         }
 
-        if (Input.GetKey(Fire) ){
-            Shoot();
-        }
+
         if (ap.autopilotState != Autopilot.AutopilotState.Off && ap.HasTarget() ){
             if (ap.aimVector.magnitude < 0.08 && ap.rangeToTarget < 200){
                 Shoot();
@@ -301,8 +269,8 @@ public class Plane : MonoBehaviour
 
         controlInputs = ap.GetAPInput(controlInputs);
         //Draw debug line for velocity
-        Debug.DrawRay(transform.position, internalVelocity, Color.magenta);
-        Debug.DrawRay(transform.position, acceleration, Color.cyan);
+        // Debug.DrawRay(transform.position, internalVelocity, Color.magenta);
+        // Debug.DrawRay(transform.position, acceleration, Color.cyan);
 
 
         // if AoA > 10, add wingtip vortices

@@ -31,6 +31,7 @@ public class LevelManager : MonoBehaviour
     public float smoothTime = 0.1f; // Smoother transition time
     public float minHorizontalSpeed = 20.0f; // Minimum horizontal speed
     public float maxHorizontalSpeed = 75.0f; // Maximum horizontal speed
+    public float minSpeedXOffset = 43f;
     public Vector3 velocity = Vector3.zero;
 
     public static event Action<int> OnPerspectiveChange;
@@ -56,22 +57,26 @@ public class LevelManager : MonoBehaviour
 
     void FixedUpdate(){
         // Calculate the current distance from the target to the camera's position
-        Vector3 targetPosition = playerPlane.transform.position + new Vector3(43f, 0, 0);   
+        
+        //Modify X of target position based on rb velocity between minSpeed and maxSpeed
+        float range = maxHorizontalSpeed - minHorizontalSpeed;
+        minSpeedXOffset = -((playerPlane.GetComponent<Plane>().getRBVelocity().x - minHorizontalSpeed)/range - 1)* 43f;
+
+        Vector3 targetPosition = playerPlane.transform.position + new Vector3(minSpeedXOffset, 0, 0);   
         Vector3 cameraPosition = transform.position;
         Vector3 offset = targetPosition - cameraPosition;
 
-        // Calculate how much to move per fixed frame
-        float horizontalMove = Mathf.Clamp(offset.x, minHorizontalSpeed * Time.fixedDeltaTime, maxHorizontalSpeed * Time.fixedDeltaTime);
+        // Calculate the desired speed based on the horizontal offset
+        float desiredSpeed = offset.x / Time.fixedDeltaTime;
+        
+        // Clamp the speed to ensure it's between min and max speeds
+        float clampedSpeed = Mathf.Clamp(desiredSpeed, minHorizontalSpeed, maxHorizontalSpeed);
+
+        // Calculate how much to move per fixed frame based on the clamped speed
+        float horizontalMove = clampedSpeed * Time.fixedDeltaTime;
 
         // Calculate the new position to move towards using smooth damping
         Vector3 targetCameraPos = new Vector3(cameraPosition.x + horizontalMove, cameraPosition.y, cameraPosition.z);
-
-        // If the player is outside the maximum distance, adjust the target camera position
-        if (offset.magnitude > maxDistance)
-        {
-            targetCameraPos = Vector3.SmoothDamp(cameraPosition, new Vector3(targetPosition.x - maxDistance, targetPosition.y, targetPosition.z), ref velocity, smoothTime, maxHorizontalSpeed);
-        }
-
         // Update the camera position
         transform.position = targetCameraPos;
 
