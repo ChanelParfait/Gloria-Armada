@@ -20,6 +20,6 @@ public class EnemyWeaponManager : MonoBehaviour
     }
 
     public void FireActiveWeapon(){
-        ActiveWeapon.Fire();
+        ActiveWeapon.EnemyFire();
     }
 }

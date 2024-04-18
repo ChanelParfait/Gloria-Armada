@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public struct EnemyStats{
+    public int MaxHealth; 
+}
 public class Enemy : MonoBehaviour
 {
     
     // Base Class for enemies 
     EnemyWeaponManager weaponManager; 
-    [SerializeField] float shootInterval;
+    [SerializeField] private float shootInterval;
     private float timer = 0;
     // Start is called before the first frame update
     void Start()

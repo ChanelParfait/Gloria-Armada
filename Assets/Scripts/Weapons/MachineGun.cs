@@ -11,6 +11,8 @@ public class MachineGun : Weapon
     void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = fireSound;
+
         // if projectile is null
         if(!projectile){
             // Find and Retrieve Player Projectile Prefab from Resources Folder
@@ -36,13 +38,20 @@ public class MachineGun : Weapon
         // base.Fire();
         if(canFire){
             Debug.Log("Machine Gun Fire");
-            Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
+            spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
             Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
             timer = 0;
             canFire = false;
             audioSource.clip = fireSound;
             audioSource.Play();
-
         }
+    }
+
+    public override void EnemyFire()
+    {
+        Debug.Log("Enemy Machine Gun Fire");
+        spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
+        Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+        audioSource.Play();
     }
 }

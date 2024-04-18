@@ -6,6 +6,10 @@ using UnityEngine;
 // four missiles can be shot in a row before incuring a cooldown period. 
 public class MissileLauncher : Weapon
 {
+    // Enemy Weapon Values
+    private bool fireLeft = true;
+
+    //Player Weapon Stats
     private const int maxAmmo = 4; 
     private int currentAmmo = maxAmmo; 
     private float cooldownTimer = 0; 
@@ -19,31 +23,17 @@ public class MissileLauncher : Weapon
     // time it takes for ammo to fully replensish after being depleted 
     private const float reloadTime = 5;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = gameObject.GetComponent<AudioSource>();
-        if(!projectile){
-            // Find and Retrieve Missile Prefab from Resources Folder
-            projectile = (GameObject)Resources.Load("Projectiles/Missile_Player");
-        }
-        if(!fireSound){
-            fireSound = (AudioClip)Resources.Load("Audio/Rocket_Sound");
-            SetupAudio();
-        }
+        SetupWeapon();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-
         reloadTimer += Time.deltaTime;
         cooldownTimer += Time.deltaTime;
-
-
 
         if(!reloading){
             // if out of ammo, the player cannot fire and must reload
@@ -86,7 +76,6 @@ public class MissileLauncher : Weapon
             Debug.Log("Missle Launched");
             Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
             Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
-            audioSource.clip = fireSound;
             audioSource.Play();
             canFire = false;
             currentAmmo --;
@@ -95,5 +84,39 @@ public class MissileLauncher : Weapon
         }
         Debug.Log(currentAmmo);
 
+    }
+
+    public override void EnemyFire()
+    {
+        Debug.Log("Enemy Missile Fire");
+        // switch between left and right between spawn positions on enemy model
+        if(fireLeft){
+            spawnPosition = gameObject.transform.position + gameObject.transform.forward * 1.32f + gameObject.transform.right * -2.055f;
+            fireLeft = false;
+        }
+        else{
+            spawnPosition = gameObject.transform.position + gameObject.transform.forward * 1.32f + gameObject.transform.right * 2.055f;
+            fireLeft = true;
+        }
+        
+        Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+        audioSource.Play();
+    }
+
+    public override void SetupWeapon(){
+        weaponStats.Damage = 1;
+
+        if(!projectile){
+            // Find and Retrieve Missile Prefab from Resources Folder
+            projectile = (GameObject)Resources.Load("Projectiles/Missile_Player");
+        }
+
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = fireSound;
+
+        if(!fireSound){
+            fireSound = (AudioClip)Resources.Load("Audio/Rocket_Sound");
+            audioSource.clip = fireSound;
+        }
     }
 }

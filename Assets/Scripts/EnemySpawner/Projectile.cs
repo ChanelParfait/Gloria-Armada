@@ -2,19 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct ProjectileStats{
+    public float speed; 
+    public int damage;
+}
 public class Projectile : MonoBehaviour
 {
-    private float speed = 10; 
+    // Base Class for All Projectile Objects
+    public ProjectileStats projectileStats; 
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        projectileStats.speed = 5;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        //Vector3 nextPos = gameObject.transform.position + ; 
-        gameObject.transform.position += gameObject.transform.forward * Time.deltaTime * speed; 
+    { 
+        gameObject.transform.position += gameObject.transform.forward * Time.deltaTime * projectileStats.speed; 
+    }
+
+    public void SetStats(ProjectileStats stats){
+        projectileStats = stats;
     }
 }

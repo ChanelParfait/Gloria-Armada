@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
-struct WeaponStats{
-    public string WeaponName;
+public struct WeaponStats{
+    public string WeaponName; 
     public int Damage;
     public int FireRate; 
     public int MaxAmmo;
     public int Range; 
-    
+
+    public ProjectileStats projectileStats;
+
 }
 public enum WeaponCategories {Primary, Special, Additional};  
 public class Weapon : MonoBehaviour
@@ -17,10 +20,12 @@ public class Weapon : MonoBehaviour
     // Base Weapon Class 
     [SerializeReference] protected GameObject projectile; 
     [SerializeReference] protected AudioClip fireSound;
-
+    
     public WeaponCategories weaponCategory;  
     public bool canFire = true;
+    protected WeaponStats weaponStats;
     protected AudioSource audioSource;
+    public Vector3 spawnPosition;
 
     // Start is called before the first frame  update
     void Start()
@@ -33,8 +38,19 @@ public class Weapon : MonoBehaviour
         
     }
 
+    public virtual void SetupWeapon(){
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = fireSound;
+    }
+
     public virtual void Fire(){
         Debug.Log("Fire Base Weapon");
+    }
+
+    
+    public virtual void EnemyFire()
+    {
+        Debug.Log("Enemy Gun Fire");
     }
 
     public GameObject GetProjectile(){
@@ -44,11 +60,7 @@ public class Weapon : MonoBehaviour
     public void SetProjectile(GameObject obj){
         projectile = obj;
     }
-    
-    public void SetupAudio(){
-        audioSource = gameObject.GetComponent<AudioSource>();
-        audioSource.clip = fireSound;
-    }
+
 
     public void SetFireSound(AudioClip clip){
         fireSound = clip;
