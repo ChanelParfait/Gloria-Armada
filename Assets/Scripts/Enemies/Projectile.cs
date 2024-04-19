@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public struct ProjectileStats{
@@ -14,8 +15,9 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        projectileStats.speed = 8;
-        projectileStats.damage = 2;
+        // Set Default Stats
+        //projectileStats.speed = 8;
+        //projectileStats.damage = 2;
     }
 
     // Update is called once per frame
@@ -28,4 +30,5 @@ public class Projectile : MonoBehaviour
         //Debug.Log(stats);
         projectileStats = stats;
     }
+
 }

@@ -36,18 +36,24 @@ public class Enemy : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider col){
+        // if hit by a player projectile
         if(col.gameObject.tag == "PlayerProjectile"){
             // Take Damage
             currentHealth -= col.gameObject.GetComponent<Projectile>().projectileStats.damage;
-            Debug.Log(currentHealth);
+            //Debug.Log("Damage Taken:" + col.gameObject.GetComponent<Projectile>().projectileStats.damage);
+            Debug.Log("Enemy Health:" + currentHealth);
 
             if(currentHealth <= 0){
                 // Trigger Enemy Death Event 
                 Debug.Log("Enemy Death");
                 Actions.OnEnemyDeath?.Invoke(this);
-                // Die
+
+                // Destroy Self
                 Destroy(gameObject);
             }
+            // Destroy Projectile
+            Destroy(col.gameObject);
+
              
         }
     }

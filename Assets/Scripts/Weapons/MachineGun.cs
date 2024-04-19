@@ -5,52 +5,40 @@ using UnityEngine;
 public class MachineGun : Weapon
 {
     private float timer = 0; 
-    private const float cooldownTime = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
-
         SetupWeapon();
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime; 
-        if(!canFire && timer >= cooldownTime){
-            canFire = true;
+        if(isPlayerWeapon){
+            PlayerUpdate();
         }
     }
 
     public override void Fire()
     {
         if(canFire){
-            //Debug.Log("Machine Gun Fire");
-            Debug.Log(weaponStats.projectileStats.damage);
-            spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
-            GameObject clone = Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
-            clone.GetComponent<Projectile>().SetStats(weaponStats.projectileStats); 
-
+            base.Fire();
             timer = 0;
             canFire = false;
-            audioSource.clip = fireSound;
-            audioSource.Play();
         }
-    }
+    } 
 
     public override void EnemyFire()
     {
         //Debug.Log("Enemy Machine Gun Fire");
-        spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
-        GameObject clone = Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
-        clone.GetComponent<Projectile>().SetStats(weaponStats.projectileStats);
-        audioSource.Play();
+        base.Fire();
     }
 
     public override void SetupWeapon(){
+        weaponStats.fireInterval = 0.5f;
         weaponStats.projectileStats.damage = 1;
-        weaponStats.projectileStats.speed = 5;
+        weaponStats.projectileStats.speed = 8;
 
 
         if(!projectile){
@@ -64,6 +52,14 @@ public class MachineGun : Weapon
         if(!fireSound){
            Object audioPrefab = Resources.Load("Audio/Enemy_Plasma");
             fireSound = (AudioClip)audioPrefab;
+        }
+    }
+
+    private void PlayerUpdate(){
+        // Increase timer
+        timer += Time.deltaTime; 
+        if(!canFire && timer >= weaponStats.fireInterval){
+            canFire = true;
         }
     }
 }

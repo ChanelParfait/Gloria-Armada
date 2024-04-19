@@ -6,8 +6,12 @@ using UnityEngine;
 
 public struct WeaponStats{
     public string WeaponName; 
-    public int FireRate; 
-    public int MaxAmmo;
+    // how frequently the weapon can fire
+    public float fireInterval;
+    // time taken to reload the weapon
+    public float reloadTime; 
+    // total ammo that can be stored at a time
+    public int maxAmmo;
     public ProjectileStats projectileStats;
 
 }
@@ -17,10 +21,10 @@ public class Weapon : MonoBehaviour
     // Base Weapon Class 
     [SerializeReference] protected GameObject projectile; 
     [SerializeReference] protected AudioClip fireSound;
-    
-    public WeaponCategories weaponCategory;  
-    public bool canFire = true;
     protected WeaponStats weaponStats;
+    public WeaponCategories weaponCategory;  
+    public bool isPlayerWeapon = false;
+    public bool canFire = true;
     protected AudioSource audioSource;
     public Vector3 spawnPosition;
 
@@ -42,12 +46,23 @@ public class Weapon : MonoBehaviour
 
     public virtual void Fire(){
         Debug.Log("Fire Base Weapon");
+        // Get spawn position and spawn projectile object
+        GameObject clone = Instantiate(projectile, GetSpawnPos(), gameObject.transform.rotation); 
+        // set stats of projectile
+        clone.GetComponent<Projectile>().SetStats(weaponStats.projectileStats); 
+        audioSource.Play();
     }
 
     
     public virtual void EnemyFire()
     {
         Debug.Log("Enemy Gun Fire");
+    }
+
+    public virtual Vector3 GetSpawnPos()
+    {
+        // return the default spawn position
+        return gameObject.transform.position + gameObject.transform.forward * 8;
     }
 
     public GameObject GetProjectile(){

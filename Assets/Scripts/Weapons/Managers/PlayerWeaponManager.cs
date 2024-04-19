@@ -4,14 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 public class PlayerWeaponManager : MonoBehaviour
 {
+    // Player has 2 main weapons
+    // Currently Serializable for testing so they can be viewed in the editor
     [SerializeField] private Weapon primaryWeapon;
 
     [SerializeField] private Weapon specialWeapon;
+
+    // Test Variables
     public GameObject testWeapon1;
     public GameObject testWeapon2;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        // Used currently to test / show functionality
+        // Will later be changed to Set Weapons through Loadout Menu
         SetPrimaryWeapon(testWeapon1);
         SetSpecialWeapon(testWeapon2);
     }
@@ -29,49 +37,25 @@ public class PlayerWeaponManager : MonoBehaviour
         }
     }
 
-    // Set Primary Weapon using a provided Weapon 
-    /*public void SetPrimaryWeapon(Weapon weapon){
-        // add a weapon component of this weapon type to the player
-        Type weaponType = weapon.GetType();
-        // store it as the primary weapon
-        primaryWeapon = (Weapon)gameObject.AddComponent(weaponType); 
-        primaryWeapon.weaponCategory = WeaponCategories.Primary;
-        // use this line to setup the weapon component using a prefab object
-        primaryWeapon.SetProjectile(weapon.GetProjectile());
-        primaryWeapon.SetFireSound(weapon.GetFireSound());
-    }*/
-
-    // Set Primary Weapon using a provided Game Object
+    // Set and Create Primary Weapon using a provided Game Object
     public void SetPrimaryWeapon(GameObject weaponObj){
         // create the provided weapon prefab as a child of the player
         // and store it as the primary weapon
         primaryWeapon = Instantiate(weaponObj, Vector3.zero, Quaternion.identity, transform).GetComponent<Weapon>();
+        primaryWeapon.isPlayerWeapon = true;
         
     }
 
-    // Set Special Weapon using a provided Weapon
-    /*public void SetSpecialWeapon(Weapon weapon){
-         // add a weapon component to this object
-        Type weaponType = weapon.GetType();
-        gameObject.AddComponent(weaponType); 
-        // store it as the special weapon 
-        specialWeapon = (Weapon)gameObject.GetComponent(weaponType);
-        specialWeapon.weaponCategory = WeaponCategories.Special;
-        // use this line to setup the weapon component using a prefab object
-        specialWeapon.SetProjectile(weapon.GetProjectile());
-        specialWeapon.SetFireSound(weapon.GetFireSound());
-    }*/
-
-    // Set Special Weapon using a provided Game Object
+    // Set and Create Special Weapon using a provided Game Object
     public void SetSpecialWeapon(GameObject weaponObj){
         // create the provided weapon prefab as a child of the player
         // and store it as the special weapon
         specialWeapon = Instantiate(weaponObj, Vector3.zero, Quaternion.identity, transform).GetComponent<Weapon>();
+        specialWeapon.isPlayerWeapon = true;
     }
 
     public virtual void FirePrimaryWeapon(){
         if(primaryWeapon){
-            //Debug.Log("Fire Primary Weapon");
             primaryWeapon.Fire();
         }
         
