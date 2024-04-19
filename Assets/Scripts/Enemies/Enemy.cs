@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     EnemyWeaponManager weaponManager; 
     [SerializeField] private float fireInterval = 3;
     [SerializeField] private int totalHealth = 3;
+    public int scoreValue = 10; 
     private int currentHealth;
     private float timer = 0;
     // Start is called before the first frame update
@@ -37,13 +38,14 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "PlayerProjectile"){
             // Take Damage
-
             currentHealth -= col.gameObject.GetComponent<Projectile>().projectileStats.damage;
-
             Debug.Log(currentHealth);
+
             if(currentHealth <= 0){
+                // Trigger Enemy Death Event 
+                Debug.Log("Enemy Death");
+                Actions.OnEnemyDeath?.Invoke(this);
                 // Die
-                // increase player score
                 Destroy(gameObject);
             }
              
