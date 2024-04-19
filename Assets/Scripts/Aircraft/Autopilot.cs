@@ -283,6 +283,8 @@ public class Autopilot : MonoBehaviour
         angleRoll *= Vector3.Cross(targetDirection, rb.transform.forward).magnitude;
         angleYaw *= Vector3.Cross(targetDirection, rb.transform.up).magnitude;
 
+        Debug.DrawRay(transform.position, targetDirection * 1000, Color.red);
+
         float autoXInput = Mathf.Clamp(PIDSolve(anglePitch, ref pids[0]), -1, 1);
         float autoYInput = Mathf.Clamp(PIDSolve(angleRoll, ref pids[1]), -1.0f, 1.0f);
         float autoZInput = Mathf.Clamp(PIDSolve(angleYaw, ref pids[2]), -1.0f, 1.0f);
@@ -414,6 +416,9 @@ public class Autopilot : MonoBehaviour
             transform.position.Set(x, y, 0);    
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezePositionZ;
+            if (!tag.Equals("Player")){
+                autopilotState = AutopilotState.pointAt;
+            }
         }
         else if (pers == Perspective.Null){
             onAxes = true;

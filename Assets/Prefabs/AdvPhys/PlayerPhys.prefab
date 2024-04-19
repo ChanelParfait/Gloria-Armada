@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6182760409746918969}
   - component: {fileID: 4620936127489192187}
   - component: {fileID: 7001200819396208791}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerPhys
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ MonoBehaviour:
   rangeToTarget: 106.31768
   hasTarget: 0
   onAxes: 0
-  shotSpeed: 100
+  shotSpeed: 20
   targetAngularSize: 1.0776951
   pers: 0
 --- !u!54 &6182760409746918969
@@ -589,7 +589,7 @@ GameObject:
   - component: {fileID: 8070367808183339508}
   - component: {fileID: 2408597013414804574}
   - component: {fileID: 6219281314664255518}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wingtipL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5419,7 +5419,7 @@ GameObject:
   - component: {fileID: 4283415266244329837}
   - component: {fileID: 6690889685156807857}
   - component: {fileID: 3865242935699703752}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: wingtipR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10249,7 +10249,7 @@ GameObject:
   - component: {fileID: 5379670173846158527}
   - component: {fileID: 6651390922727057364}
   - component: {fileID: 3650995947300920150}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15079,7 +15079,7 @@ GameObject:
   - component: {fileID: 6979668402942296204}
   - component: {fileID: 5900609437313271690}
   - component: {fileID: 4296844143597499299}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19953,6 +19953,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6681356c8ffd5e04c99b39adc097ef49, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6681356c8ffd5e04c99b39adc097ef49, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
