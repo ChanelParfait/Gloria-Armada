@@ -45,6 +45,10 @@ public class PauseMenu : MonoBehaviour
             ppVolume.enabled = false;
             gameIsPaused = false;
             Cursor.lockState = CursorLockMode.Locked;
+            if (Cursor.visible == true)
+            {
+                Cursor.visible = false;
+            }
         }
     }
 
@@ -58,6 +62,10 @@ public class PauseMenu : MonoBehaviour
         ppVolume.enabled = true;
         gameIsPaused = true;
         Cursor.lockState = CursorLockMode.None;
+        if (Cursor.visible == false)
+        {
+            Cursor.visible = true;
+        }
     }
 
     public void RestartLevel()
