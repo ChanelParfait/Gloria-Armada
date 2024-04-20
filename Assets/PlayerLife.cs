@@ -34,6 +34,7 @@ public class PlayerLife : MonoBehaviour
         {
             if (gameOverScreen.activeSelf == false)
             {
+                Time.timeScale = 0;
                 gameOverScreen.SetActive(true);
             }
         }
