@@ -69,18 +69,19 @@ public class LevelManager : MonoBehaviour
         Vector3 cameraPosition = transform.position;
         Vector3 offset = targetPosition - cameraPosition;
 
-        float dist = Mathf.Abs(offset.x);
+        // Ensure the camera always moves forwards at a minimum speed
         if (rb.velocity.x < minHorizontalSpeed && offset.x < 0)
         {
             rb.AddForce(rb.velocity - Vector3.right * minHorizontalSpeed);
         }
+        // And never goes too fast
         else if (rb.velocity.x > maxHorizontalSpeed && offset.x > 0)
         {
             rb.AddForce(rb.velocity - Vector3.right * maxHorizontalSpeed);
         }
-
+        // Otherwise follow the x position of the player
         else {
-            float speed = offset.x > 0 ? offset.x : offset.x * -10;
+            float speed = offset.x > 0 ? offset.x : offset.x * -1;
             speed *= 0.3f;
             rb.AddForce( new Vector3(offset.x, 0, 0) * speed);
         }

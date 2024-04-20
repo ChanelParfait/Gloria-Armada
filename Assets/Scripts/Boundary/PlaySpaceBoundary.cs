@@ -31,7 +31,7 @@ public class PlaySpaceBoundary : MonoBehaviour
     void Update()
     {
         UpdateBounds();
-        boxCollider.size = new Vector3(width*0.6f, height*0.9f, width);
+        boxCollider.size = new Vector3(width*0.9f, height*0.9f, width);
     }
 
     void UpdateBounds(){
