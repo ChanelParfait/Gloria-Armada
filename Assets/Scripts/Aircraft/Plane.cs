@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [Serializable]
 class AeroSurface {
@@ -32,7 +33,10 @@ public class Plane : MonoBehaviour
     [SerializeField] float fireRate = 10f;
     float lastShotTime = 0f;    
     Vector3 controlInputs;
-
+    Vector3 blendedInputs;
+    Vector3 apInputs;
+    Perspective pers;
+    LevelManager lm;
     public int health = 6;
     public bool isAlive = true;
 
@@ -54,6 +58,8 @@ public class Plane : MonoBehaviour
     [SerializeField] float cd = 25f; //0.2f
     [SerializeField] AnimationCurve cl = new AnimationCurve();
 
+    [SerializeField] AnimationCurve pitchCurve = new AnimationCurve();
+
     // Unity
     [SerializeField] Rigidbody rb;
     [SerializeField] Autopilot ap;
@@ -61,6 +67,20 @@ public class Plane : MonoBehaviour
     [SerializeField] ParticleSystem smoke;
     [SerializeField] ParticleSystem fire;
     [SerializeField] ParticleSystem[] wingtipVortices;
+
+    public bool isOutOfBounds = false;
+
+    void OnEnable(){
+        LevelManager.OnPerspectiveChange += UpdatePerspective;
+    }
+
+    void OnDisable(){
+        LevelManager.OnPerspectiveChange -= UpdatePerspective;
+    }
+
+    void UpdatePerspective(int p){
+        pers = (Perspective)p;
+    }
 
     private void Awake()
     {
@@ -80,6 +100,10 @@ public class Plane : MonoBehaviour
             if (child.name == "Smoke"){
                 smoke = child.GetComponent<ParticleSystem>();
             }
+        }
+        if (GameObject.Find("LevelManager") != null){
+            lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+            pers = lm.currentPerspective;
         }
     }
 
@@ -150,7 +174,7 @@ public class Plane : MonoBehaviour
 
     void UpdateDrag(){
         //Note: cd is not currently scaled by plane orientation
-        float drag = 0.5f * cd * localVelocity.sqrMagnitude;
+        float drag = cd * localVelocity.sqrMagnitude;
         rb.AddRelativeForce(-localVelocity.normalized * drag);
     }
 
@@ -219,12 +243,39 @@ public class Plane : MonoBehaviour
         return lift + inducedDrag;
     }
 
+    void ApplyOutOfBoundsForce(){
+        //Get a reference to the boundary gameObject
+        GameObject playArea = GameObject.Find("PlayArea");
+        if (playArea == null){
+            return;
+        }
+        //Get the box collider of the boundary
+        BoxCollider boxCollider = playArea.GetComponent<BoxCollider>();
+        // Get the proximity of the player to the edge of the boxCollider
+        Vector3 proxVec = boxCollider.ClosestPoint(transform.position) - transform.position;
+        Vector3 force = (10/Mathf.Pow(10-proxVec.magnitude, 2)) * proxVec.normalized;
+        Debug.DrawRay(transform.position, proxVec, Color.yellow);
+        Debug.DrawRay(transform.position, force, Color.red);
+
+        rb.AddForce(force, ForceMode.VelocityChange);
+    }
+
     #endregion physics
     
     void FixedUpdate(){
         float dt = Time.fixedDeltaTime;
 
-        controlDeflection = new Vector3(controlInputs.x * 30f - 0.0f, controlInputs.y * 20f, controlInputs.z * 20f);
+        if (pers == Perspective.Top_Down){
+            controlDeflection = new Vector3(-pitchCurve.Evaluate(-apInputs.x) * 40f - 0.0f, apInputs.y * 20f, apInputs.z * 20f);
+        }
+        else {
+            controlDeflection = new Vector3(-pitchCurve.Evaluate(-blendedInputs.x) * 40f - 0.0f, blendedInputs.y * 20f, blendedInputs.z * 20f);
+        }
+
+        if (isOutOfBounds){
+            ApplyOutOfBoundsForce();
+        }
+        
         CalculateState(dt);
         CalculateAoA();
 
@@ -271,10 +322,8 @@ public class Plane : MonoBehaviour
             ap.autopilotState = Autopilot.AutopilotState.Off;
         }
 
-        controlInputs = ap.GetAPInput(controlInputs);
-        //Draw debug line for velocity
-        // Debug.DrawRay(transform.position, internalVelocity, Color.magenta);
-        // Debug.DrawRay(transform.position, acceleration, Color.cyan);
+        apInputs = ap.GetAPInput(controlInputs);
+        blendedInputs = Utilities.ClampVec3(controlInputs + apInputs, -1, 1);
 
 
         // if AoA > 10, add wingtip vortices

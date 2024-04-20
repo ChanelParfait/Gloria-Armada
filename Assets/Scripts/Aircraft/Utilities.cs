@@ -159,4 +159,17 @@ public static class Utilities
             Mathf.Clamp(vec.z, min, max)
         );
     }
+    public static Vector3 ClampVec3(Vector3 vec, Vector3 min, Vector3 max)
+    {
+        return new Vector3(
+            Mathf.Clamp(vec.x, min.x, max.x),
+            Mathf.Clamp(vec.y, min.y, max.y),
+            Mathf.Clamp(vec.z, min.z, max.z)
+        );
+    }
+
+    public static Vector3 MultiplyComponents(Vector3 a, Vector3 b)
+    {
+        return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
+    }
 }

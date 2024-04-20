@@ -111,8 +111,8 @@ public class Autopilot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-        if (lm != null){
+        if (GameObject.Find("LevelManager") != null){
+            LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
             pers = lm.currentPerspective;
         }
         mainPIDs = new PID[] {pitchPID, yawPID, rollPID};
@@ -166,23 +166,23 @@ public class Autopilot : MonoBehaviour
     }
 
     public Vector3 GetAPInput(Vector3 _controlInputs){
-        controlInputs = onAxes ? _controlInputs : new Vector3(0, 0, 0);
+        controlInputs = _controlInputs;
         Vector3 apInputs = AutopilotControl(autopilotState);
         if (tag == "Player"){
             //
             if (pers == Perspective.Top_Down && onAxes){
-                // controlInputs.y *= RestrictRoll();    
-                // controlInputs.x += AutoTurn();
-                // controlInputs.y += Upright();
-                // Mathf.Clamp(controlInputs.y, -1, 1);    
+                controlInputs.y *= RestrictRoll();    
+                controlInputs.x += AutoTurn()/2;
+                controlInputs.y += Upright();
+                Mathf.Clamp(controlInputs.y, -1, 1);  
+
+                apInputs = Utilities.ClampVec3(apInputs + controlInputs, -1, 1);
             }
                
         }
 
 
-        Vector3 blendedInputs = Utilities.ClampVec3(controlInputs + apInputs, -1, 1);
-
-        return blendedInputs;
+        return apInputs;
     }
 
     Vector3 AutopilotControl(AutopilotState state){
@@ -283,7 +283,7 @@ public class Autopilot : MonoBehaviour
         angleRoll *= Vector3.Cross(targetDirection, rb.transform.forward).magnitude;
         angleYaw *= Vector3.Cross(targetDirection, rb.transform.up).magnitude;
 
-        Debug.DrawRay(transform.position, targetDirection * 1000, Color.red);
+        //Debug.DrawRay(transform.position, targetDirection * 1000, Color.red);
 
         float autoXInput = Mathf.Clamp(PIDSolve(anglePitch, ref pids[0]), -1, 1);
         float autoYInput = Mathf.Clamp(PIDSolve(angleRoll, ref pids[1]), -1.0f, 1.0f);
@@ -342,7 +342,7 @@ public class Autopilot : MonoBehaviour
 
     float AutoTurn(){
         float angle = Vector3.SignedAngle(rb.transform.up, Vector3.up, rb.transform.forward) / 180f;
-        return Mathf.Abs(angle);
+        return -Mathf.Abs(angle);
     }
 
     void AvoidGround(){
@@ -350,7 +350,7 @@ public class Autopilot : MonoBehaviour
         if (Physics.Raycast(transform.position, rb.velocity, out RaycastHit hit, 1000))
         {
             // If the ray hits something with an rb
-            Debug.DrawRay(transform.position, rb.velocity * 1000, Color.red);
+            //Debug.DrawRay(transform.position, rb.velocity * 1000, Color.red);
             Vector3 normal = hit.normal;
             // Get the angle between the velocity and the normal
 
@@ -399,10 +399,15 @@ public class Autopilot : MonoBehaviour
         float signX = Mathf.Sign(x);
         float signY = Mathf.Sign(y);
         float signZ = Mathf.Sign(z);
-        float smoothing = 100.0f;
+        float smoothing = 200.0f;
 
-        float ty = onAxes ? 0 : Mathf.Min(signY * -y * y, smoothing);
-        Vector3 targetVector = new Vector3(smoothing, ty, Mathf.Min(signZ * -z * z, smoothing)); //As a direction
+
+        float ty = Mathf.Min(signY * -y * y, smoothing);
+        float tz = Mathf.Min(signZ * -z * z, smoothing);
+        if (pers == Perspective.Side_On){ty = onAxes ? 0 : ty;}
+        if (pers == Perspective.Top_Down){tz = onAxes ? 0 : tz;}
+        
+        Vector3 targetVector = new Vector3(smoothing, ty, tz); //As a direction
         //Vector3 targetVector = new Vector3(60, 0, 0); //As a position
 
         if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 2 && (rb.velocity.normalized - Vector3.right).magnitude < 1f){
@@ -427,7 +432,7 @@ public class Autopilot : MonoBehaviour
 
 
 
-        Debug.DrawRay(rb.transform.position, targetVector * 100.0f, Color.red);
+        //Debug.DrawRay(rb.transform.position, targetVector, Color.red);
         Vector3 vecToPlane =  VectorAt(targetVector, mainPIDs, VectorType.direction);
         if (onAxes){
             vecToPlane *= 0.1f;
@@ -435,15 +440,16 @@ public class Autopilot : MonoBehaviour
         return vecToPlane;
     }
 
-    void OnDrawGizmos(){
-        Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.magenta, Color.white, Color.black};
-        if (HasTarget() && tag == "Player"){
-            foreach (Lead lead in Enum.GetValues(typeof(Lead))){
-                //assign a color to each lead type
-                Gizmos.color = colors[(int)lead];
-                Gizmos.DrawSphere(CalcLead(targetObject.GetComponent<Plane>(), lead), 1.0f);
-            }
-        }
-    }
+
+    // void OnDrawGizmos(){
+    //     Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.magenta, Color.white, Color.black};
+    //     if (HasTarget() && tag == "Player"){
+    //         foreach (Lead lead in Enum.GetValues(typeof(Lead))){
+    //             //assign a color to each lead type
+    //             Gizmos.color = colors[(int)lead];
+    //             Gizmos.DrawSphere(CalcLead(targetObject.GetComponent<Plane>(), lead), 1.0f);
+    //         }
+    //     }
+    // }
 
 }
