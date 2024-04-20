@@ -8,6 +8,8 @@ public class PlayerLife : MonoBehaviour
     public static event Action OnPlayerDamage;
     public static event Action OnPlayerHeal;
 
+    [SerializeField] private GameObject gameOverScreen;
+
     public float life, maxLife;
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,14 @@ public class PlayerLife : MonoBehaviour
             Heal(1);
             Debug.Log("Life Recovered");
         }
+
+        if (life == 0)
+        {
+            if (gameOverScreen.activeSelf == false)
+            {
+                gameOverScreen.SetActive(true);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -45,6 +55,16 @@ public class PlayerLife : MonoBehaviour
         {
             life += amount;
             OnPlayerHeal?.Invoke();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "EnemyProjectile")
+        {
+            TakeDamage(2);
+            Debug.Log("Damage Taken");
+            Destroy(other.gameObject);
         }
     }
 }
