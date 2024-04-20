@@ -52,8 +52,9 @@ public class Enemy_Spawner : MonoBehaviour
             if(enemyIndex < enemies.Length){
                 GameObject enemy = enemies[enemyIndex]; 
 
-                //get the appropriate rotation
-                Vector3 orientation = GetOrientation(spawnPoint);
+                //get movement direction and rotation
+                Vector3 orientation = -GetOrientation(spawnPoint);
+                Vector3 moveDir = GetMoveDirection(spawnPoint);
 
                 // spawn enemy as a child of the spawner
                 // providing it a relative position and rotation 
