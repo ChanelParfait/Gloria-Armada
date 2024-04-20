@@ -6679,6 +6679,7 @@ MonoBehaviour:
   gameOverPnl: {fileID: 0}
   youWinPnl: {fileID: 0}
   CurrentHealthTxt: {fileID: 0}
+  ScoreTxt: {fileID: 0}
   maxDistance: 5
   smoothTime: 0.1
   minHorizontalSpeed: 20
@@ -12142,9 +12143,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4785971375508989861, guid: c1b7717d19f33d0428793fd10ba9ce66, type: 3}
+      propertyPath: enemies.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4785971375508989861, guid: c1b7717d19f33d0428793fd10ba9ce66, type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 2721721924403181, guid: 97601bb8b9452bd4783eb1cca757f0ef, type: 3}
+      objectReference: {fileID: 919028687121953867, guid: 6598244869bbacf4b957bdd4c4397ed7, type: 3}
+    - target: {fileID: 4785971375508989861, guid: c1b7717d19f33d0428793fd10ba9ce66, type: 3}
+      propertyPath: enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 5330523515528714847, guid: 5174125a780307a4f87ca94a4e69d4b1, type: 3}
     - target: {fileID: 5142218218985203205, guid: c1b7717d19f33d0428793fd10ba9ce66, type: 3}
       propertyPath: m_LocalPosition.x
       value: -60
