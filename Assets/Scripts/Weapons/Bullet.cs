@@ -16,18 +16,18 @@ public class Bullet : MonoBehaviour
     float width;
 
     Plane owner;
-    new Rigidbody rigidbody;
+    Rigidbody rb;
     Vector3 lastPosition;
     float startTime;
 
     public void Fire(Plane owner) {
         this.owner = owner;
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         startTime = Time.time;
 
-        rigidbody.AddRelativeForce(new Vector3(0, 0, speed), ForceMode.VelocityChange);
-        rigidbody.AddForce(owner.getRBVelocity(), ForceMode.VelocityChange);
-        lastPosition = rigidbody.position;
+        rb.AddRelativeForce(new Vector3(0, 0, speed), ForceMode.VelocityChange);
+        rb.AddForce(owner.getRBVelocity(), ForceMode.VelocityChange);
+        lastPosition = rb.position;
     }
 
     void FixedUpdate() {
@@ -36,8 +36,8 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        var diff = rigidbody.position - lastPosition;
-        lastPosition = rigidbody.position;
+        var diff = rb.position - lastPosition;
+        lastPosition = rb.position;
 
         Ray ray = new Ray(lastPosition, diff.normalized);
         RaycastHit hit;
