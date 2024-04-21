@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int totalHealth = 3;
 
     public float referenceSpeed = 0;
-    public int speed = 3;
+    public int speed = 8;
     public Vector3 moveDir;
     public Vector3 orientation;
 
@@ -54,6 +54,7 @@ public class Enemy : MonoBehaviour
             // Take Damage
             TakeDamage(col.gameObject.GetComponent<Projectile>().projectileStats.damage);
             Debug.Log("Enemy Health:" + currentHealth);
+            Debug.Log("Enemy Damage Taken:" + col.gameObject.GetComponent<Projectile>().projectileStats.damage);
             // Destroy Projectile
             Destroy(col.gameObject);
         }

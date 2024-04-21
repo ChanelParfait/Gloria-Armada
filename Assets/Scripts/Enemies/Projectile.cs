@@ -30,14 +30,18 @@ public class Projectile : MonoBehaviour
     }
     public void Launch(ProjectileStats stats) {
         startTime = Time.time;
+        projectileStats = stats;
+
         
         projectileRB = GetComponent<Rigidbody>();
         projectileRB.AddRelativeForce(new Vector3(0, 0, stats.speed), ForceMode.VelocityChange); 
     }
     public void Launch(ProjectileStats stats, Vector3 cameraVelocity) {
         startTime = Time.time;
+        projectileStats = stats;
+
         projectileRB = GetComponent<Rigidbody>();
-        projectileRB.AddRelativeForce(new Vector3(0, 0, stats.speed), ForceMode.VelocityChange);
+        projectileRB.AddRelativeForce(new Vector3(0, 0, stats.speed * 2), ForceMode.VelocityChange);
         projectileRB.AddForce(cameraVelocity, ForceMode.VelocityChange); 
     }
 
