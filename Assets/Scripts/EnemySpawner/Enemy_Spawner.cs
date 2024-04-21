@@ -67,7 +67,7 @@ public class Enemy_Spawner : MonoBehaviour
                 // set the movement direction of the enemy
                 spawnedEnemy.GetComponent<Enemy>().moveDir = GetMoveDirection(spawnPoint);
                 spawnedEnemy.GetComponent<Enemy>().orientation = orientation;
-                spawnedEnemy.GetComponent<Enemy>().referenceSpeed = velocity.x;
+                spawnedEnemy.GetComponent<Enemy>().referenceSpeed = velocity.x - 5;
             }  
         }
     }

@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 //using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[Serializable]
 public struct ProjectileStats{
     public float speed; 
     public int damage;

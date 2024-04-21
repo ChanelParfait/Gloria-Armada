@@ -8,7 +8,7 @@ public class SpecialMeter : MonoBehaviour
 {
     public Image meter;
     public float meterLevel = 1;
-    private float meterCooldown = 3;
+    //private float meterCooldown = 3;
 
     public Color uncharged, charged;
 
