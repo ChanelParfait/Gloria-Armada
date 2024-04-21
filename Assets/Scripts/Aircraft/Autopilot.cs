@@ -180,8 +180,6 @@ public class Autopilot : MonoBehaviour
             }
                
         }
-
-
         return apInputs;
     }
 
@@ -333,8 +331,8 @@ public class Autopilot : MonoBehaviour
     float RestrictRoll(){
         // only allow the player to roll up to 90 degrees left/right
         float angle = Vector3.SignedAngle(rb.transform.up, Vector3.up, rb.transform.forward);
-        if (Mathf.Abs(angle) > 70){
-            Debug.Log("Angle: " + angle);
+        if (Mathf.Abs(angle) > 85){
+            //Debug.Log("Angle: " + angle);
             return 0;
         }
         return 1;

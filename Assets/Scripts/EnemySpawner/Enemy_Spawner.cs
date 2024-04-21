@@ -56,11 +56,11 @@ public class Enemy_Spawner : MonoBehaviour
                 Vector3 orientation = -GetOrientation(spawnPoint);
                 Vector3 moveDir = GetMoveDirection(spawnPoint);
 
-                // spawn enemy at the position of given spawn point 
-                GameObject spawnedEnemy = Instantiate(enemy, spawnPoint.transform.position, Quaternion.LookRotation(orientation, Vector3.up));
-                // set initial velocity of enemy in the approriate movement direction 
-                // this may later be changed to use the enemy class or provide the enemy with a particular path //
-                spawnedEnemy.GetComponent<Rigidbody>().velocity = moveDir * 6;
+                // spawn enemy as a child of the spawner
+                // providing it a relative position and rotation 
+                GameObject spawnedEnemy = Instantiate(enemy, spawnPoint.transform.position, Quaternion.LookRotation(orientation, Vector3.up), this.gameObject.transform);
+                // set the movement direction of the enemy
+                spawnedEnemy.GetComponent<Enemy>().moveDir = GetMoveDirection(spawnPoint);
             }  
         }
     }

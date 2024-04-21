@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public enum Perspective {Null = 0, Side_On = 1, Top_Down = 2};
@@ -24,6 +25,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPnl; 
     [SerializeField] private GameObject youWinPnl; 
     [SerializeField] private Text CurrentHealthTxt; 
+    [SerializeField] private Text ScoreTxt; 
+    private int score = 0; 
+
     private int playerHealth; 
 
     Rigidbody rb;
@@ -130,6 +134,17 @@ public class LevelManager : MonoBehaviour
         // }
     }
 
+    private void OnEnable(){
+        // Update Score on enemy death 
+        Actions.OnEnemyDeath += UpdateScore;
+    }
+
+    private void OnDisable(){
+        // if gameobject is disabled remove all listeners
+        Actions.OnEnemyDeath -= UpdateScore;
+
+    }
+
     private void OnTriggerEnter(Collider col){
         if(col.tag == "TransitionPoint"){
             UpdatePerspective(col.GetComponent<TransitionPoint>().GetPerspective());
@@ -151,6 +166,14 @@ public class LevelManager : MonoBehaviour
 
     private void UpdateHealthTxt(string health){
         CurrentHealthTxt.text = health;
+    }
+
+    private void UpdateScore(Enemy enemy){
+        Debug.Log("Update Score");
+        if(ScoreTxt){
+            score += enemy.scoreValue;
+            ScoreTxt.text = score.ToString();
+        }
     }
 
     private void GameOver(){
