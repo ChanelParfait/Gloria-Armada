@@ -133,7 +133,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3175531613127380621, guid: 4f90eadcb1064db4aa56a8a5d73f9534, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 430
+      value: 657.5
       objectReference: {fileID: 0}
     - target: {fileID: 3175531613127380621, guid: 4f90eadcb1064db4aa56a8a5d73f9534, type: 3}
       propertyPath: m_LocalPosition.y
@@ -180,8 +180,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9109113040331105322, guid: 4f90eadcb1064db4aa56a8a5d73f9534, type: 3}
+      propertyPath: enemyIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9109113040331105322, guid: 4f90eadcb1064db4aa56a8a5d73f9534, type: 3}
       propertyPath: spawnAmount
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9109113040331105322, guid: 4f90eadcb1064db4aa56a8a5d73f9534, type: 3}
       propertyPath: spawnInterval
@@ -5839,7 +5843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meter: {fileID: 2001751600}
-  meterLevel: 4
+  meterLevel: -14.8
   uncharged: {r: 1, g: 1, b: 1, a: 0.44313726}
   charged: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &949054476
