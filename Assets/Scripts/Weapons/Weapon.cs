@@ -4,8 +4,7 @@ using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public struct WeaponStats{
-    public string WeaponName; 
+public struct WeaponStats{ 
     // how frequently the weapon can fire
     public float fireInterval;
     // time taken to reload the weapon
@@ -45,12 +44,12 @@ public class Weapon : MonoBehaviour
     }
 
     public virtual void Fire(){
-        Debug.Log("Fire Base Weapon");
+        //Debug.Log("Fire Base Weapon");
         // Get spawn position and spawn projectile object
-        GameObject clone = Instantiate(projectile, GetSpawnPos(), gameObject.transform.rotation); 
+        GameObject clone = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation()); 
         // set stats of projectile
         clone.GetComponent<Projectile>().SetStats(weaponStats.projectileStats); 
-        audioSource.Play();
+        PlaySound();
     }
 
     
@@ -63,6 +62,17 @@ public class Weapon : MonoBehaviour
     {
         // return the default spawn position
         return gameObject.transform.position + gameObject.transform.forward * 8;
+    }
+
+    public virtual Quaternion GetSpawnRotation()
+    {
+        // return the default spawn rotation
+        return gameObject.transform.rotation;
+    }
+    
+    public virtual void PlaySound()
+    {
+        audioSource.Play();
     }
 
     public GameObject GetProjectile(){
