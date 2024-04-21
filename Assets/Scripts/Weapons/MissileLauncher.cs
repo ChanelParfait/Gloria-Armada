@@ -69,11 +69,11 @@ public class MissileLauncher : Weapon
         isReloading = false;
     }
 
-    public override void Fire()
+    public override void Fire(Rigidbody rb)
     {
         if(canFire && currentAmmo != 0){
             //Debug.Log("Missle Launched");
-            base.Fire();
+            base.Fire(rb);
             // Decrement Ammo
             currentAmmo --;
             canFire = false;
@@ -85,11 +85,11 @@ public class MissileLauncher : Weapon
 
     }
 
-    public override void EnemyFire()
+    /*public override void EnemyFire(Rigidbody rb)
     {
         //Debug.Log("Enemy Missile Fire");
-        base.Fire();
-    }
+        base.Fire(rb);
+    }*/
 
     public override void SetupWeapon(){
         weaponStats.maxAmmo = 4;

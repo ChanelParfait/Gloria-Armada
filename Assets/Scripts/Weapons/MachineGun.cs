@@ -20,20 +20,20 @@ public class MachineGun : Weapon
         }
     }
 
-    public override void Fire()
+    public override void Fire(Rigidbody rb)
     {
         if(canFire){
-            base.Fire();
+            base.Fire(rb);
             timer = 0;
             canFire = false;
         }
     } 
 
-    public override void EnemyFire()
+    /*public override void EnemyFire()
     {
         //Debug.Log("Enemy Machine Gun Fire");
         base.Fire();
-    }
+    }*/
 
     public override void SetupWeapon(){
         weaponStats.fireInterval = 0.5f;

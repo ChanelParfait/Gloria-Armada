@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public struct WeaponStats{
@@ -44,19 +45,22 @@ public class Weapon : MonoBehaviour
         audioSource.clip = fireSound;
     }
 
-    public virtual void Fire(){
+    public virtual void Fire(Rigidbody rb){
         Debug.Log("Fire Base Weapon");
         // Get spawn position and spawn projectile object
         GameObject clone = Instantiate(projectile, GetSpawnPos(), gameObject.transform.rotation); 
+        
+        //GameObject clone = Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation); 
         // set stats of projectile
-        clone.GetComponent<Projectile>().SetStats(weaponStats.projectileStats); 
+        clone.GetComponent<Projectile>().Launch(rb, weaponStats.projectileStats); 
         audioSource.Play();
     }
 
     
-    public virtual void EnemyFire()
+    public virtual void EnemyFire(Rigidbody rb)
     {
         Debug.Log("Enemy Gun Fire");
+        Fire(rb);
     }
 
     public virtual Vector3 GetSpawnPos()

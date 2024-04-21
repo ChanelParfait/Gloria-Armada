@@ -29,6 +29,6 @@ public class EnemyWeaponManager : MonoBehaviour
     }
 
     public void FireActiveWeapon(){
-        ActiveWeapon.EnemyFire();
+        ActiveWeapon.EnemyFire(GetComponent<Rigidbody>());
     }
 }
