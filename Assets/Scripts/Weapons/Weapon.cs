@@ -45,22 +45,27 @@ public class Weapon : MonoBehaviour
         audioSource.clip = fireSound;
     }
 
-    public virtual void Fire(Rigidbody rb){
+    public virtual void Fire(Vector3 velocity){
         Debug.Log("Fire Base Weapon");
         // Get spawn position and spawn projectile object
         GameObject clone = Instantiate(projectile, GetSpawnPos(), gameObject.transform.rotation); 
         
         //GameObject clone = Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation); 
         // set stats of projectile
-        clone.GetComponent<Projectile>().Launch(rb, weaponStats.projectileStats); 
+        clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats, velocity); 
         audioSource.Play();
     }
 
     
-    public virtual void EnemyFire(Rigidbody rb)
+    public virtual void EnemyFire()
     {
-        Debug.Log("Enemy Gun Fire");
-        Fire(rb);
+        // Get spawn position and spawn projectile object
+        GameObject clone = Instantiate(projectile, GetSpawnPos(), gameObject.transform.rotation); 
+        
+        //GameObject clone = Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation); 
+        // set stats of projectile
+        clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats); 
+        audioSource.Play();
     }
 
     public virtual Vector3 GetSpawnPos()

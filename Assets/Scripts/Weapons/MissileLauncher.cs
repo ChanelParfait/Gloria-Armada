@@ -69,11 +69,11 @@ public class MissileLauncher : Weapon
         isReloading = false;
     }
 
-    public override void Fire(Rigidbody rb)
+    public override void Fire(Vector3 velocity)
     {
         if(canFire && currentAmmo != 0){
             //Debug.Log("Missle Launched");
-            base.Fire(rb);
+            base.Fire(velocity);
             // Decrement Ammo
             currentAmmo --;
             canFire = false;
@@ -96,7 +96,7 @@ public class MissileLauncher : Weapon
         weaponStats.fireInterval = 0.25f;
         currentAmmo = weaponStats.maxAmmo;
         weaponStats.projectileStats.damage = 2;
-        weaponStats.projectileStats.speed = 5;
+        weaponStats.projectileStats.speed = 9;
 
 
         if(!projectile){

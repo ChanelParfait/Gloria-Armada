@@ -20,10 +20,10 @@ public class MachineGun : Weapon
         }
     }
 
-    public override void Fire(Rigidbody rb)
+    public override void Fire(Vector3 velocity)
     {
         if(canFire){
-            base.Fire(rb);
+            base.Fire(velocity);
             timer = 0;
             canFire = false;
         }
@@ -38,7 +38,7 @@ public class MachineGun : Weapon
     public override void SetupWeapon(){
         weaponStats.fireInterval = 0.5f;
         weaponStats.projectileStats.damage = 1;
-        weaponStats.projectileStats.speed = 8;
+        weaponStats.projectileStats.speed = 10;
 
 
         if(!projectile){

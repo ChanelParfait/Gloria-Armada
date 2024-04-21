@@ -11,11 +11,15 @@ public class Enemy : MonoBehaviour
     EnemyWeaponManager weaponManager; 
     [SerializeField] private float fireInterval = 3;
     [SerializeField] private int totalHealth = 3;
-    [SerializeField] private int speed = 3;
+    public int speed = 3;
     public Vector3 moveDir;
+    public Vector3 orientation;
+
     public int scoreValue = 10; 
     private int currentHealth;
     private float timer = 0;
+
+    
     // Start is called before the first frame update
     void Start()
     {   

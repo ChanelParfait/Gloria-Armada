@@ -58,14 +58,14 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public virtual void FirePrimaryWeapon(){
         if(primaryWeapon){
-            primaryWeapon.Fire(playerRB);
+            primaryWeapon.Fire(playerRB.velocity);
         }
         
     }
 
     public virtual void FireSpecialWeapon(){
         if(specialWeapon){
-            specialWeapon.Fire(playerRB);
+            specialWeapon.Fire(playerRB.velocity);
         }
     }
 }

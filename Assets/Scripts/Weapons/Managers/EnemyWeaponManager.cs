@@ -8,9 +8,12 @@ public class EnemyWeaponManager : MonoBehaviour
     public Weapon[] weapons = {};
     // Active weapon represents the weapon that can be fired
     private Weapon ActiveWeapon;
+    private Enemy enemy;
+
 
     void Start()
     {
+        enemy = GetComponent<Enemy>();
         // Set Default Active Weapon
         if(weapons.Length > 0){
             ActiveWeapon = weapons[0];
@@ -29,6 +32,6 @@ public class EnemyWeaponManager : MonoBehaviour
     }
 
     public void FireActiveWeapon(){
-        ActiveWeapon.EnemyFire(GetComponent<Rigidbody>());
+        ActiveWeapon.EnemyFire();
     }
 }
