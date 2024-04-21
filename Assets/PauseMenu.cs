@@ -8,7 +8,6 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool gameIsPaused = false;
     public GameObject pauseMenuUI;
-    public JetControl playerControl;
     public Canvas gameHUD;
 
     // Start is called before the first frame update
@@ -40,9 +39,6 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0;
 
-        //Disables the player's ability to control their ship
-        playerControl.enabled = false;
-
         //Disables the HUD that includes player's life, and special bar as well as the power-up slot
         gameHUD.enabled = false;
 
@@ -69,7 +65,6 @@ public class PauseMenu : MonoBehaviour
 
             pauseMenuUI.SetActive(false);
             Time.timeScale = 1;
-            playerControl.enabled = true;
             gameHUD.enabled = true;
             PostProcessVolume ppVolume = Camera.main.gameObject.GetComponent<PostProcessVolume>();
             ppVolume.enabled = false;

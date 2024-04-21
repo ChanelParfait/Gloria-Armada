@@ -49,7 +49,7 @@ public class SpecialMeter : MonoBehaviour
 
         meter.fillAmount = meterLevel;
 
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        if(Input.GetKeyDown(KeyCode.F))
         {
             if(meterLevel >= 0.25f)
             {
