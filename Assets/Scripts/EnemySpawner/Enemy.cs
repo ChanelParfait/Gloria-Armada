@@ -10,6 +10,9 @@ public class Enemy : MonoBehaviour
     WeaponManager weaponManager; 
     [SerializeField] float shootInterval = 5.0f;
     private float timer = 0;
+    public float health = 3.0f;
+    public bool hit = false;
+    public float incomingDamage = 1.0f; 
     // Start is called before the first frame update
     void Start()
     {   
@@ -39,7 +42,13 @@ public class Enemy : MonoBehaviour
         if(col.gameObject.tag == "PlayerProjectile"){
             // Take Damage? / Die
             //Debug.Log("Die");
-            Destroy(gameObject);
+            hit = true;
+            health -= incomingDamage; 
+            if(health <= 0){
+                Destroy(gameObject);
+            }
+            hit = false;
+            
             // increase player score 
         }
     }

@@ -16,6 +16,7 @@ TagManager:
   - EnemyProjectile
   - Despawner
   - WinPoint
+  - Powerup
   layers:
   - Default
   - TransparentFX

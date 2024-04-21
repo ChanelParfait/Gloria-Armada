@@ -4,7 +4,7 @@ using UnityEngine;
 public class JetControl : MonoBehaviour
 {
     // Player Shooting
-    [SerializeField] GameObject projectile; 
+    [SerializeField] public GameObject projectile; 
 
     // Player Movement
     [SerializeField] float aerodynamicEfficiency = 1f;
@@ -17,6 +17,13 @@ public class JetControl : MonoBehaviour
     public int health = 3; 
     public bool isDead = false; 
 
+    //Tracking Player Fire Rate
+    public bool shooting = false;
+    public float shootDelay = 0.5f;
+    public float shootTimer = 0f;
+    public float shootCooldown = 0.5f;
+    private float shootCooldownTimer = 0f;
+    public int projectileSize = 1;
 
     public void ResetPosition(float duration) {
         StartCoroutine(ResetPosition_async(duration));
@@ -44,13 +51,45 @@ public class JetControl : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         lastViewportPosition = viewport.position;
+        projectile.transform.localScale = Vector3.one;
     }
 
-        // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)){
-            Shoot();
+    // Check if the player is holding down the spacebar
+        if (Input.GetKey(KeyCode.Space))
+        {
+            shootCooldown = shootDelay;
+            // Start shooting if not already shooting and not in cooldown
+            if (!shooting && shootCooldownTimer <= 0f)
+            {
+                shooting = true;
+                Shoot();
+                shootTimer = shootDelay; // Set the shoot timer to delay the next shot
+                shootCooldownTimer = shootCooldown; // Start the cooldown timer
+            }
+        }
+        else
+        {
+            // Player released the spacebar, stop shooting
+            shooting = false;
+        }
+
+        // Update shoot timer
+        if (shooting)
+        {
+            shootTimer -= Time.deltaTime;
+            if (shootTimer <= 0f)
+            {
+                Shoot();
+                shootTimer = shootDelay; // Reset the shoot timer for the next shot
+            }
+        }
+
+        // Update shoot cooldown timer
+        if (shootCooldownTimer > 0f)
+        {
+            shootCooldownTimer -= Time.deltaTime;
         }
     }
 
@@ -103,6 +142,7 @@ public class JetControl : MonoBehaviour
 
         rb.AddForce(normalAccel);
     }
+
 
     void Shoot(){
         // get the position 4 units in front of the enemy 
