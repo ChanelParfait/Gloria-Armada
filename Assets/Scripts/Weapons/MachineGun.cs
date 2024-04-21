@@ -20,25 +20,25 @@ public class MachineGun : Weapon
         }
     }
 
-    public override void Fire()
+    public override void Fire(Vector3 velocity)
     {
         if(canFire){
-            base.Fire();
+            base.Fire(velocity);
             timer = 0;
             canFire = false;
         }
     } 
 
-    public override void EnemyFire()
+    /*public override void EnemyFire()
     {
         //Debug.Log("Enemy Machine Gun Fire");
         base.Fire();
-    }
+    }*/
 
     public override void SetupWeapon(){
         weaponStats.fireInterval = 0.5f;
         weaponStats.projectileStats.damage = 1;
-        weaponStats.projectileStats.speed = 8;
+        weaponStats.projectileStats.speed = 10;
 
 
         if(!projectile){

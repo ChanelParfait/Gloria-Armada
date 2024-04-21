@@ -16,6 +16,9 @@ public class Enemy_Spawner : MonoBehaviour
     [SerializeField] private Camera mainCamera ; 
     [SerializeField] Dictionary<string, GameObject> spawnPoints = new Dictionary<string, GameObject>();
 
+    Vector3 velocity;
+    Vector3 lastPosition;
+
 
     
     // Start is called before the first frame update
@@ -30,7 +33,8 @@ public class Enemy_Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        velocity = (transform.position - lastPosition) / Time.deltaTime;
+        lastPosition = transform.position; 
     }
 
     // Spawn a given amount of enemies at a certain spawn point 
@@ -58,9 +62,12 @@ public class Enemy_Spawner : MonoBehaviour
 
                 // spawn enemy as a child of the spawner
                 // providing it a relative position and rotation 
-                GameObject spawnedEnemy = Instantiate(enemy, spawnPoint.transform.position, Quaternion.LookRotation(orientation, Vector3.up), this.gameObject.transform);
+                GameObject spawnedEnemy = Instantiate(enemy, spawnPoint.transform.position, Quaternion.LookRotation(orientation, Vector3.up));
+
                 // set the movement direction of the enemy
                 spawnedEnemy.GetComponent<Enemy>().moveDir = GetMoveDirection(spawnPoint);
+                spawnedEnemy.GetComponent<Enemy>().orientation = orientation;
+                spawnedEnemy.GetComponent<Enemy>().referenceSpeed = velocity.x;
             }  
         }
     }
@@ -84,25 +91,25 @@ public class Enemy_Spawner : MonoBehaviour
         if(currentPerspective == Perspective.Top_Down){
             if(spawnPoint.name == "Left_Bottom" || spawnPoint.name == "Right_Bottom"){
                 // face toward top of screen
-                return cameraTransform.up;
+                return cameraTransform.up * -1;
             }
             if(spawnPoint.name == "Left_Top" || spawnPoint.name == "Right_Top"){
                 // face toward bottom of screen 
-                return cameraTransform.up * -1;
+                return cameraTransform.up;
             }
             if(spawnPoint.name == "Top_Right" || spawnPoint.name == "Bottom_Right"){
                 // face toward left side of screen 
-                return cameraTransform.right  * -1;
+                return cameraTransform.right;
             }
             if(spawnPoint.name == "Top_Left" || spawnPoint.name == "Bottom_Left"){
                 // face toward right side of screen
-                return cameraTransform.right;
+                return cameraTransform.right  * -1;
             }
 
         }
         if(currentPerspective == Perspective.Side_On){
             // face towards left side of camera 
-            return cameraTransform.right  * -1;
+            return cameraTransform.right  * 1;
         }
         else
         {

@@ -93,7 +93,7 @@ public class Plane : MonoBehaviour
         // Set the center of mass
         rb = GetComponent<Rigidbody>();
         rb.mass = weight;
-        rb.velocity = transform.forward * 20;
+        rb.velocity = transform.forward * 50;
         //targetObject = GameObject.Find("TargetPoint");   
         ap = GetComponent<Autopilot>();    
         foreach (Transform child in transform){
@@ -302,7 +302,7 @@ public class Plane : MonoBehaviour
             }
             else
             {
-                throttle = 0.7f;
+                throttle = 0.5f;
             }
             if (Input.GetKey(Fire) ){
             Shoot();

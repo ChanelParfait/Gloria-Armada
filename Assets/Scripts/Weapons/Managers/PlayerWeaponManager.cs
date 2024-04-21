@@ -10,6 +10,8 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [SerializeField] private Weapon specialWeapon;
 
+    public Rigidbody playerRB;
+
     // Test Variables
     public GameObject testWeapon1;
     public GameObject testWeapon2;
@@ -41,7 +43,7 @@ public class PlayerWeaponManager : MonoBehaviour
     public void SetPrimaryWeapon(GameObject weaponObj){
         // create the provided weapon prefab as a child of the player
         // and store it as the primary weapon
-        primaryWeapon = Instantiate(weaponObj, Vector3.zero, Quaternion.identity, transform).GetComponent<Weapon>();
+        primaryWeapon = Instantiate(weaponObj, transform.position, transform.rotation, transform).GetComponent<Weapon>();
         primaryWeapon.isPlayerWeapon = true;
         
     }
@@ -50,20 +52,20 @@ public class PlayerWeaponManager : MonoBehaviour
     public void SetSpecialWeapon(GameObject weaponObj){
         // create the provided weapon prefab as a child of the player
         // and store it as the special weapon
-        specialWeapon = Instantiate(weaponObj, Vector3.zero, Quaternion.identity, transform).GetComponent<Weapon>();
+        specialWeapon = Instantiate(weaponObj, transform.position, transform.rotation, transform).GetComponent<Weapon>();
         specialWeapon.isPlayerWeapon = true;
     }
 
     public virtual void FirePrimaryWeapon(){
         if(primaryWeapon){
-            primaryWeapon.Fire();
+            primaryWeapon.Fire(playerRB.velocity);
         }
         
     }
 
     public virtual void FireSpecialWeapon(){
         if(specialWeapon){
-            specialWeapon.Fire();
+            specialWeapon.Fire(playerRB.velocity);
         }
     }
 }
