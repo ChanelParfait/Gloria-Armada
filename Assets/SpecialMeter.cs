@@ -16,8 +16,7 @@ public class SpecialMeter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        meterLevel = 1;
-        
+        meterLevel = 1; 
     }
 
     // Update is called once per frame
@@ -78,5 +77,7 @@ public class SpecialMeter : MonoBehaviour
     private void UpdateMeter(float ammo){
         Debug.Log("Level: " + ammo);
         meterLevel = ammo * 0.25f;
+        Debug.Log("meterLevel: " + meterLevel);
+
     }
 }
