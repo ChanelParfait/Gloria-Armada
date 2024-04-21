@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     EnemyWeaponManager weaponManager; 
     [SerializeField] private float fireInterval = 3;
     [SerializeField] private int totalHealth = 3;
+
+    public float referenceSpeed = 0;
     public int speed = 3;
     public Vector3 moveDir;
     public Vector3 orientation;
@@ -73,7 +75,10 @@ public class Enemy : MonoBehaviour
     }
 
     private void MoveEnemy(){
-        gameObject.transform.position += moveDir * Time.deltaTime * speed; 
+        Vector3 referenceMovement = new Vector3(referenceSpeed, 0, 0) * Time.deltaTime;
+        Vector3 enemyMovement = moveDir * Time.deltaTime * speed;
+
+        gameObject.transform.position += enemyMovement + referenceMovement; 
     }
 
 }

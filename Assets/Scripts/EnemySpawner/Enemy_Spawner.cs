@@ -16,6 +16,9 @@ public class Enemy_Spawner : MonoBehaviour
     [SerializeField] private Camera mainCamera ; 
     [SerializeField] Dictionary<string, GameObject> spawnPoints = new Dictionary<string, GameObject>();
 
+    Vector3 velocity;
+    Vector3 lastPosition;
+
 
     
     // Start is called before the first frame update
@@ -30,7 +33,8 @@ public class Enemy_Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        velocity = (transform.position - lastPosition) / Time.deltaTime;
+        lastPosition = transform.position; 
     }
 
     // Spawn a given amount of enemies at a certain spawn point 
@@ -58,11 +62,12 @@ public class Enemy_Spawner : MonoBehaviour
 
                 // spawn enemy as a child of the spawner
                 // providing it a relative position and rotation 
-                GameObject spawnedEnemy = Instantiate(enemy, spawnPoint.transform.position, Quaternion.LookRotation(orientation, Vector3.up), this.gameObject.transform);
+                GameObject spawnedEnemy = Instantiate(enemy, spawnPoint.transform.position, Quaternion.LookRotation(orientation, Vector3.up));
 
                 // set the movement direction of the enemy
                 spawnedEnemy.GetComponent<Enemy>().moveDir = GetMoveDirection(spawnPoint);
                 spawnedEnemy.GetComponent<Enemy>().orientation = orientation;
+                spawnedEnemy.GetComponent<Enemy>().referenceSpeed = velocity.x;
             }  
         }
     }
