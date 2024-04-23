@@ -20,7 +20,7 @@ public class Weapon : MonoBehaviour
     // Base Weapon Class 
     [SerializeReference] protected GameObject projectile; 
     [SerializeReference] protected AudioClip fireSound;
-    protected WeaponStats weaponStats;
+    [SerializeField] protected WeaponStats weaponStats;
     public WeaponCategories weaponCategory;  
     public bool isPlayerWeapon = false;
     public bool canFire = true;

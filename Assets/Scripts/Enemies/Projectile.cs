@@ -8,6 +8,7 @@ using UnityEngine;
 public struct ProjectileStats{
     public float speed; 
     public int damage;
+    public int AP;
     public float lifetime;
     public Vector3 size; 
 
