@@ -10,6 +10,7 @@ public struct ProjectileStats{
     public float speed; 
     public int damage;
     float lifetime;
+    float range; 
 
 }
 
@@ -20,6 +21,7 @@ public class Projectile : MonoBehaviour
     public Rigidbody projectileRB;
     float startTime;
     float lifetime = 10;
+
 
 
 
