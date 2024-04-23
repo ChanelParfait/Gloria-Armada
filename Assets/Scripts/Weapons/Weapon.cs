@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public struct WeaponStats{
-    public string WeaponName; 
+    //public string WeaponName; 
     // how frequently the weapon can fire
     public float fireInterval;
     // time taken to reload the weapon
@@ -46,7 +47,7 @@ public class Weapon : MonoBehaviour
         Debug.Log("Fire Base Weapon");
         // Get spawn position and spawn projectile object
         GameObject clone = Instantiate(projectile, GetSpawnPos(), gameObject.transform.rotation); 
-        
+        clone.transform.localScale = weaponStats.projectileStats.size;
         //GameObject clone = Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation); 
         // set stats of projectile
         clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats, velocity); 
@@ -63,6 +64,14 @@ public class Weapon : MonoBehaviour
         // set stats of projectile
         clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats); 
         audioSource.Play();
+    }
+
+    public void UpdateStats(WeaponStats newStats){
+        weaponStats = newStats;
+    }
+
+    public WeaponStats GetStats(){
+        return weaponStats;
     }
 
     public virtual Vector3 GetSpawnPos()

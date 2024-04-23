@@ -56,6 +56,17 @@ public class PlayerWeaponManager : MonoBehaviour
         specialWeapon.isPlayerWeapon = true;
     }
 
+    
+    public Weapon GetPrimaryWeapon(){
+        return primaryWeapon;
+    }
+
+    public Weapon GetSpecialWeapon(){
+        return specialWeapon;
+    }
+
+    
+
     public virtual void FirePrimaryWeapon(){
         if(primaryWeapon){
             primaryWeapon.Fire(playerRB.velocity);
