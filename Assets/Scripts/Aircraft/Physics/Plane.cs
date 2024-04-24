@@ -25,11 +25,15 @@ public class Plane : MonoBehaviour
     
     public float throttle = 0.7f;
 
+    public float spawnSpeed = 50f;
+
     // Aircraft parameters
     [SerializeField] float liftPower = 2f;
     [SerializeField] float weight = 200;    // Weight of the aircraft (kg)
     [SerializeField] Surfaces surfaces;
     [SerializeField] float thrust = 1800;   // Maximum thrust (N)
+
+    [SerializeField] bool thrustVectoring = false;
     [SerializeField] float fireRate = 10f;
     float lastShotTime = 0f;    
     Vector3 controlInputs;
@@ -45,15 +49,17 @@ public class Plane : MonoBehaviour
     [Header("Aircraft State")]
     private float AoAYaw;
     public float AoA {get; private set;}
+
+    [SerializeField] float scaleVelocity = 1.0f;
     public Vector3 internalVelocity;   // Velocity of the aircraft (not passed to RB) (m/s)
     public Vector3 localVelocity;      // Velocity of the aircraft from local (m/s)
-    private Vector3 localAngularVelocity; // Angular velocity of the aircraft (rad/s)
     
     private Vector3 lastVelocity;
     private Vector3 lastRBAngularVelocity;
 
     public Vector3 acceleration; // Acceleration of the aircraft (m/s^2)
     public Vector3 angularAcceleration { get; private set; } // Angular acceleration of the aircraft (rad/s^2)
+    public Vector3 localAngularVelocity { get; private set; } // Angular velocity of the aircraft from local (rad/s)
 
     [SerializeField] float cd = 25f; //0.2f
     [SerializeField] AnimationCurve cl = new AnimationCurve();
@@ -66,6 +72,8 @@ public class Plane : MonoBehaviour
     [SerializeField] Bullet gun;
     [SerializeField] ParticleSystem smoke;
     [SerializeField] ParticleSystem fire;
+
+    [SerializeField] ParticleSystem boost;
     [SerializeField] ParticleSystem[] wingtipVortices;
 
     public bool isOutOfBounds = false;
@@ -86,6 +94,16 @@ public class Plane : MonoBehaviour
     {
         rb.drag = float.Epsilon;
         rb.angularDrag = 0.21f ;
+    }
+
+    public void SetThrottle(float _throttle){
+        throttle = _throttle;
+        if (throttle == 1){
+            boost.Play();
+        }
+        else {
+            boost.Stop();
+        }
     }
  
     void Start()
@@ -147,7 +165,7 @@ public class Plane : MonoBehaviour
     void CalculateState(float dt){
         var InverseRotation = Quaternion.Inverse(transform.rotation);
         //internalVelocity = rb.velocity + new Vector3(60, 0, 0);
-        internalVelocity = rb.velocity;
+        internalVelocity = rb.velocity * scaleVelocity;
         localVelocity = InverseRotation * internalVelocity;
         localAngularVelocity = InverseRotation * rb.angularVelocity;
         
@@ -169,7 +187,20 @@ public class Plane : MonoBehaviour
     }
 
     void UpdateThrust(){
-        rb.AddRelativeForce(throttle * thrust * Vector3.forward);
+        if (!thrustVectoring){
+            rb.AddRelativeForce(throttle * thrust * Vector3.forward);
+        }
+        else{
+            // Angle the thrust vector by the control inputs
+            Vector3 thrustVector = transform.forward;
+            thrustVector = Quaternion.AngleAxis(controlDeflection.x, transform.right) * thrustVector;
+            thrustVector = Quaternion.AngleAxis(controlDeflection.y, transform.up) * thrustVector;
+            Vector3 thrustForce = throttle * thrust * thrustVector;
+            rb.AddRelativeForce(thrustForce);
+            // Add torque assuming engine is behind center of mass
+            rb.AddRelativeTorque(Vector3.Cross(new Vector3(0, 0, -3f), thrustForce));
+         }
+            
     }
 
     void UpdateDrag(){

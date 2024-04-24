@@ -110,6 +110,10 @@ public class Autopilot : MonoBehaviour
         Debug.Log("Perspective changed to: " + pers.ToString());
     }
 
+    public void setTargetObject(GameObject target){
+        targetObject = target;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -193,7 +197,7 @@ public class Autopilot : MonoBehaviour
         }
 
         if (HasTarget()){
-            targetLocation = CalcLead(targetObject.GetComponent<Plane>(), Lead.leadShot);
+            targetLocation = CalcLead(targetObject.GetComponent<Plane>(), Lead.intercept);
             aimVector = CalcAimVector(targetObject.GetComponent<Plane>());
         }
         
@@ -285,6 +289,8 @@ public class Autopilot : MonoBehaviour
 
         //Debug.DrawRay(transform.position, targetDirection * 1000, Color.red);
 
+        Debug.DrawRay(transform.position, targetDirection * 20, Color.yellow);
+
         float autoXInput = Mathf.Clamp(PIDSolve(anglePitch, ref pids[0]), -1, 1);
         float autoYInput = Mathf.Clamp(PIDSolve(angleRoll, ref pids[1]), -1.0f, 1.0f);
         float autoZInput = Mathf.Clamp(PIDSolve(angleYaw, ref pids[2]), -1.0f, 1.0f);
@@ -316,6 +322,8 @@ public class Autopilot : MonoBehaviour
         angleYaw *= Vector3.Cross(velocityError, rb.transform.up).magnitude;
     
         float angleRoll = Mathf.Lerp(angleLiftVUp, angleAlignLiftV, Mathf.Clamp01(velocityError.magnitude));
+
+        Debug.DrawRay(transform.position, velocityError, Color.yellow);
 
         float x = Mathf.Clamp(PIDSolve(anglePitch,  ref pids[0]), -1, 1);
         float y = Mathf.Clamp(PIDSolve(angleRoll,   ref pids[1]), -1, 1);
@@ -447,15 +455,15 @@ public class Autopilot : MonoBehaviour
     }
 
 
-    // void OnDrawGizmos(){
-    //     Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.magenta, Color.white, Color.black};
-    //     if (HasTarget() && tag == "Player"){
-    //         foreach (Lead lead in Enum.GetValues(typeof(Lead))){
-    //             //assign a color to each lead type
-    //             Gizmos.color = colors[(int)lead];
-    //             Gizmos.DrawSphere(CalcLead(targetObject.GetComponent<Plane>(), lead), 1.0f);
-    //         }
-    //     }
-    // }
+    void OnDrawGizmos(){
+        Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.magenta, Color.white, Color.black};
+        if (HasTarget() && tag != "Player"){
+            foreach (Lead lead in Enum.GetValues(typeof(Lead))){
+                //assign a color to each lead type
+                Gizmos.color = colors[(int)lead];
+                Gizmos.DrawSphere(CalcLead(targetObject.GetComponent<Plane>(), lead), 1.0f);
+            }
+        }
+    }
 
 }
