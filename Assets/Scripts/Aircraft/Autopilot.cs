@@ -85,6 +85,8 @@ public class Autopilot : MonoBehaviour
     public bool hasTarget = false;
     public bool onAxes = false;
     public float shotSpeed = 300f;
+
+    public float zTarget = 0;
     public float targetAngularSize;
 
     [SerializeField] Perspective pers = Perspective.Null;
@@ -115,9 +117,9 @@ public class Autopilot : MonoBehaviour
             LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
             pers = lm.currentPerspective;
         }
-        mainPIDs = new PID[] {pitchPID, yawPID, rollPID};
-        autoPIDs = new PID[] {aPitchPID, aYawPID, aRollPID};
-        stabilityPIDs = new PID[] {sPitchPID, sYawPID, sRollPID};
+        mainPIDs = new PID[] {pitchPID, rollPID, yawPID};
+        autoPIDs = new PID[] {aPitchPID, aRollPID, aYawPID};
+        stabilityPIDs = new PID[] {sPitchPID, sRollPID, sYawPID};
         p = GetComponent<Plane>(); 
 
         //based on the tag
@@ -171,12 +173,12 @@ public class Autopilot : MonoBehaviour
         if (tag == "Player"){
             //
             if (pers == Perspective.Top_Down && onAxes){
-                controlInputs.y *= RestrictRoll();    
-                controlInputs.x += AutoTurn()/2;
-                controlInputs.y += Upright();
-                Mathf.Clamp(controlInputs.y, -1, 1);  
+                // controlInputs.y *= RestrictRoll();    
+                // controlInputs.x += AutoTurn()/2;
+                // controlInputs.y += Upright();
+                // Mathf.Clamp(controlInputs.y, -1, 1);  
 
-                apInputs = Utilities.ClampVec3(apInputs + controlInputs, -1, 1);
+                //apInputs = Utilities.ClampVec3(apInputs + controlInputs, -1, 1);
             }
                
         }
@@ -185,7 +187,7 @@ public class Autopilot : MonoBehaviour
 
     Vector3 AutopilotControl(AutopilotState state){
         
-        autopilotDeflection = controlInputs;
+        autopilotDeflection = Vector3.zero;
         if (state == AutopilotState.Off){
             return controlInputs;
         }
@@ -388,6 +390,10 @@ public class Autopilot : MonoBehaviour
     }
     #endregion Assists
 
+    public void setZTarget(float controlInputLR){
+        zTarget = -controlInputLR;
+    }
+
     // Target a 2D plane
     Vector3 AutoTargetPlane(char plane = 'Y'){
         // If we are not already on the plane then go to it
@@ -399,11 +405,15 @@ public class Autopilot : MonoBehaviour
         float signZ = Mathf.Sign(z);
         float smoothing = 200.0f;
 
+        // Set zAngle between 0 and 90 degrees
+        float zAngle = 40;
+        // Multiply by Tan(45 dgrees) * smoothing to get the distance to the plane
+        zTarget = Mathf.Tan(zAngle * Mathf.Deg2Rad * zTarget) * smoothing;
 
         float ty = Mathf.Min(signY * -y * y, smoothing);
-        float tz = Mathf.Min(signZ * -z * z, smoothing);
-        if (pers == Perspective.Side_On){ty = onAxes ? 0 : ty;}
-        if (pers == Perspective.Top_Down){tz = onAxes ? 0 : tz;}
+        float tz = Mathf.Min(signZ * -z * z, smoothing); // By default -> got to the center of the screen
+        if (pers == Perspective.Side_On){ ty = onAxes ? 0 : ty;}
+        if (pers == Perspective.Top_Down){tz = onAxes ? zTarget : tz;} // In top-down, go to point defined by player input
         
         Vector3 targetVector = new Vector3(smoothing, ty, tz); //As a direction
         //Vector3 targetVector = new Vector3(60, 0, 0); //As a position
@@ -428,12 +438,10 @@ public class Autopilot : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None;
         }
 
-
-
-        //Debug.DrawRay(rb.transform.position, targetVector, Color.red);
+        Debug.DrawRay(rb.transform.position, targetVector, Color.red);
         Vector3 vecToPlane =  VectorAt(targetVector, mainPIDs, VectorType.direction);
         if (onAxes){
-            vecToPlane *= 0.1f;
+            Utilities.MultiplyComponents(vecToPlane, new Vector3(1, 1, 0.3f));
         }
         return vecToPlane;
     }

@@ -85,7 +85,7 @@ public class Plane : MonoBehaviour
     private void Awake()
     {
         rb.drag = float.Epsilon;
-        rb.angularDrag = 0.2f ;
+        rb.angularDrag = 0.21f ;
     }
  
     void Start()
@@ -180,7 +180,7 @@ public class Plane : MonoBehaviour
 
     void UpdateAngularDrag(){
         //Resist rotation around Z axis
-        rb.AddTorque(-transform.InverseTransformDirection(rb.angularVelocity).z* 1000f * transform.forward);
+        rb.AddTorque(-transform.InverseTransformDirection(rb.angularVelocity).z* 1500f * transform.forward);
     }
 
     void UpdateLift(){
@@ -216,7 +216,7 @@ public class Plane : MonoBehaviour
         rb.AddRelativeTorque(Vector3.Cross(surfaces.rudder.position, rudForce)); 
 
         //Left and right ailerons
-        rb.AddRelativeForce(ailForceR + ailForceL);
+        //rb.AddRelativeForce(ailForceR + ailForceL);
         rb.AddRelativeTorque(Vector3.Cross(surfaces.aileron.position, ailForceR));
         rb.AddRelativeTorque(Vector3.Cross(-surfaces.aileron.position, ailForceL));
     }
@@ -262,7 +262,12 @@ public class Plane : MonoBehaviour
     void FixedUpdate(){
         float dt = Time.fixedDeltaTime;
 
+        apInputs = ap.GetAPInput(controlInputs);
+        blendedInputs = Utilities.ClampVec3(controlInputs + apInputs, -1, 1);
+
         if (pers == Perspective.Top_Down){
+            ap.setZTarget(controlInputs.y);
+            //controlDeflection = new Vector3(-pitchCurve.Evaluate(-apInputs.x) * 40f - 0.0f, apInputs.y * 20f, apInputs.z * 20f);
             controlDeflection = new Vector3(-pitchCurve.Evaluate(-apInputs.x) * 40f - 0.0f, apInputs.y * 20f, apInputs.z * 20f);
         }
         else {
@@ -318,9 +323,6 @@ public class Plane : MonoBehaviour
         else if (Input.GetKey(KeyCode.F)){
             ap.autopilotState = Autopilot.AutopilotState.Off;
         }
-
-        apInputs = ap.GetAPInput(controlInputs);
-        blendedInputs = Utilities.ClampVec3(controlInputs + apInputs, -1, 1);
 
 
         // if AoA > 10, add wingtip vortices
