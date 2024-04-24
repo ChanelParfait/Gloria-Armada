@@ -19,7 +19,7 @@ public class PlayerLife : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        /*if(Input.GetKeyDown(KeyCode.E))
         {
             TakeDamage(1);
             Debug.Log("Damage Taken");
@@ -28,7 +28,7 @@ public class PlayerLife : MonoBehaviour
         {
             Heal(1);
             Debug.Log("Life Recovered");
-        }
+        }*/
 
         if (life == 0)
         {
@@ -63,8 +63,9 @@ public class PlayerLife : MonoBehaviour
     {
         if (other.gameObject.tag == "EnemyProjectile")
         {
-            TakeDamage(2);
-            Debug.Log("Damage Taken");
+            TakeDamage(other.GetComponent<Projectile>().projectileStats.damage);
+            //Debug.Log("Damage Taken");
+            Debug.Log("Damage: " + other.GetComponent<Projectile>().projectileStats.damage);
             Destroy(other.gameObject);
         }
     }

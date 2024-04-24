@@ -302,11 +302,11 @@ public class Plane : MonoBehaviour
             }
             else
             {
-                throttle = 0.7f;
+                throttle = 0.5f;
             }
-            if (Input.GetKey(Fire) ){
+            /*if (Input.GetKey(Fire) ){
             Shoot();
-            }
+            }*/
         }
 
 

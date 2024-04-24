@@ -53,6 +53,8 @@ public class MissileLauncher : Weapon
         currentAmmo ++;
         reloadTimer = 0;
         Debug.Log("Ammo: " + currentAmmo);
+        Actions.OnAmmoChange?.Invoke(currentAmmo);
+        
     }
 
     private IEnumerator StartReload(){
@@ -67,15 +69,17 @@ public class MissileLauncher : Weapon
         Debug.Log("Full Reload Complete");
         currentAmmo = weaponStats.maxAmmo; 
         isReloading = false;
+        Actions.OnAmmoChange?.Invoke(currentAmmo);
     }
 
-    public override void Fire()
+    public override void Fire(Vector3 velocity)
     {
         if(canFire && currentAmmo != 0){
             //Debug.Log("Missle Launched");
-            base.Fire();
+            base.Fire(velocity);
             // Decrement Ammo
             currentAmmo --;
+            Actions.OnAmmoChange?.Invoke(currentAmmo);
             canFire = false;
             // Reset Timers
             reloadTimer = 0;
@@ -85,18 +89,18 @@ public class MissileLauncher : Weapon
 
     }
 
-    public override void EnemyFire()
+    /*public override void EnemyFire(Rigidbody rb)
     {
         //Debug.Log("Enemy Missile Fire");
-        base.Fire();
-    }
+        base.Fire(rb);
+    }*/
 
     public override void SetupWeapon(){
         weaponStats.maxAmmo = 4;
         weaponStats.fireInterval = 0.25f;
         currentAmmo = weaponStats.maxAmmo;
         weaponStats.projectileStats.damage = 2;
-        weaponStats.projectileStats.speed = 5;
+        weaponStats.projectileStats.speed = 9;
 
 
         if(!projectile){

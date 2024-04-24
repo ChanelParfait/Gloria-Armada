@@ -10,11 +10,17 @@ public class Enemy : MonoBehaviour
     EnemyWeaponManager weaponManager; 
     [SerializeField] private float fireInterval = 3;
     [SerializeField] private int totalHealth = 3;
-    [SerializeField] private int speed = 3;
+
+    public float referenceSpeed = 0;
+    public int speed = 8;
     public Vector3 moveDir;
+    public Vector3 orientation;
+
     public int scoreValue = 10; 
     private int currentHealth;
     private float timer = 0;
+
+    
     // Start is called before the first frame update
     void Start()
     {   
@@ -47,6 +53,7 @@ public class Enemy : MonoBehaviour
             // Take Damage
             TakeDamage(col.gameObject.GetComponent<Projectile>().projectileStats.damage);
             Debug.Log("Enemy Health:" + currentHealth);
+            Debug.Log("Enemy Damage Taken:" + col.gameObject.GetComponent<Projectile>().projectileStats.damage);
             // Destroy Projectile
             Destroy(col.gameObject);
         }
@@ -68,7 +75,10 @@ public class Enemy : MonoBehaviour
     }
 
     private void MoveEnemy(){
-        gameObject.transform.position += moveDir * Time.deltaTime * speed; 
+        Vector3 referenceMovement = new Vector3(referenceSpeed, 0, 0) * Time.deltaTime;
+        Vector3 enemyMovement = moveDir * Time.deltaTime * speed;
+
+        gameObject.transform.position += enemyMovement + referenceMovement; 
     }
 
 }
