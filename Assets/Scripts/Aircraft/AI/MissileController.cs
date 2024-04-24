@@ -1,15 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MissileController : MonoBehaviour
 {
-    GameObject enemy;
+    public GameObject enemy;
+
+    public enum Team
+    {
+        player,
+        enemy,
+    }
+    Team team = Team.enemy;
+
     Autopilot ap;
     Plane planeSelf;
     Rigidbody rb;
 
-    float burnTime = 1.0f;
+    bool isArmed = false;
+    [SerializeField] float burnTime = 1.0f;
+    [SerializeField] float selfDetTime = 3.0f;
+    Vector3 lastPosition;
+    [SerializeField] GameObject detonationEffect;
+    [SerializeField]LayerMask collisionMask;
+
 
     Perspective pers = Perspective.Side_On;
     // Start is called before the first frame update
@@ -26,20 +41,24 @@ public class MissileController : MonoBehaviour
 
         rb.angularDrag = 0.01f;
         //Find the player by tag
-        enemy = GameObject.FindGameObjectWithTag("Player");
+        // TODO: This should get passed by the spawner
+        if (enemy == null){
+            enemy = GameObject.FindGameObjectWithTag("Enemy");
+        }
+        ap.setTargetObject(enemy);
+        ap.setAPState(Autopilot.AutopilotState.pointAt);
         ap.onAxes = true;
+        planeSelf.SetThrottle(0.80f);
         // Wait for a short time before homing in on player
-        StartCoroutine(Wait());
-        //When the coroutine is finished, set the missile to home in on the player
-        
+        StartCoroutine(Wait());  
     }
     
     // Coroutine for missile to wait before homing in on player
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(0.2f);
-        ap.setTargetObject(enemy);
+        yield return new WaitForSeconds(0.5f);
         planeSelf.SetThrottle(1.0f);
+        isArmed = true;
         StartCoroutine(BurnOut());
     }
 
@@ -48,6 +67,47 @@ public class MissileController : MonoBehaviour
     {
         yield return new WaitForSeconds(burnTime);
         planeSelf.SetThrottle(0.0f);
+        StartCoroutine(SelfDestruct());
+    }
+
+    IEnumerator SelfDestruct()
+    {
+        yield return new WaitForSeconds(selfDetTime);
+        Detonate();
+    }
+
+    void Detonate(){
+        //StopAllCoroutines();
+        Instantiate(detonationEffect, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
+
+    // void OnCollisionEnter(Collision col)
+    // {
+    //     if (col.gameObject.tag == "Player")
+    //     {
+    //         // Detonate missile
+    //         Instantiate(detonationEffect, transform.position, Quaternion.identity);
+    //         Destroy(gameObject);
+    //     }
+    // }
+
+    void FixedUpdate(){
+        var diff = rb.position - lastPosition;
+        lastPosition = rb.position;
+
+        Ray ray = new Ray(lastPosition - diff, diff.normalized * 2);
+        Debug.DrawRay(lastPosition - diff, diff.normalized * 2, Color.red, 0.1f);
+        RaycastHit hit;
+        float width = 2.5f;
+
+        if (!isArmed){
+            return;
+        }
+        if (Physics.SphereCast(ray, width, out hit, diff.magnitude, collisionMask.value)) {
+            //Plane other = hit.collider.GetComponent<Plane>();
+            Detonate();
+        }
     }
 
     // Update is called once per frame

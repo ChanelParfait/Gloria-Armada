@@ -114,6 +114,10 @@ public class Autopilot : MonoBehaviour
         targetObject = target;
     }
 
+    public void setAPState(AutopilotState apState){
+        autopilotState = apState;
+    }
+
     // Start is called before the first frame update
     void Start()
     {

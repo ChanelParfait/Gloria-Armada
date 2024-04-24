@@ -72,7 +72,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 674909139210087522, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: hasTarget
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 674909139210087522, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: yawPID.Kd
@@ -96,7 +96,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 674909139210087522, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: autopilotState
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 674909139210087522, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: targetAngularSize
@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1168509773419960114, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1168509773419960114, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_TagString
@@ -172,7 +172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2951336494503559052, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: thrust
-      value: 1000
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 2951336494503559052, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: weight
@@ -192,11 +192,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2951336494503559052, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: scaleVelocity
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2951336494503559052, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: thrustVectoring
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2951336494503559052, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: surfaces.tail.area
@@ -286,9 +286,50 @@ PrefabInstance:
       propertyPath: pitchCurve.m_Curve.Array.data[2].outWeight
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4283415266244329837, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283415266244329837, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 4283415266244329837, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001200819396208791, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001200819396208791, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_Size.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001200819396208791, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7001200819396208791, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 8070367808183339508, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8070367808183339508, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 8070367808183339508, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.58
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4936141611755476538, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
     - {fileID: 2063622229542619533, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+    - {fileID: 7292014530985695324, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
     m_RemovedGameObjects:
     - {fileID: 9107035072416322520, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
     m_AddedGameObjects:
@@ -322,6 +363,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e380e371e3cd79d4ca318ac0f1b8a257, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+  burnTime: 1
+  selfDetTime: 3
+  detonationEffect: {fileID: 7641901280459977050, guid: a0acf2270fb5aa246bea2a0d6d4058d5, type: 3}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 192
 --- !u!4 &8102739045410771697 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3826269187576397350, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
