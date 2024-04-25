@@ -63,10 +63,10 @@ public class PlayerLife : MonoBehaviour
     {
         if (other.gameObject.tag == "EnemyProjectile")
         {
-            TakeDamage(other.GetComponent<Projectile>().projectileStats.damage);
-            //Debug.Log("Damage Taken");
-            Debug.Log("Damage: " + other.GetComponent<Projectile>().projectileStats.damage);
-            Destroy(other.gameObject);
+            // TakeDamage(other.GetComponent<Projectile>().projectileStats.damage);
+            // //Debug.Log("Damage Taken");
+            // Debug.Log("Damage: " + other.GetComponent<Projectile>().projectileStats.damage);
+            // Destroy(other.gameObject);
         }
     }
 }
