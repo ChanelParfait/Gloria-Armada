@@ -193,12 +193,12 @@ public class Plane : MonoBehaviour
         else{
             // Angle the thrust vector by the control inputs
             Vector3 thrustVector = transform.forward;
-            thrustVector = Quaternion.AngleAxis(controlDeflection.x, transform.right) * thrustVector;
+            thrustVector = Quaternion.AngleAxis(-controlDeflection.x, transform.right) * thrustVector;
             thrustVector = Quaternion.AngleAxis(controlDeflection.y, transform.up) * thrustVector;
             Vector3 thrustForce = throttle * thrust * thrustVector;
-            rb.AddRelativeForce(thrustForce);
+            rb.AddRelativeForce(throttle * thrust * Vector3.forward);
             // Add torque assuming engine is behind center of mass
-            rb.AddRelativeTorque(Vector3.Cross(new Vector3(0, 0, -3f), thrustForce));
+            rb.AddRelativeTorque(Vector3.Cross(new Vector3(0, 0, -4.5f), thrustForce));
          }
             
     }

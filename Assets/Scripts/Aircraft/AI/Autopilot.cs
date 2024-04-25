@@ -146,20 +146,21 @@ public class Autopilot : MonoBehaviour
         //Guard against null object, or object not a plane
         if (targetObject == null){
             if (targetDict.Count > 0){
-                targetObject = targetDict.FirstOrDefault().Value;
+                //targetObject = targetDict.FirstOrDefault().Value;
+                return false;
             }
             else{
                 autopilotState = autopilotState == AutopilotState.Off ? AutopilotState.Off : AutopilotState.targetFlat; 
                 return hasTarget = false;
             }
         }
-        if (targetObject.GetComponent<Plane>() == null){
+        else if (targetObject.GetComponent<Plane>() == null){
             targetLocation = targetObject.transform.position;
             return hasTarget = false;
         }
 
         //If target is dead, remove it from the list and try to find a new target
-        if (!targetObject.GetComponent<Plane>().isAlive){
+        else if (!targetObject.GetComponent<Plane>().isAlive){
             targetDict.Remove(targetObject.name);
             if (targetDict.Count > 0){
                 targetObject = targetDict.FirstOrDefault().Value;
@@ -170,9 +171,14 @@ public class Autopilot : MonoBehaviour
                 return false;                     
             }   
         }
-        rangeToTarget = Vector3.Distance(transform.position, targetObject.transform.position);
-        targetAngularSize = Mathf.Atan(2 / rangeToTarget) * Mathf.Rad2Deg;
-        return hasTarget = true;
+        else
+        {
+            rangeToTarget = Vector3.Distance(transform.position, targetObject.transform.position);
+            targetAngularSize = Mathf.Atan(2 / rangeToTarget) * Mathf.Rad2Deg;
+            return hasTarget = true;
+        }
+        return false;
+
     }
 
     public Vector3 GetAPInput(Vector3 _controlInputs){

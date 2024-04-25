@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 387109662954886105}
   - component: {fileID: 7884464371219309874}
   m_Layer: 0
-  m_Name: MissileLauncherGuided
+  m_Name: MissileLauncherGuided_Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f479efeead212a44a8fd8214a01170a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 6150919577730694117, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+  projectile: {fileID: 6150919577730694117, guid: 012c83c9214f71c4d8f391dd4daf50d5, type: 3}
   fireSound: {fileID: 0}
   weaponCategory: 1
-  isPlayerWeapon: 0
-  canFire: 1
+  isPlayerWeapon: 1
+  canFire: 0
   spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!82 &7884464371219309874
 AudioSource:

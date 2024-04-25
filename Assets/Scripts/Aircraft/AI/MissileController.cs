@@ -12,7 +12,7 @@ public class MissileController : MonoBehaviour
         player,
         enemy,
     }
-    Team team = Team.enemy;
+    [SerializeField] Team team = Team.enemy;
 
     Autopilot ap;
     Plane planeSelf;
@@ -25,6 +25,8 @@ public class MissileController : MonoBehaviour
     [SerializeField] GameObject detonationEffect;
     [SerializeField]LayerMask collisionMask;
 
+    FieldOfView fov;
+
 
     Perspective pers = Perspective.Side_On;
     // Start is called before the first frame update
@@ -33,6 +35,7 @@ public class MissileController : MonoBehaviour
         planeSelf = GetComponent<Plane>();
         ap = GetComponent<Autopilot>();
         rb = GetComponent<Rigidbody>();
+        fov = GetComponent<FieldOfView>();
 
         if (pers == Perspective.Side_On)
         {
@@ -42,21 +45,21 @@ public class MissileController : MonoBehaviour
         rb.angularDrag = 0.01f;
         //Find the player by tag
         // TODO: This should get passed by the spawner
-        if (enemy == null){
-            enemy = GameObject.FindGameObjectWithTag("Enemy");
+        if (enemy)
+        {
+            ap.setTargetObject(enemy);
+            ap.setAPState(Autopilot.AutopilotState.pointAt);
         }
-        ap.setTargetObject(enemy);
-        ap.setAPState(Autopilot.AutopilotState.pointAt);
         ap.onAxes = true;
-        planeSelf.SetThrottle(0.80f);
+        planeSelf.SetThrottle(1.0f);
         // Wait for a short time before homing in on player
         StartCoroutine(Wait());  
     }
-    
+
     // Coroutine for missile to wait before homing in on player
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         planeSelf.SetThrottle(1.0f);
         isArmed = true;
         StartCoroutine(BurnOut());
@@ -113,6 +116,18 @@ public class MissileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (enemy == null)
+        {
+            if (fov.visibleTargets.Count > 0)
+            {
+                // Check if the gameObject still exists
+                if (fov.visibleTargets[0] != null)
+                {
+                    enemy = fov.visibleTargets[0].gameObject;
+                    ap.setTargetObject(enemy);
+                    ap.setAPState(Autopilot.AutopilotState.pointAt);
+                }
+            }
+        }
     }
 }
