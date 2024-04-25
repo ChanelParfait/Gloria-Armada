@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Intro.unity
     guid: 5c42bbfc606f6824bb21111fffa7711d
   - enabled: 1
-    path: Assets/Scenes/AdvPhys/SampleSceneIntegration.unity
+    path: Assets/Scenes/AdvPhys/S1/SampleSceneIntegration.unity
     guid: a091db6419451044ca6f1cb83a1d7fcd
   m_configObjects: {}
