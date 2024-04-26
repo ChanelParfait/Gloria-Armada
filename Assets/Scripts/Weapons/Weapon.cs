@@ -43,7 +43,7 @@ public class Weapon : MonoBehaviour
     }
 
     public virtual void Fire(Vector3 velocity){
-        Debug.Log("Fire Base Weapon");
+        //Debug.Log("Fire Base Weapon");
         // Get spawn position and spawn projectile object
         GameObject clone = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation()); 
         clone.transform.localScale = weaponStats.projectileStats.size;
@@ -58,7 +58,7 @@ public class Weapon : MonoBehaviour
     
     public virtual void EnemyFire()
     {
-        Debug.Log("Enemy Fire");
+        //Debug.Log("Enemy Fire");
 
         // Get spawn position and spawn projectile object
         GameObject clone = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation()); 

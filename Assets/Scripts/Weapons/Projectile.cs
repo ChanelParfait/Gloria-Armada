@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour
 
         
         projectileRB = GetComponent<Rigidbody>();
-        Debug.Log(stats.speed);
+        //Debug.Log(stats.speed);
         projectileRB.AddRelativeForce(new Vector3(0, 0, stats.speed), ForceMode.VelocityChange); 
     }
     public void Launch(ProjectileStats stats, Vector3 cameraVelocity) {
@@ -58,6 +58,17 @@ public class Projectile : MonoBehaviour
 
     public void SetStats(ProjectileStats stats){
         projectileStats = stats;
+    }
+
+    private void OnTriggerEnter(Collider col){
+        //Debug.Log("Projectile Triggered");
+
+        if(col.gameObject.tag == "Player"){
+            col.GetComponent<PlayerLife>().TakeDamage(projectileStats.damage);
+        }
+        else if(col.gameObject.tag == "Enemy"){
+            col.GetComponent<Enemy>().TakeDamage(projectileStats.damage);
+        }
     }
 
 }

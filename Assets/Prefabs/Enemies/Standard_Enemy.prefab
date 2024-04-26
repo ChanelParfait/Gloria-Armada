@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9078503591668253462}
   m_Layer: 6
   m_Name: Standard_Enemy
-  m_TagString: EnemyProjectile
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireInterval: 3
   totalHealth: 3
+  referenceSpeed: 0
   speed: 3
   moveDir: {x: 0, y: 0, z: 0}
   orientation: {x: 0, y: 0, z: 0}
@@ -214,7 +215,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapons:
   - {fileID: 6045793822707952588}
-  playerRB: {fileID: 8332034306209877831}
 --- !u!1001 &2106472234459585926
 PrefabInstance:
   m_ObjectHideFlags: 0
