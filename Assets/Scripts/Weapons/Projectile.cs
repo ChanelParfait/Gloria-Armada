@@ -23,7 +23,7 @@ public class Projectile : MonoBehaviour
     float startTime;
     //float lifetime = 10;
 
-
+    public GameObject hitParticle;
 
 
     // Start is called before the first frame update
@@ -70,6 +70,7 @@ public class Projectile : MonoBehaviour
         }
         else if(col.gameObject.tag == "Enemy"){
             col.GetComponent<Enemy>().TakeDamage(projectileStats.damage);
+            Instantiate(hitParticle, transform.position, Quaternion.identity);
             Destroy(gameObject);
 
         }

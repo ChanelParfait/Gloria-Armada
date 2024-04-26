@@ -55,6 +55,7 @@ MonoBehaviour:
     size: {x: 0, y: 0, z: 0}
     range: 0
   projectileRB: {fileID: 0}
+  hitParticle: {fileID: 1705471074089252971, guid: 4a7c7df1406ac164ba9aa770af0c0d0a, type: 3}
 --- !u!65 &5474331421643568968
 BoxCollider:
   m_ObjectHideFlags: 0

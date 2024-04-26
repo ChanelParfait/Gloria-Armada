@@ -447,6 +447,7 @@ MonoBehaviour:
     size: {x: 0, y: 0, z: 0}
     range: 0
   projectileRB: {fileID: 1199794111368307438}
+  hitParticle: {fileID: 1705471074089252971, guid: 4a7c7df1406ac164ba9aa770af0c0d0a, type: 3}
 --- !u!4 &8102739045410771697 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3826269187576397350, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}

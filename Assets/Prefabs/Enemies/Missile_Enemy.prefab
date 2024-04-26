@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireInterval: 4
-  totalHealth: 1
+  totalHealth: 3
   referenceSpeed: 0
   speed: 3
   moveDir: {x: 0, y: 0, z: 0}
