@@ -11,7 +11,7 @@ public struct ProjectileStats{
     public int AP;
     public float lifetime;
     public Vector3 size; 
-    float range; 
+    public float range; 
 
 }
 
@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour
     public ProjectileStats projectileStats; 
     public Rigidbody projectileRB;
     float startTime;
-    float lifetime = 10;
+    //float lifetime = 10;
 
 
 
@@ -37,6 +37,7 @@ public class Projectile : MonoBehaviour
 
         
         projectileRB = GetComponent<Rigidbody>();
+        Debug.Log(stats.speed);
         projectileRB.AddRelativeForce(new Vector3(0, 0, stats.speed), ForceMode.VelocityChange); 
     }
     public void Launch(ProjectileStats stats, Vector3 cameraVelocity) {
@@ -50,7 +51,7 @@ public class Projectile : MonoBehaviour
 
 
     void FixedUpdate() {
-        if (Time.time > startTime + lifetime) {
+        if (Time.time > startTime + projectileStats.lifetime) {
             Destroy(gameObject);
         }
     }

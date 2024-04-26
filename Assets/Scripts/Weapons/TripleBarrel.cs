@@ -21,29 +21,34 @@ public class TripleBarrel : Weapon
         }
     }
 
-    public override void Fire()
+    public override void Fire(Vector3 velocity)
     {
         if(canFire){
-            base.Fire();
+            base.Fire(velocity);
             counter++;
-            base.Fire();
+            base.Fire(velocity);
             counter++;
-            base.Fire();
+            base.Fire(velocity);
             timer = 0;
             canFire = false;
+            counter = 1;
         }
     } 
 
     public override void EnemyFire()
     {
-        //Debug.Log("Enemy Machine Gun Fire");
-        base.Fire();
+        base.EnemyFire();
+        counter++;
+        base.EnemyFire();
+        counter++;
+        base.EnemyFire();
+        counter = 1;
     }
 
     public override void SetupWeapon(){
-        weaponStats.fireInterval = 1f;
-        weaponStats.projectileStats.damage = 1;
-        weaponStats.projectileStats.speed = 6;
+        //weaponStats.fireInterval = 1f;
+        //weaponStats.projectileStats.damage = 1;
+        //weaponStats.projectileStats.speed = 6;
 
         audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.clip = fireSound;
@@ -71,7 +76,16 @@ public class TripleBarrel : Weapon
     }
 
     public override Quaternion GetSpawnRotation(){
-        return base.GetSpawnRotation();
+        switch(counter){
+            case 1:
+                return Quaternion.Euler(gameObject.transform.eulerAngles.x - 45, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
+            case 2:
+                return base.GetSpawnRotation();
+            case 3:
+                return Quaternion.Euler(gameObject.transform.eulerAngles.x + 45, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
+            default:
+                return base.GetSpawnRotation();
+        }
     }
 
     public override void PlaySound(){
@@ -79,4 +93,5 @@ public class TripleBarrel : Weapon
             base.PlaySound();
         }
     }
+
 }

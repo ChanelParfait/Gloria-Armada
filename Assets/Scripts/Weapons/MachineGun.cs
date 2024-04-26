@@ -36,9 +36,9 @@ public class MachineGun : Weapon
     }*/
 
     public override void SetupWeapon(){
-        weaponStats.fireInterval = 0.5f;
-        weaponStats.projectileStats.damage = 1;
-        weaponStats.projectileStats.speed = 10;
+        //weaponStats.fireInterval = 0.5f;
+        //weaponStats.projectileStats.damage = 1;
+        //weaponStats.projectileStats.speed = 10;
 
 
         if(!projectile){
