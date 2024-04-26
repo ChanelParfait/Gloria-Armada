@@ -65,10 +65,15 @@ public class Projectile : MonoBehaviour
 
         if(col.gameObject.tag == "Player"){
             col.GetComponent<PlayerLife>().TakeDamage(projectileStats.damage);
+            Destroy(gameObject);
+
         }
         else if(col.gameObject.tag == "Enemy"){
             col.GetComponent<Enemy>().TakeDamage(projectileStats.damage);
+            Destroy(gameObject);
+
         }
+
     }
 
 }
