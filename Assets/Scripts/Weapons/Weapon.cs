@@ -48,6 +48,8 @@ public class Weapon : MonoBehaviour
         // Get spawn position and spawn projectile object
         GameObject clone = Instantiate(projectile, GetSpawnPos(), gameObject.transform.rotation); 
         clone.transform.localScale = weaponStats.projectileStats.size;
+        
+        
         //GameObject clone = Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation); 
         // set stats of projectile
         clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats, velocity); 
