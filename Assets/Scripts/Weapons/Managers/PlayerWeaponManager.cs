@@ -20,6 +20,8 @@ public class PlayerWeaponManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Get RB of parent 
+        playerRB = GetComponentInParent<Rigidbody>();
         // Used currently to test / show functionality
         // Will later be changed to Set Weapons through Loadout Menu
         SetPrimaryWeapon(testWeapon1);
@@ -55,6 +57,17 @@ public class PlayerWeaponManager : MonoBehaviour
         specialWeapon = Instantiate(weaponObj, transform.position, transform.rotation, transform).GetComponent<Weapon>();
         specialWeapon.isPlayerWeapon = true;
     }
+
+    
+    public Weapon GetPrimaryWeapon(){
+        return primaryWeapon;
+    }
+
+    public Weapon GetSpecialWeapon(){
+        return specialWeapon;
+    }
+
+    
 
     public virtual void FirePrimaryWeapon(){
         if(primaryWeapon){

@@ -2522,6 +2522,10 @@ PrefabInstance:
       propertyPath: playerPlane
       value: 
       objectReference: {fileID: 949054471}
+    - target: {fileID: 876247702513173626, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: initPerspective
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2253886997751849919, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
       propertyPath: player
       value: 
@@ -4513,10 +4517,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 797495823986119921, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1168509773419960114, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_Name
       value: PlayerPhys
@@ -4525,18 +4525,6 @@ PrefabInstance:
       propertyPath: meter
       value: 
       objectReference: {fileID: 1298909773}
-    - target: {fileID: 2063622229542619533, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
-      propertyPath: meterLevel
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4936141611755476538, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
-      propertyPath: gameOverScreen
-      value: 
-      objectReference: {fileID: 417588422}
-    - target: {fileID: 7292014530985695324, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
-      propertyPath: playerRB
-      value: 
-      objectReference: {fileID: 949054479}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7186,11 +7174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282e7828be1654a46872c4d94972946e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &949054479 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 6182760409746918969, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
-  m_PrefabInstance: {fileID: 656870839}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &964957479
 GameObject:
   m_ObjectHideFlags: 0

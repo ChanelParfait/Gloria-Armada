@@ -47,6 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492550644f6e286459916a82cec083bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileStats:
+    speed: 0
+    damage: 0
+    AP: 0
+    lifetime: 0
+    size: {x: 0, y: 0, z: 0}
+    range: 0
   projectileRB: {fileID: 0}
 --- !u!65 &5474331421643568968
 BoxCollider:
@@ -61,7 +68,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
