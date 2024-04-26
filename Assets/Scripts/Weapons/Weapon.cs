@@ -4,7 +4,6 @@ using UnityEngine;
 
 [System.Serializable]
 public struct WeaponStats{
-    //public string WeaponName; 
     // how frequently the weapon can fire
     public float fireInterval;
     // time taken to reload the weapon
@@ -53,7 +52,7 @@ public class Weapon : MonoBehaviour
         //GameObject clone = Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation); 
         // set stats of projectile
         clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats, velocity); 
-        audioSource.Play();
+        PlaySound();
     }
 
     
@@ -65,7 +64,7 @@ public class Weapon : MonoBehaviour
         //GameObject clone = Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation); 
         // set stats of projectile
         clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats); 
-        audioSource.Play();
+        PlaySound();
     }
 
     public void UpdateStats(WeaponStats newStats){
@@ -80,6 +79,17 @@ public class Weapon : MonoBehaviour
     {
         // return the default spawn position
         return gameObject.transform.position + gameObject.transform.forward * 8;
+    }
+
+    public virtual Quaternion GetSpawnRotation()
+    {
+        // return the default spawn rotation
+        return gameObject.transform.rotation;
+    }
+    
+    public virtual void PlaySound()
+    {
+        audioSource.Play();
     }
 
     public GameObject GetProjectile(){

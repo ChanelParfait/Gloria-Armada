@@ -29,9 +29,7 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Set Default Stats
-        //projectileStats.speed = 8;
-        //projectileStats.damage = 2;
+
     }
     public void Launch(ProjectileStats stats) {
         startTime = Time.time;
@@ -58,7 +56,6 @@ public class Projectile : MonoBehaviour
     }
 
     public void SetStats(ProjectileStats stats){
-        //Debug.Log(stats);
         projectileStats = stats;
     }
 
