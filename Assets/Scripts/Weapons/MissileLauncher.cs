@@ -94,12 +94,12 @@ public class MissileLauncher : Weapon
     }*/
 
     public override void SetupWeapon(){
-        weaponStats.maxAmmo = 4;
-        weaponStats.fireInterval = 0.25f;
-        weaponStats.reloadTime = 5;
+        //weaponStats.maxAmmo = 4;
+        //weaponStats.fireInterval = 0.25f;
+        //weaponStats.reloadTime = 5;
         currentAmmo = weaponStats.maxAmmo;
-        weaponStats.projectileStats.damage = 2;
-        weaponStats.projectileStats.speed = 9;
+        //weaponStats.projectileStats.damage = 2;
+        //weaponStats.projectileStats.speed = 9;
 
 
         if(!projectile){
