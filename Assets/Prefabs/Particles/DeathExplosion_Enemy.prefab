@@ -106,7 +106,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -116,8 +116,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.5
+      scalar: 2
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -168,9 +168,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startSpeed:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 50
-      minScalar: 5
+      minMaxState: 3
+      scalar: 100
+      minScalar: 40
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -664,14 +664,14 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 4
+    type: 0
     angle: 60
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 0, y: 0, z: 0}
+    m_Rotation: {x: 0, y: -90, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -751,7 +751,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 8
       mode: 0
       spread: 0
       speed:
@@ -2471,7 +2471,7 @@ ParticleSystem:
       m_Bits: 4294967295
     influenceList: []
   ClampVelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -2686,13 +2686,13 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxis: 0
     inWorldSpace: 0
-    multiplyDragByParticleSize: 1
+    multiplyDragByParticleSize: 0
     multiplyDragByParticleVelocity: 1
-    dampen: 0
+    dampen: 0.05
     drag:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3998,7 +3998,7 @@ ParticleSystem:
     lifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.25
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4049,7 +4049,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minVertexDistance: 0.2
-    textureMode: 0
+    textureMode: 1
     textureScale: {x: 1, y: 1}
     ribbonCount: 1
     shadowBias: 0.5
@@ -4129,26 +4129,26 @@ ParticleSystem:
     widthOverTrail:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 1
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
-          inSlope: -1
-          outSlope: -1
-          tangentMode: 34
+          value: 0.7504997
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: -1
-          outSlope: -1
-          tangentMode: 34
+          inSlope: -2
+          outSlope: -2
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
@@ -4188,16 +4188,16 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
         key1: {r: 1, g: 0.85950935, b: 0, a: 1}
-        key2: {r: 0, g: 0, b: 0, a: 0}
-        key3: {r: 0, g: 0, b: 0, a: 0}
+        key2: {r: 0.52201253, g: 0.17557792, b: 0, a: 0}
+        key3: {r: 0.52201253, g: 0.17557792, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
-        ctime0: 32768
-        ctime1: 65535
-        ctime2: 0
-        ctime3: 0
+        ctime0: 25572
+        ctime1: 41377
+        ctime2: 56540
+        ctime3: 65407
         ctime4: 0
         ctime5: 0
         ctime6: 0
@@ -4212,7 +4212,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_ColorSpace: 0
-        m_NumColorKeys: 2
+        m_NumColorKeys: 3
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
@@ -4903,10 +4903,10 @@ GameObject:
   - component: {fileID: 219603479895237879}
   - component: {fileID: 2247177509143080813}
   - component: {fileID: 5075316451062301173}
-  - component: {fileID: 4433902390837724229}
-  - component: {fileID: 3765786236389569654}
+  - component: {fileID: -6856489075545656407}
+  - component: {fileID: 7338096396987030808}
   m_Layer: 0
-  m_Name: Explosion_Small
+  m_Name: DeathExplosion_Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5034,7 +5034,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -5044,7 +5044,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.25
+      scalar: 0.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5215,7 +5215,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 800
+      scalar: 1000
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -7399,7 +7399,7 @@ ParticleSystem:
       m_Bits: 4294967295
     influenceList: []
   ClampVelocityModule:
-    enabled: 1
+    enabled: 0
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -7614,13 +7614,13 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxis: 0
     inWorldSpace: 0
-    multiplyDragByParticleSize: 1
-    multiplyDragByParticleVelocity: 1
+    multiplyDragByParticleSize: 0
+    multiplyDragByParticleVelocity: 0
     dampen: 0
     drag:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0.05
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -9843,7 +9843,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4433902390837724229
+--- !u!114 &-6856489075545656407
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9855,8 +9855,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787b15c942f0c924a936ed9863a37f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyTime: 2
---- !u!82 &3765786236389569654
+  destroyTime: 3
+--- !u!82 &7338096396987030808
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9866,7 +9866,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d9a5227318d1d42458c9e1a52523925a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c6675f1165df3de4b9032bb4de2dc4de, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

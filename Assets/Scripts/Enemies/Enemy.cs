@@ -20,7 +20,8 @@ public class Enemy : MonoBehaviour
     private int currentHealth;
     private float timer = 0;
 
-    
+    public GameObject deathExplosion;
+
     // Start is called before the first frame update
     void Start()
     {   
@@ -70,7 +71,8 @@ public class Enemy : MonoBehaviour
         // Trigger Enemy Death Event 
         Debug.Log("Enemy Death");
         Actions.OnEnemyDeath?.Invoke(this);
-        // Destroy Self
+        // Destroy Self and emit death explosion
+        Instantiate(deathExplosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 

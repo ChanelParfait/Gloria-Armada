@@ -70,7 +70,10 @@ public class Projectile : MonoBehaviour
         }
         else if(col.gameObject.tag == "Enemy"){
             col.GetComponent<Enemy>().TakeDamage(projectileStats.damage);
-            Instantiate(hitParticle, transform.position, Quaternion.identity);
+            if (hitParticle)
+            {
+                Instantiate(hitParticle, transform.position, Quaternion.identity);
+            }
             Destroy(gameObject);
 
         }

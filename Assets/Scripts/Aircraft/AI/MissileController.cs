@@ -81,7 +81,10 @@ public class MissileController : MonoBehaviour
 
     void Detonate(){
         //StopAllCoroutines();
-        Instantiate(detonationEffect, transform.position, Quaternion.identity);
+        if(detonationEffect)
+        {
+            Instantiate(detonationEffect, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 

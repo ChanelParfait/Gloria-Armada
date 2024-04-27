@@ -5,6 +5,7 @@ using UnityEngine;
 public class HitParticleDestroy : MonoBehaviour
 {
     private float timer;
+    public float destroyTime = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +16,7 @@ public class HitParticleDestroy : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 0.5f)
+        if (timer > destroyTime)
         {
             Destroy(gameObject);
         }
