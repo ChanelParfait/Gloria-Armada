@@ -47,8 +47,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 0}
   fireSound: {fileID: 0}
+  weaponStats:
+    fireInterval: 0.25
+    reloadTime: 5
+    maxAmmo: 4
+    projectileStats:
+      speed: 9
+      damage: 2
+      AP: 0
+      lifetime: 10
+      size: {x: 1, y: 1, z: 1}
+      range: 0
   weaponCategory: 1
+  isPlayerWeapon: 0
   canFire: 1
+  spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!82 &7884464371219309874
 AudioSource:
   m_ObjectHideFlags: 0

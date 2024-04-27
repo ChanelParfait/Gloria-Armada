@@ -332,7 +332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7001200819396208791, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
-      value: 256
+      value: 384
       objectReference: {fileID: 0}
     - target: {fileID: 8070367808183339508, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_LocalPosition.x
@@ -438,6 +438,10 @@ MonoBehaviour:
   projectileStats:
     speed: 0
     damage: 1
+    AP: 0
+    lifetime: 0
+    size: {x: 0, y: 0, z: 0}
+    range: 0
   projectileRB: {fileID: 1199794111368307438}
 --- !u!4 &8102739045410771697 stripped
 Transform:

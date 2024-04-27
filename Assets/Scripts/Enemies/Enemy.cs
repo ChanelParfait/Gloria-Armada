@@ -51,15 +51,15 @@ public class Enemy : MonoBehaviour
         // if hit by a player projectile
         if(col.gameObject.tag == "PlayerProjectile"){
             // Take Damage
-            TakeDamage(col.gameObject.GetComponent<Projectile>().projectileStats.damage);
+            //TakeDamage(col.gameObject.GetComponent<Projectile>().projectileStats.damage);
             Debug.Log("Enemy Health:" + currentHealth);
-            Debug.Log("Enemy Damage Taken:" + col.gameObject.GetComponent<Projectile>().projectileStats.damage);
+            //Debug.Log("Enemy Damage Taken:" + col.gameObject.GetComponent<Projectile>().projectileStats.damage);
             // Destroy Projectile
-            Destroy(col.gameObject);
+            //Destroy(col.gameObject);
         }
     }
 
-    void TakeDamage(int damage){
+    public void TakeDamage(int damage){
         currentHealth -= damage;
         if(currentHealth <= 0){
             Die();

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-//using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,8 +8,10 @@ using UnityEngine;
 public struct ProjectileStats{
     public float speed; 
     public int damage;
-    float lifetime;
-    float range; 
+    public int AP;
+    public float lifetime;
+    public Vector3 size; 
+    public float range; 
 
 }
 
@@ -20,7 +21,7 @@ public class Projectile : MonoBehaviour
     public ProjectileStats projectileStats; 
     public Rigidbody projectileRB;
     float startTime;
-    float lifetime = 10;
+    //float lifetime = 10;
 
 
 
@@ -28,9 +29,7 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Set Default Stats
-        //projectileStats.speed = 8;
-        //projectileStats.damage = 2;
+
     }
     public void Launch(ProjectileStats stats) {
         startTime = Time.time;
@@ -38,6 +37,7 @@ public class Projectile : MonoBehaviour
 
         
         projectileRB = GetComponent<Rigidbody>();
+        //Debug.Log(stats.speed);
         projectileRB.AddRelativeForce(new Vector3(0, 0, stats.speed), ForceMode.VelocityChange); 
     }
     public void Launch(ProjectileStats stats, Vector3 cameraVelocity) {
@@ -51,14 +51,29 @@ public class Projectile : MonoBehaviour
 
 
     void FixedUpdate() {
-        if (Time.time > startTime + lifetime) {
+        if (Time.time > startTime + projectileStats.lifetime) {
             Destroy(gameObject);
         }
     }
 
     public void SetStats(ProjectileStats stats){
-        //Debug.Log(stats);
         projectileStats = stats;
+    }
+
+    private void OnTriggerEnter(Collider col){
+        //Debug.Log("Projectile Triggered");
+
+        if(col.gameObject.tag == "Player"){
+            col.GetComponent<PlayerLife>().TakeDamage(projectileStats.damage);
+            Destroy(gameObject);
+
+        }
+        else if(col.gameObject.tag == "Enemy"){
+            col.GetComponent<Enemy>().TakeDamage(projectileStats.damage);
+            Destroy(gameObject);
+
+        }
+
     }
 
 }
