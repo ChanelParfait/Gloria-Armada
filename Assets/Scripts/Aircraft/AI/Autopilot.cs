@@ -36,7 +36,7 @@ public class Autopilot : MonoBehaviour
     [SerializeField] Vector3 autopilotDeflection = new Vector3(0, 0, 0);
     Vector3 controlInputs = new Vector3(0, 0, 0);
     
-    public enum AutopilotState {Off = 0, pointAt = 1, vectorAt = 3, targetFlat = 2};
+    public enum AutopilotState {Off, pointAt,  targetFlat, vectorAt, targetStraight};
     [Header("AP State")]
     public AutopilotState autopilotState = AutopilotState.Off;
     //AutopilotState lastAutopilotState = AutopilotState.Off;
@@ -150,8 +150,13 @@ public class Autopilot : MonoBehaviour
                 return false;
             }
             else{
-                autopilotState = autopilotState == AutopilotState.Off ? AutopilotState.Off : AutopilotState.targetFlat; 
-                return hasTarget = false;
+                if (autopilotState != AutopilotState.Off || autopilotState != AutopilotState.targetStraight){
+                    autopilotState = AutopilotState.targetFlat;
+                    return false;
+                }
+                else{
+                    return false;
+                }
             }
         }
         else if (targetObject.GetComponent<Plane>() == null){
@@ -221,7 +226,10 @@ public class Autopilot : MonoBehaviour
             autopilotDeflection = VectorAt(targetLocation, mainPIDs, VectorType.direction);
         }
         else if (state == AutopilotState.targetFlat){
-            autopilotDeflection = AutoTargetPlane('Y');
+            autopilotDeflection = AutoTargetPlane();
+        }
+        else if (state == AutopilotState.targetStraight){
+            autopilotDeflection = AutoStraight();
         }
         else{
             autopilotDeflection = new Vector3(0, 0, 0);
@@ -412,8 +420,13 @@ public class Autopilot : MonoBehaviour
         zTarget = -controlInputLR;
     }
 
+    Vector3 AutoStraight(){
+        // Go set a vector that is straight ahead
+        return VectorAt(rb.transform.forward * 1000, mainPIDs, VectorType.direction);
+    }
+
     // Target a 2D plane
-    Vector3 AutoTargetPlane(char plane = 'Y'){
+    Vector3 AutoTargetPlane(){
         // If we are not already on the plane then go to it
         float x = rb.transform.position.x;
         float y = rb.transform.position.y;
@@ -465,15 +478,15 @@ public class Autopilot : MonoBehaviour
     }
 
 
-    void OnDrawGizmos(){
-        Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.magenta, Color.white, Color.black};
-        if (HasTarget() && tag != "Player"){
-            foreach (Lead lead in Enum.GetValues(typeof(Lead))){
-                //assign a color to each lead type
-                Gizmos.color = colors[(int)lead];
-                Gizmos.DrawSphere(CalcLead(targetObject.GetComponent<Plane>(), lead), 1.0f);
-            }
-        }
-    }
+    // void OnDrawGizmos(){
+    //     Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.magenta, Color.white, Color.black};
+    //     if (HasTarget() && tag != "Player"){
+    //         foreach (Lead lead in Enum.GetValues(typeof(Lead))){
+    //             //assign a color to each lead type
+    //             Gizmos.color = colors[(int)lead];
+    //             Gizmos.DrawSphere(CalcLead(targetObject.GetComponent<Plane>(), lead), 1.0f);
+    //         }
+    //     }
+    // }
 
 }

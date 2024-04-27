@@ -69,4 +69,19 @@ public class PlayerLife : MonoBehaviour
             // Destroy(other.gameObject);
         }
     }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
+            //Get the normal of the collision
+            Vector3 normal = col.contacts[0].normal;
+            //Get dot product of the normal and the velocity
+            Rigidbody rb = GetComponent<Rigidbody>();
+            float dot = Vector3.Dot(rb.velocity.normalized, normal);
+            
+            //Reduce health by a minimum of 1healh, max of MaxLife based on dot
+            float damage = Mathf.Lerp(1, maxLife, dot);
+            TakeDamage(damage);
+        }
+    }
 }

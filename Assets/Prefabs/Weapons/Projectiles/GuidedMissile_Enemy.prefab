@@ -112,7 +112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 674909139210087522, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: autopilotState
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 674909139210087522, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: targetAngularSize
@@ -188,7 +188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2951336494503559052, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: thrust
-      value: 1500
+      value: 1350
       objectReference: {fileID: 0}
     - target: {fileID: 2951336494503559052, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: weight
@@ -204,15 +204,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2951336494503559052, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: liftPower
-      value: 0.4
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 2951336494503559052, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: spawnSpeed
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2951336494503559052, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: scaleVelocity
-      value: 1.3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2951336494503559052, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: thrustVectoring
@@ -400,8 +400,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
   team: 1
-  burnTime: 1
-  selfDetTime: 3
+  burnTime: 0.5
+  selfDetTime: 2
   detonationEffect: {fileID: 7641901280459977050, guid: a0acf2270fb5aa246bea2a0d6d4058d5, type: 3}
   collisionMask:
     serializedVersion: 2
@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   viewRadius: 250
-  viewAngle: 58
+  viewAngle: 123
   layerMask:
     serializedVersion: 2
     m_Bits: 128
