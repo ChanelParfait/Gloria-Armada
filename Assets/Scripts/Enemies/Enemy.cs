@@ -3,21 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Enemy : MonoBehaviour
+public class Enemy : EnemyBase
 {
     
     // Base Class for enemies 
     EnemyWeaponManager weaponManager; 
     [SerializeField] private float fireInterval = 3;
-    [SerializeField] private int totalHealth = 3;
 
     public float referenceSpeed = 0;
     public int speed = 8;
     public Vector3 moveDir;
     public Vector3 orientation;
-
-    public int scoreValue = 10; 
-    private int currentHealth;
     private float timer = 0;
 
     
@@ -25,7 +21,6 @@ public class Enemy : MonoBehaviour
     void Start()
     {   
         weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
-        currentHealth = totalHealth;
     }
 
     // Update is called once per frame
@@ -43,7 +38,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public void Fire(){
+    override public void Fire(){
         weaponManager.FireActiveWeapon();
     }
 
@@ -51,22 +46,15 @@ public class Enemy : MonoBehaviour
         // if hit by a player projectile
         if(col.gameObject.tag == "PlayerProjectile"){
             // Take Damage
-            TakeDamage(col.gameObject.GetComponent<Projectile>().projectileStats.damage);
+            //TakeDamage(col.gameObject.GetComponent<Projectile>().projectileStats.damage);
             Debug.Log("Enemy Health:" + currentHealth);
-            Debug.Log("Enemy Damage Taken:" + col.gameObject.GetComponent<Projectile>().projectileStats.damage);
+            //Debug.Log("Enemy Damage Taken:" + col.gameObject.GetComponent<Projectile>().projectileStats.damage);
             // Destroy Projectile
-            Destroy(col.gameObject);
+            //Destroy(col.gameObject);
         }
     }
 
-    void TakeDamage(int damage){
-        currentHealth -= damage;
-        if(currentHealth <= 0){
-            Die();
-        }
-    }
-
-    void Die(){
+    override public void Die(){
         // Trigger Enemy Death Event 
         Debug.Log("Enemy Death");
         Actions.OnEnemyDeath?.Invoke(this);

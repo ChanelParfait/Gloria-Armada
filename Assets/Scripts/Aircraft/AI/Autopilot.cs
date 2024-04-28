@@ -36,7 +36,7 @@ public class Autopilot : MonoBehaviour
     [SerializeField] Vector3 autopilotDeflection = new Vector3(0, 0, 0);
     Vector3 controlInputs = new Vector3(0, 0, 0);
     
-    public enum AutopilotState {Off = 0, pointAt = 1, vectorAt = 3, targetFlat = 2};
+    public enum AutopilotState {Off, pointAt,  targetFlat, vectorAt, targetStraight};
     [Header("AP State")]
     public AutopilotState autopilotState = AutopilotState.Off;
     //AutopilotState lastAutopilotState = AutopilotState.Off;
@@ -85,6 +85,8 @@ public class Autopilot : MonoBehaviour
     public bool hasTarget = false;
     public bool onAxes = false;
     public float shotSpeed = 300f;
+
+    public float zTarget = 0;
     public float targetAngularSize;
 
     [SerializeField] Perspective pers = Perspective.Null;
@@ -108,6 +110,14 @@ public class Autopilot : MonoBehaviour
         Debug.Log("Perspective changed to: " + pers.ToString());
     }
 
+    public void setTargetObject(GameObject target){
+        targetObject = target;
+    }
+
+    public void setAPState(AutopilotState apState){
+        autopilotState = apState;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -115,9 +125,9 @@ public class Autopilot : MonoBehaviour
             LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
             pers = lm.currentPerspective;
         }
-        mainPIDs = new PID[] {pitchPID, yawPID, rollPID};
-        autoPIDs = new PID[] {aPitchPID, aYawPID, aRollPID};
-        stabilityPIDs = new PID[] {sPitchPID, sYawPID, sRollPID};
+        mainPIDs = new PID[] {pitchPID, rollPID, yawPID};
+        autoPIDs = new PID[] {aPitchPID, aRollPID, aYawPID};
+        stabilityPIDs = new PID[] {sPitchPID, sRollPID, sYawPID};
         p = GetComponent<Plane>(); 
 
         //based on the tag
@@ -136,20 +146,26 @@ public class Autopilot : MonoBehaviour
         //Guard against null object, or object not a plane
         if (targetObject == null){
             if (targetDict.Count > 0){
-                targetObject = targetDict.FirstOrDefault().Value;
+                //targetObject = targetDict.FirstOrDefault().Value;
+                return false;
             }
             else{
-                autopilotState = autopilotState == AutopilotState.Off ? AutopilotState.Off : AutopilotState.targetFlat; 
-                return hasTarget = false;
+                if (autopilotState != AutopilotState.Off || autopilotState != AutopilotState.targetStraight){
+                    autopilotState = AutopilotState.targetFlat;
+                    return false;
+                }
+                else{
+                    return false;
+                }
             }
         }
-        if (targetObject.GetComponent<Plane>() == null){
+        else if (targetObject.GetComponent<Plane>() == null){
             targetLocation = targetObject.transform.position;
             return hasTarget = false;
         }
 
         //If target is dead, remove it from the list and try to find a new target
-        if (!targetObject.GetComponent<Plane>().isAlive){
+        else if (!targetObject.GetComponent<Plane>().isAlive){
             targetDict.Remove(targetObject.name);
             if (targetDict.Count > 0){
                 targetObject = targetDict.FirstOrDefault().Value;
@@ -160,9 +176,14 @@ public class Autopilot : MonoBehaviour
                 return false;                     
             }   
         }
-        rangeToTarget = Vector3.Distance(transform.position, targetObject.transform.position);
-        targetAngularSize = Mathf.Atan(2 / rangeToTarget) * Mathf.Rad2Deg;
-        return hasTarget = true;
+        else
+        {
+            rangeToTarget = Vector3.Distance(transform.position, targetObject.transform.position);
+            targetAngularSize = Mathf.Atan(2 / rangeToTarget) * Mathf.Rad2Deg;
+            return hasTarget = true;
+        }
+        return false;
+
     }
 
     public Vector3 GetAPInput(Vector3 _controlInputs){
@@ -171,12 +192,12 @@ public class Autopilot : MonoBehaviour
         if (tag == "Player"){
             //
             if (pers == Perspective.Top_Down && onAxes){
-                controlInputs.y *= RestrictRoll();    
-                controlInputs.x += AutoTurn()/2;
-                controlInputs.y += Upright();
-                Mathf.Clamp(controlInputs.y, -1, 1);  
+                // controlInputs.y *= RestrictRoll();    
+                // controlInputs.x += AutoTurn()/2;
+                // controlInputs.y += Upright();
+                // Mathf.Clamp(controlInputs.y, -1, 1);  
 
-                apInputs = Utilities.ClampVec3(apInputs + controlInputs, -1, 1);
+                //apInputs = Utilities.ClampVec3(apInputs + controlInputs, -1, 1);
             }
                
         }
@@ -185,13 +206,13 @@ public class Autopilot : MonoBehaviour
 
     Vector3 AutopilotControl(AutopilotState state){
         
-        autopilotDeflection = controlInputs;
+        autopilotDeflection = Vector3.zero;
         if (state == AutopilotState.Off){
             return controlInputs;
         }
 
         if (HasTarget()){
-            targetLocation = CalcLead(targetObject.GetComponent<Plane>(), Lead.leadShot);
+            targetLocation = CalcLead(targetObject.GetComponent<Plane>(), Lead.intercept);
             aimVector = CalcAimVector(targetObject.GetComponent<Plane>());
         }
         
@@ -205,7 +226,10 @@ public class Autopilot : MonoBehaviour
             autopilotDeflection = VectorAt(targetLocation, mainPIDs, VectorType.direction);
         }
         else if (state == AutopilotState.targetFlat){
-            autopilotDeflection = AutoTargetPlane('Y');
+            autopilotDeflection = AutoTargetPlane();
+        }
+        else if (state == AutopilotState.targetStraight){
+            autopilotDeflection = AutoStraight();
         }
         else{
             autopilotDeflection = new Vector3(0, 0, 0);
@@ -283,6 +307,8 @@ public class Autopilot : MonoBehaviour
 
         //Debug.DrawRay(transform.position, targetDirection * 1000, Color.red);
 
+        Debug.DrawRay(transform.position, targetDirection * 20, Color.yellow);
+
         float autoXInput = Mathf.Clamp(PIDSolve(anglePitch, ref pids[0]), -1, 1);
         float autoYInput = Mathf.Clamp(PIDSolve(angleRoll, ref pids[1]), -1.0f, 1.0f);
         float autoZInput = Mathf.Clamp(PIDSolve(angleYaw, ref pids[2]), -1.0f, 1.0f);
@@ -314,6 +340,8 @@ public class Autopilot : MonoBehaviour
         angleYaw *= Vector3.Cross(velocityError, rb.transform.up).magnitude;
     
         float angleRoll = Mathf.Lerp(angleLiftVUp, angleAlignLiftV, Mathf.Clamp01(velocityError.magnitude));
+
+        Debug.DrawRay(transform.position, velocityError, Color.yellow);
 
         float x = Mathf.Clamp(PIDSolve(anglePitch,  ref pids[0]), -1, 1);
         float y = Mathf.Clamp(PIDSolve(angleRoll,   ref pids[1]), -1, 1);
@@ -388,8 +416,17 @@ public class Autopilot : MonoBehaviour
     }
     #endregion Assists
 
+    public void setZTarget(float controlInputLR){
+        zTarget = -controlInputLR;
+    }
+
+    Vector3 AutoStraight(){
+        // Go set a vector that is straight ahead
+        return VectorAt(rb.transform.forward * 1000, mainPIDs, VectorType.direction);
+    }
+
     // Target a 2D plane
-    Vector3 AutoTargetPlane(char plane = 'Y'){
+    Vector3 AutoTargetPlane(){
         // If we are not already on the plane then go to it
         float x = rb.transform.position.x;
         float y = rb.transform.position.y;
@@ -399,11 +436,15 @@ public class Autopilot : MonoBehaviour
         float signZ = Mathf.Sign(z);
         float smoothing = 200.0f;
 
+        // Set zAngle between 0 and 90 degrees
+        float zAngle = 40;
+        // Multiply by Tan(45 dgrees) * smoothing to get the distance to the plane
+        zTarget = Mathf.Tan(zAngle * Mathf.Deg2Rad * zTarget) * smoothing;
 
         float ty = Mathf.Min(signY * -y * y, smoothing);
-        float tz = Mathf.Min(signZ * -z * z, smoothing);
-        if (pers == Perspective.Side_On){ty = onAxes ? 0 : ty;}
-        if (pers == Perspective.Top_Down){tz = onAxes ? 0 : tz;}
+        float tz = Mathf.Min(signZ * -z * z, smoothing); // By default -> got to the center of the screen
+        if (pers == Perspective.Side_On){ ty = onAxes ? 0 : ty;}
+        if (pers == Perspective.Top_Down){tz = onAxes ? zTarget : tz;} // In top-down, go to point defined by player input
         
         Vector3 targetVector = new Vector3(smoothing, ty, tz); //As a direction
         //Vector3 targetVector = new Vector3(60, 0, 0); //As a position
@@ -428,12 +469,10 @@ public class Autopilot : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None;
         }
 
-
-
-        //Debug.DrawRay(rb.transform.position, targetVector, Color.red);
+        Debug.DrawRay(rb.transform.position, targetVector, Color.red);
         Vector3 vecToPlane =  VectorAt(targetVector, mainPIDs, VectorType.direction);
         if (onAxes){
-            vecToPlane *= 0.1f;
+            Utilities.MultiplyComponents(vecToPlane, new Vector3(1, 1, 0.3f));
         }
         return vecToPlane;
     }
@@ -441,7 +480,7 @@ public class Autopilot : MonoBehaviour
 
     // void OnDrawGizmos(){
     //     Color[] colors = {Color.red, Color.green, Color.blue, Color.yellow, Color.cyan, Color.magenta, Color.white, Color.black};
-    //     if (HasTarget() && tag == "Player"){
+    //     if (HasTarget() && tag != "Player"){
     //         foreach (Lead lead in Enum.GetValues(typeof(Lead))){
     //             //assign a color to each lead type
     //             Gizmos.color = colors[(int)lead];
