@@ -99,12 +99,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireInterval: 4
-  totalHealth: 1
+  totalHealth: 3
   referenceSpeed: 0
   speed: 3
   moveDir: {x: 0, y: 0, z: 0}
   orientation: {x: 0, y: 0, z: 0}
   scoreValue: 10
+  deathExplosion: {fileID: 7641901280459977050, guid: 12cd1a8c790828542bcbce48a291aa01, type: 3}
 --- !u!82 &4763586288305748271
 AudioSource:
   m_ObjectHideFlags: 0

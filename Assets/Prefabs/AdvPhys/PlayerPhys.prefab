@@ -5148,7 +5148,7 @@ MonoBehaviour:
   gun: {fileID: 1955615125115568952, guid: 93478ce0210976544bb1a24947eb49e2, type: 3}
   smoke: {fileID: 6651390922727057364}
   fire: {fileID: 5900609437313271690}
-  boost: {fileID: 0}
+  boost: {fileID: 797495823986119921}
   wingtipVortices:
   - {fileID: 2408597013414804574}
   - {fileID: 6690889685156807857}

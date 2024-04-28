@@ -48,11 +48,11 @@ MonoBehaviour:
   projectile: {fileID: 5426895945089439378, guid: 3e917c10eb181df4c82a090a4c40a8f4, type: 3}
   fireSound: {fileID: 8300000, guid: 0bbee73ee57a3064781c30353e56f3c9, type: 3}
   weaponStats:
-    fireInterval: 0.5
+    fireInterval: 0.2
     reloadTime: 0
     maxAmmo: 0
     projectileStats:
-      speed: 10
+      speed: 20
       damage: 1
       AP: 0
       lifetime: 10
@@ -74,7 +74,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0

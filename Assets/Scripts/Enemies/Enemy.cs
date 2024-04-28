@@ -16,7 +16,8 @@ public class Enemy : EnemyBase
     public Vector3 orientation;
     private float timer = 0;
 
-    
+    public GameObject deathExplosion;
+
     // Start is called before the first frame update
     void Start()
     {   
@@ -58,7 +59,8 @@ public class Enemy : EnemyBase
         // Trigger Enemy Death Event 
         Debug.Log("Enemy Death");
         Actions.OnEnemyDeath?.Invoke(this);
-        // Destroy Self
+        // Destroy Self and emit death explosion
+        Instantiate(deathExplosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 
