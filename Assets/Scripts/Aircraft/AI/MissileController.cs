@@ -7,13 +7,6 @@ public class MissileController : MonoBehaviour
 {
     public GameObject enemy;
 
-    public enum Team
-    {
-        player,
-        enemy,
-    }
-    //[SerializeField] Team team = Team.enemy;
-
     Autopilot ap;
     Plane planeSelf;
     Rigidbody rb;
@@ -39,6 +32,8 @@ public class MissileController : MonoBehaviour
 
         if (pers == Perspective.Side_On)
         {
+            Vector3 pos = this.gameObject.transform.position;
+            gameObject.transform.position.Set(pos.x, pos.y, 0);
             rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezePositionZ;
         }
 

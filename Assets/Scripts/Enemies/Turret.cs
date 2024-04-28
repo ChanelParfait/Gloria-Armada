@@ -8,14 +8,13 @@ public class Turret : EnemyBase
     [SerializeField] GameObject aimPoint;
     [SerializeField] GameObject azimuthObj;
     [SerializeField] GameObject elevationObj;
+
+    [SerializeField] bool leadShot = true;
+    [SerializeField] float overrideProjectileSpeed = 25.0f;
     EnemyWeaponManager weaponManager; 
-    [SerializeField] private float fireInterval = 3;
-    private float timer = 0;
-
     FieldOfView fov;
+    [SerializeField] float rotationSpeed = 60.0f;
 
-    
-    [SerializeField] float rotationSpeed = 1.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,28 +28,38 @@ public class Turret : EnemyBase
         
         if (enemy != null){
             AimpointToTarget();
+            weaponManager.FireActiveWeapon();
         }
         else {
             AimpointReset();
             SearchForTarget();
         }
-        LookAtTarget();
-        timer += Time.deltaTime; 
-        if(timer >= fireInterval){
-            timer = 0; 
-            Fire();
-        }
-        
+        LookAtTarget();  
     }
 
     void AimpointToTarget(){
-        //get projectile velocity from weapon manager
-        float projectileSpeed = weaponManager.ActiveWeapon.GetProjectileStats().speed;
-        aimPoint.transform.position = Utilities.FirstOrderIntercept(azimuthObj.transform.position, Vector3.zero, projectileSpeed, enemy.transform.position, enemy.GetComponent<Rigidbody>().velocity);
+        if (!leadShot){
+            aimPoint.transform.position = enemy.transform.position;
+            return;
+        }
+        float projectileSpeed;
+        if (overrideProjectileSpeed > 0){
+            projectileSpeed = overrideProjectileSpeed;
+        }
+        else {projectileSpeed = weaponManager.ActiveWeapon.GetProjectileStats().speed;}
+
+
+        Vector3 relativePos = enemy.transform.position - transform.position;
+        //Estimate time to target
+        float timeToTarget = relativePos.magnitude / (2*projectileSpeed);
+        //Predict position
+        Vector3 targetPosition = enemy.transform.position + enemy.GetComponent<Rigidbody>().velocity * timeToTarget;
+        //Set aimpoint to target position
+        aimPoint.transform.position = targetPosition;
     }
 
     void AimpointReset(){
-        aimPoint.transform.position = transform.position + new Vector3(-50, 50, 0);
+        aimPoint.transform.position = transform.position + new Vector3(-50, 5, 0);
     }
 
 
@@ -89,6 +98,7 @@ public class Turret : EnemyBase
             azimuthRotation,
             EaseInOut(t)
         );
+
         // For elevation, find the direction relative to the azimuth's current forward
         Vector3 elevationDirection = aimPoint.transform.position - elevationObj.transform.position;
 
@@ -106,6 +116,7 @@ public class Turret : EnemyBase
             finalElevationRotation,
             EaseInOut(t)
         );
+
     }
 
     static float Flip(float x)

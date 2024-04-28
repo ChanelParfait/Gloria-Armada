@@ -403,7 +403,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
-  team: 0
   burnTime: 1
   selfDetTime: 3
   detonationEffect: {fileID: 7641901280459977050, guid: a0acf2270fb5aa246bea2a0d6d4058d5, type: 3}

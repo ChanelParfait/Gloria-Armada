@@ -69,7 +69,7 @@ public class Projectile : MonoBehaviour
 
         }
         else if(col.gameObject.tag == "Enemy"){
-            col.GetComponent<Enemy>().TakeDamage(projectileStats.damage);
+            col.GetComponent<EnemyBase>().TakeDamage(projectileStats.damage);
             if (hitParticle)
             {
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
