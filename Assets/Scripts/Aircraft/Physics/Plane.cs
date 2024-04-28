@@ -18,7 +18,7 @@ public class Plane : MonoBehaviour
 {
 
     //public KeyCode Up = KeyCode.W, Down = KeyCode.S, Left = KeyCode.A, Right = KeyCode.D, YawRight = KeyCode.E, YawLeft = KeyCode.Q;
-    private KeyCode Fire = KeyCode.Space;
+    //private KeyCode Fire = KeyCode.Space;
     public KeyCode throttleUp = KeyCode.Tab, throttleDown = KeyCode.LeftShift;
 
     [SerializeField] Vector3 controlDeflection = Vector3.zero;

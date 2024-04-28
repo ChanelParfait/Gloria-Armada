@@ -37,6 +37,14 @@ public class Weapon : MonoBehaviour
         
     }
 
+    public WeaponStats GetWeaponStats(){
+        return weaponStats;
+    }
+
+    public ProjectileStats GetProjectileStats(){
+        return weaponStats.projectileStats;
+    }
+
     public virtual void SetupWeapon(){
         audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.clip = fireSound;
