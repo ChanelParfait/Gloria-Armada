@@ -25,7 +25,7 @@ public class IntroSequence : MonoBehaviour
         thruster.transform.localScale = new Vector3(power, power, power);
         power = power * burstScale;
 
-        if (time <= 7.0f)
+        if (time <= 4.5f)
         {
             time += Time.deltaTime;
         }
@@ -62,11 +62,11 @@ public class IntroSequence : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            power -= Time.deltaTime * 0.1f;
+            power -= Time.deltaTime * 0.3f;
             engineSound.pitch += Time.deltaTime * 0.05f + powerMulti;
             if (power < -0.5f)
             {
-                powerMulti += Time.deltaTime * 0.001f;
+                powerMulti += Time.deltaTime * 0.003f;
                 power = power - powerMulti;
             }
         }

@@ -8,6 +8,8 @@ public class PlayerLife : MonoBehaviour
     public static event Action OnPlayerDamage;
     public static event Action OnPlayerHeal;
 
+    public AudioSource damageSound;
+    public Animator damageCircle;
     [SerializeField] private GameObject gameOverScreen;
 
     public float life, maxLife;
@@ -43,6 +45,8 @@ public class PlayerLife : MonoBehaviour
     // Update is called once per frame
     public void TakeDamage(float amount)
     {
+        damageCircle.SetTrigger("DamageTaken");
+        damageSound.Play();
         if (life > 0)
         {
             life -= amount;
