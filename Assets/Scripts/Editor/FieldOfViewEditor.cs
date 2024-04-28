@@ -13,6 +13,9 @@ public class FieldOfViewEditor : Editor
     Vector3 viewAngleA = fow.DirFromAngle(-fow.viewAngle / 2, false);
     Vector3 viewAngleB = fow.DirFromAngle(fow.viewAngle / 2, false);
 
+    //Draw a circle viewRadius distance away with the radius of the FOV
+    Handles.DrawWireDisc(fow.transform.position, Vector3.up, fow.viewRadius);
+
     Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleA * fow.viewRadius);
     Handles.DrawLine(fow.transform.position, fow.transform.position + viewAngleB * fow.viewRadius);
 

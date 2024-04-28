@@ -3,21 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Enemy : MonoBehaviour
+public class Enemy : EnemyBase
 {
     
     // Base Class for enemies 
     EnemyWeaponManager weaponManager; 
     [SerializeField] private float fireInterval = 3;
-    [SerializeField] private int totalHealth = 3;
 
     public float referenceSpeed = 0;
     public int speed = 8;
     public Vector3 moveDir;
     public Vector3 orientation;
-
-    public int scoreValue = 10; 
-    private int currentHealth;
     private float timer = 0;
 
     public GameObject deathExplosion;
@@ -26,7 +22,6 @@ public class Enemy : MonoBehaviour
     void Start()
     {   
         weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
-        currentHealth = totalHealth;
     }
 
     // Update is called once per frame
@@ -44,7 +39,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public void Fire(){
+    override public void Fire(){
         weaponManager.FireActiveWeapon();
     }
 
@@ -60,14 +55,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage){
-        currentHealth -= damage;
-        if(currentHealth <= 0){
-            Die();
-        }
-    }
-
-    void Die(){
+    override public void Die(){
         // Trigger Enemy Death Event 
         Debug.Log("Enemy Death");
         Actions.OnEnemyDeath?.Invoke(this);

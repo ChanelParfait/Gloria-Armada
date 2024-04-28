@@ -18,7 +18,7 @@ public class Plane : MonoBehaviour
 {
 
     //public KeyCode Up = KeyCode.W, Down = KeyCode.S, Left = KeyCode.A, Right = KeyCode.D, YawRight = KeyCode.E, YawLeft = KeyCode.Q;
-    private KeyCode Fire = KeyCode.Space;
+    //private KeyCode Fire = KeyCode.Space;
     public KeyCode throttleUp = KeyCode.Tab, throttleDown = KeyCode.LeftShift;
 
     [SerializeField] Vector3 controlDeflection = Vector3.zero;
@@ -343,6 +343,13 @@ public class Plane : MonoBehaviour
             /*if (Input.GetKey(Fire) ){
             Shoot();
             }*/
+        }
+
+        if (throttle == 1.0f && !boost.isPlaying){
+            boost.Play();
+        }
+        else if (throttle != 1.0f && boost.isPlaying){
+            boost.Stop();
         }
 
 

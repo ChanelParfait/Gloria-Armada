@@ -12,7 +12,7 @@ public class MissileController : MonoBehaviour
         player,
         enemy,
     }
-    [SerializeField] Team team = Team.enemy;
+    //[SerializeField] Team team = Team.enemy;
 
     Autopilot ap;
     Plane planeSelf;

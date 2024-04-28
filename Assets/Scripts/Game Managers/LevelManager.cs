@@ -168,7 +168,7 @@ public class LevelManager : MonoBehaviour
         CurrentHealthTxt.text = health;
     }
 
-    private void UpdateScore(Enemy enemy){
+    private void UpdateScore(EnemyBase enemy){
         Debug.Log("Update Score");
         if(ScoreTxt){
             score += enemy.scoreValue;
