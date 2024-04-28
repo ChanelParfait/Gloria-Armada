@@ -19644,12 +19644,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autopilotDeflection: {x: 0, y: 0, z: 0}
-  autopilotState: 0
+  autopilotState: 4
   rb: {fileID: 4724966013838317634}
   autoArm: 1
   pitchPID:
-    Kp: 1
-    Ki: 0.01
+    Kp: 5
+    Ki: 2
     Kd: 0.2
     integral: 0
     lastError: 0

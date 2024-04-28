@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3126505736772270310}
   - component: {fileID: 2447133373380495537}
   m_Layer: 6
-  m_Name: Turret_Rocket
+  m_Name: Turret_Missile
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839cb99b570fa3447879c1b71b49ac98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 4355265953626248377, guid: 3d765b1f1bd4c564d83911290a6806d1, type: 3}
+  projectile: {fileID: 6084175212007587323, guid: 84a3875747c56434580d872255e3723a, type: 3}
   fireSound: {fileID: 0}
   weaponStats:
     fireInterval: 1
