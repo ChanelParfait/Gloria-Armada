@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public static class Actions
 {
-    public static UnityAction<Enemy> OnEnemyDeath;
+    public static UnityAction<EnemyBase> OnEnemyDeath;
 
     public static UnityAction<float> OnAmmoChange;
 

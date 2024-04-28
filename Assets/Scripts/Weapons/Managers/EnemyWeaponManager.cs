@@ -7,7 +7,7 @@ public class EnemyWeaponManager : MonoBehaviour
     // Enemy can have many weapons, stored in a list
     public Weapon[] weapons = {};
     // Active weapon represents the weapon that can be fired
-    private Weapon ActiveWeapon;
+    public Weapon ActiveWeapon { get; private set; }
     private Enemy enemy;
 
 
