@@ -75,9 +75,6 @@ public class Projectile : MonoBehaviour
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
             }
             Destroy(gameObject);
-
         }
-
     }
-
 }

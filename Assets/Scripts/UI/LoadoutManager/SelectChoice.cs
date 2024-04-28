@@ -36,4 +36,20 @@ public class SelectChoice : MonoBehaviour
         myButtonImage.color = new Color(1, 1, 1, 1);
         myButtonImage.sprite = myButtonSprite[2];
     }
+
+    public void SelectItem4()
+    {
+        Debug.Log("Equipped Item 4");
+        myButtonImage = GetComponent<Image>();
+        myButtonImage.color = new Color(1, 1, 1, 1);
+        myButtonImage.sprite = myButtonSprite[3];
+    }
+
+    public void SelectItem5()
+    {
+        Debug.Log("Equipped Item 5");
+        myButtonImage = GetComponent<Image>();
+        myButtonImage.color = new Color(1, 1, 1, 1);
+        myButtonImage.sprite = myButtonSprite[4];
+    }
 }
