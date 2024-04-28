@@ -345,6 +345,13 @@ public class Plane : MonoBehaviour
             }*/
         }
 
+        if (throttle == 1.0f && !boost.isPlaying){
+            boost.Play();
+        }
+        else if (throttle != 1.0f && boost.isPlaying){
+            boost.Stop();
+        }
+
 
         if (ap.autopilotState != Autopilot.AutopilotState.Off && ap.HasTarget() ){
             if (ap.aimVector.magnitude < 0.08 && ap.rangeToTarget < 200){
