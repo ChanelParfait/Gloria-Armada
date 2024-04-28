@@ -54,6 +54,7 @@ MonoBehaviour:
   elevationObj: {fileID: 5608887924069183869}
   leadShot: 1
   overrideProjectileSpeed: 60
+  elevationConstraintAngle: 10
   rotationSpeed: 1
 --- !u!65 &2447133373380495537
 BoxCollider:

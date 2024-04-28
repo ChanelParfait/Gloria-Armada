@@ -55,6 +55,7 @@ MonoBehaviour:
   elevationObj: {fileID: 5699940837839844598}
   leadShot: 1
   overrideProjectileSpeed: 60
+  elevationConstraintAngle: 80
   rotationSpeed: 1
 --- !u!82 &4384332850938745729
 AudioSource:
@@ -188,6 +189,14 @@ PrefabInstance:
     - target: {fileID: 8389682792174885612, guid: 3d04493e6ac5414489280cfd0a741ba6, type: 3}
       propertyPath: m_Name
       value: Turret_Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 8389682792174885612, guid: 3d04493e6ac5414489280cfd0a741ba6, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8389682792174885612, guid: 3d04493e6ac5414489280cfd0a741ba6, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 9161997985381007446, guid: 3d04493e6ac5414489280cfd0a741ba6, type: 3}
       propertyPath: m_LocalPosition.x

@@ -12,17 +12,27 @@ public class Homing : MonoBehaviour
 
     FieldOfView fov;
 
+    [SerializeField] float armingDelay = 0.50f;
+    bool isArmed = false;
+
     // Start is called before the first frame update
     void Start()
     {
         ap = GetComponent<Autopilot>();
         fov = GetComponent<FieldOfView>();
+        StartCoroutine(Arm());
+    }
+
+    IEnumerator Arm()
+    {
+        yield return new WaitForSeconds(armingDelay);
+        isArmed = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (enemy == null)
+        if (enemy == null && isArmed)
         {
             if (fov.visibleTargets.Count > 0)
             {

@@ -49,7 +49,7 @@ public class MachineGun : Weapon
                 currentAmmo --;
             }
             else if(currentAmmo == 0 && !isReloading){
-                Debug.Log("Out of Ammo");
+                //Debug.Log("Out of Ammo");
                 StartCoroutine(StartReload());
             }
         }
@@ -79,7 +79,7 @@ public class MachineGun : Weapon
                 currentAmmo --;
             }
             else if(currentAmmo == 0 && !isReloading){
-                Debug.Log("Out of Ammo");
+                //Debug.Log("Out of Ammo");
                 StartCoroutine(StartReload());
             }
         }
@@ -94,7 +94,7 @@ public class MachineGun : Weapon
 
     private void FinishReload(){
         // returns the weapon to max ammo
-        Debug.Log("Full Reload Complete");
+        //Debug.Log("Full Reload Complete");
         currentAmmo = weaponStats.maxAmmo; 
         isReloading = false;
         Actions.OnAmmoChange?.Invoke(currentAmmo);

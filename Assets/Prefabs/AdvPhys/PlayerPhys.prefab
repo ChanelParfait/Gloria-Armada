@@ -4907,7 +4907,7 @@ MonoBehaviour:
       position: {x: 0, y: 0, z: -4.3}
       orientation: {x: 0, y: 1, z: 0}
     horizontalStabilizer:
-      area: 0.2
+      area: 0.4
       position: {x: 0, y: 0, z: -4}
       orientation: {x: 1, y: 0, z: 0}
     aileron:

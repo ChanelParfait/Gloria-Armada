@@ -9,19 +9,23 @@ public class Turret : EnemyBase
     [SerializeField] GameObject azimuthObj;
     [SerializeField] GameObject elevationObj;
 
+    
+
     [SerializeField] bool leadShot = true;
     [SerializeField] float overrideProjectileSpeed = 25.0f;
+    [SerializeField] float elevationConstraintAngle = 45.0f;
     EnemyWeaponManager weaponManager; 
     FieldOfView fov;
     [SerializeField] float rotationSpeed = 60.0f;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         fov = GetComponentInChildren<FieldOfView>(); //FOV is a child of "Gun Turret Body" - reflecting the actual aiming direction
         weaponManager = gameObject.GetComponentInChildren<EnemyWeaponManager>();
-
     }
+    
     // Update is called once per frame
     void Update()
     {
@@ -108,6 +112,7 @@ public class Turret : EnemyBase
         Vector3 constrainedElevation = elevationRotation.eulerAngles;
         constrainedElevation.y = 0;  // Remove yaw changes
         constrainedElevation.z = 0;  // Remove roll changes
+        constrainedElevation.x = Mathf.Clamp(constrainedElevation.x, -elevationConstraintAngle - 90,  elevationConstraintAngle - 90);  // Constrain pitch changes
 
         Quaternion finalElevationRotation = Quaternion.Euler(constrainedElevation);
 

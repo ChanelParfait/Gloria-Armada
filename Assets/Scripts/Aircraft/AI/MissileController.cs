@@ -12,6 +12,7 @@ public class MissileController : MonoBehaviour
     Rigidbody rb;
 
     bool isArmed = false;
+    [SerializeField] float waitTime = 0.5f;
     [SerializeField] float burnTime = 1.0f;
     [SerializeField] float selfDetTime = 3.0f;
     Vector3 lastPosition;
@@ -46,7 +47,7 @@ public class MissileController : MonoBehaviour
             ap.setAPState(Autopilot.AutopilotState.pointAt);
         }
         ap.onAxes = true;
-        planeSelf.SetThrottle(1.0f);
+        planeSelf.SetThrottle(0.0f);
         // Wait for a short time before homing in on player
         StartCoroutine(Wait());  
     }
@@ -54,7 +55,7 @@ public class MissileController : MonoBehaviour
     // Coroutine for missile to wait before homing in on player
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(waitTime);
         planeSelf.SetThrottle(1.0f);
         isArmed = true;
         StartCoroutine(BurnOut());
