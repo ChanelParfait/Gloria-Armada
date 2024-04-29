@@ -8,16 +8,16 @@ using UnityEngine;
 class PID{
     public float Kp, Ki, Kd;
     public float integral, lastError;
-    public float getInt(){
+    public float GetInt(){
         return integral;
     }
-    public float getLastError(){
+    public float GetLastError(){
         return lastError;
     }
-    public void setInt(float i){
+    public void SetInt(float i){
         integral = i;
     }
-    public void setLastError(float e){
+    public void SetLastError(float e){
         lastError = e;
     }
 
@@ -131,7 +131,8 @@ public class Autopilot : MonoBehaviour
         p = GetComponent<Plane>(); 
 
         //based on the tag
-        if (tag == "Player"){
+        if (CompareTag("Player"))
+        {
             targetObjects = GameObject.FindGameObjectsWithTag("Enemy");
         }
         else{
@@ -189,7 +190,8 @@ public class Autopilot : MonoBehaviour
     public Vector3 GetAPInput(Vector3 _controlInputs){
         controlInputs = _controlInputs;
         Vector3 apInputs = AutopilotControl(autopilotState);
-        if (tag == "Player"){
+        if (CompareTag("Player"))
+        {
             //
             if (pers == Perspective.Top_Down && onAxes){
                 // controlInputs.y *= RestrictRoll();    
@@ -304,8 +306,6 @@ public class Autopilot : MonoBehaviour
         anglePitch *= Vector3.Cross(targetDirection, rb.transform.right).magnitude;
         angleRoll *= Vector3.Cross(targetDirection, rb.transform.forward).magnitude;
         angleYaw *= Vector3.Cross(targetDirection, rb.transform.up).magnitude;
-
-        //Debug.DrawRay(transform.position, targetDirection * 1000, Color.red);
 
         Debug.DrawRay(transform.position, targetDirection * 20, Color.yellow);
 
@@ -460,7 +460,8 @@ public class Autopilot : MonoBehaviour
             transform.position.Set(x, y, 0);    
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezePositionZ;
-            if (!tag.Equals("Player")){
+            if (!CompareTag("Player"))
+            {
                 autopilotState = AutopilotState.pointAt;
             }
         }
@@ -469,7 +470,6 @@ public class Autopilot : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None;
         }
 
-        Debug.DrawRay(rb.transform.position, targetVector, Color.red);
         Vector3 vecToPlane =  VectorAt(targetVector, mainPIDs, VectorType.direction);
         if (onAxes){
             Utilities.MultiplyComponents(vecToPlane, new Vector3(1, 1, 0.3f));

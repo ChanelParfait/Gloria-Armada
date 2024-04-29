@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3209566285644169230}
   - component: {fileID: 7502277592070407747}
   m_Layer: 0
-  m_Name: MachineGun
+  m_Name: MachineGunBurst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,8 +48,8 @@ MonoBehaviour:
   projectile: {fileID: 5426895945089439378, guid: 3e917c10eb181df4c82a090a4c40a8f4, type: 3}
   fireSound: {fileID: 8300000, guid: 0bbee73ee57a3064781c30353e56f3c9, type: 3}
   weaponStats:
-    fireInterval: 0.2
-    reloadTime: 0.3
+    fireInterval: 0.1
+    reloadTime: 1
     maxAmmo: 4
     projectileStats:
       speed: 20

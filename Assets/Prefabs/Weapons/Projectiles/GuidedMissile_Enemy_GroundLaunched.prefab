@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &86450042035029534
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5698211726449992143, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1636.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698211726449992143, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 14.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698211726449992143, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698211726449992143, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698211726449992143, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698211726449992143, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698211726449992143, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698211726449992143, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698211726449992143, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5698211726449992143, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150919577730694117, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_Name
+      value: GuidedMissile_Enemy_GroundLaunched
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150919577730694117, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6150919577730694117, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: m_TagString
+      value: EnemyProjectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 7112929052805948190, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: burnTime
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7112929052805948190, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: waitTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7112929052805948190, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: selfDetTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898844604284343131, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: thrust
+      value: 1400
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898844604284343131, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: liftPower
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898844604284343131, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: scaleVelocity
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898844604284343131, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: surfaces.wing.area
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898844604284343131, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: surfaces.aileron.area
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898844604284343131, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: surfaces.wing.position.z
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6150919577730694117, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      insertIndex: 6
+      addedObject: {fileID: 709121800447608915}
+  m_SourcePrefab: {fileID: 100100000, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+--- !u!1 &6084175212007587323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6150919577730694117, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+  m_PrefabInstance: {fileID: 86450042035029534}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &709121800447608915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6084175212007587323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86629519c8473fc4a803c07f9614fced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  detonationEffect: {fileID: 7641901280459977050, guid: a0acf2270fb5aa246bea2a0d6d4058d5, type: 3}
+  team: 1
+  radius: 12
