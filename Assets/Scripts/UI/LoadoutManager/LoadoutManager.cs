@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public enum WeaponType
 {
     Primary,
-    Special
+    Special,
+    Body
 }
 
 
@@ -15,10 +16,12 @@ public class LoadoutManager : MonoBehaviour
     // Assuming you have set these via the inspector
     public Button[] primaryWeaponButtons;
     public Button[] specialWeaponButtons;
+    public Button[] BodyButtons;
     public Button launchButton;
 
     private WeaponButton selectedPrimaryWeapon;
     private WeaponButton selectedSpecialWeapon;
+    private WeaponButton selectedBody;
 
     // [SerializeField] private int? selectedPrimaryWeapon;
     // [SerializeField] private int? selectedSpecialWeapon;
@@ -51,6 +54,15 @@ public class LoadoutManager : MonoBehaviour
             }
 
             selectedSpecialWeapon = weaponButton;
+        }
+        else if (weaponButton.weaponType.ToString().Equals("Body"))
+        {
+            if (selectedBody != null && selectedBody != weaponButton)
+            {
+                selectedBody.Deselect();
+            }
+
+            selectedBody = weaponButton;
         }
         // else if (!isPrimary && selectedSpecialWeapon != null)
         // {

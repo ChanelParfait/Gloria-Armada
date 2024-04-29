@@ -37,6 +37,26 @@ public class LoadoutDescription : MonoBehaviour
         descText.GetComponent<TextMeshProUGUI>().text = "N.R.G Lazer <br> <br>Hold the special button to fire a beam of energy in the jet's direction. The longer you fire it, the wider and deadlier the beam gets. <br> <br>Caution: User will be unable to steer their jet while the beam is firing.";
     }
 
+    public void DescStandard()
+    {
+        descText.GetComponent<TextMeshProUGUI>().text = "Standard <br> <br>Original body configuration with balanced mobility and firepower. No benefits or downsides included.";
+    }
+
+    public void DescLight()
+    {
+        descText.GetComponent<TextMeshProUGUI>().text = "Light Build <br> <br>Removal of some armor from the jet results in reduction of its overall weight, allowing the user to pilot the vessel with improved speed, better contol and precision.";
+    }
+
+    public void DescHeavy()
+    {
+        descText.GetComponent<TextMeshProUGUI>().text = "Heavy Build <br> <br>Modifies the jet's equipped weapons to make them more deadly, but such upgrades require additional payload to the jet, causing the vessel to move slower.";
+    }
+
+    public void DescMaster()
+    {
+        descText.GetComponent<TextMeshProUGUI>().text = "Master Upgrade <br> <br>For ace pilots only. A heavily modified body configuration is applied to the jet, significantly amplifying the jet's capabilities in both mobility and firepower. However, all armor from the vessel will be removed to make space for all the upgrades, meaning a hit from any enemy weapon will result in certain death.";
+    }
+
     public void DescNone()
     {
         descText.GetComponent<TextMeshProUGUI>().text = " ";

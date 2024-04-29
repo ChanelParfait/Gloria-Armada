@@ -166,6 +166,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 797495823986119921, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 797495823986119921, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 797495823986119921, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 797495823986119921, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: EmissionModule.rateOverTime.minScalar
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 1168509773419960114, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_Name
       value: GuidedMissile_Player
@@ -353,6 +369,14 @@ PrefabInstance:
     - target: {fileID: 8070367808183339508, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_LocalPosition.z
       value: -1.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 8460208646662630098, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8460208646662630098, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.6
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4936141611755476538, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
