@@ -5,7 +5,7 @@ using UnityEngine;
 public class ChangeLoadout : MonoBehaviour
 {
     public Animator loadoutAnim;
-    public GameObject primary, special;
+    public GameObject primary, special, body;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,18 +29,43 @@ public class ChangeLoadout : MonoBehaviour
         {
             special.SetActive(false);
         }
+        if (body.activeSelf == true)
+        {
+            body.SetActive(false);
+        }
     }
 
     public void OpenSpecialMenu()
     {
         loadoutAnim.SetBool("Changing", true);
+        if (primary.activeSelf == true)
+        {
+            primary.SetActive(false);
+        }
         if (special.activeSelf == false)
         {
             special.SetActive(true);
         }
+        if (body.activeSelf == true)
+        {
+            body.SetActive(false);
+        }
+    }
+
+    public void OpenBodyMenu()
+    {
+        loadoutAnim.SetBool("Changing", true);
         if (primary.activeSelf == true)
         {
             primary.SetActive(false);
+        }
+        if (special.activeSelf == true)
+        {
+            special.SetActive(false);
+        }
+        if (body.activeSelf == false)
+        {
+            body.SetActive(true);
         }
     }
 

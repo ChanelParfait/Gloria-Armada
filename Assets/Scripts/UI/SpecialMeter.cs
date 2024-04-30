@@ -75,9 +75,9 @@ public class SpecialMeter : MonoBehaviour
 
 
     private void UpdateMeter(float ammo){
-        Debug.Log("Level: " + ammo);
+        //Debug.Log("Level: " + ammo);
         meterLevel = ammo * 0.25f;
-        Debug.Log("meterLevel: " + meterLevel);
+        //Debug.Log("meterLevel: " + meterLevel);
 
     }
 }

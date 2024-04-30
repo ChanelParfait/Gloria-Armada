@@ -15,8 +15,9 @@ public class EnemyPlane : EnemyBase
 
     
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {   
+        base.Start();
         weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
     }
 
@@ -48,6 +49,14 @@ public class EnemyPlane : EnemyBase
 
     public override void TakeDamage(int damage){
         base.TakeDamage(damage);
+    }
+
+    override public void Die(){
+        // Trigger Enemy Death Event 
+        Actions.OnEnemyDeath?.Invoke(this);
+        // Destroy Self and emit death explosion
+        Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 
     protected virtual void MoveEnemy(){

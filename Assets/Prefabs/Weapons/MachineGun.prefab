@@ -49,8 +49,8 @@ MonoBehaviour:
   fireSound: {fileID: 8300000, guid: 0bbee73ee57a3064781c30353e56f3c9, type: 3}
   weaponStats:
     fireInterval: 0.2
-    reloadTime: 0
-    maxAmmo: 0
+    reloadTime: 0.3
+    maxAmmo: 4
     projectileStats:
       speed: 20
       damage: 1

@@ -15,10 +15,14 @@ public class EnemyBase : Actor
     public int scoreValue = 10; 
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
         currentHealth = maxHealth;
+    }
+
+    protected void Setup(){
+        
     }
 
     public virtual void Fire(){

@@ -7,18 +7,12 @@ public class MissileController : MonoBehaviour
 {
     public GameObject enemy;
 
-    public enum Team
-    {
-        player,
-        enemy,
-    }
-    //[SerializeField] Team team = Team.enemy;
-
     Autopilot ap;
     Plane planeSelf;
     Rigidbody rb;
 
     bool isArmed = false;
+    [SerializeField] float waitTime = 0.5f;
     [SerializeField] float burnTime = 1.0f;
     [SerializeField] float selfDetTime = 3.0f;
     Vector3 lastPosition;
@@ -39,6 +33,8 @@ public class MissileController : MonoBehaviour
 
         if (pers == Perspective.Side_On)
         {
+            Vector3 pos = this.gameObject.transform.position;
+            gameObject.transform.position.Set(pos.x, pos.y, 0);
             rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezePositionZ;
         }
 
@@ -51,7 +47,7 @@ public class MissileController : MonoBehaviour
             ap.setAPState(Autopilot.AutopilotState.pointAt);
         }
         ap.onAxes = true;
-        planeSelf.SetThrottle(1.0f);
+        planeSelf.SetThrottle(0.0f);
         // Wait for a short time before homing in on player
         StartCoroutine(Wait());  
     }
@@ -59,7 +55,7 @@ public class MissileController : MonoBehaviour
     // Coroutine for missile to wait before homing in on player
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(waitTime);
         planeSelf.SetThrottle(1.0f);
         isArmed = true;
         StartCoroutine(BurnOut());
@@ -79,7 +75,7 @@ public class MissileController : MonoBehaviour
         Detonate();
     }
 
-    void Detonate(){
+    public void Detonate(){
         //StopAllCoroutines();
         if(detonationEffect)
         {
