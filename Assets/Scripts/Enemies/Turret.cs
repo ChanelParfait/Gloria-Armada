@@ -112,7 +112,8 @@ public class Turret : EnemyBase
         Vector3 constrainedElevation = elevationRotation.eulerAngles;
         constrainedElevation.y = 0;  // Remove yaw changes
         constrainedElevation.z = 0;  // Remove roll changes
-        constrainedElevation.x = Mathf.Clamp(constrainedElevation.x, -elevationConstraintAngle - 90,  elevationConstraintAngle - 90);  // Constrain pitch changes
+        constrainedElevation.x = Mathf.Clamp(constrainedElevation.x,  270, 270 + elevationConstraintAngle);  // Constrain pitch changes
+
 
         Quaternion finalElevationRotation = Quaternion.Euler(constrainedElevation);
 
