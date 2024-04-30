@@ -51,9 +51,9 @@ public class EnemyPlane : EnemyBase
         base.TakeDamage(damage);
     }
 
-    override public void Die(){
+    protected override void Die(){
         // Trigger Enemy Death Event 
-        Actions.OnEnemyDeath?.Invoke(this);
+        OnEnemyDeath?.Invoke(this);
         // Destroy Self and emit death explosion
         Instantiate(deathExplosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
