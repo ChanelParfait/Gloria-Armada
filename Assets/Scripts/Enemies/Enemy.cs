@@ -58,7 +58,7 @@ public class Enemy : EnemyBase
 
     override public void Die(){
         // Trigger Enemy Death Event 
-        Debug.Log("Enemy Death");
+        //Debug.Log("Enemy Death");
         Actions.OnEnemyDeath?.Invoke(this);
         // Destroy Self and emit death explosion
         Instantiate(deathExplosion, transform.position, Quaternion.identity);
