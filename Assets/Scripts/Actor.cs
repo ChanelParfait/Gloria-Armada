@@ -9,7 +9,7 @@ public class Actor : MonoBehaviour
     public int currentHealth {get; protected set;}
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         currentHealth = maxHealth;
     }

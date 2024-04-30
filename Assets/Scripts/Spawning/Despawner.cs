@@ -18,7 +18,7 @@ public class Despawner : MonoBehaviour
 
     private void OnTriggerExit(Collider col){
         if(col.tag == "Enemy" || col.tag == "PlayerProjectile" || col.tag == "EnemyProjectile"){
-            Debug.Log("Despawn: " + col.name);
+            //Debug.Log("Despawn: " + col.name);
             Destroy(col.gameObject);
         }
         

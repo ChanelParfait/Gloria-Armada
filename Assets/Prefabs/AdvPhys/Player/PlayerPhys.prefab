@@ -4839,10 +4839,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 756333059307113752}
+  - component: {fileID: 3337119729129866234}
   - component: {fileID: 2951336494503559052}
   - component: {fileID: 674909139210087522}
   - component: {fileID: 6182760409746918969}
-  - component: {fileID: 3337119729129866234}
   - component: {fileID: 2063622229542619533}
   - component: {fileID: 7001200819396208791}
   - component: {fileID: 4552230076764758497}
@@ -4874,6 +4874,21 @@ Transform:
   - {fileID: 8460208646662630098}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &3337119729129866234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168509773419960114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb7bf86409900f499368b9f70206844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 6
+  audioSource: {fileID: 0}
+  deathObj: {fileID: 4159290798137297532, guid: e9ccf1c41ebb61b4995d14415ae5b2c0, type: 3}
 --- !u!114 &2951336494503559052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5225,20 +5240,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &3337119729129866234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1168509773419960114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fb7bf86409900f499368b9f70206844, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 6
-  audioSource: {fileID: 0}
 --- !u!114 &2063622229542619533
 MonoBehaviour:
   m_ObjectHideFlags: 0
