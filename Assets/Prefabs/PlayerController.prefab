@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7238442878657003467}
   - component: {fileID: 6705802291743627497}
   - component: {fileID: 3505711862186953058}
-  - component: {fileID: 3371560836860139555}
+  - component: {fileID: 7399555093298659050}
+  - component: {fileID: -596944816715672466}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -299,27 +300,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!65 &3371560836860139555
-BoxCollider:
+--- !u!114 &7399555093298659050
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8754366938149064170}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 7, y: 2, z: 6.5}
-  m_Center: {x: 0, y: 0.2, z: 0.2}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 282e7828be1654a46872c4d94972946e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  life: 0
+  maxLife: 6
+--- !u!114 &-596944816715672466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8754366938149064170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b9172247149e18489f2ba7a38148473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meterLeft: {fileID: 0}
+  meterRight: {fileID: 0}
+  meterLevel: 0
+  uncharged: {r: 1, g: 1, b: 1, a: 0.4862745}
+  charged: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &4082585045916529662
 PrefabInstance:
   m_ObjectHideFlags: 0

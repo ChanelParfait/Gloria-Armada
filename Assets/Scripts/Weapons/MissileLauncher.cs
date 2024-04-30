@@ -6,88 +6,135 @@ using UnityEngine;
 // four missiles can be shot in a row before incuring a cooldown period. 
 public class MissileLauncher : Weapon
 {
-    private const int maxAmmo = 4; 
-    private int currentAmmo = maxAmmo; 
-    private float cooldownTimer = 0; 
+    // Enemy Weapon Values
+    private bool fireLeft = true;
+
+    //Player Weapon Stats 
+    private int currentAmmo; 
+    private float firerateTimer = 0; 
     private float reloadTimer = 0; 
-    private bool reloading = false;
-    // a short delay time between the player being able to fire
-    // to prevent spamming a weapon
-    private const float cooldownTime = 0.25f;
+    private bool isReloading = false;
+
     // time it takes for the ammo to be replensished by 1
-    private const float refreshTime = 1.5f;
+    private const float replenTime = 1.5f;
     // time it takes for ammo to fully replensish after being depleted 
     private const float reloadTime = 5;
-
-
 
     // Start is called before the first frame update
     void Start()
     {
-        // Find and Retrieve Missile Prefab from Resources Folder
-        Object projectilePrefab = Resources.Load("Projectiles/Missile");
-        projectile = (GameObject)projectilePrefab;
-        Object audioPrefab = Resources.Load("Audio/Enemy_Plasma");
-        //SetupAudio((AudioClip)audioPrefab);
+        SetupWeapon();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-
         reloadTimer += Time.deltaTime;
-        cooldownTimer += Time.deltaTime;
+        firerateTimer += Time.deltaTime;
 
+        if(firerateTimer >  weaponStats.fireInterval && !canFire){
+            canFire = true;
+        }
 
-
-        if(!reloading){
+        if(!isReloading){
             // if out of ammo, the player cannot fire and must reload
             if(currentAmmo == 0){
-                canFire = false;
-                reloading = true; 
-                reloadTimer = 0;
+                StartCoroutine(StartReload());
             }
 
-            if(cooldownTimer > cooldownTime && !canFire){
-                canFire = true;
-            }
-            
-            // replensish ammo after refresh time has passed
-            if(reloadTimer > refreshTime && currentAmmo < maxAmmo){
-                Debug.Log("Ammo Replenished");
-
-                currentAmmo ++;
-                reloadTimer = 0;
-                Debug.Log(currentAmmo);
-
-            }
-        }
-        else{
-            if(reloadTimer > reloadTime){
-                Debug.Log("Full Reload Complete");
-                // reload
-                currentAmmo = maxAmmo; 
-                reloading = false;
-                canFire = true;
-                reloadTimer = 0;
+            // replenish ammo by 1 after refresh time has passed
+            if(reloadTimer > replenTime && currentAmmo < weaponStats.maxAmmo){
+                IncreaseAmmo();
             }
         }
     }
+    private void IncreaseAmmo(){
+        // Add one to ammo and reset reload timer
+        currentAmmo ++;
+        reloadTimer = 0;
+        Debug.Log("Ammo: " + currentAmmo);
+        Actions.OnAmmoChange?.Invoke(currentAmmo);
+        
+    }
 
-    public override void Fire()
+    private IEnumerator StartReload(){
+        // start the reloading process
+        isReloading = true; 
+        yield return new WaitForSeconds(reloadTime);
+        FinishReload();
+    }
+
+    private void FinishReload(){
+        // returns the weapon to max ammo
+        Debug.Log("Full Reload Complete");
+        currentAmmo = weaponStats.maxAmmo; 
+        isReloading = false;
+        Actions.OnAmmoChange?.Invoke(currentAmmo);
+    }
+
+    public override void Fire(Vector3 velocity)
     {
-        // base.Fire();
-        if(canFire){
-            Debug.Log("Missle Launched");
-            Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
-            Instantiate(projectile, spawnPosition, gameObject.transform.rotation);
-            canFire = false;
+        if(canFire && currentAmmo != 0){
+            //Debug.Log("Missle Launched");
+            base.Fire(velocity);
+            // Decrement Ammo
             currentAmmo --;
+            Actions.OnAmmoChange?.Invoke(currentAmmo);
+            canFire = false;
+            // Reset Timers
             reloadTimer = 0;
-            cooldownTimer = 0;
+            firerateTimer = 0;
         }
-        Debug.Log(currentAmmo);
+        Debug.Log("Ammo: " + currentAmmo);
 
+    }
+
+    /*public override void EnemyFire(Rigidbody rb)
+    {
+        //Debug.Log("Enemy Missile Fire");
+        base.Fire(rb);
+    }*/
+
+    public override void SetupWeapon(){
+        weaponStats.maxAmmo = 4;
+        weaponStats.fireInterval = 0.25f;
+        currentAmmo = weaponStats.maxAmmo;
+        weaponStats.projectileStats.damage = 2;
+        weaponStats.projectileStats.speed = 9;
+
+
+        if(!projectile){
+            // Find and Retrieve Missile Prefab from Resources Folder
+            projectile = (GameObject)Resources.Load("Projectiles/Missile_Player");
+        }
+
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = fireSound;
+
+        if(!fireSound){
+            fireSound = (AudioClip)Resources.Load("Audio/Rocket_Sound");
+            audioSource.clip = fireSound;
+        }
+    }
+
+    public override Vector3 GetSpawnPos()
+    {   
+
+        if(isPlayerWeapon){
+            // projectile spawn position for the player remains the same
+            return base.GetSpawnPos();
+        }
+        else{
+            // to get enemy spawn position
+            // switch between left and right between spawn positions on enemy model
+            if(fireLeft){
+                fireLeft = false;
+                return gameObject.transform.position + gameObject.transform.forward * 1.32f + gameObject.transform.right * -2.055f;
+            }
+            else{
+                fireLeft = true;    
+                return gameObject.transform.position + gameObject.transform.forward * 1.32f + gameObject.transform.right * 2.055f;
+            }
+        }
     }
 }

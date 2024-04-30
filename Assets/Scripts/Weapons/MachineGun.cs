@@ -5,44 +5,61 @@ using UnityEngine;
 public class MachineGun : Weapon
 {
     private float timer = 0; 
-    private const float cooldownTime = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
-        SetupAudio();
-        // if projectile is null
-        if(!projectile){
-            // Find and Retrieve Player Projectile Prefab from Resources Folder
-            Object prefab = Resources.Load("Projectiles/Plasma_Player");
-            projectile = (GameObject)prefab;
-            Object audioPrefab = Resources.Load("Audio/Enemy_Plasma");
-            fireSound = (AudioClip)audioPrefab;
-            SetupAudio();
-        }
-        
+        SetupWeapon();
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime; 
-        if(!canFire && timer >= cooldownTime){
-            canFire = true;
+        if(isPlayerWeapon){
+            PlayerUpdate();
         }
     }
 
-    public override void Fire()
+    public override void Fire(Vector3 velocity)
     {
-        // base.Fire();
         if(canFire){
-            Debug.Log("Machine Gun Fire");
-            Vector3 spawnPosition = gameObject.transform.position + gameObject.transform.forward * 8;
-            Instantiate(projectile, spawnPosition, gameObject.transform.rotation); 
+            base.Fire(velocity);
             timer = 0;
             canFire = false;
-            audioSource.Play(); 
+        }
+    } 
 
+    /*public override void EnemyFire()
+    {
+        //Debug.Log("Enemy Machine Gun Fire");
+        base.Fire();
+    }*/
+
+    public override void SetupWeapon(){
+        weaponStats.fireInterval = 0.5f;
+        weaponStats.projectileStats.damage = 1;
+        weaponStats.projectileStats.speed = 10;
+
+
+        if(!projectile){
+            Object prefab = Resources.Load("Projectiles/Plasma_Player");
+            projectile = (GameObject)prefab;
+        }
+
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = fireSound;
+
+        if(!fireSound){
+           Object audioPrefab = Resources.Load("Audio/Enemy_Plasma");
+            fireSound = (AudioClip)audioPrefab;
+        }
+    }
+
+    private void PlayerUpdate(){
+        // Increase timer
+        timer += Time.deltaTime; 
+        if(!canFire && timer >= weaponStats.fireInterval){
+            canFire = true;
         }
     }
 }
