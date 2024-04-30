@@ -6,7 +6,9 @@ using UnityEngine.Events;
 
 public class PlayerPlane : PlaneBase
 {
-    public static event UnityAction OnPlayerDamage;
+    public AudioSource damageSound;
+    public Animator damageCircle;
+    public static event UnityAction<PlayerPlane> OnPlayerDamage;
     public static event UnityAction OnPlayerDeath;
     // Start is called before the first frame update
     void Start()
@@ -21,7 +23,9 @@ public class PlayerPlane : PlaneBase
     }
 
     public override void TakeDamage(int damage){
-        OnPlayerDamage?.Invoke();
+        damageCircle.SetTrigger("DamageTaken");
+        damageSound.Play();
+        OnPlayerDamage?.Invoke(this);
         base.TakeDamage(damage);
     }
 
@@ -30,15 +34,23 @@ public class PlayerPlane : PlaneBase
         base.Die();
     }
 
-    private void OnTriggerEnter(Collider col){
-        if(col.gameObject.tag == "EnemyProjectile"){
-            // Take Damage? / Die
-            currentHealth -= col.gameObject.GetComponent<Projectile>().projectileStats.damage;
-            if(currentHealth <= 0){
-                //isDead = true; 
-            }
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
+            //Get the normal of the collision
+            Vector3 normal = col.contacts[0].normal;
+            //Get dot product of the normal and the velocity
+            Rigidbody rb = GetComponent<Rigidbody>();
+            float dot = Vector3.Dot(rb.velocity.normalized, normal);
+            
+            Debug.Log(dot);
+
+            dot = Mathf.Clamp01(dot * 5);
+            
+            //Reduce health by a minimum of 1healh, max of MaxLife based on dot
+            int damage = (int)Mathf.Lerp(1,maxHealth, dot);
+            TakeDamage(damage);
         }
     }
-
     
 }

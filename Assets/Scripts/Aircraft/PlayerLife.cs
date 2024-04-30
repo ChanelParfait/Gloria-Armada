@@ -10,7 +10,7 @@ public class PlayerLife : MonoBehaviour
 
     public AudioSource damageSound;
     public Animator damageCircle;
-    [SerializeField] private GameObject gameOverScreen;
+    //[SerializeField] private GameObject gameOverScreen;
 
     public float life, maxLife;
     // Start is called before the first frame update
@@ -30,7 +30,7 @@ public class PlayerLife : MonoBehaviour
         {
             Heal(1);
             Debug.Log("Life Recovered");
-        }*/
+        }
 
         if (life == 0)
         {
@@ -39,7 +39,7 @@ public class PlayerLife : MonoBehaviour
                 Time.timeScale = 0;
                 gameOverScreen.SetActive(true);
             }
-        }
+        }*/
     }
 
     // Update is called once per frame
@@ -74,7 +74,7 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision col)
+    /*private void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
             //Get the normal of the collision
@@ -91,5 +91,5 @@ public class PlayerLife : MonoBehaviour
             float damage = Mathf.Lerp(1, maxLife, dot);
             TakeDamage(damage);
         }
-    }
+    }*/
 }

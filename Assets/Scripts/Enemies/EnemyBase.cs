@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
+    // CLASS NO LONGER NEEDED
     public int scoreValue = 10; 
     [SerializeField] private int totalHealth = 3;
     public int currentHealth {get; private set;}

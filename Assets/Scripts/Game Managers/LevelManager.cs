@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,20 +17,22 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Perspective initPerspective; 
     public Perspective currentPerspective { get; private set;} 
     [SerializeField] private Animator anim; 
-
     [SerializeField] private Enemy_Spawner enemySpawner;
     [SerializeField] private JetControl jetControl;
-
     [SerializeField] private GameObject playerPlane;
 
+    // UI and Visuals
     [SerializeField] private GameObject gameOverPnl; 
     [SerializeField] private GameObject youWinPnl; 
     [SerializeField] private Text CurrentHealthTxt; 
-    [SerializeField] private Text ScoreTxt; 
-    private int score = 0; 
+    [SerializeField] private TextMeshProUGUI ScoreTxt; 
+    public Animator damageCircle;
 
+    // UI Values
+    private int score = 0; 
     private int playerHealth; 
 
+    // Camera Controls // 
     Rigidbody rb;
     public float maxDistance = 5.0f; // Distance at which camera starts moving
     public float smoothTime = 0.1f; // Smoother transition time
@@ -39,9 +42,10 @@ public class LevelManager : MonoBehaviour
     public float maxHeight = 50.0f;
     public Vector3 velocity = Vector3.zero;
 
+    // Events // 
     public static event Action<int> OnPerspectiveChange;
 
-    bool isGameOver = false;
+    //bool isGameOver = false;
 
     void Awake(){
         rb = GetComponent<Rigidbody>();
@@ -119,15 +123,6 @@ public class LevelManager : MonoBehaviour
         //     isGameOver = true;
         // }
 
-
-
-
-        if(isGameOver){
-            if(Input.GetKeyDown(KeyCode.Return)){
-                Restart();
-            }
-        }
-
         // if(playerHealth != jetControl.health){
         //     playerHealth = jetControl.health;
         //     UpdateHealthTxt(playerHealth.ToString());
@@ -136,12 +131,16 @@ public class LevelManager : MonoBehaviour
 
     private void OnEnable(){
         // Update Score on enemy death 
-        Actions.OnEnemyDeath += UpdateScore;
+        Enemy.OnEnemyDeath += UpdateScore;
+        PlayerPlane.OnPlayerDeath += GameOver;
+
     }
 
     private void OnDisable(){
         // if gameobject is disabled remove all listeners
-        Actions.OnEnemyDeath -= UpdateScore;
+        Enemy.OnEnemyDeath -= UpdateScore;
+        PlayerPlane.OnPlayerDeath -= GameOver;
+
 
     }
 
@@ -168,12 +167,16 @@ public class LevelManager : MonoBehaviour
         CurrentHealthTxt.text = health;
     }
 
-    private void UpdateScore(EnemyBase enemy){
+    private void UpdateScore(Enemy enemy){
         Debug.Log("Update Score");
         if(ScoreTxt){
             score += enemy.scoreValue;
             ScoreTxt.text = score.ToString();
         }
+    }
+
+    private void PlayDamageEffect(){
+        damageCircle.SetTrigger("DamageTaken");
     }
 
     private void GameOver(){

@@ -1,23 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
-public class Enemy : EnemyBase
+public class Enemy : PlaneBase
 {
     
-    // Base Class for enemies 
     EnemyWeaponManager weaponManager; 
-    [SerializeField] private float fireInterval = 3;
+    public int scoreValue = 10; 
 
+    [SerializeField] private float fireInterval = 3;
+    [SerializeField] private int speed = 8;
     public float referenceSpeed = 0;
-    public int speed = 8;
     public Vector3 moveDir;
     public Vector3 orientation;
     private float timer = 0;
 
-    public GameObject deathExplosion;
-
+    // Events
+    public static UnityAction<Enemy> OnEnemyDeath;
+    
     // Start is called before the first frame update
     void Start()
     {   
@@ -39,7 +41,7 @@ public class Enemy : EnemyBase
     }
 
 
-    override public void Fire(){
+    public void Fire(){
         weaponManager.FireActiveWeapon();
     }
 
@@ -47,27 +49,26 @@ public class Enemy : EnemyBase
         // if hit by a player projectile
         if(col.gameObject.tag == "PlayerProjectile"){
             // Take Damage
-            //TakeDamage(col.gameObject.GetComponent<Projectile>().projectileStats.damage);
-            Debug.Log("Enemy Health:" + currentHealth);
+            TakeDamage(col.gameObject.GetComponent<Projectile>().projectileStats.damage);
+            //Debug.Log("Enemy Health:" + currentHealth);
             //Debug.Log("Enemy Damage Taken:" + col.gameObject.GetComponent<Projectile>().projectileStats.damage);
             // Destroy Projectile
-            //Destroy(col.gameObject);
+            Destroy(col.gameObject);
         }
     }
 
-    override public void Die(){
-        // Trigger Enemy Death Event 
-        Debug.Log("Enemy Death");
-        Actions.OnEnemyDeath?.Invoke(this);
-        // Destroy Self and emit death explosion
-        Instantiate(deathExplosion, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+    public override void TakeDamage(int damage){
+        base.TakeDamage(damage);
     }
 
-    private void MoveEnemy(){
+    protected override void Die(){   
+        OnEnemyDeath?.Invoke(this);
+        base.Die();
+    }
+
+    protected virtual void MoveEnemy(){
         Vector3 referenceMovement = new Vector3(referenceSpeed, 0, 0) * Time.deltaTime;
         Vector3 enemyMovement = moveDir * Time.deltaTime * speed;
-
         gameObject.transform.position += enemyMovement + referenceMovement; 
     }
 
