@@ -64,7 +64,11 @@ public class LevelManager : MonoBehaviour
     void FixedUpdate(){
         // Calculate the current distance from the target to the camera's position
         
-        //Modify X of target position based on rb velocity between minSpeed and maxSpeed
+        if (playerPlane == null)
+        {
+            return;
+        }
+        
         float range = maxHorizontalSpeed - minHorizontalSpeed;
         minSpeedXOffset = -((playerPlane.GetComponent<Plane>().getRBVelocity().x - minHorizontalSpeed)/range - 1)* 30f;
         float yOffset = playerPlane.transform.position.y / 200;

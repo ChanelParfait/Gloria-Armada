@@ -88,7 +88,6 @@ public class Projectile : MonoBehaviour
         else if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
             MissileController missile;
             if (missile = GetComponent<MissileController>()){
-                Debug.Log("Missile Hit Terrain");
                 missile.Detonate();
             }
             else{
