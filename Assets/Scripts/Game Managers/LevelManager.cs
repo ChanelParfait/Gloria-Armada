@@ -24,12 +24,12 @@ public class LevelManager : MonoBehaviour
     // UI and Visuals
     [SerializeField] private GameObject gameOverPnl; 
     [SerializeField] private GameObject youWinPnl; 
-    [SerializeField] private Text CurrentHealthTxt; 
     [SerializeField] private TextMeshProUGUI ScoreTxt; 
+    public Animator damageAnim;
+
 
     // UI Values
     private int score = 0; 
-    private int playerHealth; 
 
     // Camera Controls // 
     Rigidbody rb;
@@ -57,7 +57,6 @@ public class LevelManager : MonoBehaviour
     {
         UpdatePerspective(initPerspective);
         enemySpawner.UpdatePerspective(currentPerspective);
-        playerHealth = playerPlane.GetComponent<Plane>().health;
         rb.velocity = Vector3.right * 20;
 
         //This is the minimum velocity to keep the player moving
@@ -133,6 +132,7 @@ public class LevelManager : MonoBehaviour
         // Update Score on enemy death 
         EnemyBase.OnEnemyDeath += UpdateScore;
         PlayerPlane.OnPlayerDeath += GameOver;
+        PlayerPlane.OnPlayerDamage += PlayDamageEffect;
 
     }
 
@@ -140,6 +140,8 @@ public class LevelManager : MonoBehaviour
         // if gameobject is disabled remove all listeners
         EnemyBase.OnEnemyDeath -= UpdateScore;
         PlayerPlane.OnPlayerDeath -= GameOver;
+        PlayerPlane.OnPlayerDamage -= PlayDamageEffect;
+
 
 
     }
@@ -163,10 +165,6 @@ public class LevelManager : MonoBehaviour
         OnPerspectiveChange?.Invoke((int)currentPerspective);
     }
 
-    private void UpdateHealthTxt(string health){
-        CurrentHealthTxt.text = health;
-    }
-
     private void UpdateScore(EnemyBase enemy){
         Debug.Log("Update Score");
         if(ScoreTxt){
@@ -175,9 +173,9 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    /*private void PlayDamageEffect(){
-        damageCircle.SetTrigger("DamageTaken");
-    }*/
+    private void PlayDamageEffect(PlayerPlane playerPlane){
+        damageAnim.SetTrigger("DamageTaken");
+    }
 
     private void GameOver(){
         //Debug.Log("Game Over");

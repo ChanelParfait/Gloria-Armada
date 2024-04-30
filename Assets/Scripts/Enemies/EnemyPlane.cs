@@ -12,6 +12,7 @@ public class EnemyPlane : EnemyBase
     public Vector3 moveDir;
     public Vector3 orientation;
     private float timer = 0;
+    public GameObject deathExplosion;
 
     
     // Start is called before the first frame update

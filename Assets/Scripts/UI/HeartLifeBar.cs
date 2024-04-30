@@ -30,20 +30,19 @@ public class HeartLifeBar : MonoBehaviour
 
     public void DrawHearts(PlayerPlane plane)
     {
+        Debug.Log("Draw Hearts");
         ClearHearts();
+        float maxLifeRemainder = maxHealth % 2;
+        int heartsToMake = (int)((maxHealth * 0.5f) + maxLifeRemainder);
+        for (int i = 0; i < heartsToMake; i++)
         {
-            float maxLifeRemainder = maxHealth % 2;
-            int heartsToMake = (int)((maxHealth * 0.5f) + maxLifeRemainder);
-            for (int i = 0; i < heartsToMake; i++)
-            {
-                CreateEmptyHeart();
-            }
+            CreateEmptyHeart();
+        }
 
-            for(int i = 0; i < hearts.Count; i++)
-            {
-                int heartStatusRemainder = Mathf.Clamp(plane.currentHealth - (i * 2), 0, 2);
-                hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
-            }
+        for(int i = 0; i < hearts.Count; i++)
+        {
+            int heartStatusRemainder = Mathf.Clamp(plane.currentHealth - (i * 2), 0, 2);
+            hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
         }
     }
 
@@ -51,7 +50,6 @@ public class HeartLifeBar : MonoBehaviour
     {   
         // Draw Hearts at Full Health
         ClearHearts();
-        {
             float maxLifeRemainder = maxHealth % 2;
             int heartsToMake = (int)((maxHealth * 0.5f) + maxLifeRemainder);
             for (int i = 0; i < heartsToMake; i++)
@@ -64,7 +62,6 @@ public class HeartLifeBar : MonoBehaviour
                 int heartStatusRemainder = Mathf.Clamp(maxHealth - (i * 2), 0, 2);
                 hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
             }
-        }
     }
 
     public void CreateEmptyHeart()

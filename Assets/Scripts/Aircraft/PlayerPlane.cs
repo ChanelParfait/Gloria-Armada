@@ -6,22 +6,21 @@ using UnityEngine.Events;
 
 public class PlayerPlane : Actor
 {
-    public AudioSource damageSound;
-    public Animator damageCircle;
+    public AudioSource audioSource;
     public static event UnityAction<PlayerPlane> OnPlayerDamage;
     public static event UnityAction OnPlayerDeath;
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
+        audioSource = GetComponent<AudioSource>();
     }
 
 
     public override void TakeDamage(int damage){
-        //damageCircle.SetTrigger("DamageTaken");
-        //damageSound.Play();
-        Debug.Log("Damage: " + damage);
+        audioSource.Play();
         base.TakeDamage(damage);
+        //Debug.Log("Current Health: " + currentHealth);
         OnPlayerDamage?.Invoke(this);
     }
 
