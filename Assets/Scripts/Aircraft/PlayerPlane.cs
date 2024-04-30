@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class PlayerController : MonoBehaviour
+public class PlayerPlane : PlaneBase
 {
-    //private float maxHealth = 6; 
-    private float currentHealth = 6;
-
+    public static event UnityAction OnPlayerDamage;
+    public static event UnityAction OnPlayerDeath;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +18,16 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public override void TakeDamage(int damage){
+        OnPlayerDamage?.Invoke();
+        base.TakeDamage(damage);
+    }
+
+    protected override void Die(){   
+        OnPlayerDeath?.Invoke();
+        base.Die();
     }
 
     private void OnTriggerEnter(Collider col){
