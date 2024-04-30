@@ -30,9 +30,6 @@ public class HeartLifeBar : MonoBehaviour
 
     public void DrawHearts(PlayerPlane plane)
     {
-        Debug.Log("Take Damage - Draw Hearts");
-        Debug.Log("Current Health" + plane.currentHealth);
-
         ClearHearts();
         {
             float maxLifeRemainder = maxHealth % 2;
@@ -46,8 +43,6 @@ public class HeartLifeBar : MonoBehaviour
             {
                 int heartStatusRemainder = Mathf.Clamp(plane.currentHealth - (i * 2), 0, 2);
                 hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
-                Debug.Log("heart status" + heartStatusRemainder);
-
             }
         }
     }

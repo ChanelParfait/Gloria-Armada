@@ -68,50 +68,51 @@ public class LevelManager : MonoBehaviour
         // Calculate the current distance from the target to the camera's position
         
         //Modify X of target position based on rb velocity between minSpeed and maxSpeed
-        float range = maxHorizontalSpeed - minHorizontalSpeed;
-        minSpeedXOffset = -((playerPlane.GetComponent<Plane>().getRBVelocity().x - minHorizontalSpeed)/range - 1)* 30f;
-        float yOffset = playerPlane.transform.position.y / 200;
+        if(playerPlane){
+            float range = maxHorizontalSpeed - minHorizontalSpeed;
+            minSpeedXOffset = -((playerPlane.GetComponent<Plane>().getRBVelocity().x - minHorizontalSpeed)/range - 1)* 30f;
+            float yOffset = playerPlane.transform.position.y / 200;
 
-        Vector3 targetPosition = playerPlane.transform.position + new Vector3(minSpeedXOffset, yOffset, 0);   
-        Vector3 cameraPosition = transform.position;
-        Vector3 offset = targetPosition - cameraPosition;
+            Vector3 targetPosition = playerPlane.transform.position + new Vector3(minSpeedXOffset, yOffset, 0);   
+            Vector3 cameraPosition = transform.position;
+            Vector3 offset = targetPosition - cameraPosition;
+        
+            // Ensure the camera always moves forwards at a minimum speed
+            if (rb.velocity.x < minHorizontalSpeed && offset.x < 0)
+            {
+                rb.AddForce(rb.velocity - Vector3.right * minHorizontalSpeed);
+            }
+            // And never goes too fast
+            else if (rb.velocity.x > maxHorizontalSpeed && offset.x > 0)
+            {
+                rb.AddForce(rb.velocity - Vector3.right * maxHorizontalSpeed);
+            }
+            // Otherwise follow the x position of the player
+            else {
+                float speed = offset.x > 0 ? offset.x : offset.x * -1;
+                speed *= 0.3f;
+                rb.AddForce( new Vector3(offset.x, 0, 0) * speed);
+            }
 
-        // Ensure the camera always moves forwards at a minimum speed
-        if (rb.velocity.x < minHorizontalSpeed && offset.x < 0)
-        {
-            rb.AddForce(rb.velocity - Vector3.right * minHorizontalSpeed);
+            // If player is above 20y, move camera up
+            if (rb.position.y > maxHeight)
+            {
+                rb.AddForce(new Vector3(0, -(float)Math.Pow(rb.position.y - maxHeight, 2)*2 -rb.velocity.y, 0));
+            }
+            else if (rb.position.y < 0)
+            {
+                //Add a force upward that is greater when player is lower - resist movement
+                rb.AddForce(new Vector3(0, (float)Math.Pow(rb.position.y, 2)*2 - rb.velocity.y , 0));
+            }
+            else
+            {
+                float relPos = rb.position.y - playerPlane.transform.position.y;
+                float positionSign = Mathf.Sign(relPos);
+                float damping = playerPlane.GetComponent<Plane>().getRBVelocity().y - rb.velocity.y;
+                damping *= damping*Mathf.Sign(damping);
+                rb.AddForce(new Vector3(0, -positionSign * (float)Math.Pow(relPos, 2) + damping, 0));
+            }
         }
-        // And never goes too fast
-        else if (rb.velocity.x > maxHorizontalSpeed && offset.x > 0)
-        {
-            rb.AddForce(rb.velocity - Vector3.right * maxHorizontalSpeed);
-        }
-        // Otherwise follow the x position of the player
-        else {
-            float speed = offset.x > 0 ? offset.x : offset.x * -1;
-            speed *= 0.3f;
-            rb.AddForce( new Vector3(offset.x, 0, 0) * speed);
-        }
-
-        // If player is above 20y, move camera up
-        if (rb.position.y > maxHeight)
-        {
-            rb.AddForce(new Vector3(0, -(float)Math.Pow(rb.position.y - maxHeight, 2)*2 -rb.velocity.y, 0));
-        }
-        else if (rb.position.y < 0)
-        {
-            //Add a force upward that is greater when player is lower - resist movement
-            rb.AddForce(new Vector3(0, (float)Math.Pow(rb.position.y, 2)*2 - rb.velocity.y , 0));
-        }
-        else
-        {
-            float relPos = rb.position.y - playerPlane.transform.position.y;
-            float positionSign = Mathf.Sign(relPos);
-            float damping = playerPlane.GetComponent<Plane>().getRBVelocity().y - rb.velocity.y;
-            damping *= damping*Mathf.Sign(damping);
-            rb.AddForce(new Vector3(0, -positionSign * (float)Math.Pow(relPos, 2) + damping, 0));
-        }
-
     }
 
     // Update is called once per frame
