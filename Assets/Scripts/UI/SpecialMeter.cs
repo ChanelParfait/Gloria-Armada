@@ -63,13 +63,13 @@ public class SpecialMeter : MonoBehaviour
 
     private void OnEnable(){
         // Update Score on enemy death 
-        Actions.OnAmmoChange += UpdateMeter;
+        Weapon.OnAmmoChange += UpdateMeter;
         
     }
 
     private void OnDisable(){
         // if gameobject is disabled remove all listeners
-        Actions.OnAmmoChange -= UpdateMeter;
+        Weapon.OnAmmoChange -= UpdateMeter;
 
     }
 

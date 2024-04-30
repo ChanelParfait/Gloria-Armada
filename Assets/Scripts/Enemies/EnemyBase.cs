@@ -1,17 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class EnemyBase : MonoBehaviour
+public class EnemyBase : Actor
 {
+    
+    // Events
+    public static UnityAction<EnemyBase> OnEnemyDeath;
+    protected EnemyWeaponManager weaponManager; 
+
+
+    // How much the score increases on enemy death
     public int scoreValue = 10; 
-    [SerializeField] private int totalHealth = 3;
-    public int currentHealth {get; private set;}
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        currentHealth = totalHealth;
+        weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
+        currentHealth = maxHealth;
     }
 
     protected void Setup(){
@@ -19,23 +26,13 @@ public class EnemyBase : MonoBehaviour
     }
 
     public virtual void Fire(){
-
+        // Fire a Weapon
+        weaponManager.FireActiveWeapon();
     }
 
-    public void TakeDamage(int damage){
-        currentHealth -= damage;
-        if(currentHealth <= 0){
-            Die();
-        }
+    protected override void Die(){   
+        OnEnemyDeath?.Invoke(this);
+        base.Die();
     }
 
-    public virtual void Die(){
-        Destroy(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

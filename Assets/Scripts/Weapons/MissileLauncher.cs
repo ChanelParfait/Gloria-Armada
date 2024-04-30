@@ -51,7 +51,7 @@ public class MissileLauncher : Weapon
         currentAmmo ++;
         reloadTimer = 0;
         Debug.Log("Ammo: " + currentAmmo);
-        Actions.OnAmmoChange?.Invoke(currentAmmo);
+        OnAmmoChange?.Invoke(currentAmmo);
         
     }
 
@@ -67,7 +67,7 @@ public class MissileLauncher : Weapon
         Debug.Log("Full Reload Complete");
         currentAmmo = weaponStats.maxAmmo; 
         isReloading = false;
-        Actions.OnAmmoChange?.Invoke(currentAmmo);
+        OnAmmoChange?.Invoke(currentAmmo);
     }
 
     public override void Fire(Vector3 velocity)
@@ -77,7 +77,7 @@ public class MissileLauncher : Weapon
             base.Fire(velocity);
             // Decrement Ammo
             currentAmmo --;
-            Actions.OnAmmoChange?.Invoke(currentAmmo);
+            OnAmmoChange?.Invoke(currentAmmo);
             canFire = false;
             // Reset Timers
             reloadTimer = 0;

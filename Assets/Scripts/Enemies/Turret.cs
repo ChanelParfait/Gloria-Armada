@@ -14,7 +14,6 @@ public class Turret : EnemyBase
     [SerializeField] bool leadShot = true;
     [SerializeField] float overrideProjectileSpeed = 25.0f;
     [SerializeField] float elevationConstraintAngle = 45.0f;
-    EnemyWeaponManager weaponManager; 
     FieldOfView fov;
     [SerializeField] float rotationSpeed = 60.0f;
 
@@ -77,10 +76,6 @@ public class Turret : EnemyBase
                 enemy = fov.visibleTargets[0].gameObject;
             }
         }
-    }
-
-    public override void Fire(){
-        weaponManager.FireActiveWeapon();
     }
 
 
