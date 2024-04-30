@@ -251,7 +251,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 10000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -593,7 +593,7 @@ Rigidbody:
   m_GameObject: {fileID: 8350215954295267770}
   serializedVersion: 4
   m_Mass: 10
-  m_Drag: 0
+  m_Drag: 0.16
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -626,12 +626,11 @@ MonoBehaviour:
   initPerspective: 1
   anim: {fileID: 1753689543936176722}
   enemySpawner: {fileID: 2927386685241210806}
-  jetControl: {fileID: 0}
   playerPlane: {fileID: 0}
   gameOverPnl: {fileID: 0}
   youWinPnl: {fileID: 0}
   ScoreTxt: {fileID: 0}
-  damageAnim: {fileID: 0}
+  damageAnim: {fileID: 7107334772887753252, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
   maxDistance: 5
   smoothTime: 0.1
   minHorizontalSpeed: 20

@@ -61,37 +61,45 @@ public class Projectile : MonoBehaviour
 
     void FixedUpdate() {
         if (Time.time > startTime + projectileStats.lifetime) {
-            Destroy(gameObject);
+            Die();
         }
     }
 
     private void OnCollisionEnter(Collision col){
         if(col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    private void Die(){
+        ParticleManager[] pms = GetComponentsInChildren<ParticleManager>();
+        foreach (ParticleManager pm in pms)
+        {
+            pm.transform.SetParent(null);   
+            pm.Detatch();
+        }
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "Player"){
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
-            Destroy(gameObject);
+            Die();
         }
         else if(col.gameObject.tag == "Enemy"){
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
-            Destroy(gameObject);
-            Debug.Log("Hit Enemy");
             if (hitParticle)
             {
-                Debug.Log("Spawning Hit particle");
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
             }
+            Die();
         }
         else if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
             MissileController missile;
             if (missile = GetComponent<MissileController>()){
                 missile.Detonate();
             }
-            Destroy(gameObject);
+            Die();
         }
     }
 }

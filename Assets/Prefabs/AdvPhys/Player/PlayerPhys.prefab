@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8460208646662630098}
   - component: {fileID: 797495823986119921}
   - component: {fileID: 3621766436343345346}
+  - component: {fileID: 4535850548967860990}
   m_Layer: 7
   m_Name: boost
   m_TagString: Untagged
@@ -4830,6 +4831,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4535850548967860990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883901173955393454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1168509773419960114
 GameObject:
   m_ObjectHideFlags: 0
@@ -5384,6 +5397,7 @@ GameObject:
   - component: {fileID: 8070367808183339508}
   - component: {fileID: 2408597013414804574}
   - component: {fileID: 6219281314664255518}
+  - component: {fileID: 6862967932187155586}
   m_Layer: 7
   m_Name: wingtipL
   m_TagString: Untagged
@@ -10203,6 +10217,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &6862967932187155586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4516825297399139526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5124061948501627520
 GameObject:
   m_ObjectHideFlags: 0
@@ -10214,6 +10240,7 @@ GameObject:
   - component: {fileID: 4283415266244329837}
   - component: {fileID: 6690889685156807857}
   - component: {fileID: 3865242935699703752}
+  - component: {fileID: 8010824393663527018}
   m_Layer: 7
   m_Name: wingtipR
   m_TagString: Untagged
@@ -15033,6 +15060,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8010824393663527018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5124061948501627520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8012318085517979214
 GameObject:
   m_ObjectHideFlags: 0
@@ -15044,6 +15083,7 @@ GameObject:
   - component: {fileID: 5379670173846158527}
   - component: {fileID: 6651390922727057364}
   - component: {fileID: 3650995947300920150}
+  - component: {fileID: 3186821459560118974}
   m_Layer: 7
   m_Name: smoke
   m_TagString: Untagged
@@ -19863,6 +19903,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &3186821459560118974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8012318085517979214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8931380740068753388
 GameObject:
   m_ObjectHideFlags: 0
@@ -19874,6 +19926,7 @@ GameObject:
   - component: {fileID: 6979668402942296204}
   - component: {fileID: 5900609437313271690}
   - component: {fileID: 4296844143597499299}
+  - component: {fileID: 7498134632266278327}
   m_Layer: 7
   m_Name: fire
   m_TagString: Untagged
@@ -24693,6 +24746,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &7498134632266278327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8931380740068753388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3042125635388901829
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24748,7 +24813,7 @@ PrefabInstance:
     - target: {fileID: 5694165871972618649, guid: 67050f1860d0d5642acf40517d9f21c7, type: 3}
       propertyPath: testWeapon1
       value: 
-      objectReference: {fileID: 1062033948207875801, guid: 726c88db1ea7b10468efb08112948ee3, type: 3}
+      objectReference: {fileID: 1062033948207875801, guid: c2968064a6f387d42ae42e6dc19c3673, type: 3}
     - target: {fileID: 5694165871972618649, guid: 67050f1860d0d5642acf40517d9f21c7, type: 3}
       propertyPath: testWeapon2
       value: 

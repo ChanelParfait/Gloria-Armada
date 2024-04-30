@@ -26,10 +26,8 @@ public class SmallExplosion : MonoBehaviour
 
             if (col.CompareTag("Player"))
             {
-                            Debug.Log("Scaled Damage: " + scaledDamage + " Range: " + range + " ScaledRange: " + range / explosionRadius);
-
                 col.GetComponent<PlayerLife>()?.TakeDamage(scaledDamage);
-                col.GetComponent<Rigidbody>().AddExplosionForce(1000.0f, transform.position, explosionRadius);
+                col.GetComponent<Rigidbody>().AddExplosionForce(1000.0f, transform.position, explosionRadius, 0, ForceMode.Impulse);
             }
             else if (col.CompareTag("Enemy"))
             {

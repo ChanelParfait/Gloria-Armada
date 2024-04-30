@@ -172,8 +172,12 @@ public class LevelManager : MonoBehaviour
 
     private void GameOver(){
         //Debug.Log("Game Over");
-        gameOverPnl.SetActive(true);
-        Time.timeScale = 0; 
+        if (gameOverPnl != null)
+        {
+            gameOverPnl.SetActive(true);
+            //Time.timeScale = 0; 
+        }
+        
     }
 
     private void YouWin(){
