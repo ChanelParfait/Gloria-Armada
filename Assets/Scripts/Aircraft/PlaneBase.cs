@@ -6,12 +6,13 @@ using UnityEngine.Events;
 
 public class PlaneBase : MonoBehaviour
 {
-    public int maxHealth;
-    public int currentHealth {get; private set;}
+    [SerializeReference] public int maxHealth;
+    public int currentHealth {get; protected set;}
 
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(maxHealth);
         currentHealth = maxHealth;
     }
 

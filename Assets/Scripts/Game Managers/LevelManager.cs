@@ -26,7 +26,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject youWinPnl; 
     [SerializeField] private Text CurrentHealthTxt; 
     [SerializeField] private TextMeshProUGUI ScoreTxt; 
-    public Animator damageCircle;
 
     // UI Values
     private int score = 0; 
@@ -175,9 +174,9 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void PlayDamageEffect(){
+    /*private void PlayDamageEffect(){
         damageCircle.SetTrigger("DamageTaken");
-    }
+    }*/
 
     private void GameOver(){
         //Debug.Log("Game Over");

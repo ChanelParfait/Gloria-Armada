@@ -61,22 +61,16 @@ public class Projectile : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider col){
-        //Debug.Log("Projectile Triggered");
-
-        if(col.gameObject.tag == "Player"){
-            col.GetComponent<PlayerLife>().TakeDamage(projectileStats.damage);
-            Destroy(gameObject);
-
+        Debug.Log("Projectile Triggered");
+        if (col.gameObject.tag == "Enemy" && hitParticle)
+        {
+            col.GetComponent<PlaneBase>().TakeDamage(projectileStats.damage);
+            Instantiate(hitParticle, transform.position, Quaternion.identity);
         }
-        else if(col.gameObject.tag == "Enemy"){
-            col.GetComponent<Enemy>().TakeDamage(projectileStats.damage);
-            if (hitParticle)
-            {
-                Instantiate(hitParticle, transform.position, Quaternion.identity);
-            }
-            Destroy(gameObject);
-
+        else if (col.gameObject.tag == "Player"){
+            col.GetComponent<PlaneBase>().TakeDamage(projectileStats.damage);
         }
+        Destroy(gameObject);
 
     }
 

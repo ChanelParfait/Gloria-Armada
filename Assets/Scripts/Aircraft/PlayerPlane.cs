@@ -13,7 +13,7 @@ public class PlayerPlane : PlaneBase
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -23,9 +23,10 @@ public class PlayerPlane : PlaneBase
     }
 
     public override void TakeDamage(int damage){
-        damageCircle.SetTrigger("DamageTaken");
-        damageSound.Play();
+        //damageCircle.SetTrigger("DamageTaken");
+        //damageSound.Play();
         OnPlayerDamage?.Invoke(this);
+        Debug.Log("Damage: " + damage);
         base.TakeDamage(damage);
     }
 
