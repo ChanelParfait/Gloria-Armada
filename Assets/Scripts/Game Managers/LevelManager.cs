@@ -57,6 +57,12 @@ public class LevelManager : MonoBehaviour
         playerHealth = playerPlane.GetComponent<Plane>().health;
         rb.velocity = Vector3.right * 20;
 
+        if (playerPlane == null)
+        {
+            //Find the player by tag
+            playerPlane = GameObject.FindGameObjectWithTag("Player");
+        }
+
         //This is the minimum velocity to keep the player moving
         //rb.velocity = Vector3.right * 20;
     }
@@ -68,7 +74,7 @@ public class LevelManager : MonoBehaviour
         {
             return;
         }
-        
+
         float range = maxHorizontalSpeed - minHorizontalSpeed;
         minSpeedXOffset = -((playerPlane.GetComponent<Plane>().getRBVelocity().x - minHorizontalSpeed)/range - 1)* 30f;
         float yOffset = playerPlane.transform.position.y / 200;

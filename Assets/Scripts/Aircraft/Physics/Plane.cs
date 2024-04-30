@@ -283,8 +283,9 @@ public class Plane : MonoBehaviour
         //Get the box collider of the boundary
         BoxCollider boxCollider = playArea.GetComponent<BoxCollider>();
         // Get the proximity of the player to the edge of the boxCollider
+        float strength = 1;
         Vector3 proxVec = boxCollider.ClosestPoint(transform.position) - transform.position;
-        Vector3 force = 2/(Mathf.Pow(10-proxVec.magnitude, 2)+ 0.1f) * proxVec.normalized + proxVec;
+        Vector3 force = 2/(Mathf.Pow(20*(1/strength)-proxVec.magnitude, 2)+ 0.1f) * proxVec.normalized + proxVec;
         rb.AddForce(force, ForceMode.VelocityChange);
     }
 
