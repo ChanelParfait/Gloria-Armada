@@ -18,7 +18,6 @@ public class LevelManager : MonoBehaviour
     public Perspective currentPerspective { get; private set;} 
     [SerializeField] private Animator anim; 
     [SerializeField] private Enemy_Spawner enemySpawner;
-    [SerializeField] private JetControl jetControl;
     [SerializeField] private GameObject playerPlane;
 
     // UI and Visuals
@@ -123,15 +122,6 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if(jetControl.isDead && !isGameOver){
-        //     GameOver();
-        //     isGameOver = true;
-        // }
-
-        // if(playerHealth != jetControl.health){
-        //     playerHealth = jetControl.health;
-        //     UpdateHealthTxt(playerHealth.ToString());
-        // }
     }
 
     private void OnEnable(){
@@ -147,9 +137,6 @@ public class LevelManager : MonoBehaviour
         EnemyBase.OnEnemyDeath -= UpdateScore;
         PlayerPlane.OnPlayerDeath -= GameOver;
         PlayerPlane.OnPlayerDamage -= PlayDamageEffect;
-
-
-
     }
 
     private void OnTriggerEnter(Collider col){

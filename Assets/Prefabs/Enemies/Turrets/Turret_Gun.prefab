@@ -47,15 +47,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e6b22a1584cae49aa483a32a0c0780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
   scoreValue: 10
-  totalHealth: 3
   enemy: {fileID: 0}
   aimPoint: {fileID: 5014994174253834196}
   azimuthObj: {fileID: 7628627719845462674}
   elevationObj: {fileID: 5699940837839844598}
   leadShot: 1
   overrideProjectileSpeed: 60
-  elevationConstraintAngle: 70
+  elevationConstraintAngle: 60
   rotationSpeed: 1
 --- !u!82 &4384332850938745729
 AudioSource:

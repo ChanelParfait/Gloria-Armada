@@ -630,8 +630,8 @@ MonoBehaviour:
   playerPlane: {fileID: 0}
   gameOverPnl: {fileID: 0}
   youWinPnl: {fileID: 0}
-  CurrentHealthTxt: {fileID: 0}
   ScoreTxt: {fileID: 0}
+  damageAnim: {fileID: 0}
   maxDistance: 5
   smoothTime: 0.1
   minHorizontalSpeed: 20

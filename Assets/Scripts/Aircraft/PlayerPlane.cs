@@ -41,9 +41,10 @@ public class PlayerPlane : Actor
             rb.AddTorque(GetComponent<Rigidbody>().angularVelocity, ForceMode.VelocityChange);
         }
         //Destroy the player
-        Destroy(gameObject);
-        OnPlayerDeath?.Invoke();
         base.Die();
+        //TODO: This goes before the base.Die() call
+        OnPlayerDeath?.Invoke();
+        
     }
 
     private void OnCollisionEnter(Collision col)

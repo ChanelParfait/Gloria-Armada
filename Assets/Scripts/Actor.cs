@@ -24,6 +24,13 @@ public class Actor : MonoBehaviour
 
     protected virtual void Die(){
         // Death Function 
+        // If any children are particle managers or have particle managers, detach them
+        ParticleManager[] pms = GetComponentsInChildren<ParticleManager>();
+        foreach (ParticleManager pm in pms)
+        {
+            pm.transform.SetParent(null);   
+            pm.Detatch();
+        }
         Destroy(gameObject);
     }
 }

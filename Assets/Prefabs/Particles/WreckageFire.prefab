@@ -1318,7 +1318,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 0.9794673, b: 0.7905661, a: 1}
-        key1: {r: 1, g: 0.90384847, b: 0, a: 0.18039216}
+        key1: {r: 1, g: 0.90384847, b: 0, a: 0.74509805}
         key2: {r: 0.8792453, g: 0.18385355, b: 0.077970766, a: 0}
         key3: {r: 0.04905659, g: 0.03767176, b: 0.038755335, a: 0}
         key4: {r: 0.5018867, g: 0.5018867, b: 0.5018867, a: 0}
@@ -2698,7 +2698,7 @@ ParticleSystem:
     strength:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -2804,7 +2804,7 @@ ParticleSystem:
     strengthZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -2855,7 +2855,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     separateAxes: 1
-    frequency: 0.5
+    frequency: 0.2
     damping: 1
     octaves: 1
     octaveMultiplier: 0.5
@@ -2864,7 +2864,7 @@ ParticleSystem:
     scrollSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2

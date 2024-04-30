@@ -79,8 +79,10 @@ public class Projectile : MonoBehaviour
         else if(col.gameObject.tag == "Enemy"){
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
             Destroy(gameObject);
+            Debug.Log("Hit Enemy");
             if (hitParticle)
             {
+                Debug.Log("Spawning Hit particle");
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
             }
         }
