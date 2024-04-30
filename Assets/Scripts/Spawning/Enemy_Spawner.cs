@@ -65,8 +65,8 @@ public class Enemy_Spawner : MonoBehaviour
                 GameObject spawnedEnemy = Instantiate(enemy, spawnPoint.transform.position, Quaternion.LookRotation(orientation, Vector3.up));
 
                 // set the movement direction of the enemy
-                Enemy e;
-                if ((e = spawnedEnemy.GetComponent<Enemy>()) != null)
+                EnemyPlane e;
+                if ((e = spawnedEnemy.GetComponent<EnemyPlane>()) != null)
                 {
                     e.moveDir = moveDir;
                     e.orientation = orientation;

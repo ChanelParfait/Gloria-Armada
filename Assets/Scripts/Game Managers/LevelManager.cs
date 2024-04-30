@@ -130,14 +130,14 @@ public class LevelManager : MonoBehaviour
 
     private void OnEnable(){
         // Update Score on enemy death 
-        Enemy.OnEnemyDeath += UpdateScore;
+        EnemyBase.OnEnemyDeath += UpdateScore;
         PlayerPlane.OnPlayerDeath += GameOver;
 
     }
 
     private void OnDisable(){
         // if gameobject is disabled remove all listeners
-        Enemy.OnEnemyDeath -= UpdateScore;
+        EnemyBase.OnEnemyDeath -= UpdateScore;
         PlayerPlane.OnPlayerDeath -= GameOver;
 
 
@@ -166,7 +166,7 @@ public class LevelManager : MonoBehaviour
         CurrentHealthTxt.text = health;
     }
 
-    private void UpdateScore(Enemy enemy){
+    private void UpdateScore(EnemyBase enemy){
         Debug.Log("Update Score");
         if(ScoreTxt){
             score += enemy.scoreValue;

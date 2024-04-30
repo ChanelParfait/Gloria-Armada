@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public struct WeaponStats{
@@ -25,6 +26,10 @@ public class Weapon : MonoBehaviour
     public bool canFire = true;
     protected AudioSource audioSource;
     public Vector3 spawnPosition;
+    
+    // Events 
+    public static UnityAction<float> OnAmmoChange;
+
 
     // Start is called before the first frame  update
     void Start()

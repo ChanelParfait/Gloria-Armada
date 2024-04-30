@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerPlane : PlaneBase
+public class PlayerPlane : Actor
 {
     public AudioSource damageSound;
     public Animator damageCircle;
@@ -16,18 +16,13 @@ public class PlayerPlane : PlaneBase
         currentHealth = maxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public override void TakeDamage(int damage){
         //damageCircle.SetTrigger("DamageTaken");
         //damageSound.Play();
-        OnPlayerDamage?.Invoke(this);
         Debug.Log("Damage: " + damage);
         base.TakeDamage(damage);
+        OnPlayerDamage?.Invoke(this);
     }
 
     protected override void Die(){   
@@ -48,8 +43,9 @@ public class PlayerPlane : PlaneBase
 
             dot = Mathf.Clamp01(dot * 5);
             
-            //Reduce health by a minimum of 1healh, max of MaxLife based on dot
+            //Reduce health by a minimum of 1health, max of MaxLife based on dot
             int damage = (int)Mathf.Lerp(1,maxHealth, dot);
+
             TakeDamage(damage);
         }
     }

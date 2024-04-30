@@ -4,12 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 
-public class Enemy : PlaneBase
+public class EnemyPlane : EnemyBase
 {
-    
-    EnemyWeaponManager weaponManager; 
-    public int scoreValue = 10; 
-
     [SerializeField] private float fireInterval = 3;
     [SerializeField] private int speed = 8;
     public float referenceSpeed = 0;
@@ -17,8 +13,6 @@ public class Enemy : PlaneBase
     public Vector3 orientation;
     private float timer = 0;
 
-    // Events
-    public static UnityAction<Enemy> OnEnemyDeath;
     
     // Start is called before the first frame update
     void Start()
@@ -40,11 +34,6 @@ public class Enemy : PlaneBase
         }
     }
 
-
-    public void Fire(){
-        weaponManager.FireActiveWeapon();
-    }
-
     private void OnTriggerEnter(Collider col){
         // if hit by a player projectile
         if(col.gameObject.tag == "PlayerProjectile"){
@@ -59,11 +48,6 @@ public class Enemy : PlaneBase
 
     public override void TakeDamage(int damage){
         base.TakeDamage(damage);
-    }
-
-    protected override void Die(){   
-        OnEnemyDeath?.Invoke(this);
-        base.Die();
     }
 
     protected virtual void MoveEnemy(){

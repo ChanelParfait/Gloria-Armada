@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class PlayerLife : MonoBehaviour
 {
-    public static event Action OnPlayerDamage;
-    public static event Action OnPlayerHeal;
-
+    //public static event Action OnPlayerDamage;
+    //public static event Action OnPlayerHeal;
     public AudioSource damageSound;
     public Animator damageCircle;
     //[SerializeField] private GameObject gameOverScreen;
@@ -50,7 +49,7 @@ public class PlayerLife : MonoBehaviour
         if (life > 0)
         {
             life -= amount;
-            OnPlayerDamage?.Invoke();
+            //OnPlayerDamage?.Invoke();
         }
     }
 
@@ -59,7 +58,7 @@ public class PlayerLife : MonoBehaviour
         if (life < maxLife)
         {
             life += amount;
-            OnPlayerHeal?.Invoke();
+            //OnPlayerHeal?.Invoke();
         }
     }
 
