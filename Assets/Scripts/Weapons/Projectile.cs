@@ -27,6 +27,16 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        projectileRB = GetComponent<Rigidbody>();
+        if (projectileRB == null){
+            projectileRB = gameObject.AddComponent<Rigidbody>();
+            projectileRB.interpolation = RigidbodyInterpolation.Interpolate;
+        }
+        Collider col = GetComponent<Collider>();
+        if (col == null){
+            col = gameObject.AddComponent<BoxCollider>();
+            col.isTrigger = true;
+        }
     }
 
     public void Launch(ProjectileStats stats) {
