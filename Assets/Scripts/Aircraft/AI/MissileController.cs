@@ -75,7 +75,7 @@ public class MissileController : MonoBehaviour
         Detonate();
     }
 
-    void Detonate(){
+    public void Detonate(){
         //StopAllCoroutines();
         if(detonationEffect)
         {

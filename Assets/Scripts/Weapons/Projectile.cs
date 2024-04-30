@@ -55,6 +55,12 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision col){
+        if(col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
+            Destroy(gameObject);
+        }
+    }
+
     private void OnTriggerEnter(Collider col){
 
         if(col.gameObject.tag == "Player"){
@@ -68,6 +74,17 @@ public class Projectile : MonoBehaviour
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
             }
             Destroy(gameObject);
+        }
+        else if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
+            MissileController missile;
+            if (missile = GetComponent<MissileController>()){
+                Debug.Log("Missile Hit Terrain");
+                missile.Detonate();
+            }
+            else{
+                Destroy(gameObject);
+            }
+            
         }
     }
 }

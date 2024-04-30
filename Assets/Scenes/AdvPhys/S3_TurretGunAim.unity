@@ -1515,6 +1515,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 949054471}
+    - target: {fileID: 7068312176032813334, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: far clip plane
+      value: 10000
+      objectReference: {fileID: 0}
     - target: {fileID: 8350215954295267770, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
       propertyPath: m_Name
       value: LevelManager
