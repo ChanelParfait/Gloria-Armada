@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1630909987149455724}
   - component: {fileID: 43273233858047346}
   - component: {fileID: 3689258555490957411}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HitParticlePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4904,7 +4904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyTime: 1
   damage: 0
-  explosionRadius: 13
+  explosionRadius: 0
 --- !u!82 &3689258555490957411
 AudioSource:
   m_ObjectHideFlags: 0
