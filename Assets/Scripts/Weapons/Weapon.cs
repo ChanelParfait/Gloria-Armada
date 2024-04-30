@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
+[System.Serializable]
 public struct WeaponStats{
-    public string WeaponName; 
     // how frequently the weapon can fire
     public float fireInterval;
     // time taken to reload the weapon
@@ -19,12 +20,16 @@ public class Weapon : MonoBehaviour
     // Base Weapon Class 
     [SerializeReference] protected GameObject projectile; 
     [SerializeReference] protected AudioClip fireSound;
-    protected WeaponStats weaponStats;
+    [SerializeField] protected WeaponStats weaponStats;
     public WeaponCategories weaponCategory;  
     public bool isPlayerWeapon = false;
     public bool canFire = true;
     protected AudioSource audioSource;
     public Vector3 spawnPosition;
+    
+    // Events 
+    public static UnityAction<float> OnAmmoChange;
+
 
     // Start is called before the first frame  update
     void Start()
@@ -37,38 +42,69 @@ public class Weapon : MonoBehaviour
         
     }
 
+    public WeaponStats GetWeaponStats(){
+        return weaponStats;
+    }
+
+    public ProjectileStats GetProjectileStats(){
+        return weaponStats.projectileStats;
+    }
+
     public virtual void SetupWeapon(){
         audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.clip = fireSound;
     }
 
     public virtual void Fire(Vector3 velocity){
-        Debug.Log("Fire Base Weapon");
+        //Debug.Log("Fire Base Weapon");
         // Get spawn position and spawn projectile object
-        GameObject clone = Instantiate(projectile, GetSpawnPos(), gameObject.transform.rotation); 
+        GameObject clone = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation()); 
+        clone.transform.localScale = weaponStats.projectileStats.size;
+        
         
         //GameObject clone = Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation); 
         // set stats of projectile
         clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats, velocity); 
-        audioSource.Play();
+        PlaySound();
     }
 
     
     public virtual void EnemyFire()
     {
+        //Debug.Log("Enemy Fire");
+
         // Get spawn position and spawn projectile object
-        GameObject clone = Instantiate(projectile, GetSpawnPos(), gameObject.transform.rotation); 
+        GameObject clone = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation()); 
         
         //GameObject clone = Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation); 
         // set stats of projectile
         clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats); 
-        audioSource.Play();
+        PlaySound();
+    }
+
+    public void UpdateStats(WeaponStats newStats){
+        weaponStats = newStats;
+    }
+
+    public WeaponStats GetStats(){
+        return weaponStats;
     }
 
     public virtual Vector3 GetSpawnPos()
     {
         // return the default spawn position
         return gameObject.transform.position + gameObject.transform.forward * 8;
+    }
+
+    public virtual Quaternion GetSpawnRotation()
+    {
+        // return the default spawn rotation
+        return gameObject.transform.rotation;
+    }
+    
+    public virtual void PlaySound()
+    {
+        audioSource.Play();
     }
 
     public GameObject GetProjectile(){

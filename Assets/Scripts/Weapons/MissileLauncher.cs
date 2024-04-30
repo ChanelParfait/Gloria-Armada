@@ -17,8 +17,6 @@ public class MissileLauncher : Weapon
 
     // time it takes for the ammo to be replensished by 1
     private const float replenTime = 1.5f;
-    // time it takes for ammo to fully replensish after being depleted 
-    private const float reloadTime = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -53,14 +51,14 @@ public class MissileLauncher : Weapon
         currentAmmo ++;
         reloadTimer = 0;
         Debug.Log("Ammo: " + currentAmmo);
-        Actions.OnAmmoChange?.Invoke(currentAmmo);
+        OnAmmoChange?.Invoke(currentAmmo);
         
     }
 
     private IEnumerator StartReload(){
         // start the reloading process
         isReloading = true; 
-        yield return new WaitForSeconds(reloadTime);
+        yield return new WaitForSeconds(weaponStats.reloadTime);
         FinishReload();
     }
 
@@ -69,7 +67,7 @@ public class MissileLauncher : Weapon
         Debug.Log("Full Reload Complete");
         currentAmmo = weaponStats.maxAmmo; 
         isReloading = false;
-        Actions.OnAmmoChange?.Invoke(currentAmmo);
+        OnAmmoChange?.Invoke(currentAmmo);
     }
 
     public override void Fire(Vector3 velocity)
@@ -79,7 +77,7 @@ public class MissileLauncher : Weapon
             base.Fire(velocity);
             // Decrement Ammo
             currentAmmo --;
-            Actions.OnAmmoChange?.Invoke(currentAmmo);
+            OnAmmoChange?.Invoke(currentAmmo);
             canFire = false;
             // Reset Timers
             reloadTimer = 0;
@@ -96,11 +94,12 @@ public class MissileLauncher : Weapon
     }*/
 
     public override void SetupWeapon(){
-        weaponStats.maxAmmo = 4;
-        weaponStats.fireInterval = 0.25f;
+        //weaponStats.maxAmmo = 4;
+        //weaponStats.fireInterval = 0.25f;
+        //weaponStats.reloadTime = 5;
         currentAmmo = weaponStats.maxAmmo;
-        weaponStats.projectileStats.damage = 2;
-        weaponStats.projectileStats.speed = 9;
+        //weaponStats.projectileStats.damage = 2;
+        //weaponStats.projectileStats.speed = 9;
 
 
         if(!projectile){

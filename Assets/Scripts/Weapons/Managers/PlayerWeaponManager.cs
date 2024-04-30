@@ -17,9 +17,12 @@ public class PlayerWeaponManager : MonoBehaviour
     public GameObject testWeapon2;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
+        //Get RB of parent 
+        playerRB = GetComponentInParent<Rigidbody>();
         // Used currently to test / show functionality
         // Will later be changed to Set Weapons through Loadout Menu
         SetPrimaryWeapon(testWeapon1);
@@ -29,14 +32,15 @@ public class PlayerWeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Fire Primary Weapon when pressing Q
-        if(Input.GetKeyDown(KeyCode.Q)){
+        // Fire Primary Weapon when pressing Space
+        if(Input.GetKey(KeyCode.Space)){
             FirePrimaryWeapon();
         }
         // Fire Special Weapon when pressing E
         if(Input.GetKeyDown(KeyCode.E)){
             FireSpecialWeapon();
         }
+
     }
 
     // Set and Create Primary Weapon using a provided Game Object
@@ -55,6 +59,17 @@ public class PlayerWeaponManager : MonoBehaviour
         specialWeapon = Instantiate(weaponObj, transform.position, transform.rotation, transform).GetComponent<Weapon>();
         specialWeapon.isPlayerWeapon = true;
     }
+
+    
+    public Weapon GetPrimaryWeapon(){
+        return primaryWeapon;
+    }
+
+    public Weapon GetSpecialWeapon(){
+        return specialWeapon;
+    }
+
+    
 
     public virtual void FirePrimaryWeapon(){
         if(primaryWeapon){

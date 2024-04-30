@@ -65,9 +65,17 @@ public class Enemy_Spawner : MonoBehaviour
                 GameObject spawnedEnemy = Instantiate(enemy, spawnPoint.transform.position, Quaternion.LookRotation(orientation, Vector3.up));
 
                 // set the movement direction of the enemy
-                spawnedEnemy.GetComponent<Enemy>().moveDir = GetMoveDirection(spawnPoint);
-                spawnedEnemy.GetComponent<Enemy>().orientation = orientation;
-                spawnedEnemy.GetComponent<Enemy>().referenceSpeed = velocity.x - 5;
+                EnemyPlane e;
+                if ((e = spawnedEnemy.GetComponent<EnemyPlane>()) != null)
+                {
+                    e.moveDir = moveDir;
+                    e.orientation = orientation;
+                    e.referenceSpeed = velocity.x - 5;
+                }
+                else
+                {
+                    Debug.Log("Enemy does not have Enemy component");
+                }
             }  
         }
     }

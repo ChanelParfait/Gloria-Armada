@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class PlayerLife : MonoBehaviour
 {
-    public static event Action OnPlayerDamage;
-    public static event Action OnPlayerHeal;
-
-    [SerializeField] private GameObject gameOverScreen;
+    //public static event Action OnPlayerDamage;
+    //public static event Action OnPlayerHeal;
+    public AudioSource damageSound;
+    public Animator damageAnim;
+    //[SerializeField] private GameObject gameOverScreen;
 
     public float life, maxLife;
     // Start is called before the first frame update
@@ -28,7 +29,7 @@ public class PlayerLife : MonoBehaviour
         {
             Heal(1);
             Debug.Log("Life Recovered");
-        }*/
+        }
 
         if (life == 0)
         {
@@ -37,16 +38,18 @@ public class PlayerLife : MonoBehaviour
                 Time.timeScale = 0;
                 gameOverScreen.SetActive(true);
             }
-        }
+        }*/
     }
 
     // Update is called once per frame
     public void TakeDamage(float amount)
     {
+        damageAnim.SetTrigger("DamageTaken");
+        damageSound.Play();
         if (life > 0)
         {
             life -= amount;
-            OnPlayerDamage?.Invoke();
+            //OnPlayerDamage?.Invoke();
         }
     }
 
@@ -55,7 +58,7 @@ public class PlayerLife : MonoBehaviour
         if (life < maxLife)
         {
             life += amount;
-            OnPlayerHeal?.Invoke();
+            //OnPlayerHeal?.Invoke();
         }
     }
 
@@ -63,10 +66,29 @@ public class PlayerLife : MonoBehaviour
     {
         if (other.gameObject.tag == "EnemyProjectile")
         {
-            TakeDamage(other.GetComponent<Projectile>().projectileStats.damage);
-            //Debug.Log("Damage Taken");
-            Debug.Log("Damage: " + other.GetComponent<Projectile>().projectileStats.damage);
-            Destroy(other.gameObject);
+            // TakeDamage(other.GetComponent<Projectile>().projectileStats.damage);
+            // //Debug.Log("Damage Taken");
+            // Debug.Log("Damage: " + other.GetComponent<Projectile>().projectileStats.damage);
+            // Destroy(other.gameObject);
         }
     }
+
+    /*private void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
+            //Get the normal of the collision
+            Vector3 normal = col.contacts[0].normal;
+            //Get dot product of the normal and the velocity
+            Rigidbody rb = GetComponent<Rigidbody>();
+            float dot = Vector3.Dot(rb.velocity.normalized, normal);
+            
+            Debug.Log(dot);
+
+            dot = Mathf.Clamp01(dot * 5);
+            
+            //Reduce health by a minimum of 1healh, max of MaxLife based on dot
+            float damage = Mathf.Lerp(1, maxLife, dot);
+            TakeDamage(damage);
+        }
+    }*/
 }

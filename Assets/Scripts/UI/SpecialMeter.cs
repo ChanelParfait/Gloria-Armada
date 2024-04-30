@@ -63,21 +63,21 @@ public class SpecialMeter : MonoBehaviour
 
     private void OnEnable(){
         // Update Score on enemy death 
-        Actions.OnAmmoChange += UpdateMeter;
+        Weapon.OnAmmoChange += UpdateMeter;
         
     }
 
     private void OnDisable(){
         // if gameobject is disabled remove all listeners
-        Actions.OnAmmoChange -= UpdateMeter;
+        Weapon.OnAmmoChange -= UpdateMeter;
 
     }
 
 
     private void UpdateMeter(float ammo){
-        Debug.Log("Level: " + ammo);
+        //Debug.Log("Level: " + ammo);
         meterLevel = ammo * 0.25f;
-        Debug.Log("meterLevel: " + meterLevel);
+        //Debug.Log("meterLevel: " + meterLevel);
 
     }
 }
