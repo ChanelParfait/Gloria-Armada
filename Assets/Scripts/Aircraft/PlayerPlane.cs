@@ -55,7 +55,7 @@ public class PlayerPlane : Actor
             Rigidbody rb = GetComponent<Rigidbody>();
             float dot = Vector3.Dot(rb.velocity.normalized, normal);
             
-            Debug.Log(dot);
+            //Debug.Log(dot);
 
             dot = Mathf.Clamp01(dot * 5);
             

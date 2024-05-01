@@ -95,7 +95,7 @@ public class Turret : EnemyBase
         azimuthObj.transform.rotation = Quaternion.Slerp(
             azimuthObj.transform.rotation,
             azimuthRotation,
-            EaseInOut(t)
+            Utilities.EaseInOut(t)
         );
 
         // For elevation, find the direction relative to the azimuth's current forward
@@ -115,29 +115,9 @@ public class Turret : EnemyBase
         elevationObj.transform.localRotation =Quaternion.Slerp(
             elevationObj.transform.localRotation,
             finalElevationRotation,
-            EaseInOut(t)
+            Utilities.EaseInOut(t)
         );
 
-    }
-
-    static float Flip(float x)
-    {
-        return 1 - x;
-    }
-
-    public static float EaseIn(float t)
-    {
-        return t * t;
-    }
-
-    public static float EaseOut(float t)
-    {
-        return Flip(Mathf.Pow(Flip(t),2));
-    }         
-
-     public static float EaseInOut(float t)
-    {
-        return Mathf.Lerp(EaseIn(t), EaseOut(t), t);
     }
 
 }

@@ -3,15 +3,19 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 [Serializable]
-class AeroSurface {
+public class AeroSurface {
     public float area;
     public Vector3 position;
     public Vector3 orientation;
 }
 
 [Serializable]
-class Surfaces{
+public class Surfaces{
     public AeroSurface wing, tail, rudder, horizontalStabilizer, aileron;
+}
+
+public struct Controls{
+    public float pitch, roll, yaw, throttle;
 }
 
 public class Plane : MonoBehaviour
@@ -34,8 +38,6 @@ public class Plane : MonoBehaviour
     [SerializeField] float thrust = 1800;   // Maximum thrust (N)
 
     [SerializeField] bool thrustVectoring = false;
-    [SerializeField] float fireRate = 10f;
-    float lastShotTime = 0f;    
     Vector3 controlInputs;
     Vector3 blendedInputs;
     Vector3 apInputs;
@@ -69,7 +71,6 @@ public class Plane : MonoBehaviour
     // Unity
     [SerializeField] Rigidbody rb;
     [SerializeField] Autopilot ap;
-    [SerializeField] Bullet gun;
     [SerializeField] ParticleSystem smoke;
     [SerializeField] ParticleSystem fire;
 
@@ -152,12 +153,12 @@ public class Plane : MonoBehaviour
     }
     
     void Shoot(){
-        if (Time.time - lastShotTime < 1/fireRate){
-            return;
-        }
-        Bullet bullet = Instantiate(gun, transform.position + transform.forward, transform.rotation);
-        bullet.GetComponent<Bullet>().Fire(this);
-        lastShotTime = Time.time;
+        // if (Time.time - lastShotTime < 1/fireRate){
+        //     return;
+        // }
+        // Bullet bullet = Instantiate(gun, transform.position + transform.forward, transform.rotation);
+        // bullet.GetComponent<Bullet>().Fire(this);
+        // lastShotTime = Time.time;
     }
 
 
@@ -213,6 +214,7 @@ public class Plane : MonoBehaviour
         //Resist rotation around Z axis
         rb.AddTorque(-transform.InverseTransformDirection(rb.angularVelocity).z* 1500f * transform.forward);
     }
+    
 
     void UpdateLift(){
         Vector3 liftForce = CalculateLift(AoA,
@@ -339,11 +341,8 @@ public class Plane : MonoBehaviour
             }
             else
             {
-                throttle = 0.5f;
+                //throttle = 0.5f;
             }
-            /*if (Input.GetKey(Fire) ){
-            Shoot();
-            }*/
         }
 
         if (throttle == 1.0f && !boost.isPlaying){

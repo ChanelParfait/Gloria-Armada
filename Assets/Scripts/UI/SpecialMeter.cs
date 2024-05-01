@@ -48,8 +48,10 @@ public class SpecialMeter : MonoBehaviour
         {
             meter.color = charged;
         }*/
-
-        meter.fillAmount = meterLevel;
+        if (meter){
+            meter.fillAmount = meterLevel;
+        }
+        
 
         /*if(Input.GetKeyDown(KeyCode.LeftShift))
         {

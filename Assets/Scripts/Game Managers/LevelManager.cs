@@ -71,7 +71,7 @@ public class LevelManager : MonoBehaviour
     void FixedUpdate(){
         // Calculate the current distance from the target to the camera's position
         
-        //Modify X of target position based on rb velocity between minSpeed and maxSpeed
+        // Modify X of target position based on rb velocity between minSpeed and maxSpeed
         if(playerPlane){
             float range = maxHorizontalSpeed - minHorizontalSpeed;
             minSpeedXOffset = -((playerPlane.GetComponent<Plane>().getRBVelocity().x - minHorizontalSpeed)/range - 1)* 30f;
@@ -150,8 +150,10 @@ public class LevelManager : MonoBehaviour
 
     private void UpdatePerspective(Perspective pers){
         currentPerspective = pers; 
-        anim.SetInteger("Perspective", (int)currentPerspective);
-
+        if (anim != null){
+            anim.SetInteger("Perspective", (int)currentPerspective);
+        }
+        
         enemySpawner.UpdatePerspective(currentPerspective); 
         //jetControl.ResetPosition(5f);
         //Invoke action to update others without storing references to all objects
