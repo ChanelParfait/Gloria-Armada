@@ -45,17 +45,23 @@ public class Autopilot : MonoBehaviour
     
     [SerializeField] bool autoArm = true;
 
+    public bool InFormation {get; private set;}
+
     [Space(10)]
     [Header("PID Controllers")]
     [SerializeField] PID pitchPID = new PID(1.0f, 0.01f, 0.2f);
     [SerializeField] PID yawPID =   new PID(1.0f, 0.01f, 0.2f);
     [SerializeField] PID rollPID =  new PID(1.0f, 0.01f, 0.2f);
 
+    PID throttlePID = new PID(0.1f, 0.001f, 0.1f);
+
     PID[] mainPIDs;
 
     PID aPitchPID = new PID(1.0f, 0.01f, 0.2f);
     PID aYawPID =   new PID(1.0f, 0.01f, 0.2f);
     PID aRollPID =  new PID(1.0f, 0.01f, 0.2f);
+
+    
 
     PID[] autoPIDs;
 
@@ -360,22 +366,26 @@ public class Autopilot : MonoBehaviour
 
         float throttle;    
         Vector3 positionalError = targetPosition - rb.transform.position;
-        //Debug.DrawRay(rb.transform.position, positionalError, Color.magenta);
+        Debug.DrawRay(rb.transform.position, positionalError, Color.magenta);
         float dot = Vector3.Dot(positionalError.normalized, targetVelocity.normalized);
         Vector3 projectedPosition = targetPosition + Vector3.Project(-positionalError, targetVelocity);
-        //Debug.DrawLine(targetPosition, projectedPosition, Color.green);
+        Debug.DrawLine(targetPosition, projectedPosition, Color.green);
         float distanceBehindTarget = (projectedPosition -  rb.transform.position).magnitude * Mathf.Sign(dot);
 
         //Debug.Log("Behind by: " + distanceBehindTarget + "m");
         
-        throttle = Mathf.Clamp01(dot);
+        throttle = Mathf.Clamp01(PIDSolve(distanceBehindTarget, ref throttlePID));
         if (distanceBehindTarget < 10){
             Vector3 tempTarget = targetPosition + 10 * targetVelocity.normalized;
             if (distanceBehindTarget < 0){
                 tempTarget = projectedPosition + 10 * targetVelocity.normalized;
             }
-            //Debug.DrawLine(rb.transform.position, tempTarget, Color.red);
+            Debug.DrawLine(rb.transform.position, tempTarget, Color.red);
             targetPosition = tempTarget;
+        }
+
+        if (Mathf.Abs(distanceBehindTarget) < 5){
+            InFormation = true;
         }
     
         Vector3 targetDirection = (targetPosition - rb.transform.position).normalized;

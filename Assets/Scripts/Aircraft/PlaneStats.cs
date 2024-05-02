@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "NewPlane", menuName = "Planes/", order = 1)]
+[CreateAssetMenu(fileName = "NewPlane", menuName = "Plane/PlaneStats", order = 1)]
 public class PlaneStats : ScriptableObject
 {
     public Surfaces surfaces;

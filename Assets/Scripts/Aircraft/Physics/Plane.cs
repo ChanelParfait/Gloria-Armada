@@ -18,6 +18,8 @@ public struct Controls{
     public float pitch, roll, yaw, throttle;
 }
 
+
+
 public class Plane : MonoBehaviour
 {
 
@@ -63,6 +65,18 @@ public class Plane : MonoBehaviour
     public Vector3 angularAcceleration { get; private set; } // Angular acceleration of the aircraft (rad/s^2)
     public Vector3 localAngularVelocity { get; private set; } // Angular velocity of the aircraft from local (rad/s)
 
+
+    [Flags]
+    public enum ControlChannels
+    {
+        None = 0,
+        Horizontal = 1 << 0,  // 1
+        Vertical = 1 << 1,    // 2
+        Throttle = 1 << 2,   // 4
+    }
+
+    [SerializeField] ControlChannels enabledControls;
+
     [SerializeField] float cd = 25f; //0.2f
     [SerializeField] AnimationCurve cl = new AnimationCurve();
 
@@ -105,6 +119,10 @@ public class Plane : MonoBehaviour
         else {
             boost.Stop();
         }
+    }
+
+    public void SetControlsEnabled(ControlChannels _enabled){
+        enabledControls = _enabled;
     }
  
     void Start()
@@ -321,6 +339,30 @@ public class Plane : MonoBehaviour
         UpdateAngularDrag();
 
     }
+
+    bool IsChannelEnabled(ControlChannels channel){
+        return (enabledControls & channel) == channel;
+    }
+
+        public void EnableChannel(ControlChannels channel)
+    {
+        enabledControls |= channel;
+    }
+
+    public void DisableChannel(ControlChannels channel)
+    {
+        enabledControls &= ~channel;
+    }
+
+    public void EnableAllChannels()
+    {
+        enabledControls = ControlChannels.Horizontal | ControlChannels.Vertical | ControlChannels.Throttle;
+    }
+
+    public void DisableAllChannels()
+    {
+        enabledControls = ControlChannels.None;
+    }
     
     // Update is called once per frame
     void Update()
@@ -328,21 +370,24 @@ public class Plane : MonoBehaviour
         //Get key inputs -> these can be overridden by autopilot
         //Currently control inputs for all controls, we will simplify this later
         if (tag =="Player" && isAlive){
-            controlInputs.y = Input.GetAxis("P1_Horizontal");
-            controlInputs.x = Input.GetAxis("P1_Vertical");
+            controlInputs.y = IsChannelEnabled(ControlChannels.Horizontal) ?  Input.GetAxis("P1_Horizontal") : 0;
+            controlInputs.x = IsChannelEnabled(ControlChannels.Vertical) ?  Input.GetAxis("P1_Vertical") : 0;
 
-            if (Input.GetKey(throttleUp))
-            {
-                throttle = 1f;
+            if (IsChannelEnabled(ControlChannels.Throttle)){
+                if (Input.GetKey(throttleUp))
+                {
+                    throttle = 1f;
+                }
+                else if (Input.GetKey(throttleDown))
+                {
+                    throttle = 0;
+                }
+                else
+                {
+                    //throttle = 0.5f;
+                }
             }
-            else if (Input.GetKey(throttleDown))
-            {
-                throttle = 0;
-            }
-            else
-            {
-                //throttle = 0.5f;
-            }
+
         }
 
         if (throttle == 1.0f && !boost.isPlaying){

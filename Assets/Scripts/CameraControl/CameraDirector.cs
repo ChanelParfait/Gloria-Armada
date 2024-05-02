@@ -8,9 +8,9 @@ public class CameraDirector : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private Camera mainCam;
 
-    GameObject wreck;
+    //GameObject wreck;
 
-    [SerializeField] bool deathSequence = false; 
+    //bool deathSequence = false; 
 
     private void OnEnable() {
         PlayerPlane.OnPlayerDeath += OnPlayerDeath;

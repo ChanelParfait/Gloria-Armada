@@ -4944,13 +4944,13 @@ MonoBehaviour:
       orientation: {x: 1, y: 0, z: 0}
   thrust: 1800
   thrustVectoring: 0
-  fireRate: 20
   health: 24
   isAlive: 1
   scaleVelocity: 1
   internalVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   acceleration: {x: 0, y: 0, z: 0}
+  enabledControls: -1
   cd: 0.25
   cl:
     serializedVersion: 2
@@ -5173,7 +5173,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   rb: {fileID: 6182760409746918969}
   ap: {fileID: 674909139210087522}
-  gun: {fileID: 1955615125115568952, guid: 93478ce0210976544bb1a24947eb49e2, type: 3}
   smoke: {fileID: 6651390922727057364}
   fire: {fileID: 5900609437313271690}
   boost: {fileID: 797495823986119921}
@@ -24813,7 +24812,7 @@ PrefabInstance:
     - target: {fileID: 5694165871972618649, guid: 67050f1860d0d5642acf40517d9f21c7, type: 3}
       propertyPath: testWeapon1
       value: 
-      objectReference: {fileID: 1062033948207875801, guid: c2968064a6f387d42ae42e6dc19c3673, type: 3}
+      objectReference: {fileID: 1062033948207875801, guid: 726c88db1ea7b10468efb08112948ee3, type: 3}
     - target: {fileID: 5694165871972618649, guid: 67050f1860d0d5642acf40517d9f21c7, type: 3}
       propertyPath: testWeapon2
       value: 

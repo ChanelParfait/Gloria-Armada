@@ -30,7 +30,8 @@ public class EnemyBase : Actor
         weaponManager.FireActiveWeapon();
     }
 
-    protected override void Die(){   
+    protected override void Die(){ 
+        Debug.Log("Enemy Died: " + name + "UniqueID: " + GetInstanceID());  
         OnEnemyDeath?.Invoke(this);
         base.Die();
     }
