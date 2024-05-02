@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: EnemyProjectile
       objectReference: {fileID: 0}
+    - target: {fileID: 7042804340993636549, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
+      propertyPath: hitParticle
+      value: 
+      objectReference: {fileID: 7641901280459977050, guid: a0acf2270fb5aa246bea2a0d6d4058d5, type: 3}
     - target: {fileID: 7112929052805948190, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
       propertyPath: burnTime
       value: 1.5
@@ -125,3 +129,5 @@ MonoBehaviour:
   detonationEffect: {fileID: 7641901280459977050, guid: a0acf2270fb5aa246bea2a0d6d4058d5, type: 3}
   team: 1
   radius: 12
+  armingDelay: 1
+  isArmed: 0
