@@ -14,7 +14,9 @@ public class EnemyPlane : EnemyBase
     private float timer = 0;
     public GameObject deathExplosion;
 
-    
+
+    [SerializeField] private PowerupManager powerupManager;
+
     // Start is called before the first frame update
     protected override void Start()
     {   
@@ -57,6 +59,7 @@ public class EnemyPlane : EnemyBase
         OnEnemyDeath?.Invoke(this);
         // Destroy Self and emit death explosion
         Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        powerupManager.SpawnPowerUp(transform.position);
         Destroy(gameObject);
     }
 

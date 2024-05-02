@@ -98,14 +98,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2a22a1813d6d84cb1ccafe385a5e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
   scoreValue: 10
-  totalHealth: 4
   fireInterval: 4
-  referenceSpeed: 0
   speed: 3
+  referenceSpeed: 0
   moveDir: {x: 0, y: 0, z: 0}
   orientation: {x: 0, y: 0, z: 0}
   deathExplosion: {fileID: 7641901280459977050, guid: 12cd1a8c790828542bcbce48a291aa01, type: 3}
+  powerupManager: {fileID: 8694571463313691911, guid: 1df9884301790490bb9aaef6ca2b9daf, type: 3}
 --- !u!82 &4763586288305748271
 AudioSource:
   m_ObjectHideFlags: 0
