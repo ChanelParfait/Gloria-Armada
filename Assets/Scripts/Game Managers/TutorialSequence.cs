@@ -22,7 +22,7 @@ public class TutorialSequence : MonoBehaviour
 
 
     [SerializeField] DialogueManager dialogue;
-    [SerializeField] DialogueManager playerCrash;
+    [SerializeField] DialogueScriptableObject script;
 
     Plane playerPlane;
     Autopilot ap;
@@ -48,7 +48,17 @@ public class TutorialSequence : MonoBehaviour
         playerWeapons.isEnabled = false;
         ap = GameObject.FindWithTag("Player").GetComponent<Autopilot>();
         dialogue = GetComponent<DialogueManager>();
+        dialogue.script = script;
         StartCoroutine(Initialize());
+    }
+
+    
+    IEnumerator Initialize(){
+        yield return new WaitForSeconds(1);
+        Debug.Log("Tutorial Sequence Started");
+        playerPlane.DisableAllChannels();
+        ap.setAPState(Autopilot.AutopilotState.targetFormation);
+        dialogue.StartDialogue();
     }
 
     void AxisControlTask(TutorialTask task, DialogueManager requester){
@@ -59,6 +69,7 @@ public class TutorialSequence : MonoBehaviour
             case TutorialTask.VerticalControls:
                 //bitwise and vertical and throttle channels
                 playerPlane.EnableChannel(Plane.ControlChannels.Vertical | Plane.ControlChannels.Throttle);
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 CompletionRequirements = () => Input.GetAxis("P1_Vertical") > 0;
                 break;
             case TutorialTask.HorizontalControls:
@@ -91,13 +102,6 @@ public class TutorialSequence : MonoBehaviour
         Debug.Log("Show Hint");
     }
 
-    IEnumerator Initialize(){
-        yield return new WaitForSeconds(1);
-        Debug.Log("Tutorial Sequence Started");
-        playerPlane.DisableAllChannels();
-        ap.setAPState(Autopilot.AutopilotState.targetFormation);
-        dialogue.StartDialogue();
-    }
 
     IEnumerator WaitForTask(Func<bool> Req, DialogueManager requester){
         yield return new WaitUntil(() => Req());
@@ -109,6 +113,9 @@ public class TutorialSequence : MonoBehaviour
 
     IEnumerator OnCompleteTask(DialogueManager requester){
         yield return new WaitForSeconds(1);
+        playerPlane.DisableAllChannels();
+        playerWeapons.enabled = false;
+        ap.setAPState(Autopilot.AutopilotState.targetFormation);
         requester.SetTaskComplete();
     }
 

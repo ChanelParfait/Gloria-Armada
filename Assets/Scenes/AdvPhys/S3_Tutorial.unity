@@ -3034,7 +3034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 0}
-  playerCrash: {fileID: 0}
+  script: {fileID: 11400000, guid: d4c87666a748b5a4390287fa53a73de1, type: 2}
 --- !u!114 &762686824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3047,6 +3047,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53cd779bfdfd2f0418fd70d65286ee3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  script: {fileID: 0}
+  currentDialogue: []
   NPCBackground: {fileID: 0}
   NPCNameText: {fileID: 0}
   NPCDialogueText: {fileID: 0}

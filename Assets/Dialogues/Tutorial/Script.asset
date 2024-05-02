@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21e62a662a23db7468f802727566a4cc, type: 3}
-  m_Name: Player
+  m_Script: {fileID: 11500000, guid: 3ec9e4e8b71b71b49b78a3900a1bb336, type: 3}
+  m_Name: Script
   m_EditorClassIdentifier: 
-  speakerName: Player
-  image: {fileID: 21300000, guid: ad4148593b05d0f47980774815c325fe, type: 3}
-  type: 0
-  faction: 0
+  speakers:
+  - {fileID: 0}
+  lines: []
+  timeBetweenLines: 1

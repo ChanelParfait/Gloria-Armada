@@ -20,6 +20,13 @@ public enum Faction
     Enemy,
 }
 
+[System.Serializable]
+public class DialogueChoice
+{
+    public string affirmative = "Yes";
+    public string negative = "No";
+}
+
 
 [System.Serializable]
 public enum DialogueType{
@@ -31,18 +38,19 @@ public enum DialogueType{
         Action,
 }
 
-[CreateAssetMenu(fileName = "New Speaker", menuName = "Dialogue/Speaker")]
-public class Speaker : ScriptableObject {
-    public string speakerName;
-    public Sprite image;
-    public SpeakerType type;
-    public Faction faction;
-}
+
 
 [System.Serializable]
 public class DialogueLine{
     public Speaker speaker;
     public DialogueType dialogueType;
     public string line;
+    public DialogueChoice choice; // Add this
+
+    public DialogueLine()
+    {
+        choice = new DialogueChoice();
+    }
+
 }
 
