@@ -12,21 +12,19 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public Rigidbody playerRB;
 
-    // Test Variables
-    //public GameObject testWeapon1;
-    //public GameObject testWeapon2;
-
-
+    public GameObject test1;
+    public GameObject test2;
 
     // Start is called before the first frame update
     void Start()
     {
         //Get RB of parent 
         playerRB = GetComponentInParent<Rigidbody>();
-        // Used currently to test / show functionality
-        // Will later be changed to Set Weapons through Loadout Menu
-        //SetPrimaryWeapon(testWeapon1);
-        //SetSpecialWeapon(testWeapon2);
+
+        if(!primaryWeapon && !specialWeapon){
+            SetPrimaryWeapon(test1);
+            SetSpecialWeapon(test2);
+        }
     }
 
     // Update is called once per frame

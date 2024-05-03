@@ -10,7 +10,7 @@ public class Enemy_Spawner : MonoBehaviour
     // that enemies are spawned on the same plane and their movement is fixed to that plane
     // if camera position or angle is changed, the spawner / spawn points must be moved to align with the player plane 
     [SerializeField] private Transform cameraTransform; 
-    [SerializeField] private Perspective currentPerspective = Perspective.Side_On; 
+    [SerializeField] private Perspective currentPerspective; 
     [SerializeField] private GameObject[] enemies; 
 
     [SerializeField] private Camera mainCamera ; 
@@ -20,7 +20,15 @@ public class Enemy_Spawner : MonoBehaviour
     Vector3 lastPosition;
 
 
-    
+    private void OnEnable(){
+        LevelManager.OnPerspectiveChange += UpdatePerspective;
+    }
+
+    private void OnDisable(){
+        // if gameobject is disabled remove all listeners
+        LevelManager.OnPerspectiveChange -= UpdatePerspective;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -150,7 +158,7 @@ public class Enemy_Spawner : MonoBehaviour
             }
     }
 
-    public void UpdatePerspective(Perspective newPers){
-        currentPerspective = newPers; 
+    public void UpdatePerspective(int newPers){
+        currentPerspective = (Perspective)newPers; 
     }
 }

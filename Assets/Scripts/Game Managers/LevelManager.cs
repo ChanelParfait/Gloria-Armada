@@ -55,7 +55,6 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         UpdatePerspective(initPerspective);
-        enemySpawner.UpdatePerspective(currentPerspective);
         rb.velocity = Vector3.right * 20;
 
         if (playerPlane == null)
@@ -152,7 +151,6 @@ public class LevelManager : MonoBehaviour
         currentPerspective = pers; 
         anim.SetInteger("Perspective", (int)currentPerspective);
 
-        enemySpawner.UpdatePerspective(currentPerspective); 
         //jetControl.ResetPosition(5f);
         //Invoke action to update others without storing references to all objects
         OnPerspectiveChange?.Invoke((int)currentPerspective);
