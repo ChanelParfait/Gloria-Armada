@@ -17,6 +17,9 @@ TagManager:
   - Despawner
   - WinPoint
   - Powerup
+  - PlayerWreckage
+  - LevelManager
+  - LevelTrigger
   layers:
   - Default
   - TransparentFX

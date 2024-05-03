@@ -10,6 +10,8 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [SerializeField] private Weapon specialWeapon;
 
+    public bool isEnabled = true;
+
     public Rigidbody playerRB;
 
     // Test Variables
@@ -33,11 +35,11 @@ public class PlayerWeaponManager : MonoBehaviour
     void Update()
     {
         // Fire Primary Weapon when pressing Space
-        if(Input.GetKey(KeyCode.Space)){
+        if(Input.GetKey(KeyCode.Space) && isEnabled){
             FirePrimaryWeapon();
         }
         // Fire Special Weapon when pressing E
-        if(Input.GetKeyDown(KeyCode.E)){
+        if(Input.GetKeyDown(KeyCode.E) && isEnabled){
             FireSpecialWeapon();
         }
 

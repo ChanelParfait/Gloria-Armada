@@ -3,16 +3,22 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 [Serializable]
-class AeroSurface {
+public class AeroSurface {
     public float area;
     public Vector3 position;
     public Vector3 orientation;
 }
 
 [Serializable]
-class Surfaces{
+public class Surfaces{
     public AeroSurface wing, tail, rudder, horizontalStabilizer, aileron;
 }
+
+public struct Controls{
+    public float pitch, roll, yaw, throttle;
+}
+
+
 
 public class Plane : MonoBehaviour
 {
@@ -34,8 +40,6 @@ public class Plane : MonoBehaviour
     [SerializeField] float thrust = 1800;   // Maximum thrust (N)
 
     [SerializeField] bool thrustVectoring = false;
-    [SerializeField] float fireRate = 10f;
-    float lastShotTime = 0f;    
     Vector3 controlInputs;
     Vector3 blendedInputs;
     Vector3 apInputs;
@@ -61,6 +65,18 @@ public class Plane : MonoBehaviour
     public Vector3 angularAcceleration { get; private set; } // Angular acceleration of the aircraft (rad/s^2)
     public Vector3 localAngularVelocity { get; private set; } // Angular velocity of the aircraft from local (rad/s)
 
+
+    [Flags]
+    public enum ControlChannels
+    {
+        None = 0,
+        Horizontal = 1 << 0,  // 1
+        Vertical = 1 << 1,    // 2
+        Throttle = 1 << 2,   // 4
+    }
+
+    [SerializeField] ControlChannels enabledControls;
+
     [SerializeField] float cd = 25f; //0.2f
     [SerializeField] AnimationCurve cl = new AnimationCurve();
 
@@ -69,7 +85,6 @@ public class Plane : MonoBehaviour
     // Unity
     [SerializeField] Rigidbody rb;
     [SerializeField] Autopilot ap;
-    [SerializeField] Bullet gun;
     [SerializeField] ParticleSystem smoke;
     [SerializeField] ParticleSystem fire;
 
@@ -104,6 +119,10 @@ public class Plane : MonoBehaviour
         else {
             boost.Stop();
         }
+    }
+
+    public void SetControlsEnabled(ControlChannels _enabled){
+        enabledControls = _enabled;
     }
  
     void Start()
@@ -152,12 +171,12 @@ public class Plane : MonoBehaviour
     }
     
     void Shoot(){
-        if (Time.time - lastShotTime < 1/fireRate){
-            return;
-        }
-        Bullet bullet = Instantiate(gun, transform.position + transform.forward, transform.rotation);
-        bullet.GetComponent<Bullet>().Fire(this);
-        lastShotTime = Time.time;
+        // if (Time.time - lastShotTime < 1/fireRate){
+        //     return;
+        // }
+        // Bullet bullet = Instantiate(gun, transform.position + transform.forward, transform.rotation);
+        // bullet.GetComponent<Bullet>().Fire(this);
+        // lastShotTime = Time.time;
     }
 
 
@@ -213,6 +232,7 @@ public class Plane : MonoBehaviour
         //Resist rotation around Z axis
         rb.AddTorque(-transform.InverseTransformDirection(rb.angularVelocity).z* 1500f * transform.forward);
     }
+    
 
     void UpdateLift(){
         Vector3 liftForce = CalculateLift(AoA,
@@ -283,8 +303,9 @@ public class Plane : MonoBehaviour
         //Get the box collider of the boundary
         BoxCollider boxCollider = playArea.GetComponent<BoxCollider>();
         // Get the proximity of the player to the edge of the boxCollider
+        float strength = 1;
         Vector3 proxVec = boxCollider.ClosestPoint(transform.position) - transform.position;
-        Vector3 force = 2/(Mathf.Pow(10-proxVec.magnitude, 2)+ 0.1f) * proxVec.normalized + proxVec;
+        Vector3 force = 2/(Mathf.Pow(20*(1/strength)-proxVec.magnitude, 2)+ 0.1f) * proxVec.normalized + proxVec;
         rb.AddForce(force, ForceMode.VelocityChange);
     }
 
@@ -318,6 +339,30 @@ public class Plane : MonoBehaviour
         UpdateAngularDrag();
 
     }
+
+    bool IsChannelEnabled(ControlChannels channel){
+        return (enabledControls & channel) == channel;
+    }
+
+        public void EnableChannel(ControlChannels channel)
+    {
+        enabledControls |= channel;
+    }
+
+    public void DisableChannel(ControlChannels channel)
+    {
+        enabledControls &= ~channel;
+    }
+
+    public void EnableAllChannels()
+    {
+        enabledControls = ControlChannels.Horizontal | ControlChannels.Vertical | ControlChannels.Throttle;
+    }
+
+    public void DisableAllChannels()
+    {
+        enabledControls = ControlChannels.None;
+    }
     
     // Update is called once per frame
     void Update()
@@ -325,24 +370,24 @@ public class Plane : MonoBehaviour
         //Get key inputs -> these can be overridden by autopilot
         //Currently control inputs for all controls, we will simplify this later
         if (tag =="Player" && isAlive){
-            controlInputs.y = Input.GetAxis("P1_Horizontal");
-            controlInputs.x = Input.GetAxis("P1_Vertical");
+            controlInputs.y = IsChannelEnabled(ControlChannels.Horizontal) ?  Input.GetAxis("P1_Horizontal") : 0;
+            controlInputs.x = IsChannelEnabled(ControlChannels.Vertical) ?  Input.GetAxis("P1_Vertical") : 0;
 
-            if (Input.GetKey(throttleUp))
-            {
-                throttle = 1f;
+            if (IsChannelEnabled(ControlChannels.Throttle)){
+                if (Input.GetKey(throttleUp))
+                {
+                    throttle = 1f;
+                }
+                else if (Input.GetKey(throttleDown))
+                {
+                    throttle = 0;
+                }
+                else
+                {
+                    //throttle = 0.5f;
+                }
             }
-            else if (Input.GetKey(throttleDown))
-            {
-                throttle = 0;
-            }
-            else
-            {
-                throttle = 0.5f;
-            }
-            /*if (Input.GetKey(Fire) ){
-            Shoot();
-            }*/
+
         }
 
         if (throttle == 1.0f && !boost.isPlaying){

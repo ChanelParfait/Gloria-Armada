@@ -8,22 +8,34 @@ public class Actor : MonoBehaviour
     [SerializeReference] public int maxHealth;
     public int currentHealth {get; protected set;}
 
+    protected bool isAlive = true;
+
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         currentHealth = maxHealth;
     }
 
     public virtual void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        if(currentHealth <= 0){
-            Die();
+        if (isAlive){
+            currentHealth -= damage;
+            if(currentHealth <= 0){
+                isAlive = false;
+                Die();
+            }
         }
     }
 
     protected virtual void Die(){
         // Death Function 
+        // If any children are particle managers or have particle managers, detach them
+        ParticleManager[] pms = GetComponentsInChildren<ParticleManager>();
+        foreach (ParticleManager pm in pms)
+        {
+            pm.transform.SetParent(null);   
+            pm.Detatch();
+        }
         Destroy(gameObject);
     }
 }

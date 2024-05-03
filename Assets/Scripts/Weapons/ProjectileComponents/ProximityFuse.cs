@@ -53,7 +53,7 @@ public class ProximityFuse : MonoBehaviour
         }
         //If target is found, look for increasing range (we have passed target)
         else{
-            Debug.Log(name + " is tracking " + target.name + " at " + rangeToTarget + " last: " + lastRangeToTarget);
+            //Debug.Log(name + " is tracking " + target.name + " at " + rangeToTarget + " last: " + lastRangeToTarget);
             rangeToTarget = (target.position - transform.position).magnitude;
             if (rangeToTarget > lastRangeToTarget && isArmed){
                 Detonate();

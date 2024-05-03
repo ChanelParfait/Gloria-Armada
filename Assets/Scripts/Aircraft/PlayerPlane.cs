@@ -9,13 +9,14 @@ public class PlayerPlane : Actor
     public AudioSource audioSource;
     public static event UnityAction<PlayerPlane> OnPlayerDamage;
     public static event UnityAction OnPlayerDeath;
+
+    [SerializeField] GameObject deathObj;
     // Start is called before the first frame update
-    void Start()
+    override protected void Start()
     {
         currentHealth = maxHealth;
         audioSource = GetComponent<AudioSource>();
     }
-
 
     public override void TakeDamage(int damage){
         audioSource.Play();
@@ -25,8 +26,24 @@ public class PlayerPlane : Actor
     }
 
     protected override void Die(){   
-        OnPlayerDeath?.Invoke();
+        if (deathObj == null)
+        {
+            Debug.LogError("Death Object not set in PlayerLife script");
+            return;
+        }
+        GameObject deadObj = Instantiate(deathObj, transform.position, transform.rotation);
+        foreach (Rigidbody rb in deadObj.GetComponentsInChildren<Rigidbody>())
+        {
+            //Add force to the rigid body
+            rb.AddForce(GetComponent<Rigidbody>().velocity, ForceMode.VelocityChange);
+            // Using the offset of the child from the parent, apply the appropriate velocity from the angular velocity
+            rb.AddTorque(GetComponent<Rigidbody>().angularVelocity, ForceMode.VelocityChange);
+        }
+        //Destroy the player
         base.Die();
+        //TODO: This goes before the base.Die() call
+        OnPlayerDeath?.Invoke();
+        
     }
 
     private void OnCollisionEnter(Collision col)
@@ -38,7 +55,7 @@ public class PlayerPlane : Actor
             Rigidbody rb = GetComponent<Rigidbody>();
             float dot = Vector3.Dot(rb.velocity.normalized, normal);
             
-            Debug.Log(dot);
+            //Debug.Log(dot);
 
             dot = Mathf.Clamp01(dot * 5);
             

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2103526018316895210}
   - component: {fileID: 1597674502044970073}
   - component: {fileID: 4430732407916316336}
+  - component: {fileID: 4828920805340790490}
   m_Layer: 7
   m_Name: boost
   m_TagString: Untagged
@@ -4830,6 +4831,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4828920805340790490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205942143493965581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1036074900772646115
 GameObject:
   m_ObjectHideFlags: 0
@@ -4841,6 +4854,7 @@ GameObject:
   - component: {fileID: 7584531652723249248}
   - component: {fileID: 984623357335652248}
   - component: {fileID: 8067115476712521414}
+  - component: {fileID: 3327382660746923673}
   m_Layer: 7
   m_Name: smoke
   m_TagString: Untagged
@@ -9660,6 +9674,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &3327382660746923673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036074900772646115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1230038070892675713
 GameObject:
   m_ObjectHideFlags: 0
@@ -9671,6 +9697,7 @@ GameObject:
   - component: {fileID: 5152838144148834322}
   - component: {fileID: 2437828155178675899}
   - component: {fileID: 3456638863782227150}
+  - component: {fileID: 6251015080989246972}
   m_Layer: 7
   m_Name: fire
   m_TagString: Untagged
@@ -14490,6 +14517,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &6251015080989246972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230038070892675713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3966768664029148857
 GameObject:
   m_ObjectHideFlags: 0
@@ -14501,6 +14540,7 @@ GameObject:
   - component: {fileID: 7013060715417918608}
   - component: {fileID: 810191296626434321}
   - component: {fileID: 7605938849458567016}
+  - component: {fileID: 449359082640989270}
   m_Layer: 7
   m_Name: wingtipR
   m_TagString: Untagged
@@ -19320,6 +19360,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &449359082640989270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3966768664029148857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4355265953626248377
 GameObject:
   m_ObjectHideFlags: 0
@@ -19916,6 +19968,7 @@ GameObject:
   - component: {fileID: 7752228737047105954}
   - component: {fileID: 7574278400887952963}
   - component: {fileID: 762761099360704092}
+  - component: {fileID: 2226815811420871254}
   m_Layer: 7
   m_Name: wingtipL
   m_TagString: Untagged
@@ -24735,6 +24788,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &2226815811420871254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9187894150497313839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2465417015494654627
 PrefabInstance:
   m_ObjectHideFlags: 0

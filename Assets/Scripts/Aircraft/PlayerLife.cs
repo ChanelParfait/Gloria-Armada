@@ -11,6 +11,8 @@ public class PlayerLife : MonoBehaviour
     public Animator damageAnim;
     //[SerializeField] private GameObject gameOverScreen;
 
+    [SerializeField] GameObject deathObj;
+
     public float life, maxLife;
     // Start is called before the first frame update
     void Start()
@@ -31,14 +33,33 @@ public class PlayerLife : MonoBehaviour
             Debug.Log("Life Recovered");
         }
 
-        if (life == 0)
+        if (life <= 0)
         {
+            OnDeath();
             if (gameOverScreen.activeSelf == false)
             {
                 Time.timeScale = 0;
                 gameOverScreen.SetActive(true);
             }
         }*/
+    }
+
+    void OnDeath(){
+        if (deathObj == null)
+        {
+            Debug.LogError("Death Object not set in PlayerLife script");
+            return;
+        }
+        GameObject deadObj = Instantiate(deathObj, transform.position, transform.rotation);
+        foreach (Rigidbody rb in deadObj.GetComponentsInChildren<Rigidbody>())
+        {
+            //Add force to the rigid body
+            rb.AddForce(GetComponent<Rigidbody>().velocity, ForceMode.VelocityChange);
+            // Using the offset of the child from the parent, apply the appropriate velocity from the angular velocity
+            rb.AddTorque(GetComponent<Rigidbody>().angularVelocity, ForceMode.VelocityChange);
+        }
+        //Destroy the player
+        Destroy(gameObject);
     }
 
     // Update is called once per frame

@@ -18,7 +18,6 @@ public class LevelManager : MonoBehaviour
     public Perspective currentPerspective { get; private set;} 
     [SerializeField] private Animator anim; 
     [SerializeField] private Enemy_Spawner enemySpawner;
-    [SerializeField] private JetControl jetControl;
     [SerializeField] private GameObject playerPlane;
 
     // UI and Visuals
@@ -59,6 +58,12 @@ public class LevelManager : MonoBehaviour
         enemySpawner.UpdatePerspective(currentPerspective);
         rb.velocity = Vector3.right * 20;
 
+        if (playerPlane == null)
+        {
+            //Find the player by tag
+            playerPlane = GameObject.FindGameObjectWithTag("Player");
+        }
+
         //This is the minimum velocity to keep the player moving
         //rb.velocity = Vector3.right * 20;
     }
@@ -66,7 +71,7 @@ public class LevelManager : MonoBehaviour
     void FixedUpdate(){
         // Calculate the current distance from the target to the camera's position
         
-        //Modify X of target position based on rb velocity between minSpeed and maxSpeed
+        // Modify X of target position based on rb velocity between minSpeed and maxSpeed
         if(playerPlane){
             float range = maxHorizontalSpeed - minHorizontalSpeed;
             minSpeedXOffset = -((playerPlane.GetComponent<Plane>().getRBVelocity().x - minHorizontalSpeed)/range - 1)* 30f;
@@ -117,15 +122,6 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if(jetControl.isDead && !isGameOver){
-        //     GameOver();
-        //     isGameOver = true;
-        // }
-
-        // if(playerHealth != jetControl.health){
-        //     playerHealth = jetControl.health;
-        //     UpdateHealthTxt(playerHealth.ToString());
-        // }
     }
 
     private void OnEnable(){
@@ -141,9 +137,6 @@ public class LevelManager : MonoBehaviour
         EnemyBase.OnEnemyDeath -= UpdateScore;
         PlayerPlane.OnPlayerDeath -= GameOver;
         PlayerPlane.OnPlayerDamage -= PlayDamageEffect;
-
-
-
     }
 
     private void OnTriggerEnter(Collider col){
@@ -157,8 +150,10 @@ public class LevelManager : MonoBehaviour
 
     private void UpdatePerspective(Perspective pers){
         currentPerspective = pers; 
-        anim.SetInteger("Perspective", (int)currentPerspective);
-
+        if (anim != null){
+            anim.SetInteger("Perspective", (int)currentPerspective);
+        }
+        
         enemySpawner.UpdatePerspective(currentPerspective); 
         //jetControl.ResetPosition(5f);
         //Invoke action to update others without storing references to all objects
@@ -179,8 +174,12 @@ public class LevelManager : MonoBehaviour
 
     private void GameOver(){
         //Debug.Log("Game Over");
-        gameOverPnl.SetActive(true);
-        Time.timeScale = 0; 
+        if (gameOverPnl != null)
+        {
+            gameOverPnl.SetActive(true);
+            //Time.timeScale = 0; 
+        }
+        
     }
 
     private void YouWin(){

@@ -24,6 +24,21 @@ public class Projectile : MonoBehaviour
     public GameObject hitParticle;
 
 
+    // Start is called before the first frame update
+    protected virtual void Start()
+    {
+        projectileRB = GetComponent<Rigidbody>();
+        if (projectileRB == null){
+            projectileRB = gameObject.AddComponent<Rigidbody>();
+            projectileRB.interpolation = RigidbodyInterpolation.Interpolate;
+        }
+        Collider col = GetComponent<Collider>();
+        if (col == null){
+            col = gameObject.AddComponent<BoxCollider>();
+            col.isTrigger = true;
+        }
+    }
+
     public void Launch(ProjectileStats stats) {
         startTime = Time.time;
         projectileStats = stats;
@@ -46,36 +61,45 @@ public class Projectile : MonoBehaviour
 
     void FixedUpdate() {
         if (Time.time > startTime + projectileStats.lifetime) {
-            Destroy(gameObject);
+            Die();
         }
     }
 
     private void OnCollisionEnter(Collision col){
         if(col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    private void Die(){
+        ParticleManager[] pms = GetComponentsInChildren<ParticleManager>();
+        foreach (ParticleManager pm in pms)
+        {
+            pm.transform.SetParent(null);   
+            pm.Detatch();
+        }
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "Player"){
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
-            Destroy(gameObject);
+            Die();
         }
         else if(col.gameObject.tag == "Enemy"){
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
-            Destroy(gameObject);
             if (hitParticle)
             {
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
             }
+            Die();
         }
         else if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
             MissileController missile;
             if (missile = GetComponent<MissileController>()){
-                Debug.Log("Missile Hit Terrain");
                 missile.Detonate();
             }
-            Destroy(gameObject);
+            Die();
         }
     }
 }
