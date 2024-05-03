@@ -36,26 +36,9 @@ public class PowerupManager : MonoBehaviour
 
         if(CheckDrop()){
             Instantiate(PowerupPrefab, enemyPosition, Quaternion.identity);
-            Debug.Log("Power-up spawned at: ");
+            Debug.Log("Power-up spawned at: " + enemyPosition);
         }
      
-    }
-    private void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.CompareTag("Player")) // Check if the colliding object is the player
-        {
-
-            // Randomly select a powerup item
-            string selectedPowerup = powerupItems[Random.Range(0, powerupItems.Length)];
-
-            // Apply the powerup effect based on the selected item
-            //ApplyPowerup(selectedPowerup);
-
-            // Display the name of the obtained powerup item on the screen
-
-            Destroy(gameObject);
-
-        }
     }
 
 }
