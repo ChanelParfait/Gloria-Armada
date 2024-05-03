@@ -10,7 +10,7 @@ public class DialogueScriptableObjectEditor : Editor
         switch (faction)
         {
             case Faction.Player:
-                return Color.blue;
+                return Color.yellow;
             case Faction.Squad:
                 return Color.green;
             case Faction.Friendly:
@@ -79,7 +79,20 @@ public class DialogueScriptableObjectEditor : Editor
                     DialogueType dialogueType = (DialogueType)line.FindPropertyRelative("dialogueType").enumValueIndex;
                     if (dialogueType == DialogueType.Choice)
                     {
-                        EditorGUILayout.PropertyField(line.FindPropertyRelative("choice"), new GUIContent("Choice"), true);
+                        SerializedProperty choice = line.FindPropertyRelative("choice");
+                        EditorGUI.indentLevel++;
+                        
+                        // Handle Affirmative Option
+                        SerializedProperty affirm = choice.FindPropertyRelative("affirm");
+                        DisplayChoiceOption(affirm, "Affirmative Option");
+                        
+                        EditorGUILayout.Space(); // Space between affirmative and negative options
+
+                        // Handle Negative Option
+                        SerializedProperty negate = choice.FindPropertyRelative("negate");
+                        DisplayChoiceOption(negate, "Negative Option");
+
+                        EditorGUI.indentLevel--;
                     }
                     EditorGUI.indentLevel--;
                 }
@@ -92,5 +105,20 @@ public class DialogueScriptableObjectEditor : Editor
         }
 
         serializedObject.ApplyModifiedProperties();
+    }
+
+    // Helper method to display fields for a ChoiceOption
+    void DisplayChoiceOption(SerializedProperty choiceOption, string label)
+    {
+        EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(choiceOption.FindPropertyRelative("optionText"), new GUIContent("Option Text"));
+        EditorGUILayout.PropertyField(choiceOption.FindPropertyRelative("choiceType"), new GUIContent("Choice Type"));
+        
+        ChoiceType choiceType = (ChoiceType)choiceOption.FindPropertyRelative("choiceType").enumValueIndex;
+        if (choiceType == ChoiceType.ChangeDialogue)
+        {
+            EditorGUILayout.PropertyField(choiceOption.FindPropertyRelative("newDialogue"), new GUIContent("New Dialogue"));
+            EditorGUILayout.PropertyField(choiceOption.FindPropertyRelative("newDialogueIndex"), new GUIContent("Dialogue Index"));
+        }
     }
 }

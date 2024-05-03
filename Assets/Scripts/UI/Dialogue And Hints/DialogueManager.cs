@@ -20,7 +20,7 @@ public class DialogueManager : MonoBehaviour
     public List<DialogueLine> currentDialogue;
 
     private int index;
-    private int typeSpeed = 50; //In characters per second
+    private int typeSpeed = 50;
     // private int defaultSpeed = 50;
     // private int fastSpeed = 150;
 
@@ -67,7 +67,8 @@ public class DialogueManager : MonoBehaviour
 
     bool taskComplete = false;
     bool choiceMade = false;
-    bool choiceAffirm = false;
+    bool isResponseYes = false;
+    bool repeatLine = false;
 
     void OnEnable(){
 
@@ -119,13 +120,11 @@ public class DialogueManager : MonoBehaviour
             currentDialogueText.text += c;
             yield return new WaitForSeconds(typeSpeed/1000f);
         }
-        // when line is done typing, check if there is a choice or action to be made
-        // TODO
 
         //Display the line for a second before moving on to the next line
         //Debug.Log("Line Length: " + tutorial[index].line.Length + " Typed chars: " + currentDialogueText.text.Length);   
         if (currentDialogueText.text.Length == currentDialogue[index].line.Length){
-            Debug.Log("Line typed" + ", DialogueType: " + currentDialogue[index].dialogueType);
+            //Debug.Log("Line typed" + ", DialogueType: " + currentDialogue[index].dialogueType);
             switch (currentDialogue[index].dialogueType){
                 case DialogueType.Dialogue:
                     yield return new WaitForSeconds(3);
@@ -133,29 +132,38 @@ public class DialogueManager : MonoBehaviour
                 case DialogueType.InterruptedDialogue:
                     break;
                 case DialogueType.Choice:
-                    choiceYes.Find("Yes_Text").GetComponent<TextMeshProUGUI>().text = currentDialogue[index].choice.affirmative;
-                    choiceNo.Find("No_Text").GetComponent<TextMeshProUGUI>().text = currentDialogue[index].choice.negative;
+                    choicePrompts.enabled = true;
+                    choiceYes.Find("Yes_Text").GetComponent<TextMeshProUGUI>().text = currentDialogue[index].choice.affirm.optionText;
+                    choiceNo.Find("No_Text").GetComponent<TextMeshProUGUI>().text = currentDialogue[index].choice.negate.optionText;
                     foreach (RectTransform rect in new RectTransform[] {choiceYes, choiceNo}){                        
                         StartCoroutine(WipeInRect(rect, rect.anchoredPosition, true));          
                     }
                     StartCoroutine(AwaitChoice());
                     yield return new WaitUntil(() => choiceMade);
-                    choiceMade = false;
-                    if (choiceAffirm){
+                    choiceMade = false; //Reset the choiceMade flag
+                    if (isResponseYes){
+                        //ToDo: Unpack the choice and execute the appropriate action
+                        //currentDialogue[index].choice.affirm.action();
                         StartCoroutine(BounceOut(choiceYes));
                         StartCoroutine(WipeOutRect(choiceNo));
                     }
                     else{
+                        //ToDo: Unpack the choice and execute the appropriate action
                         StartCoroutine(BounceOut(choiceNo));
                         StartCoroutine(WipeOutRect(choiceYes));
                     }
+                    ExecuteChoice(currentDialogue[index].choice, isResponseYes);
+                    yield return new WaitForSeconds(1);
+                    choicePrompts.enabled = false;
                     break;
 
                 case DialogueType.Prompt:
+                    promptContinue.enabled = true;
                     StartCoroutine(WipeInRect(promptContinueDialog, promptContinueDialog.anchoredPosition, true));
                     //Wait for the player to press the continue button
                     yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
                     StartCoroutine(WipeOutRect(promptContinueDialog));
+                    promptContinue.enabled = false;
                     break;
                 case DialogueType.Action:
                     OnRequestPitchControl?.Invoke(TutorialTask.VerticalControls, this);
@@ -166,7 +174,7 @@ public class DialogueManager : MonoBehaviour
                     break;
             }
             if (currentDialogue[index].dialogueType == DialogueType.Dialogue){
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(0.5f);
             }          
             NPCDialogueText.text = "";
             NextLine();
@@ -178,19 +186,38 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeLine());
     }
 
+    public void StartDialogue(DialogueScriptableObject _script){
+        script = _script;
+        currentDialogue = script.lines;
+        index = 0;
+        StartCoroutine(TypeLine());
+    }
+
+    public void StartDialogue(int index){
+        this.index = index;
+        StartCoroutine(TypeLine());
+    }   
+
     private void NextLine(){
-        index++;
-        if (index < currentDialogue.Count){
-            //If the next speaker differs from the current speaker then disable the current canvas
-            if (currentDialogue[index].speaker.type != currentDialogue[index-1].speaker.type){
-                StartCoroutine(PopOutBox(currentCanvas, currentBackground));
-            }
+        if (repeatLine){
+            repeatLine = false;
             StartCoroutine(TypeLine());
         }
-        else{
-            //End of dialogue
-            currentCanvas.enabled = false;
+        else {
+            index++;
+            if (index < currentDialogue.Count){
+                //If the next speaker differs from the current speaker then disable the current canvas
+                if (currentDialogue[index].speaker.type != currentDialogue[index-1].speaker.type){
+                    StartCoroutine(PopOutBox(currentCanvas, currentBackground));
+                }
+                StartCoroutine(TypeLine());
+            }
+            else{
+                //End of dialogue
+                currentCanvas.enabled = false;
+            }
         }
+
     }
 
     public void SetTaskComplete(){
@@ -200,14 +227,32 @@ public class DialogueManager : MonoBehaviour
     IEnumerator AwaitChoice(){
         if (Keyboard.current.yKey.wasPressedThisFrame){
             choiceMade = true;
-            choiceAffirm = true;
+            isResponseYes = true;
         }
         else if (Keyboard.current.nKey.wasPressedThisFrame){
             choiceMade = true;
-            choiceAffirm = false;
+            isResponseYes = false;
         }
         if (choiceMade){
             yield return null;
+        }
+    }
+
+    void ExecuteChoice(DialogueChoice choice, bool _isResponseYes){
+        ChoiceOption chosen = _isResponseYes ? choice.affirm : choice.negate;
+        ChoiceType choiceType = chosen.choiceType;
+        switch (choiceType){
+            case ChoiceType.Default:
+                break;
+            case ChoiceType.Repeat:
+                repeatLine = true;
+                break;
+            case ChoiceType.ChangeDialogue:
+                currentDialogue = chosen.newDialogue.lines;
+                index = chosen.newDialogueIndex;
+                break;
+            case ChoiceType.EndDialogue:
+                break;
         }
     }
     IEnumerator PopInBox(Canvas canvas, Transform background){
@@ -328,11 +373,11 @@ public class DialogueManager : MonoBehaviour
             choiceMade = false;
         }
         if (Input.GetButtonDown("P1_Fire1")) {
-            choiceAffirm = true;  
+            isResponseYes = true;  
             choiceMade = true;
         }
         if (Input.GetButtonDown("P1_Fire2")) {
-            choiceAffirm = false; 
+            isResponseYes = false; 
             choiceMade = true;
         }
     }

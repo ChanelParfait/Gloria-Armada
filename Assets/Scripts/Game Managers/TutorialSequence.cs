@@ -21,7 +21,7 @@ public class TutorialSequence : MonoBehaviour
     GameObject formationPoint;
 
 
-    [SerializeField] DialogueManager dialogue;
+    DialogueManager dialogue;
     [SerializeField] DialogueScriptableObject script;
 
     Plane playerPlane;

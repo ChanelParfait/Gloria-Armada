@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,10 +22,29 @@ public enum Faction
 }
 
 [System.Serializable]
+public enum ChoiceType
+{
+    Default,
+    Repeat,
+    ChangeDialogue,
+    EndDialogue,
+}
+
+[System.Serializable]
+public class ChoiceOption
+{
+    public string optionText;
+    public ChoiceType choiceType;
+    public DialogueScriptableObject newDialogue;
+    public int newDialogueIndex;
+    public Func<bool> action;
+}
+
+[System.Serializable]
 public class DialogueChoice
 {
-    public string affirmative = "Yes";
-    public string negative = "No";
+    public ChoiceOption affirm;
+    public ChoiceOption negate;
 }
 
 
@@ -36,8 +56,15 @@ public enum DialogueType{
         Prompt,
         Choice,
         Action,
+        Event,
 }
 
+[System.Serializable]
+public class DialogueEvent
+{
+    public string eventName;
+    public Action action;
+}
 
 
 [System.Serializable]
