@@ -13,8 +13,8 @@ public class PlayerWeaponManager : MonoBehaviour
     public Rigidbody playerRB;
 
     // Test Variables
-    public GameObject testWeapon1;
-    public GameObject testWeapon2;
+    //public GameObject testWeapon1;
+    //public GameObject testWeapon2;
 
 
 
@@ -25,8 +25,8 @@ public class PlayerWeaponManager : MonoBehaviour
         playerRB = GetComponentInParent<Rigidbody>();
         // Used currently to test / show functionality
         // Will later be changed to Set Weapons through Loadout Menu
-        SetPrimaryWeapon(testWeapon1);
-        SetSpecialWeapon(testWeapon2);
+        //SetPrimaryWeapon(testWeapon1);
+        //SetSpecialWeapon(testWeapon2);
     }
 
     // Update is called once per frame

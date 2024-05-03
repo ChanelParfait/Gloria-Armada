@@ -17,6 +17,9 @@ public class LoadoutManager : MonoBehaviour
     public Button[] primaryWeaponButtons;
     public Button[] specialWeaponButtons;
     public Button[] BodyButtons;
+    public WeaponButton DefaultPrimary;
+    public WeaponButton DefaultSpecial;
+
     public Button launchButton;
 
     private WeaponButton selectedPrimaryWeapon;
@@ -26,6 +29,10 @@ public class LoadoutManager : MonoBehaviour
     // [SerializeField] private int? selectedPrimaryWeapon;
     // [SerializeField] private int? selectedSpecialWeapon;
 
+    void OnEnable()
+    {
+        launchButton.onClick.AddListener(ConfirmSelections);
+    }
 
     void Awake()
     {
@@ -33,7 +40,20 @@ public class LoadoutManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+
+
+        SelectWeapon(DefaultPrimary);
+        SelectWeapon(DefaultSpecial);
+
     }
+
+    private void Update()
+    {
+        // When the return key is pressed, click the launch button
+        if(Input.GetKeyDown(KeyCode.Return)){
+            launchButton.onClick.Invoke();
+        }
+    } 
 
     public void SelectWeapon(WeaponButton weaponButton)
     {
@@ -80,10 +100,10 @@ public class LoadoutManager : MonoBehaviour
         //     selectedSpecialWeapon = button;
 
         // // Check if both selections are made
-        // if (selectedPrimaryWeapon != null && selectedSpecialWeapon != null)
-        // {
-        //     launchButton.interactable = true; // Enable the launch button if both selections are made
-        //}
+        if (selectedPrimaryWeapon != null && selectedSpecialWeapon != null)
+        {
+            launchButton.interactable = true; // Enable the launch button if both selections are made
+        }
     }
 
     private void UpdateUI()
@@ -93,13 +113,19 @@ public class LoadoutManager : MonoBehaviour
 
     public void ConfirmSelections()
     {
-        // if (selectedPrimaryWeapon.HasValue && selectedSpecialWeapon.HasValue)
-        // {
-        //    Debug.Log("Primary Weapon: " + selectedPrimaryWeapon + " Special Weapon: " + selectedSpecialWeapon);
-        // }
-        // else
-        // {
-        //     // Show an error or prompt for complete selections
-        // }
+        // on Launch, get the weaponID of primary and special weapon buttons
+        // and pass them to the game manager
+        Debug.Log("Weapons Confirmed");
+
+        GameManager gameManager =  GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>(); 
+        // 
+        if (selectedPrimaryWeapon != null && selectedSpecialWeapon != null){
+            gameManager.PrimaryWeapon = selectedPrimaryWeapon.weaponPrefab;
+            gameManager.SpecialWeapon = selectedSpecialWeapon.weaponPrefab;
+
+        }
+        else {
+            Debug.Log("Weapons not Selected");
+        }
     }
 }

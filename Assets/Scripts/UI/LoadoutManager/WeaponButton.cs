@@ -5,7 +5,8 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Button))]
 public class WeaponButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    public int weaponID; // Or use a more complex type like an object reference
+    //public int weaponID; // Or use a more complex type like an object reference
+    public GameObject weaponPrefab;
     public WeaponType weaponType;
 
     public Sprite normalSprite;
