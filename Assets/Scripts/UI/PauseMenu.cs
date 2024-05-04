@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
@@ -21,23 +20,25 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Checks if the game is paused or not when ESC is pressed, then pause or unpause
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (plane != null)
         {
-            if (gameIsPaused)
+            //Checks if the game is paused or not when ESC is pressed, then pause or unpause
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                Resume();
-            }
-            else
-            {
-                Pause();
+                if (gameIsPaused)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Pause();
+                }
             }
         }
 
-        if (plane == null)
+        else
         {
-            gameOverUI.SetActive(true);
-            Destroy(gameObject);
+            gameOverUI.GetComponent<GameOverMenu>().timerStart = true;
         }
     }
 
@@ -49,10 +50,6 @@ public class PauseMenu : MonoBehaviour
 
         //Disables the HUD that includes player's life, and special bar as well as the power-up slot
         gameHUD.enabled = false;
-
-        //Blurs the scene while paused
-        PostProcessVolume ppVolume = Camera.main.gameObject.GetComponent<PostProcessVolume>();
-        ppVolume.enabled = true;
 
         //To be used in the Resume button to make sure the game is paused when the player resumes the game
         gameIsPaused = true;
@@ -74,8 +71,6 @@ public class PauseMenu : MonoBehaviour
             pauseMenuUI.SetActive(false);
             Time.timeScale = 1;
             gameHUD.enabled = true;
-            PostProcessVolume ppVolume = Camera.main.gameObject.GetComponent<PostProcessVolume>();
-            ppVolume.enabled = false;
             gameIsPaused = false;
             Cursor.lockState = CursorLockMode.Locked;
             if (Cursor.visible == true)

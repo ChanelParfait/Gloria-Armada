@@ -1020,11 +1020,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1547661647231710226, guid: e7edccc096d677842b0b341bae1f9a76, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 209.64624
+      value: 157.23474
       objectReference: {fileID: 0}
     - target: {fileID: 1547661647231710226, guid: e7edccc096d677842b0b341bae1f9a76, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 809.3046
+      value: 606.97845
       objectReference: {fileID: 0}
     - target: {fileID: 1547661647231710226, guid: e7edccc096d677842b0b341bae1f9a76, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1858,6 +1858,67 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &366541842
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3452112838685167019, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
+      propertyPath: shouldCursorBeVisible
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864024016092588314, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2388.2095
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864024016092588314, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -600.6942
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864024016092588314, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4759.808
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864024016092588314, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864024016092588314, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864024016092588314, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864024016092588314, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864024016092588314, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864024016092588314, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864024016092588314, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7539215408321459910, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
+      propertyPath: m_Name
+      value: CursorCheck
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 49fb96027c4273a4db7e42eb5a7a64e2, type: 3}
 --- !u!1 &367596087
 GameObject:
   m_ObjectHideFlags: 0
@@ -2178,6 +2239,14 @@ PrefabInstance:
     - target: {fileID: 6142761180487254110, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8659416481830113530, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 157.23474
+      objectReference: {fileID: 0}
+    - target: {fileID: 8659416481830113530, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 6.9784546
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10476,3 +10545,4 @@ SceneRoots:
   - {fileID: 478724524}
   - {fileID: 39278735}
   - {fileID: 1656395378}
+  - {fileID: 366541842}
