@@ -25,14 +25,11 @@ MonoBehaviour:
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
       negate:
         optionText: 
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 25758a77975d9504382d6793350fe913, type: 2}
     dialogueType: 0
     line: I read you loud and clear
@@ -42,14 +39,11 @@ MonoBehaviour:
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
       negate:
         optionText: 
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 4
     line: Good. Now, let's get started
@@ -59,14 +53,11 @@ MonoBehaviour:
         choiceType: 1
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
       negate:
         optionText: Continue
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 0
     line: I've set your plane's autopilot to hold formation with me
@@ -76,14 +67,11 @@ MonoBehaviour:
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
       negate:
         optionText: 
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 11400000, guid: bd008cb8410c396488aa319bfcbed2d1, type: 2}
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 0
     line: It's still an experimental aircraft, so be careful
@@ -93,14 +81,11 @@ MonoBehaviour:
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
       negate:
         optionText: 
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 0
     line: You don't want to end up like the last pilot
@@ -110,14 +95,11 @@ MonoBehaviour:
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
       negate:
         optionText: 
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 25758a77975d9504382d6793350fe913, type: 2}
     dialogueType: 1
     line: What happened to the las
@@ -127,14 +109,11 @@ MonoBehaviour:
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
       negate:
         optionText: 
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 0
     line: 'Ok first line item: Pitch response'
@@ -144,14 +123,11 @@ MonoBehaviour:
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
       negate:
         optionText: 
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 5
     line: Try pitching up, towards me
@@ -161,14 +137,11 @@ MonoBehaviour:
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
       negate:
         optionText: 
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 4
     line: Would you prefer the pitch to be inverted?
@@ -178,14 +151,11 @@ MonoBehaviour:
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
       negate:
         optionText: Invert it
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 0
     line: If you change your mind there is a setting for it
@@ -195,16 +165,13 @@ MonoBehaviour:
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
       negate:
         optionText: 
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 0}
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
-    dialogueType: 6
+    dialogueType: 0
     line: Alright, let's get into horizontal controls
     choice:
       affirm:
@@ -212,12 +179,9 @@ MonoBehaviour:
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
       negate:
         optionText: 
         choiceType: 0
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 11400000, guid: bd008cb8410c396488aa319bfcbed2d1, type: 2}
   timeBetweenLines: 1

@@ -28,7 +28,6 @@ public enum ChoiceType
     Repeat,
     ChangeDialogue,
     EndDialogue,
-    Event,
 }
 
 [System.Serializable]
@@ -38,7 +37,7 @@ public class ChoiceOption
     public ChoiceType choiceType;
     public DialogueScriptableObject newDialogue;
     public int newDialogueIndex;
-    public DialogueEvents eventAction;
+    public Func<bool> action;
 }
 
 [System.Serializable]
@@ -60,12 +59,10 @@ public enum DialogueType{
         Event,
 }
 
-
 [System.Serializable]
-public class DialogueEvent : ScriptableObject
+public class DialogueEvent
 {
     public string eventName;
-    
     public Action action;
 }
 
@@ -76,8 +73,6 @@ public class DialogueLine{
     public DialogueType dialogueType;
     public string line;
     public DialogueChoice choice; // Add this
-
-    public DialogueEvents dialogueEvent;
 
     public DialogueLine()
     {
