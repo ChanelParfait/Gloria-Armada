@@ -85,14 +85,25 @@ public class DialogueScriptableObjectEditor : Editor
                         // Handle Affirmative Option
                         SerializedProperty affirm = choice.FindPropertyRelative("affirm");
                         DisplayChoiceOption(affirm, "Affirmative Option");
-                        
+                        if (affirm.FindPropertyRelative("choiceType").enumValueIndex == (int)ChoiceType.Event)
+                        {
+                            EditorGUILayout.PropertyField(affirm.FindPropertyRelative("eventAction"), new GUIContent("Event Action"));
+                        }
                         EditorGUILayout.Space(); // Space between affirmative and negative options
 
                         // Handle Negative Option
                         SerializedProperty negate = choice.FindPropertyRelative("negate");
                         DisplayChoiceOption(negate, "Negative Option");
+                        if (negate.FindPropertyRelative("choiceType").enumValueIndex == (int)ChoiceType.Event)
+                        {
+                            EditorGUILayout.PropertyField(negate.FindPropertyRelative("eventAction"), new GUIContent("Event Action"));
+                        }
 
                         EditorGUI.indentLevel--;
+                    }
+                    if (dialogueType == DialogueType.Event)
+                    {
+                        EditorGUILayout.PropertyField(line.FindPropertyRelative("dialogueEvent"), new GUIContent("Dialogue Event"));
                     }
                     EditorGUI.indentLevel--;
                 }
