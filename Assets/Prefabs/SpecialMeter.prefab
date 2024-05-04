@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7045326430031707119}
   - component: {fileID: 1342848816291436430}
   m_Layer: 5
-  m_Name: Special_Left
+  m_Name: SpecialMeter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,8 +27,8 @@ RectTransform:
   m_GameObject: {fileID: 4666954787476010718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3759907094303070264}
   m_Father: {fileID: 0}
@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -105.625, y: -289.3}
-  m_SizeDelta: {x: 50, y: 131.25}
+  m_SizeDelta: {x: 200, y: 62.5}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &7045326430031707119
 CanvasRenderer:
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 1846126411033765289}
   - component: {fileID: 6244762903084891699}
   m_Layer: 5
-  m_Name: Special_LeftInner
+  m_Name: Special_Inner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,15 +104,15 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2008523926127600828}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -62.5}
-  m_SizeDelta: {x: 21.875, y: 125}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -9.483337}
+  m_SizeDelta: {x: 187.5, y: 37.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1846126411033765289
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 1
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0

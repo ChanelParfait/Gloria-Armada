@@ -4,13 +4,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
 
-public class PauseMenu : MonoBehaviour
+public class GameOverMenu : MonoBehaviour
 {
+    private float timer;
     public static bool gameIsPaused = false;
     public GameObject pauseMenuUI;
     public Canvas gameHUD;
-    public GameObject plane;
-    public GameObject gameOverUI;
 
     // Start is called before the first frame update
     void Start()
@@ -21,23 +20,11 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Checks if the game is paused or not when ESC is pressed, then pause or unpause
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (gameIsPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
-            }
-        }
+        timer += Time.deltaTime;
 
-        if (plane == null)
+        if(timer > 3.0f)
         {
-            gameOverUI.SetActive(true);
-            Destroy(gameObject);
+            Pause();
         }
     }
 
@@ -62,26 +49,6 @@ public class PauseMenu : MonoBehaviour
         if (Cursor.visible == false)
         {
             Cursor.visible = true;
-        }
-    }
-
-    //This entire resume function practically does the opposite of the Pause function
-    public void Resume()
-    {
-        if (gameIsPaused)
-        {
-
-            pauseMenuUI.SetActive(false);
-            Time.timeScale = 1;
-            gameHUD.enabled = true;
-            PostProcessVolume ppVolume = Camera.main.gameObject.GetComponent<PostProcessVolume>();
-            ppVolume.enabled = false;
-            gameIsPaused = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            if (Cursor.visible == true)
-            {
-                Cursor.visible = false;
-            }
         }
     }
 
