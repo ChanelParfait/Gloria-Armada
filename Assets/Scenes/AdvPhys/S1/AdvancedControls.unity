@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1336957, g: 0.14353545, b: 0.13464256, a: 1}
+  m_IndirectSpecularColor: {r: 0.38269123, g: 0.3942083, b: 0.37878802, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -233,11 +233,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1168509773419960114, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
   m_PrefabInstance: {fileID: 7911094056301981758}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &221396558 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 756333059307113752, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
-  m_PrefabInstance: {fileID: 7911094056301981758}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &312080149
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,6 +370,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &606878050 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1084848977594486349, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+  m_PrefabInstance: {fileID: 7911094056301981758}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &822627607
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,13 +401,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 822627607}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.78, y: 0.86, z: -11.85}
+  m_LocalRotation: {x: 0, y: -0.70710677, z: -0.70710677, w: 0}
+  m_LocalPosition: {x: 1.59, y: -3.7, z: 1.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 221396558}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 606878050}
+  m_LocalEulerAnglesHint: {x: -90, y: -90, z: -90}
 --- !u!81 &822627609
 AudioListener:
   m_ObjectHideFlags: 0
@@ -754,7 +754,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 756333059307113752, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 1084848977594486349, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       insertIndex: -1
       addedObject: {fileID: 822627608}
     m_AddedComponents: []

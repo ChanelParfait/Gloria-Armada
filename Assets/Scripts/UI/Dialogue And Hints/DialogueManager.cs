@@ -172,10 +172,6 @@ public class DialogueManager : MonoBehaviour
                     taskComplete = false;
                     StartCoroutine(WipeOutRect(promptContinueDialog));
                     break;
-                case DialogueType.Event:
-                    //Find the event and execute it
-                    currentDialogue[index].dialogueEvent.Action();
-                    break;
             }
             if (currentDialogue[index].dialogueType == DialogueType.Dialogue){
                 yield return new WaitForSeconds(0.5f);

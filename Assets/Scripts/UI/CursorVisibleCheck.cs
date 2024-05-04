@@ -9,6 +9,7 @@ public class CursorVisibleCheck : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
+        Time.timeScale = 1;
         if (shouldCursorBeVisible == false && Cursor.visible == true)
         {
             Cursor.visible = false;

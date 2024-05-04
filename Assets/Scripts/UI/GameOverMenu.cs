@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using UnityEngine.Rendering.PostProcessing;
 using UnityEngine;
 
 public class GameOverMenu : MonoBehaviour
 {
+    public bool timerStart = false;
     private float timer;
     public static bool gameIsPaused = false;
-    public GameObject pauseMenuUI;
+    public GameObject gameOverUI;
     public Canvas gameHUD;
 
     // Start is called before the first frame update
@@ -20,7 +20,10 @@ public class GameOverMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
+        if(timerStart == true)
+        {
+            timer += Time.deltaTime;
+        }
 
         if(timer > 3.0f)
         {
@@ -31,15 +34,11 @@ public class GameOverMenu : MonoBehaviour
     void Pause()
     {
         //Stops time and enables Pause UI
-        pauseMenuUI.SetActive(true);
+        gameOverUI.SetActive(true);
         Time.timeScale = 0;
 
         //Disables the HUD that includes player's life, and special bar as well as the power-up slot
         gameHUD.enabled = false;
-
-        //Blurs the scene while paused
-        PostProcessVolume ppVolume = Camera.main.gameObject.GetComponent<PostProcessVolume>();
-        ppVolume.enabled = true;
 
         //To be used in the Resume button to make sure the game is paused when the player resumes the game
         gameIsPaused = true;
@@ -49,6 +48,24 @@ public class GameOverMenu : MonoBehaviour
         if (Cursor.visible == false)
         {
             Cursor.visible = true;
+        }
+    }
+
+    //This entire resume function practically does the opposite of the Pause function
+    public void Resume()
+    {
+        if (gameIsPaused)
+        {
+
+            gameOverUI.SetActive(false);
+            Time.timeScale = 1;
+            gameHUD.enabled = true;
+            gameIsPaused = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            if (Cursor.visible == true)
+            {
+                Cursor.visible = false;
+            }
         }
     }
 
