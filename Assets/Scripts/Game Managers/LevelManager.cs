@@ -148,7 +148,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void UpdatePerspective(Perspective pers){
+    public void UpdatePerspective(Perspective pers){
         currentPerspective = pers; 
         if (anim != null){
             anim.SetInteger("Perspective", (int)currentPerspective);

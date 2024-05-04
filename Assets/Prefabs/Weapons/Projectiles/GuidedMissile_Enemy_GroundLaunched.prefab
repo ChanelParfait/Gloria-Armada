@@ -86,11 +86,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7898844604284343131, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
       propertyPath: scaleVelocity
-      value: 3.5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7898844604284343131, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
       propertyPath: surfaces.wing.area
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7898844604284343131, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
       propertyPath: surfaces.aileron.area
@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7898844604284343131, guid: c4e04d5822b29184284a7a1bd2acc867, type: 3}
       propertyPath: surfaces.wing.position.z
-      value: 1
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
