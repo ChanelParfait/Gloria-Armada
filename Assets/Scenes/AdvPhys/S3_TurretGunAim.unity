@@ -1912,6 +1912,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: DamageCirclePrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 1126817472265967928, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2277678596508296740, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3876144742722985991, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
+      propertyPath: m_canvas
+      value: 
+      objectReference: {fileID: 1849828314}
     - target: {fileID: 3876144742722985991, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
       propertyPath: m_canvas
       value: 
@@ -1920,6 +1932,10 @@ PrefabInstance:
       propertyPath: m_WorldSpaceTargetObject
       value: 
       objectReference: {fileID: 656870840}
+    - target: {fileID: 4799418030955536300, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c9711f5aec758ae4a92fe6e3720c87a5, type: 2}
     - target: {fileID: 6142761180487254110, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1999,6 +2015,14 @@ PrefabInstance:
     - target: {fileID: 6142761180487254110, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8659416481830113530, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 8659416481830113530, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8423,6 +8447,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 449488882}
+  - {fileID: 449488882}
   - {fileID: 1166906144}
   - {fileID: 1196347025}
   - {fileID: 1547661647093221341}
@@ -8794,6 +8819,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1900622492 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4666954787476010718, guid: 67dba1da5e77235479674ac7a56d1669, type: 3}
+  m_PrefabInstance: {fileID: 6088020879236678688}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1900622493 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2008523926127600828, guid: 67dba1da5e77235479674ac7a56d1669, type: 3}
+  m_PrefabInstance: {fileID: 6088020879236678688}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1929356205
 GameObject:
   m_ObjectHideFlags: 0

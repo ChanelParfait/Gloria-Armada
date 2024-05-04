@@ -16,18 +16,11 @@ public class SceneLoader : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (SceneManager.GetActiveScene().buildIndex == 1)
-            {
-                LoadPreviousScene();
-            }
-        }
+        
     }
 
     public void LoadNextScene()
     {
-        
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
