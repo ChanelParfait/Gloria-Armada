@@ -9,6 +9,8 @@ public class PauseMenu : MonoBehaviour
     public static bool gameIsPaused = false;
     public GameObject pauseMenuUI;
     public Canvas gameHUD;
+    public GameObject plane;
+    public GameObject gameOverUI;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,12 @@ public class PauseMenu : MonoBehaviour
             {
                 Pause();
             }
+        }
+
+        if (plane == null)
+        {
+            gameOverUI.SetActive(true);
+            Destroy(gameObject);
         }
     }
 
