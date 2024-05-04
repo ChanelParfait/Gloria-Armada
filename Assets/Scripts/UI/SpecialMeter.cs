@@ -50,6 +50,16 @@ public class SpecialMeter : MonoBehaviour
         }*/
         if (meter){
             meter.fillAmount = meterLevel;
+            if(meterLevel < 1)
+                {
+                    meter.color = new Color(1, 1, 1, 1);
+                    meterOuter.color = new Color(1, 1, 1, 1);
+                }
+                else
+                {
+                    meter.color -= new Color(0, 0, 0, Time.deltaTime);
+                    meterOuter.color -= new Color(0, 0, 0, Time.deltaTime);
+                }
         }
         
 
@@ -62,16 +72,7 @@ public class SpecialMeter : MonoBehaviour
             }
         }*/
 
-        if(meterLevel < 1)
-        {
-            meter.color = new Color(1, 1, 1, 1);
-            meterOuter.color = new Color(1, 1, 1, 1);
-        }
-        else
-        {
-            meter.color -= new Color(0, 0, 0, Time.deltaTime);
-            meterOuter.color -= new Color(0, 0, 0, Time.deltaTime);
-        }
+
     }
 
     private void OnEnable(){

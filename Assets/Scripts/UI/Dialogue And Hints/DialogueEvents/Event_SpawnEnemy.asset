@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Event_SpawnEnemy
   m_EditorClassIdentifier: 
   eventOption: 0
-  enemyPrefab: {fileID: 0}
+  enemyPrefab: {fileID: 919028687121953867, guid: 6598244869bbacf4b957bdd4c4397ed7, type: 3}
+  waypoints: []

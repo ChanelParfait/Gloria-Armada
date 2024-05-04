@@ -70,7 +70,7 @@ public class TutorialSequence : MonoBehaviour
                 //bitwise and vertical and throttle channels
                 playerPlane.EnableChannel(Plane.ControlChannels.Vertical | Plane.ControlChannels.Throttle);
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
-                CompletionRequirements = () => Input.GetAxis("P1_Vertical") > 0;
+                CompletionRequirements = () => Input.GetAxis("P1_Vertical") < 0;
                 break;
             case TutorialTask.HorizontalControls:
                 playerPlane.EnableChannel(Plane.ControlChannels.Horizontal | Plane.ControlChannels.Throttle);
