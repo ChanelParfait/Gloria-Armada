@@ -7,8 +7,10 @@ public class PowerupManager : MonoBehaviour
     public string[] powerupItems; // Array to store the names of powerup items
     [SerializeField] private float dropChance = 5f;
 
+
     
-    void Start(){
+    void Start()
+    {
 
     }
 
@@ -29,14 +31,13 @@ public class PowerupManager : MonoBehaviour
             // Drop does not occur
             return false;
         }
-    }
-
+    }    
     public void SpawnPowerUp(Vector3 enemyPosition)
     {
 
         if(CheckDrop()){
             Instantiate(PowerupPrefab, enemyPosition, Quaternion.identity);
-            Debug.Log("Power-up spawned at: " + enemyPosition);
+            //Debug.Log("Power-up spawned at: " + enemyPosition);
         }
      
     }
