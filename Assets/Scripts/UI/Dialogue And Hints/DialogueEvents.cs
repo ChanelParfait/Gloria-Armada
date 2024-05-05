@@ -11,6 +11,7 @@ public class DialogueEvents : ScriptableObject
         SpawnEnemy,
         ChangeOrientation,
         AddWaypoints,
+        EndScene,
     }
 
     public EventOption eventOption;
@@ -21,8 +22,14 @@ public class DialogueEvents : ScriptableObject
     //Spawn enemy
     public void SpawnEnemy()
     {
+        GameObject formationPoint = GameObject.Find("FormationPoint");
         //Instantiate the enemy 
-        Instantiate(enemyPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject spawnedEnemy = Instantiate(enemyPrefab, formationPoint.transform.position, Quaternion.LookRotation(Vector3.right, Vector3.up));
+        EnemyPlane e;
+        if ((e = spawnedEnemy.GetComponent<EnemyPlane>()) != null)
+        {
+            e.referenceSpeed = formationPoint.GetComponent<Rigidbody>().velocity.x;
+        }
         
     }
 
@@ -53,6 +60,10 @@ public class DialogueEvents : ScriptableObject
                 break;
             case EventOption.ChangeOrientation:
                 ChangeOrientation();
+                break;
+            case EventOption.EndScene:
+                LevelManager lm = FindObjectOfType<LevelManager>();
+                lm.YouWin();
                 break;
         }
     }

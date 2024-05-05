@@ -67,6 +67,13 @@ public class DialogueScriptableObjectEditor : Editor
                     EditorGUILayout.EndHorizontal();
                     break; // Exit the loop to prevent accessing invalid dat
                 }
+                if (GUILayout.Button("Insert", GUILayout.Width(60)))
+                {
+                    lines.InsertArrayElementAtIndex(i);
+                    lines.serializedObject.ApplyModifiedProperties(); // Apply changes immediately
+                    EditorGUILayout.EndHorizontal();
+                    break; // Exit the loop to prevent accessing invalid data
+                }
                 EditorGUILayout.EndHorizontal();
 
                 if (line.isExpanded)
@@ -85,14 +92,30 @@ public class DialogueScriptableObjectEditor : Editor
                         // Handle Affirmative Option
                         SerializedProperty affirm = choice.FindPropertyRelative("affirm");
                         DisplayChoiceOption(affirm, "Affirmative Option");
-                        
+                        if (affirm.FindPropertyRelative("choiceType").enumValueIndex == (int)ChoiceType.Event)
+                        {
+                            EditorGUILayout.PropertyField(affirm.FindPropertyRelative("eventAction"), new GUIContent("Event Action"));
+                        }
                         EditorGUILayout.Space(); // Space between affirmative and negative options
 
                         // Handle Negative Option
                         SerializedProperty negate = choice.FindPropertyRelative("negate");
                         DisplayChoiceOption(negate, "Negative Option");
+                        if (negate.FindPropertyRelative("choiceType").enumValueIndex == (int)ChoiceType.Event)
+                        {
+                            EditorGUILayout.PropertyField(negate.FindPropertyRelative("eventAction"), new GUIContent("Event Action"));
+                        }
 
                         EditorGUI.indentLevel--;
+                    }
+                    if (dialogueType == DialogueType.Event)
+                    {
+                        EditorGUILayout.PropertyField(line.FindPropertyRelative("dialogueEvent"), new GUIContent("Dialogue Event"));
+                    }
+
+                    if (dialogueType == DialogueType.Action)
+                    {
+                        EditorGUILayout.PropertyField(line.FindPropertyRelative("tutorialTask"), new GUIContent("Tutorial Task"));
                     }
                     EditorGUI.indentLevel--;
                 }

@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: bc3f872f4b3e5b34eb27e350ee5d62fc
   - enabled: 1
+    path: Assets/Scenes/AdvPhys/S3_Tutorial.unity
+    guid: d7bbea0bd72d8dd41b4092ea7176ee0b
+  - enabled: 1
     path: Assets/Scenes/Loadout.unity
     guid: b9d3a6621af88ed4db1816c01b38d20a
   - enabled: 1

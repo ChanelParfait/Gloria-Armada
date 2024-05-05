@@ -60,10 +60,10 @@ public class DialogueManager : MonoBehaviour
     RectTransform choiceYes;
     RectTransform choiceNo;
 
-    public static UnityAction<TutorialTask, DialogueManager> OnRequestPitchControl;
-    public static UnityAction<TutorialTask, DialogueManager> OnRequestHorizontalControl;
-    public static UnityAction<TutorialTask, DialogueManager> OnRequestShoot;
-    public static UnityAction<TutorialTask, DialogueManager> OnRequestShootSpecial;
+    public static UnityAction<TutorialTask, DialogueManager> OnRequestPlayerAction;
+    // public static UnityAction<TutorialTask, DialogueManager> OnRequestHorizontalControl;
+    // public static UnityAction<TutorialTask, DialogueManager> OnRequestShoot;
+    // public static UnityAction<TutorialTask, DialogueManager> OnRequestShootSpecial;
 
     bool taskComplete = false;
     bool choiceMade = false;
@@ -166,11 +166,14 @@ public class DialogueManager : MonoBehaviour
                     promptContinue.enabled = false;
                     break;
                 case DialogueType.Action:
-                    OnRequestPitchControl?.Invoke(TutorialTask.VerticalControls, this);
+                    OnRequestPlayerAction?.Invoke(currentDialogue[index].tutorialTask, this);
                     //Wait for the task to be completed
                     yield return new WaitUntil(() => taskComplete);
                     taskComplete = false;
                     StartCoroutine(WipeOutRect(promptContinueDialog));
+                    break;
+                case DialogueType.Event:
+                    currentDialogue[index].dialogueEvent.Action();
                     break;
             }
             if (currentDialogue[index].dialogueType == DialogueType.Dialogue){

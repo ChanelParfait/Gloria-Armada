@@ -10,7 +10,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [SerializeField] private Weapon specialWeapon;
 
-    public bool isEnabled = true;
+    public bool isArmed = true;
 
     public Rigidbody playerRB;
 
@@ -34,12 +34,14 @@ public class PlayerWeaponManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         // Fire Primary Weapon when pressing Space
-        if(Input.GetKey(KeyCode.Space) && isEnabled){
+        if(Input.GetKey(KeyCode.Space) && isArmed){
+            //Debug.Log("Weapon: " + primaryWeapon + "Fired by: " + gameObject.name);
             FirePrimaryWeapon();
         }
         // Fire Special Weapon when pressing E
-        if(Input.GetKeyDown(KeyCode.E) && isEnabled){
+        if(Input.GetKeyDown(KeyCode.E) && isArmed){
             FireSpecialWeapon();
         }
 

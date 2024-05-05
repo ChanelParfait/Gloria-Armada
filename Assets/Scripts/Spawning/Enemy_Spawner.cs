@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Enemy_Spawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
     // enemy spawner is parented to the camera for dynamic spawning
     // spawning plane must be parallel and aligned with the player to ensure
@@ -50,7 +50,7 @@ public class Enemy_Spawner : MonoBehaviour
     }
 
     //Spawn an enemy of given type(index) at a given spawn point 
-    private void SpawnEnemy(SpawnPointName spawnPointName, int enemyIndex){
+    public void SpawnEnemy(SpawnPointName spawnPointName, int enemyIndex){
         // given a spawn position name, find the corresponding spawn point gameobject from the list of spawn points
         GameObject spawnPoint;
         if (spawnPoints.TryGetValue(spawnPointName.ToString(), out spawnPoint)){

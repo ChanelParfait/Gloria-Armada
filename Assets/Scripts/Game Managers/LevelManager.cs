@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Perspective initPerspective; 
     public Perspective currentPerspective { get; private set;} 
     [SerializeField] private Animator anim; 
-    [SerializeField] private Enemy_Spawner enemySpawner;
+    [SerializeField] private EnemySpawner enemySpawner;
     [SerializeField] private GameObject playerPlane;
 
     // UI and Visuals
@@ -54,6 +54,8 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameOverPnl = GameObject.Find("GameOver");
+        youWinPnl = GameObject.Find("YouWin");
         UpdatePerspective(initPerspective);
         enemySpawner.UpdatePerspective(currentPerspective);
         rb.velocity = Vector3.right * 20;
@@ -148,7 +150,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void UpdatePerspective(Perspective pers){
+    public void UpdatePerspective(Perspective pers){
         currentPerspective = pers; 
         if (anim != null){
             anim.SetInteger("Perspective", (int)currentPerspective);
@@ -182,9 +184,14 @@ public class LevelManager : MonoBehaviour
         
     }
 
-    private void YouWin(){
-        youWinPnl.SetActive(true);
-        Time.timeScale = 0; 
+    public void YouWin(){
+        //youWinPnl.SetActive(true);
+        StartCoroutine(goToNextLevel());
+    }
+
+    IEnumerator goToNextLevel(){
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void Restart(){
