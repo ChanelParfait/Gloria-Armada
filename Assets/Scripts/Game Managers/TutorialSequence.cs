@@ -15,6 +15,7 @@ public enum TutorialTask{
         Boundary,
         PrimaryFire,
         SecondaryFire,
+        FreeFlight,
     }
 public class TutorialSequence : MonoBehaviour
 {
@@ -113,6 +114,12 @@ public class TutorialSequence : MonoBehaviour
                 playerWeapons.isArmed = true;
                 CompletionRequirements = () => isEnemyDead == true; 
                 isEnemyDead = false;
+                break;
+            case TutorialTask.FreeFlight:
+                playerPlane.EnableAllChannels();
+                playerWeapons.isArmed = true;
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
+                CompletionRequirements = () => false;
                 break;
             default:
                 //Always exit as if task completed if no task is set

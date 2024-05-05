@@ -195,6 +195,12 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeLine());
     }
 
+    public void StartDialogue(DialogueScriptableObject _script, int _index){
+        script = _script;
+        currentDialogue = script.lines;
+        index = _index;
+        StartCoroutine(TypeLine());
+    }
     public void StartDialogue(int index){
         this.index = index;
         StartCoroutine(TypeLine());
