@@ -2468,7 +2468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e33c81cc194344eb0c851211ef9281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 1062033948207875801, guid: 7d1d6e664a280d64491b85fd498cad91, type: 3}
+  weaponPrefab: {fileID: 1062033948207875801, guid: 727f9549a9f244c48adccba25475ad20, type: 3}
   weaponType: 1
   normalSprite: {fileID: 21300000, guid: 2a4b5bfab5d5d274b8f2101671f1963a, type: 3}
   highlightedSprite: {fileID: 21300000, guid: f19432b2f3ee20e40b624f1ed04d740f, type: 3}
@@ -4472,7 +4472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8145203520018443969, guid: 6cad46c2646b82245bcfbcf80707c01c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

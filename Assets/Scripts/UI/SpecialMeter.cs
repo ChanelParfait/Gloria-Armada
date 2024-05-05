@@ -7,10 +7,12 @@ using UnityEngine.UI;
 public class SpecialMeter : MonoBehaviour
 {
     public Image meter, meterOuter;
-    public float meterLevel = 1;
+    public float meterLevel;
     //private float meterCooldown = 3;
 
     public Color uncharged, charged;
+
+    private float maxAmmo;
 
 
     // Start is called before the first frame update
@@ -89,8 +91,12 @@ public class SpecialMeter : MonoBehaviour
 
 
     private void UpdateMeter(float ammo){
+        // get max ammo from first ammo update
+        if(maxAmmo == 0){
+            maxAmmo = ammo;
+        }
         //Debug.Log("Level: " + ammo);
-        meterLevel = ammo * 0.25f;
+        meterLevel = ammo * (1 / maxAmmo);
         //Debug.Log("meterLevel: " + meterLevel);
 
     }
