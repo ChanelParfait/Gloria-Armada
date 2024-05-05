@@ -2,36 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SelectChoiceCam : MonoBehaviour
 {
     public Animator camAnim;
-    public SceneLoader sceneChanger;
     public GameObject LaunchButton;
 
-    // Start is called before the first frame update
-    void Start()
+
+    void OnEnable()
     {
-        
+        LaunchButton.GetComponent<Button>().onClick.AddListener(Launch);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            sceneChanger.LoadPreviousScene();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if(LaunchButton.activeSelf == true)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            }
-        }
-    }
-
     public void SelectPrimary()
     {
         camAnim.SetBool("ChangePrimary", true);
