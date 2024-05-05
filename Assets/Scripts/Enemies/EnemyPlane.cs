@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class EnemyPlane : EnemyBase
 {
-    [SerializeField] private float fireInterval = 3;
+    [SerializeField] private float fireInterval = 1;
     [SerializeField] private int speed = 8;
     public float referenceSpeed = 0;
     public Vector3 moveDir;
@@ -30,7 +30,7 @@ public class EnemyPlane : EnemyBase
         }
 
         timer += Time.deltaTime; 
-        if(timer >= fireInterval){
+        if(timer >= Random.Range(fireInterval, 3f)){
             timer = 0; 
             Fire();
         }
@@ -48,7 +48,7 @@ public class EnemyPlane : EnemyBase
         }
     }
 
-    public override void TakeDamage(int damage){
+    public override void TakeDamage(float damage){
         base.TakeDamage(damage);
     }
 

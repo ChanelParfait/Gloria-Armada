@@ -174,13 +174,17 @@ public class LevelManager : MonoBehaviour
     }
 
     private void GameOver(){
+        StartCoroutine(ShowDeathScreen());
+    }
+
+    IEnumerator ShowDeathScreen(){
+        yield return new WaitForSeconds(10);
         //Debug.Log("Game Over");
         if (gameOverPnl != null)
         {
             gameOverPnl.SetActive(true);
             //Time.timeScale = 0; 
-        }
-        
+        }  
     }
 
     public void YouWin(){

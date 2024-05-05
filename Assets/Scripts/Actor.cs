@@ -16,10 +16,10 @@ public class Actor : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
         if (isAlive){
-            currentHealth -= damage;
+            currentHealth -= (int)damage;
             if(currentHealth <= 0){
                 isAlive = false;
                 Die();
