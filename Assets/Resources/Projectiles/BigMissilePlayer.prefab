@@ -76,7 +76,7 @@ MonoBehaviour:
     size: {x: 0, y: 0, z: 0}
     range: 0
   projectileRB: {fileID: 2024443142957549870}
-  hitParticle: {fileID: 7641901280459977050, guid: a0acf2270fb5aa246bea2a0d6d4058d5, type: 3}
+  hitParticle: {fileID: 7641901280459977050, guid: edbbaa83de556d840bf013012ee681ee, type: 3}
 --- !u!54 &2024443142957549870
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -72,6 +72,9 @@ public class Projectile : MonoBehaviour
     }
 
     private void Die(){
+        if (hitParticle){
+            Instantiate(hitParticle, transform.position, Quaternion.identity);
+        }
         ParticleManager[] pms = GetComponentsInChildren<ParticleManager>();
         foreach (ParticleManager pm in pms)
         {

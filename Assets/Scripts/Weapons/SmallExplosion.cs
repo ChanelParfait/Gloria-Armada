@@ -9,6 +9,8 @@ public class SmallExplosion : MonoBehaviour
 
     public float damage = 1.0f;
 
+    public float impulse = 300.0f;
+
     [SerializeField] float explosionRadius = 13.0f;
 
     Collider col;
@@ -27,7 +29,7 @@ public class SmallExplosion : MonoBehaviour
             if (col.CompareTag("Player"))
             {
                 col.GetComponent<PlayerPlane>()?.TakeDamage(scaledDamage);
-                col.GetComponent<Rigidbody>().AddExplosionForce(1000.0f, transform.position, explosionRadius, 0, ForceMode.Impulse);
+                col.GetComponent<Rigidbody>().AddExplosionForce(impulse, transform.position, explosionRadius, 0, ForceMode.Impulse);
             }
             else if (col.CompareTag("Enemy"))
             {
