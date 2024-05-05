@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 
@@ -122,9 +123,14 @@ public class TutorialSequence : MonoBehaviour
         StartCoroutine(WaitForTask(CompletionRequirements, requester));
     }
 
-    IEnumerator ShowHint(string key){
-        
-        hintCanvas.transform.Find("HintText").GetComponent<UnityEngine.UI.Text>().text = key;
+    void ShowHint(string key){
+        hintCanvas.transform.Find("HintText").GetComponent<TextMeshProUGUI>().text = key;   
+        hintCanvas.enabled = true;
+        StartCoroutine(HintDisplay(key));
+    }
+
+    IEnumerator HintDisplay(string key){    
+        hintCanvas.transform.Find("HintText").GetComponent<TextMeshProUGUI>().text = key;   
         yield return new WaitForSeconds(1);
         hintCanvas.enabled = false;
     }

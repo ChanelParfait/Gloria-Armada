@@ -173,7 +173,7 @@ public class DialogueManager : MonoBehaviour
                     StartCoroutine(WipeOutRect(promptContinueDialog));
                     break;
                 case DialogueType.Event:
-                    currentDialogue[index].dialogueEvent.Action();
+                    currentDialogue[index].dialogueEvent.DoEvent();
                     break;
             }
             if (currentDialogue[index].dialogueType == DialogueType.Dialogue){

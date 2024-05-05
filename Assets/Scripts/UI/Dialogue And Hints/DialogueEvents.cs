@@ -24,7 +24,7 @@ public class DialogueEvents : ScriptableObject
     {
         GameObject formationPoint = GameObject.Find("FormationPoint");
         //Instantiate the enemy 
-        GameObject spawnedEnemy = Instantiate(enemyPrefab, formationPoint.transform.position, Quaternion.LookRotation(Vector3.right, Vector3.up));
+        GameObject spawnedEnemy = Instantiate(enemyPrefab, formationPoint.transform.position + Vector3.right*60, Quaternion.LookRotation(Vector3.right, Vector3.up));
         EnemyPlane e;
         if ((e = spawnedEnemy.GetComponent<EnemyPlane>()) != null)
         {
@@ -51,7 +51,7 @@ public class DialogueEvents : ScriptableObject
         }
     }
 
-    public void Action()
+    public void DoEvent()
     {
         switch (eventOption)
         {
