@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,7 +13,6 @@ public struct ProjectileStats{
     public float lifetime;
     public Vector3 size; 
     public float range; 
-
 }
 
 public class Projectile : MonoBehaviour
@@ -21,25 +21,31 @@ public class Projectile : MonoBehaviour
     public ProjectileStats projectileStats; 
     public Rigidbody projectileRB;
     float startTime;
-    //float lifetime = 10;
-
-
+    public GameObject hitParticle;
 
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-
+        projectileRB = GetComponent<Rigidbody>();
+        if (projectileRB == null){
+            projectileRB = gameObject.AddComponent<Rigidbody>();
+            projectileRB.interpolation = RigidbodyInterpolation.Interpolate;
+        }
+        Collider col = GetComponent<Collider>();
+        if (col == null){
+            col = gameObject.AddComponent<BoxCollider>();
+            col.isTrigger = true;
+        }
     }
+
     public void Launch(ProjectileStats stats) {
         startTime = Time.time;
         projectileStats = stats;
-
-        
         projectileRB = GetComponent<Rigidbody>();
-        //Debug.Log(stats.speed);
         projectileRB.AddRelativeForce(new Vector3(0, 0, stats.speed), ForceMode.VelocityChange); 
     }
+
     public void Launch(ProjectileStats stats, Vector3 cameraVelocity) {
         startTime = Time.time;
         projectileStats = stats;
@@ -48,32 +54,52 @@ public class Projectile : MonoBehaviour
         projectileRB.AddRelativeForce(new Vector3(0, 0, stats.speed * 2), ForceMode.VelocityChange);
         projectileRB.AddForce(cameraVelocity, ForceMode.VelocityChange); 
     }
-
-
-    void FixedUpdate() {
-        if (Time.time > startTime + projectileStats.lifetime) {
-            Destroy(gameObject);
-        }
-    }
-
+    
     public void SetStats(ProjectileStats stats){
         projectileStats = stats;
     }
 
-    private void OnTriggerEnter(Collider col){
-        //Debug.Log("Projectile Triggered");
-
-        if(col.gameObject.tag == "Player"){
-            col.GetComponent<PlayerLife>().TakeDamage(projectileStats.damage);
-            Destroy(gameObject);
-
+    void FixedUpdate() {
+        if (Time.time > startTime + projectileStats.lifetime) {
+            Die();
         }
-        else if(col.gameObject.tag == "Enemy"){
-            col.GetComponent<Enemy>().TakeDamage(projectileStats.damage);
-            Destroy(gameObject);
-
-        }
-
     }
 
+    private void OnCollisionEnter(Collision col){
+        if(col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
+            Die();
+        }
+    }
+
+    private void Die(){
+        ParticleManager[] pms = GetComponentsInChildren<ParticleManager>();
+        foreach (ParticleManager pm in pms)
+        {
+            pm.transform.SetParent(null);   
+            pm.Detatch();
+        }
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter(Collider col){
+        if(col.gameObject.tag == "Player"){
+            col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
+            Die();
+        }
+        else if(col.gameObject.tag == "Enemy"){
+            col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
+            if (hitParticle)
+            {
+                Instantiate(hitParticle, transform.position, Quaternion.identity);
+            }
+            Die();
+        }
+        else if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
+            MissileController missile;
+            if (missile = GetComponent<MissileController>()){
+                missile.Detonate();
+            }
+            Die();
+        }
+    }
 }

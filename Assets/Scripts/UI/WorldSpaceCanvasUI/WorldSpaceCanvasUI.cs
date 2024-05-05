@@ -34,6 +34,16 @@ namespace Calcatz.WorldSpaceCanvasUI {
             InitReferences();
         }
 
+        private void OnEnable(){
+            //Subscribe to onPlayerDeath
+            PlayerPlane.OnPlayerDeath += OnPlayerDeath;
+        }
+
+        private void OnDisable(){
+            //Unsubscribe to onPlayerDeath
+            PlayerPlane.OnPlayerDeath -= OnPlayerDeath;
+        }
+
         private void InitReferences() {
             if (m_CanvasScaler == null) {
                 m_CanvasScaler = GetComponent<CanvasScaler>();
@@ -132,5 +142,15 @@ namespace Calcatz.WorldSpaceCanvasUI {
             Vector2 normalizedPoint = screenPoint / screenSize*2;
             return normalizedPoint;
         }
+
+        void OnPlayerDeath(){
+            // Disable playerHUD
+            // find playerHUD in children
+            GameObject playerHUD = transform.Find("PlayerHUD").gameObject;
+            if (playerHUD != null){
+                playerHUD.SetActive(false);
+            } 
+        }
+
     }
 }

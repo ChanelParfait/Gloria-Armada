@@ -172,4 +172,34 @@ public static class Utilities
     {
         return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
     }
+
+    static float Flip(float x)
+    {
+        return 1 - x;
+    }
+
+    public static float EaseIn(float t)
+    {
+        return t * t;
+    }
+
+    public static float EaseOut(float t)
+    {
+        return Flip(Mathf.Pow(Flip(t),2));
+    }         
+
+     public static float EaseInOut(float t)
+    {
+        return Mathf.Lerp(EaseIn(t), EaseOut(t), t);
+    }
+
+    public static float EaseInOutBack(float t)
+    {
+        const float c1 = 1.70158f;
+        const float c2 = c1 * 1.525f;
+        float t2 = t-1f;
+        return t < 0.5
+            ? t * t * 2 * ((c2 + 1) * t * 2 - c2)
+            : t2*t2 * 2 * ((c2 + 1) * t2 * 2 + c2) + 1;
+    }
 }

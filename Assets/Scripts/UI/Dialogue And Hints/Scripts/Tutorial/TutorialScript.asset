@@ -1,0 +1,325 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ec9e4e8b71b71b49b78a3900a1bb336, type: 3}
+  m_Name: TutorialScript
+  m_EditorClassIdentifier: 
+  speakers:
+  - {fileID: 11400000, guid: 25758a77975d9504382d6793350fe913, type: 2}
+  - {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+  lines:
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 3
+    line: Ok, test pilot, comms check. Do you read me?
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 2
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 0
+  - speaker: {fileID: 11400000, guid: 25758a77975d9504382d6793350fe913, type: 2}
+    dialogueType: 0
+    line: I read you loud and clear
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 0
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 0
+    line: Good. Now, let's get started
+    choice:
+      affirm:
+        optionText: Say again?
+        choiceType: 1
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: Continue
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: c22292e8b68346b4c8459f440f38f1b8, type: 2}
+    tutorialTask: 0
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 0
+    line: I've set your plane's autopilot to hold formation with me
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 4
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 0
+    line: It's still an experimental aircraft, so be careful
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 0
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 0
+    line: You don't want to end up like the last pilot
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 0
+  - speaker: {fileID: 11400000, guid: 25758a77975d9504382d6793350fe913, type: 2}
+    dialogueType: 1
+    line: What happened to the las-
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 0
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 0
+    line: 'Ok first line item: Pitch response'
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 0
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 5
+    line: Try pitching up, towards me
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 0
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 4
+    line: Would you prefer the pitch to be inverted?
+    choice:
+      affirm:
+        optionText: It's fine
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: Invert it
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 0
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 0
+    line: If you change your mind there is a setting for it
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 0
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 5
+    line: Ok, use Shift to boost!
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 2
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 6
+    line: Alright, let's get ourselves a test target!
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: c22292e8b68346b4c8459f440f38f1b8, type: 2}
+    tutorialTask: 0
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 5
+    line: Shoot down that plane with SPACE
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: c22292e8b68346b4c8459f440f38f1b8, type: 2}
+    tutorialTask: 4
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 6
+    line: Nice, work. I'll give you some more practice
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: c22292e8b68346b4c8459f440f38f1b8, type: 2}
+    tutorialTask: 0
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 5
+    line: Try using E to shoot your special weapon
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: c22292e8b68346b4c8459f440f38f1b8, type: 2}
+    tutorialTask: 5
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 6
+    line: Great work, go get some rest
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: f652919abd4201b47b683c57def2a9b1, type: 2}
+    tutorialTask: 5
+  timeBetweenLines: 1

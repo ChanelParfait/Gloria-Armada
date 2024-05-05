@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SpecialMeter : MonoBehaviour
 {
-    public Image meter;
+    public Image meter, meterOuter;
     public float meterLevel = 1;
     //private float meterCooldown = 3;
 
@@ -48,8 +48,20 @@ public class SpecialMeter : MonoBehaviour
         {
             meter.color = charged;
         }*/
-
-        meter.fillAmount = meterLevel;
+        if (meter){
+            meter.fillAmount = meterLevel;
+            if(meterLevel < 1)
+                {
+                    meter.color = new Color(1, 1, 1, 1);
+                    meterOuter.color = new Color(1, 1, 1, 1);
+                }
+                else
+                {
+                    meter.color -= new Color(0, 0, 0, Time.deltaTime);
+                    meterOuter.color -= new Color(0, 0, 0, Time.deltaTime);
+                }
+        }
+        
 
         /*if(Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -59,25 +71,27 @@ public class SpecialMeter : MonoBehaviour
                 meterCooldown = 0;
             }
         }*/
+
+
     }
 
     private void OnEnable(){
         // Update Score on enemy death 
-        Actions.OnAmmoChange += UpdateMeter;
+        Weapon.OnAmmoChange += UpdateMeter;
         
     }
 
     private void OnDisable(){
         // if gameobject is disabled remove all listeners
-        Actions.OnAmmoChange -= UpdateMeter;
+        Weapon.OnAmmoChange -= UpdateMeter;
 
     }
 
 
     private void UpdateMeter(float ammo){
-        Debug.Log("Level: " + ammo);
+        //Debug.Log("Level: " + ammo);
         meterLevel = ammo * 0.25f;
-        Debug.Log("meterLevel: " + meterLevel);
+        //Debug.Log("meterLevel: " + meterLevel);
 
     }
 }

@@ -5,22 +5,34 @@ using UnityEngine;
 public class ParticleManager : MonoBehaviour
 {
     ParticleSystem ps;
+    bool detatched = false;
     // Start is called before the first frame update
     void Start()
     {
-    
-    var ps = GetComponentInChildren<ParticleSystem>();
-    if (ps != null) {
-        ps.Play();
+        //if the object has no parent, set as detatched from the getgo
+        if (transform.parent == null){
+            detatched = true;
+        }
+        ps = GetComponent<ParticleSystem>();
+        if (ps != null && detatched) {
+            ps.Play();
+        }     
     }
-        
+
+    public void Detatch(){
+        var em = ps.emission;
+        em.enabled = false;
+        // on last particle death
     }
 
     // Update is called once per frame
     void Update()
     {
-    if (ps != null && !ps.IsAlive()) {
-        Destroy(gameObject);
-    }      
+        if (detatched){
+            if (ps != null && !ps.IsAlive()) {
+            Destroy(gameObject);
+            }     
+        }
+ 
     }
 }
