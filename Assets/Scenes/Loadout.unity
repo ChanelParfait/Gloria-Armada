@@ -1407,6 +1407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff232ebee20f1b944947fa16b707f007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneLoader: {fileID: 1836286449}
   primaryWeaponButtons:
   - {fileID: 761020986}
   - {fileID: 1410879227}
@@ -1419,6 +1420,7 @@ MonoBehaviour:
   DefaultPrimary: {fileID: 761020989}
   DefaultSpecial: {fileID: 1655796186}
   launchButton: {fileID: 839039073}
+  escapeButton: {fileID: 441646058}
 --- !u!1 &792084275
 GameObject:
   m_ObjectHideFlags: 0
@@ -1743,7 +1745,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camAnim: {fileID: 798043008}
-  sceneChanger: {fileID: 1836286449}
   LaunchButton: {fileID: 839039069}
 --- !u!1 &803483555
 GameObject:
@@ -1942,9 +1943,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 839039073}
         m_TargetAssemblyTypeName: ChangeScene, Assembly-CSharp
-        m_MethodName: LoadNextScene
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4471,7 +4472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8145203520018443969, guid: 6cad46c2646b82245bcfbcf80707c01c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5723,3 +5724,4 @@ SceneRoots:
   - {fileID: 1494908817}
   - {fileID: 1020976678}
   - {fileID: 7985697284780359479}
+  - {fileID: 53670985}

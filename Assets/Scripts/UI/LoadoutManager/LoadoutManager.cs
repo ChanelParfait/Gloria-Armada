@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum WeaponType
@@ -13,6 +14,8 @@ public enum WeaponType
 public class LoadoutManager : MonoBehaviour
 {
     public static LoadoutManager Instance;
+    public SceneLoader sceneLoader;
+
     // Assuming you have set these via the inspector
     public Button[] primaryWeaponButtons;
     public Button[] specialWeaponButtons;
@@ -21,6 +24,8 @@ public class LoadoutManager : MonoBehaviour
     public WeaponButton DefaultSpecial;
 
     public Button launchButton;
+    public Button escapeButton;
+
 
     private WeaponButton selectedPrimaryWeapon;
     private WeaponButton selectedSpecialWeapon;
@@ -32,7 +37,10 @@ public class LoadoutManager : MonoBehaviour
     void OnEnable()
     {
         launchButton.onClick.AddListener(ConfirmSelections);
+        launchButton.onClick.AddListener(sceneLoader.LoadNextScene);
+        escapeButton.onClick.AddListener(sceneLoader.LoadPreviousScene);
     }
+
 
     void Awake()
     {
@@ -52,6 +60,9 @@ public class LoadoutManager : MonoBehaviour
         // When the return key is pressed, click the launch button
         if(Input.GetKeyDown(KeyCode.Return)){
             launchButton.onClick.Invoke();
+        }
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            escapeButton.onClick.Invoke();
         }
     } 
 
@@ -84,26 +95,26 @@ public class LoadoutManager : MonoBehaviour
 
             selectedBody = weaponButton;
         }
-        // else if (!isPrimary && selectedSpecialWeapon != null)
-        // {
-        //     // Update the previously selected special button to unselected state
-        //     UpdateButtonVisual(selectedSpecialWeapon, false);
-        // }
+        /* else if (!isPrimary && selectedSpecialWeapon != null)
+         {
+             // Update the previously selected special button to unselected state
+             UpdateButtonVisual(selectedSpecialWeapon, false);
+         }
 
         // Select the new button by changing its visual state
-        // UpdateButtonVisual(button, true);
+        UpdateButtonVisual(button, true);
 
-        // // Save the selected button
-        // if (isPrimary)
-        //     selectedPrimaryWeapon = button;
-        // else
-        //     selectedSpecialWeapon = button;
+        // Save the selected button
+        if (isPrimary)
+             selectedPrimaryWeapon = button;
+        else
+             selectedSpecialWeapon = button;
 
-        // // Check if both selections are made
+        // Check if both selections are made
         if (selectedPrimaryWeapon != null && selectedSpecialWeapon != null)
         {
             launchButton.interactable = true; // Enable the launch button if both selections are made
-        }
+        }*/
     }
 
     private void UpdateUI()
@@ -115,7 +126,7 @@ public class LoadoutManager : MonoBehaviour
     {
         // on Launch, get the weaponID of primary and special weapon buttons
         // and pass them to the game manager
-        Debug.Log("Weapons Confirmed");
+        //Debug.Log("Weapons Confirmed");
 
         GameManager gameManager =  GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>(); 
         // 
@@ -128,4 +139,5 @@ public class LoadoutManager : MonoBehaviour
             Debug.Log("Weapons not Selected");
         }
     }
+
 }
