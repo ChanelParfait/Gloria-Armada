@@ -22,6 +22,7 @@ public class TripleBarrel : Weapon
     void Start()
     {
         SetupWeapon();
+        currentPerspective = Perspective.Side_On;
     }
 
     // Update is called once per frame
@@ -74,6 +75,7 @@ public class TripleBarrel : Weapon
     }
 
     public override Vector3 GetSpawnPos(){
+        Debug.Log("Trip Pers:" + currentPerspective);
         if(currentPerspective == Perspective.Side_On){
             switch(counter){
             case 1:

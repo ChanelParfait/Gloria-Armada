@@ -9855,10 +9855,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787b15c942f0c924a936ed9863a37f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask: 0
   destroyTime: 2
-  damage: 10
-  Impulse: 30000
-  explosionRadius: 100
+  damage: 4
+  impulse: 300
+  explosionRadius: 50
 --- !u!82 &3765786236389569654
 AudioSource:
   m_ObjectHideFlags: 0
