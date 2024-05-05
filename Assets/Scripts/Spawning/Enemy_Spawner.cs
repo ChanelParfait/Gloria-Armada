@@ -13,6 +13,8 @@ public class Enemy_Spawner : MonoBehaviour
     [SerializeField] private Perspective currentPerspective; 
     [SerializeField] private GameObject[] enemies; 
 
+    public bool isEnabled = true;
+
     [SerializeField] private Camera mainCamera ; 
     [SerializeField] Dictionary<string, GameObject> spawnPoints = new Dictionary<string, GameObject>();
 
@@ -91,7 +93,7 @@ public class Enemy_Spawner : MonoBehaviour
     private void OnTriggerEnter(Collider col){
         //Debug.Log("Trigger");
 
-        if(col.tag == "SpawnTrigger"){
+        if(col.tag == "SpawnTrigger" && isEnabled){
             // upon colliding with a spawn trigger, retrieve spawn parameters and start the spawning coroutine
             SpawnTrigger trigger = col.GetComponent<SpawnTrigger>();
             StartCoroutine(SpawnEnemies(trigger.spawnPointName, trigger.enemyIndex, trigger.spawnAmount, trigger.spawnInterval));

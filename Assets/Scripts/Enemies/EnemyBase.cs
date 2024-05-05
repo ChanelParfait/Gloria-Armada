@@ -15,10 +15,10 @@ public class EnemyBase : Actor
     public int scoreValue = 10; 
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    override protected void Start()
     {
         weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
-        currentHealth = maxHealth;
+        base.Start();
     }
 
     protected void Setup(){
@@ -30,7 +30,8 @@ public class EnemyBase : Actor
         weaponManager.FireActiveWeapon();
     }
 
-    protected override void Die(){   
+    protected override void Die(){ 
+        Debug.Log("Enemy Died: " + name + "UniqueID: " + GetInstanceID());  
         OnEnemyDeath?.Invoke(this);
         base.Die();
     }

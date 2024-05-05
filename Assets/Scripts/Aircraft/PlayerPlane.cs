@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class PlayerPlane : Actor
 {
@@ -55,7 +56,7 @@ public class PlayerPlane : Actor
             Rigidbody rb = GetComponent<Rigidbody>();
             float dot = Vector3.Dot(rb.velocity.normalized, normal);
             
-            Debug.Log(dot);
+            //Debug.Log(dot);
 
             dot = Mathf.Clamp01(dot * 5);
             

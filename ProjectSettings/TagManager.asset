@@ -18,6 +18,9 @@ TagManager:
   - WinPoint
   - PlayerWeaponManager
   - GameManager
+  - PlayerWreckage
+  - LevelManager
+  - LevelTrigger
   layers:
   - Default
   - TransparentFX

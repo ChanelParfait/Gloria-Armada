@@ -36,7 +36,7 @@ public class Autopilot : MonoBehaviour
     [SerializeField] Vector3 autopilotDeflection = new Vector3(0, 0, 0);
     Vector3 controlInputs = new Vector3(0, 0, 0);
     
-    public enum AutopilotState {Off, pointAt,  targetFlat, vectorAt, targetStraight};
+    public enum AutopilotState {Off, pointAt,  targetFlat, vectorAt, targetStraight, targetFormation};
     [Header("AP State")]
     public AutopilotState autopilotState = AutopilotState.Off;
     //AutopilotState lastAutopilotState = AutopilotState.Off;
@@ -45,17 +45,23 @@ public class Autopilot : MonoBehaviour
     
     [SerializeField] bool autoArm = true;
 
+    public bool InFormation {get; private set;}
+
     [Space(10)]
     [Header("PID Controllers")]
     [SerializeField] PID pitchPID = new PID(1.0f, 0.01f, 0.2f);
     [SerializeField] PID yawPID =   new PID(1.0f, 0.01f, 0.2f);
     [SerializeField] PID rollPID =  new PID(1.0f, 0.01f, 0.2f);
 
+    PID throttlePID = new PID(0.1f, 0.001f, 0.1f);
+
     PID[] mainPIDs;
 
     PID aPitchPID = new PID(1.0f, 0.01f, 0.2f);
     PID aYawPID =   new PID(1.0f, 0.01f, 0.2f);
     PID aRollPID =  new PID(1.0f, 0.01f, 0.2f);
+
+    
 
     PID[] autoPIDs;
 
@@ -187,7 +193,7 @@ public class Autopilot : MonoBehaviour
 
     }
 
-    public Vector3 GetAPInput(Vector3 _controlInputs){
+    public Vector4 GetAPInput(Vector4 _controlInputs){
         controlInputs = _controlInputs;
         Vector3 apInputs = AutopilotControl(autopilotState);
         if (CompareTag("Player"))
@@ -232,6 +238,9 @@ public class Autopilot : MonoBehaviour
         }
         else if (state == AutopilotState.targetStraight){
             autopilotDeflection = AutoStraight();
+        }
+        else if (state == AutopilotState.targetFormation){
+            autopilotDeflection = FormationWith(targetObject, mainPIDs);
         }
         else{
             autopilotDeflection = new Vector3(0, 0, 0);
@@ -349,6 +358,64 @@ public class Autopilot : MonoBehaviour
         return new Vector3(x, y, z);
     }
 
+    Vector3 FormationWith(GameObject targetObject, PID[] pids = null){
+        Vector3 targetOffset = new Vector3(5, -10, 0);
+        Vector3 targetPosition = targetObject.transform.position + targetOffset;
+        
+        Vector3 targetVelocity = targetObject.GetComponent<Rigidbody>().velocity;
+
+        float throttle;    
+        Vector3 positionalError = targetPosition - rb.transform.position;
+        Debug.DrawRay(rb.transform.position, positionalError, Color.magenta);
+        float dot = Vector3.Dot(positionalError.normalized, targetVelocity.normalized);
+        Vector3 projectedPosition = targetPosition + Vector3.Project(-positionalError, targetVelocity);
+        Debug.DrawLine(targetPosition, projectedPosition, Color.green);
+        float distanceBehindTarget = (projectedPosition -  rb.transform.position).magnitude * Mathf.Sign(dot);
+
+        //Debug.Log("Behind by: " + distanceBehindTarget + "m");
+        
+        throttle = Mathf.Clamp01(PIDSolve(distanceBehindTarget, ref throttlePID));
+        if (distanceBehindTarget < 10){
+            Vector3 tempTarget = targetPosition + 10 * targetVelocity.normalized;
+            if (distanceBehindTarget < 0){
+                tempTarget = projectedPosition + 10 * targetVelocity.normalized;
+            }
+            Debug.DrawLine(rb.transform.position, tempTarget, Color.red);
+            targetPosition = tempTarget;
+        }
+
+        if (Mathf.Abs(distanceBehindTarget) < 5){
+            InFormation = true;
+        }
+    
+        Vector3 targetDirection = (targetPosition - rb.transform.position).normalized;
+        Vector3 desiredVelocity = targetDirection;
+        Vector3 curVelocity = p.internalVelocity;
+        Vector3 velocityError = desiredVelocity - curVelocity.normalized;
+        
+
+        //Get signed angles for angle up, roll, right
+        float anglePitch       = Vector3.SignedAngle(rb.transform.forward, velocityError, rb.transform.right) / 180f;
+        float angleLiftVUp    = -Vector3.SignedAngle(rb.transform.up, Vector3.up, rb.transform.forward)       / 180f;
+        float angleAlignLiftV = -Vector3.SignedAngle(rb.transform.up, velocityError, rb.transform.forward)    / 180f;
+        float angleYaw         = Vector3.SignedAngle(rb.transform.forward, velocityError, rb.transform.up)    / 180f;
+
+        // Multiply signed angle by the magnitude of the error projected in that direction
+        anglePitch *= Vector3.Cross(velocityError, rb.transform.right).magnitude;
+        angleAlignLiftV *= Vector3.Cross(velocityError, rb.transform.forward).magnitude;
+        angleYaw *= Vector3.Cross(velocityError, rb.transform.up).magnitude;
+    
+        float angleRoll = Mathf.Lerp(angleLiftVUp, angleAlignLiftV, Mathf.Clamp01(velocityError.magnitude));
+
+        Debug.DrawRay(transform.position, velocityError, Color.yellow);
+
+        float x = Mathf.Clamp(PIDSolve(anglePitch,  ref pids[0]), -1, 1);
+        float y = Mathf.Clamp(PIDSolve(angleRoll,   ref pids[1]), -1, 1);
+        float z = Mathf.Clamp(PIDSolve(angleYaw,    ref pids[2]), -1, 1);
+        p.SetThrottle(throttle);
+        return new Vector4(x, y, z);
+    }
+
     #region Assists
     float Upright(){
         // Get the angle between the aircraft's up and the world up
@@ -425,11 +492,14 @@ public class Autopilot : MonoBehaviour
         return VectorAt(rb.transform.forward * 1000, mainPIDs, VectorType.direction);
     }
 
-    // Target a 2D plane
-    Vector3 AutoTargetPlane(){
+    // Target a 2D plane based on LevelManager perspective
+    Vector3 AutoTargetPlane(bool positional = false, float holdAltitude = float.MaxValue){
         // If we are not already on the plane then go to it
         float x = rb.transform.position.x;
         float y = rb.transform.position.y;
+        if (holdAltitude != float.MaxValue){
+            y = holdAltitude - y;
+        }
         float z = rb.transform.position.z;
         float signX = Mathf.Sign(x);
         float signY = Mathf.Sign(y);
@@ -437,7 +507,7 @@ public class Autopilot : MonoBehaviour
         float smoothing = 200.0f;
 
         // Set zAngle between 0 and 90 degrees
-        float zAngle = 40;
+        float zAngle = 60;
         // Multiply by Tan(45 dgrees) * smoothing to get the distance to the plane
         zTarget = Mathf.Tan(zAngle * Mathf.Deg2Rad * zTarget) * smoothing;
 
@@ -447,7 +517,9 @@ public class Autopilot : MonoBehaviour
         if (pers == Perspective.Top_Down){tz = onAxes ? zTarget : tz;} // In top-down, go to point defined by player input
         
         Vector3 targetVector = new Vector3(smoothing, ty, tz); //As a direction
-        //Vector3 targetVector = new Vector3(60, 0, 0); //As a position
+        if (positional){
+            targetVector = new Vector3(60, 0, 0); //As a position
+        }
 
         if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 2 && (rb.velocity.normalized - Vector3.right).magnitude < 1f){
             transform.position.Set(x, 0, z);
@@ -462,7 +534,7 @@ public class Autopilot : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezePositionZ;
             if (!CompareTag("Player"))
             {
-                autopilotState = AutopilotState.pointAt;
+                autopilotState = AutopilotState.targetFormation;
             }
         }
         else if (pers == Perspective.Null){

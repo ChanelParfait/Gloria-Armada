@@ -8,6 +8,8 @@ public class Actor : MonoBehaviour
     [SerializeReference] public int maxHealth;
     public int currentHealth {get; protected set;}
 
+    protected bool isAlive = true;
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -16,9 +18,12 @@ public class Actor : MonoBehaviour
 
     public virtual void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        if(currentHealth <= 0){
-            Die();
+        if (isAlive){
+            currentHealth -= damage;
+            if(currentHealth <= 0){
+                isAlive = false;
+                Die();
+            }
         }
     }
 

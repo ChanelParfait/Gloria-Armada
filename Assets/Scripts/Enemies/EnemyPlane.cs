@@ -53,11 +53,9 @@ public class EnemyPlane : EnemyBase
     }
 
     protected override void Die(){
-        // Trigger Enemy Death Event 
-        OnEnemyDeath?.Invoke(this);
         // Destroy Self and emit death explosion
         Instantiate(deathExplosion, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        base.Die();
     }
 
     protected virtual void MoveEnemy(){
