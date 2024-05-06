@@ -19,7 +19,7 @@ public class PlayerPlane : Actor
         audioSource = GetComponent<AudioSource>();
     }
 
-    public override void TakeDamage(int damage){
+    public override void TakeDamage(float damage){
         audioSource.Play();
         base.TakeDamage(damage);
         //Debug.Log("Current Health: " + currentHealth);

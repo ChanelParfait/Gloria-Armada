@@ -41,15 +41,34 @@ public class GameManager : MonoBehaviour
         
     }
 
-    void OnSceneChanged(Scene scene, LoadSceneMode mode){
-        if (SceneManager.GetActiveScene().buildIndex == 3){
-            // Set up player
-            PlayerWeaponManager manager = GameObject.FindGameObjectWithTag("PlayerWeaponManager").GetComponent<PlayerWeaponManager>();
+    IEnumerator ApplyLoadout(){
+        yield return new WaitForSeconds(1);
+        GameObject player  = GameObject.FindGameObjectWithTag("PlayerWeaponManager");
+        if (player){
+            PlayerWeaponManager manager = player.GetComponent<PlayerWeaponManager>();
             if (manager){
                 manager.SetPrimaryWeapon(PrimaryWeapon);
                 manager.SetSpecialWeapon(SpecialWeapon);
                 // set body 
             }
+        }
+
+    }
+
+    void OnSceneChanged(Scene scene, LoadSceneMode mode){
+        if (SceneManager.GetActiveScene().buildIndex == 4){
+            // Set up player
+            GameObject player  = GameObject.FindGameObjectWithTag("PlayerWeaponManager");
+            if (player){
+                PlayerWeaponManager manager = player.GetComponent<PlayerWeaponManager>();
+                if (manager){
+                    manager.SetPrimaryWeapon(PrimaryWeapon);
+                    manager.SetSpecialWeapon(SpecialWeapon);
+                    // set body 
+                }
+            }
+            StartCoroutine(ApplyLoadout());
+            
         }
     }
 }

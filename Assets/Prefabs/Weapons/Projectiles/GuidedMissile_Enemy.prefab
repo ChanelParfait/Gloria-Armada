@@ -202,6 +202,10 @@ PrefabInstance:
       propertyPath: ColorModule.gradient.maxGradient.key1.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 883901173955393454, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1168509773419960114, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_Name
       value: GuidedMissile_Enemy
@@ -362,6 +366,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -1.46
       objectReference: {fileID: 0}
+    - target: {fileID: 4516825297399139526, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5124061948501627520, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6182760409746918969, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_UseGravity
       value: 0
@@ -382,6 +394,10 @@ PrefabInstance:
       propertyPath: m_ExcludeLayers.m_Bits
       value: 320
       objectReference: {fileID: 0}
+    - target: {fileID: 8012318085517979214, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8070367808183339508, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.1
@@ -401,6 +417,10 @@ PrefabInstance:
     - target: {fileID: 8460208646662630098, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931380740068753388, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4936141611755476538, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}

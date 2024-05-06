@@ -305,8 +305,8 @@ MonoBehaviour:
     dialogueEvent: {fileID: 11400000, guid: c22292e8b68346b4c8459f440f38f1b8, type: 2}
     tutorialTask: 5
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
-    dialogueType: 6
-    line: Great work, go get some rest
+    dialogueType: 5
+    line: Great work, exit whenever you're ready with ENTER
     choice:
       affirm:
         optionText: 

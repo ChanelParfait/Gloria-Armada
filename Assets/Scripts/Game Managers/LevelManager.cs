@@ -174,13 +174,26 @@ public class LevelManager : MonoBehaviour
     }
 
     private void GameOver(){
+        GameObject wreckage = GameObject.FindWithTag("PlayerWreckage");
+        //Pick a random child from player wreckage
+        Transform randomChild = wreckage.transform.GetChild(UnityEngine.Random.Range(0, wreckage.transform.childCount));
+
+        StartCoroutine(ShowDeathScreen(randomChild));
+    }
+
+    IEnumerator ShowDeathScreen(Transform wreckage){
+        if (wreckage != null)
+        {
+            yield return new WaitUntil (() => wreckage.GetComponent<Rigidbody>().velocity.magnitude < 1.0f);
+
+        }
+        yield return new WaitForSeconds(30);
         //Debug.Log("Game Over");
         if (gameOverPnl != null)
         {
             gameOverPnl.SetActive(true);
             //Time.timeScale = 0; 
-        }
-        
+        }  
     }
 
     public void YouWin(){
@@ -190,6 +203,7 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator goToNextLevel(){
         yield return new WaitForSeconds(3);
+        StopAllCoroutines();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
