@@ -43,8 +43,7 @@ public class PlayerPlane : Actor
         //Destroy the player
         base.Die();
         //TODO: This goes before the base.Die() call
-        OnPlayerDeath?.Invoke();
-        
+        OnPlayerDeath?.Invoke();     
     }
 
     private void OnCollisionEnter(Collision col)

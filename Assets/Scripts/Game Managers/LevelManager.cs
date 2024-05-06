@@ -176,7 +176,7 @@ public class LevelManager : MonoBehaviour
     private void GameOver(){
         GameObject wreckage = GameObject.FindWithTag("PlayerWreckage");
         //Pick a random child from player wreckage
-        Transform randomChild = wreckage.transform.GetChild(UnityEngine.Random.Range(0, wreckage.transform.childCount));
+        Transform randomChild = wreckage.transform.GetChild(0).GetChild(UnityEngine.Random.Range(0, wreckage.transform.childCount));
 
         StartCoroutine(ShowDeathScreen(randomChild));
     }

@@ -39,7 +39,7 @@ public class Autopilot : MonoBehaviour
     public enum AutopilotState {Off, pointAt,  targetFlat, vectorAt, targetStraight, targetFormation};
     [Header("AP State")]
     public AutopilotState autopilotState = AutopilotState.Off;
-    //AutopilotState lastAutopilotState = AutopilotState.Off;
+    [SerializeField] AutopilotState lastAutopilotState = AutopilotState.Off;
     [SerializeField] private Rigidbody rb;
     Plane p;
     
@@ -111,6 +111,7 @@ public class Autopilot : MonoBehaviour
     {
         pers = (Perspective)_pers;
         rb.constraints = RigidbodyConstraints.None;
+        lastAutopilotState = autopilotState;
         autopilotState = AutopilotState.targetFlat;
         onAxes = false;
         Debug.Log("Perspective changed to: " + pers.ToString());
@@ -130,6 +131,9 @@ public class Autopilot : MonoBehaviour
         if (GameObject.Find("LevelManager") != null){
             LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
             pers = lm.currentPerspective;
+        }
+        if (rb == null){
+            rb = GetComponent<Rigidbody>();
         }
         mainPIDs = new PID[] {pitchPID, rollPID, yawPID};
         autoPIDs = new PID[] {aPitchPID, aRollPID, aYawPID};
@@ -158,6 +162,7 @@ public class Autopilot : MonoBehaviour
             }
             else{
                 if (autopilotState != AutopilotState.Off || autopilotState != AutopilotState.targetStraight){
+                    lastAutopilotState = autopilotState;
                     autopilotState = AutopilotState.targetFlat;
                     return false;
                 }
@@ -525,6 +530,7 @@ public class Autopilot : MonoBehaviour
             transform.position.Set(x, 0, z);
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezePositionY;
+            autopilotState = lastAutopilotState;
         }
         // if rb.velocity is CLOSE to right, and z is CLOSE to 0, and we are not on the axes
         else if (pers == Perspective.Side_On && !onAxes && Mathf.Abs(z) < 2 && (rb.velocity.normalized - Vector3.right).magnitude < 0.1f){
@@ -532,10 +538,8 @@ public class Autopilot : MonoBehaviour
             transform.position.Set(x, y, 0);    
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezePositionZ;
-            if (!CompareTag("Player"))
-            {
-                autopilotState = AutopilotState.targetFormation;
-            }
+            autopilotState = lastAutopilotState;
+            
         }
         else if (pers == Perspective.Null){
             onAxes = true;

@@ -92,7 +92,8 @@ public class TutorialSequence : MonoBehaviour
             case TutorialTask.Boost:
                 ShowHint("Shift");
                 playerPlane.EnableAllChannels();
-                CompletionRequirements = () => Input.GetKeyDown(KeyCode.LeftShift);
+
+                CompletionRequirements = () => playerPlane.throttle == 1.0f;
                 break;
             case TutorialTask.Boundary:
                 playSpaceBoundary.enforceBoundary = true;
@@ -146,6 +147,7 @@ public class TutorialSequence : MonoBehaviour
     IEnumerator WaitForTask(Func<bool> Req, DialogueManager requester){
         yield return new WaitUntil(() => Req());
         {
+            yield return new WaitForSeconds(1);
             Debug.Log("Task Complete");
             StartCoroutine(OnCompleteTask(requester));
         }
@@ -156,7 +158,7 @@ public class TutorialSequence : MonoBehaviour
     }
 
     IEnumerator OnCompleteTask(DialogueManager requester){
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3f);
         playerPlane.DisableAllChannels();
         playerWeapons.isArmed = false;
         ap.setAPState(Autopilot.AutopilotState.targetFormation);

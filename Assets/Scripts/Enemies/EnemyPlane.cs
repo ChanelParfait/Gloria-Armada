@@ -14,6 +14,8 @@ public class EnemyPlane : EnemyBase
     private float timer = 0;
     public GameObject deathExplosion;
 
+    [SerializeField] private GameObject deathObj;
+
     
     // Start is called before the first frame update
     protected override void Start()
@@ -55,6 +57,18 @@ public class EnemyPlane : EnemyBase
     protected override void Die(){
         // Destroy Self and emit death explosion
         Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        if (deathObj != null)
+        {
+            GameObject deadObj = Instantiate(deathObj, transform.position, transform.rotation);
+            foreach (Rigidbody rb in deadObj.GetComponentsInChildren<Rigidbody>())
+            {
+                //Add force to the rigid body
+                rb.AddForce(GetComponent<Rigidbody>().velocity, ForceMode.VelocityChange);
+                // Using the offset of the child from the parent, apply the appropriate velocity from the angular velocity
+                rb.AddTorque(GetComponent<Rigidbody>().angularVelocity, ForceMode.VelocityChange);
+            }
+        }
+
         base.Die();
     }
 
@@ -62,6 +76,26 @@ public class EnemyPlane : EnemyBase
         Vector3 referenceMovement = new Vector3(referenceSpeed, 0, 0) * Time.deltaTime;
         Vector3 enemyMovement = moveDir * Time.deltaTime * speed;
         gameObject.transform.position += enemyMovement + referenceMovement; 
+    }
+
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
+            //Get the normal of the collision
+            Vector3 normal = col.contacts[0].normal;
+            //Get dot product of the normal and the velocity
+            Rigidbody rb = GetComponent<Rigidbody>();
+            float dot = Vector3.Dot(rb.velocity.normalized, normal);
+            
+            //Debug.Log(dot);
+
+            dot = Mathf.Clamp01(dot * 5);
+            
+            //Reduce health by a minimum of 1health, max of MaxLife based on dot
+            int damage = (int)Mathf.Lerp(1,maxHealth, dot);
+
+            TakeDamage(damage);
+        }
     }
 
 }
