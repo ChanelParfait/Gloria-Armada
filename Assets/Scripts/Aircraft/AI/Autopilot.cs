@@ -464,28 +464,6 @@ public class Autopilot : MonoBehaviour
             autopilotDeflection = new Vector3(Mathf.Lerp(controlInputs.x, pitch, t), Mathf.Lerp(controlInputs.y, roll, t), controlInputs.z);
         }
     }
-
-    float AutoTargetStabilize(){
-        //Attempt to smooth AoA and restrict to < 24 degrees
-        // // If angular velocity is high, stabilize the aircraft
-        // if (rb.angularVelocity.magnitude > 1f){
-        //     float pitchError = rb.angularVelocity.z;
-        //     // PID for pitch
-        //     float proportional_pitch = pitchError * Kp_pitch;
-        //     integral_pitch += pitchError * Time.deltaTime;
-        //     float integralTerm_pitch = integral_pitch * Ki_pitch;
-        //     float derivative_pitch = (pitchError - lastError_pitch) / Time.deltaTime;
-        //     float derivativeTerm_pitch = derivative_pitch * Kd_pitch;
-
-        //     // Adjust pitch control input
-        //     autoXInput = proportional_pitch + integralTerm_pitch + derivativeTerm_pitch;   
-        //     Mathf.Clamp(autoXInput, -1f, 1f);
-
-        //     lastError_pitch = pitchError;
-        // }
-
-        return -1;
-    }
     #endregion Assists
 
     public void setZTarget(float controlInputLR){
@@ -546,7 +524,10 @@ public class Autopilot : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None;
         }
 
-        Vector3 vecToPlane =  VectorAt(targetVector, mainPIDs, VectorType.direction);
+        Vector3 vecToPlane =  PointAt(targetVector + transform.position, mainPIDs);
+        if (tz == 0){
+            vecToPlane.y += Upright();
+        }
         if (onAxes){
             Utilities.MultiplyComponents(vecToPlane, new Vector3(1, 1, 0.3f));
         }
