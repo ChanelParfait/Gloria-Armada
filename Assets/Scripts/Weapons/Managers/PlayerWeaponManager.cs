@@ -10,7 +10,7 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [SerializeField] private Weapon specialWeapon;
 
-    Powerups[] powerups;
+    [SerializeField] List<PowerupType> powerups = new();
 
     public bool isArmed = true;
 
@@ -18,6 +18,32 @@ public class PlayerWeaponManager : MonoBehaviour
 
     public GameObject test1;
     public GameObject test2;
+
+    public void AddPowerup(PowerupType powerup){
+        powerups.Add(powerup);
+
+        Weapon primaryWeapon = GetPrimaryWeapon();
+        Weapon specialWeapon = GetSpecialWeapon();
+        //Apply the powerup effect to the weapon stats
+        switch (powerup)
+        {
+            case PowerupType.DamageUp:
+                primaryWeapon.GetWeaponStats().projectileStats.damage *= 2; // Double bullet damage
+                break;
+            case PowerupType.BulletSpeedUp:
+                primaryWeapon.GetWeaponStats().projectileStats.speed *= 2;  
+                Debug.Log("Bullet Speed Up");
+                break;
+            case PowerupType.FirerateUp:
+                primaryWeapon.GetWeaponStats().fireInterval *= 0.5f; // Double firerate
+                primaryWeapon.GetWeaponStats().reloadTime *= 0.5f; // Double firerate
+                Debug.Log("Firerate Up");
+                break;
+            case PowerupType.BulletSizeUp:
+                primaryWeapon.GetWeaponStats().projectileStats.size *= 2; // Double bullet size
+                break;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()

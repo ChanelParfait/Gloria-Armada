@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public struct WeaponStats{
+public class WeaponStats{
     // how frequently the weapon can fire
     public float fireInterval;
     // time taken to reload the weapon
@@ -48,6 +48,11 @@ public class Weapon : MonoBehaviour
 
     public ProjectileStats GetProjectileStats(){
         return weaponStats.projectileStats;
+    }
+
+
+    public void SetProjectileStats(ProjectileStats stats){
+        weaponStats.projectileStats = stats;
     }
 
     public virtual void SetupWeapon(){

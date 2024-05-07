@@ -2,32 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PowerupType {
+    DamageUp,
+    BulletSpeedUp,
+    FirerateUp,
+    BulletSizeUp,
+}
+
 public class Powerups : MonoBehaviour
 {
-    // Start is called before the first frame update
-    [SerializeField] private PowerupManager powerupManager; 
     [SerializeField] private PlayerWeaponManager playerWeaponManager; 
-    [SerializeField] private Projectile projectile; 
-
-
-
-    public enum PowerupType {
-        DamageUp,
-        BulletSpeedUp,
-        FirerateUp,
-        BulletSizeUp
-        
-    }
-
-    public PowerupType powerupType;
+    // [SerializeField] private Projectile projectile; 
+    [SerializeField] PowerupType powerupType;
 
     
     void Start()
     {
         playerWeaponManager = FindObjectOfType<PlayerWeaponManager>();
-        powerupManager = FindObjectOfType<PowerupManager>();
-        ApplyPowerupEffect(powerupType);
-
+        powerupType = GetRandomPowerup();
     }
 
     // Update is called once per frame
@@ -44,6 +36,7 @@ public class Powerups : MonoBehaviour
 
      private void ApplyPowerupEffect(PowerupType type)
     {
+        playerWeaponManager.AddPowerup(type);
         switch (type)
         {
             case PowerupType.DamageUp:
@@ -65,16 +58,9 @@ public class Powerups : MonoBehaviour
         // Check if the colliding object is the player
         if (col.gameObject.CompareTag("Player")) 
         {
-
-            //Apply the Powerup Effect
-            Powerups powerupInstance = col.GetComponent<Powerups>();
-            if (powerupInstance != null)
-            {
-                powerupInstance.ApplyPowerupEffect(powerupType);
-            }
-
+            ApplyPowerupEffect(powerupType);
             // Display the name of the obtained powerup item on the screen
-            // Debug.Log("Collision Detected");
+            Debug.Log("Obtained Powerup: " + powerupType);
             Destroy(gameObject);
 
         }
