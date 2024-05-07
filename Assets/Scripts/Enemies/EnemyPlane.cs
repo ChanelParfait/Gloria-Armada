@@ -1,8 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.Events;
 
+class vec3PID {
+    public PID x;
+    public PID y;
+    public PID z;
+
+    public vec3PID(float p, float i, float d){
+        x = new PID(p, i, d);
+        y = new PID(p, i, d);
+        z = new PID(p, i, d);
+    }
+
+    public Vector3 Solve(Vector3 target, Vector3 current){
+        return new Vector3(x.Solve(target.x, current.x), y.Solve(target.y, current.y), z.Solve(target.z, current.z));
+    }
+
+    public Vector3 Solve(Vector3 error){
+        return new Vector3(x.Solve(error.x), y.Solve(error.y), z.Solve(error.z));
+    
+    }
+}
 
 public class EnemyPlane : EnemyBase
 {
@@ -11,25 +33,60 @@ public class EnemyPlane : EnemyBase
     public float referenceSpeed = 0;
     public Vector3 moveDir;
     public Vector3 orientation;
+
+    vec3PID pid = new vec3PID(1f, 0.01f, 6f);
+
+    GameObject targetObj;
+    Camera cam;
+    [SerializeField] Vector3 targetOffset;
+    float randomOffsetComponent;
+    Vector3 targetPos;
+
+    Rigidbody rb;
     private float timer = 0;
     public GameObject deathExplosion;
 
     [SerializeField] private GameObject deathObj;
 
-    
     // Start is called before the first frame update
     protected override void Start()
     {   
         base.Start();
         weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
+        rb = GetComponent<Rigidbody>();
+        cam = Camera.main;
+        if(targetObj == null){
+            targetObj = GameObject.FindGameObjectWithTag("LevelManager");
+        }
+        randomOffsetComponent = Random.Range(-0.4f, 0.4f);
+        StartCoroutine(Initialize());
+        
+    }
+
+    IEnumerator Initialize(){
+        yield return new WaitForSeconds(0.1f);
+        rb.velocity = referenceSpeed * Utilities.MultiplyComponents(orientation, moveDir);
+    }
+
+    Vector2 GetCameraDimensions(){
+        //With a perspective cam at -250 units on the z axis, find the bounds of the camera view using the camera's FOV
+        float height = 2.0f * Mathf.Tan(0.5f * cam.fieldOfView * Mathf.Deg2Rad) * 250.0f;
+        float width = height * cam.aspect;  
+
+        return new Vector2(width, height);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(moveDir != null){
-            MoveEnemy();
+
+        if(targetObj == null){
+            targetObj = GameObject.FindGameObjectWithTag("LevelManager");
         }
+        targetOffset = new Vector3(GetCameraDimensions().x/2 - 10.0f, GetCameraDimensions().y/2 * randomOffsetComponent, 0);
+        targetPos = targetObj.transform.position + targetOffset;
+        MoveEnemy();
+
 
         timer += Time.deltaTime; 
         if(timer >= Random.Range(fireInterval, 3f)){
@@ -73,9 +130,10 @@ public class EnemyPlane : EnemyBase
     }
 
     protected virtual void MoveEnemy(){
-        Vector3 referenceMovement = new Vector3(referenceSpeed, 0, 0) * Time.deltaTime;
-        Vector3 enemyMovement = moveDir * Time.deltaTime * speed;
-        gameObject.transform.position += enemyMovement + referenceMovement; 
+        Vector3 error = targetPos - transform.position;
+        //Scale the error by the screen width
+        Vector3 moveDir = pid.Solve(targetPos, transform.position);
+        rb.AddForce(moveDir.normalized * speed * 20.0f);
     }
 
     private void OnCollisionEnter(Collision col)

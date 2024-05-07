@@ -34,7 +34,7 @@ public class Actor : MonoBehaviour
         foreach (ParticleManager pm in pms)
         {
             pm.transform.SetParent(null);   
-            pm.Detatch();
+            pm.Detach();
         }
         Destroy(gameObject);
     }

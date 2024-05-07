@@ -113,7 +113,7 @@ public class DialogueManager : MonoBehaviour
             //Debug.Log("Line typed" + ", DialogueType: " + currentDialogue[index].dialogueType);
             switch (currentDialogue[index].dialogueType){
                 case DialogueType.Dialogue:
-                    yield return new WaitForSeconds(3);
+                    StartCoroutine(WaitOrSkip(3));
                     break;
                 case DialogueType.InterruptedDialogue:
                     break;
@@ -168,6 +168,21 @@ public class DialogueManager : MonoBehaviour
             NPCDialogueText.text = "";
             NextLine();
         }   
+    }
+
+    IEnumerator WaitOrSkip(float waitTime){
+        float t = 0;
+        while (t < waitTime){
+            // Check if the space key is pressed
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                Debug.Log("Space key pressed. Skipping wait time.");
+                yield break;  // Exit the coroutine early
+            }
+            yield return null;
+            t += Time.deltaTime;
+            // Wait for the next frame   
+        }
     }
 
     public void StartDialogue(){

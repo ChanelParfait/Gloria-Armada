@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 [Serializable]
-class PID{
+public class PID{
     public float Kp, Ki, Kd;
     public float integral, lastError;
     public float GetInt(){
@@ -19,6 +19,15 @@ class PID{
     }
     public void SetLastError(float e){
         lastError = e;
+    }
+
+    public float Solve(float target, float current){
+        float error = target - current;
+        return Kp * error + Ki * integral + Kd * (error - lastError);
+    }
+
+    public float Solve(float error){
+        return Kp * error + Ki * integral + Kd * (error - lastError);
     }
 
     public PID(float _Kp, float _Ki, float _Kd){
@@ -515,8 +524,8 @@ public class Autopilot : MonoBehaviour
         // if rb.velocity is CLOSE to right, and z is CLOSE to 0, and we are not on the axes
         else if (pers == Perspective.Side_On && !onAxes && Mathf.Abs(z) < 2 && (rb.velocity.normalized - Vector3.right).magnitude < 0.1f){
             //force the plane to the xz plane
-            transform.position.Set(x, y, 0);   
-            transform.rotation = Quaternion.Euler(0, 90, 0);
+            rb.MovePosition(new Vector3(x, y, 0));  
+            rb.MoveRotation(Quaternion.Euler(0, 90, 0));
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezePositionZ;
             autopilotState = lastAutopilotState;

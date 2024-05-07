@@ -29,6 +29,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ScoreTxt; 
     public Animator damageAnim;
 
+    List<GameObject> enemies = new List<GameObject>();
+    [SerializeField] bool spawnOverTime = false;
+
+    float lastSpawnTime = 0;
+    float spawnInterval = 5.0f;
+
 
     // UI Values
     private int score = 0; 
@@ -126,6 +132,12 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (spawnOverTime){
+            if (Time.time - lastSpawnTime > spawnInterval){
+                lastSpawnTime = Time.time;
+                enemySpawner.SpawnEnemy(SpawnPointName.Top_Right, UnityEngine.Random.Range(0, 2));
+            }
+        }
     }
 
     private void OnEnable(){

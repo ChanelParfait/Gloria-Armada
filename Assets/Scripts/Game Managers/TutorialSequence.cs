@@ -57,6 +57,7 @@ public class TutorialSequence : MonoBehaviour
         playerPlane = GameObject.FindWithTag("Player").GetComponent<Plane>();
         playerWeapons = GameObject.FindWithTag("Player").GetComponentInChildren<PlayerWeaponManager>();
         hintCanvas = GameObject.Find("PlayerPhys/Hints/Canvas").GetComponent<Canvas>();
+        hintCanvas.enabled = false;
         playerWeapons.isArmed = false;
         ap = GameObject.FindWithTag("Player").GetComponent<Autopilot>();
         instructorAP = GameObject.Find("InstructorPlane").GetComponent<Autopilot>();
@@ -74,7 +75,7 @@ public class TutorialSequence : MonoBehaviour
         ap.setAPState(Autopilot.AutopilotState.targetFormation);
         instructorAP.setAPState(Autopilot.AutopilotState.targetFormation);
         dialogue.StartDialogue();
-        hintCanvas.enabled = false;
+        
         StartCoroutine(camDirector.LerpFOV(2f, 23f));
     }
 
@@ -99,8 +100,7 @@ public class TutorialSequence : MonoBehaviour
             case TutorialTask.Boost:
                 ShowHint("Shift");
                 playerPlane.EnableAllChannels();
-
-                CompletionRequirements = () => playerPlane.throttle == 1.0f;
+                CompletionRequirements = () => playerPlane.throttle == 1.0f && Input.GetAxis("P1_Boost") == 1.0f;
                 break;
             case TutorialTask.Boundary:
                 playSpaceBoundary.enforceBoundary = true;
@@ -134,7 +134,6 @@ public class TutorialSequence : MonoBehaviour
                 CompletionRequirements = () => true;
                 break;
         }
-        hintCanvas.enabled = true;
         StartCoroutine(WaitForTask(CompletionRequirements, requester));
     }
 
@@ -144,9 +143,8 @@ public class TutorialSequence : MonoBehaviour
         StartCoroutine(HintDisplay(key));
     }
 
-    IEnumerator HintDisplay(string key){    
-        hintCanvas.transform.Find("HintText").GetComponent<TextMeshProUGUI>().text = key;   
-        yield return new WaitForSeconds(1);
+    IEnumerator HintDisplay(string key){     
+        yield return new WaitForSeconds(3);
         hintCanvas.enabled = false;
     }
 
@@ -166,11 +164,13 @@ public class TutorialSequence : MonoBehaviour
 
     IEnumerator OnCompleteTask(DialogueManager requester){
         yield return new WaitForSeconds(3f);
+        Debug.Log("Task Complete: Returning to AP");
         playerPlane.DisableAllChannels();
         playerWeapons.isArmed = false;
         ap.setAPState(Autopilot.AutopilotState.targetFormation);
         requester.SetTaskComplete();
         hintCanvas.enabled = false;
+        StopAllCoroutines();
     }
 
     // Update is called once per frame
