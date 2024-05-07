@@ -114,7 +114,6 @@ public class Autopilot : MonoBehaviour
         lastAutopilotState = autopilotState;
         autopilotState = AutopilotState.targetFlat;
         onAxes = false;
-        Debug.Log("Perspective changed to: " + pers.ToString());
     }
 
     public void setTargetObject(GameObject target){
@@ -161,7 +160,7 @@ public class Autopilot : MonoBehaviour
                 return false;
             }
             else{
-                if (autopilotState != AutopilotState.Off || autopilotState != AutopilotState.targetStraight){
+                if (autopilotState != AutopilotState.Off || autopilotState != AutopilotState.targetStraight || autopilotState != AutopilotState.targetFormation){
                     lastAutopilotState = autopilotState;
                     autopilotState = AutopilotState.targetFlat;
                     return false;
@@ -365,7 +364,10 @@ public class Autopilot : MonoBehaviour
 
     Vector3 FormationWith(GameObject targetObject, PID[] pids = null){
         Vector3 targetOffset = new Vector3(5, -10, 0);
-        Vector3 targetPosition = targetObject.transform.position + targetOffset;
+        if (targetObject == null){
+            targetObject = GameObject.Find("LevelManager").gameObject;   
+        }
+       Vector3 targetPosition = targetObject.transform.position + targetOffset;
         
         Vector3 targetVelocity = targetObject.GetComponent<Rigidbody>().velocity;
 
@@ -513,7 +515,8 @@ public class Autopilot : MonoBehaviour
         // if rb.velocity is CLOSE to right, and z is CLOSE to 0, and we are not on the axes
         else if (pers == Perspective.Side_On && !onAxes && Mathf.Abs(z) < 2 && (rb.velocity.normalized - Vector3.right).magnitude < 0.1f){
             //force the plane to the xz plane
-            transform.position.Set(x, y, 0);    
+            transform.position.Set(x, y, 0);   
+            transform.rotation = Quaternion.Euler(0, 90, 0);
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezePositionZ;
             autopilotState = lastAutopilotState;
@@ -526,7 +529,7 @@ public class Autopilot : MonoBehaviour
 
         Vector3 vecToPlane =  PointAt(targetVector + transform.position, mainPIDs);
         if (tz == 0){
-            vecToPlane.y += Upright();
+            vecToPlane.z += Upright();
         }
         if (onAxes){
             Utilities.MultiplyComponents(vecToPlane, new Vector3(1, 1, 0.3f));

@@ -25,12 +25,15 @@ public class TutorialSequence : MonoBehaviour
 
     [SerializeField] Canvas hintCanvas;
 
+    CameraDirector camDirector;
+
 
     DialogueManager dialogue;
     [SerializeField] DialogueScriptableObject script;
 
     Plane playerPlane;
     Autopilot ap;
+    Autopilot instructorAP;
     PlayerWeaponManager playerWeapons;
 
     bool isEnemyDead = false;
@@ -56,8 +59,10 @@ public class TutorialSequence : MonoBehaviour
         hintCanvas = GameObject.Find("PlayerPhys/Hints/Canvas").GetComponent<Canvas>();
         playerWeapons.isArmed = false;
         ap = GameObject.FindWithTag("Player").GetComponent<Autopilot>();
+        instructorAP = GameObject.Find("InstructorPlane").GetComponent<Autopilot>();
         dialogue = GetComponent<DialogueManager>();
         dialogue.script = script;
+        camDirector = GameObject.Find("CameraDirector").GetComponent<CameraDirector>();
         StartCoroutine(Initialize());
     }
 
@@ -67,8 +72,10 @@ public class TutorialSequence : MonoBehaviour
         Debug.Log("Tutorial Sequence Started");
         playerPlane.DisableAllChannels();
         ap.setAPState(Autopilot.AutopilotState.targetFormation);
+        instructorAP.setAPState(Autopilot.AutopilotState.targetFormation);
         dialogue.StartDialogue();
         hintCanvas.enabled = false;
+        StartCoroutine(camDirector.LerpFOV(2f, 23f));
     }
 
     void PlayerTask(TutorialTask task, DialogueManager requester){

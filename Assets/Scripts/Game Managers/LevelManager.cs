@@ -17,6 +17,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Perspective initPerspective; 
     public Perspective currentPerspective { get; private set;} 
     [SerializeField] private Animator anim; 
+
+    [SerializeField] bool useLERP = false;
+    [SerializeField] bool isRotating = false;
     [SerializeField] private EnemySpawner enemySpawner;
     [SerializeField] private GameObject playerPlane;
 
@@ -149,16 +152,52 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public static Vector3 PerspectiveToEuler(Perspective p){
+        //Convert perspective to euler angles
+        switch (p){
+            case Perspective.Side_On:
+                return new Vector3(0, 0, 0);
+            case Perspective.Top_Down:
+                return new Vector3(90, 0, -90);
+            default:
+                Transform camDirector = GameObject.Find("CameraDirector").transform;
+                return camDirector.rotation.eulerAngles;
+        }
+    }
+
     public void UpdatePerspective(Perspective pers){
+        Vector3 currentOrientation = PerspectiveToEuler(currentPerspective);
         currentPerspective = pers; 
 
         if (anim != null){
             anim.SetInteger("Perspective", (int)currentPerspective);
+            OnPerspectiveChange?.Invoke((int)currentPerspective);
         }
-    
+        else if (useLERP && !isRotating){
+            
+            Vector3 newOrientation = PerspectiveToEuler(pers);
+            Transform camDirector = transform.Find("CameraDirector");
+
+            StartCoroutine(LerpOrientation(4f, currentOrientation, newOrientation, camDirector));
+            OnPerspectiveChange?.Invoke((int)currentPerspective);
+        }
         //jetControl.ResetPosition(5f);
         //Invoke action to update others without storing references to all objects
-        OnPerspectiveChange?.Invoke((int)currentPerspective);
+        
+    }
+
+    IEnumerator LerpOrientation(float time, Vector3 current, Vector3 target, Transform cam){
+        //Get CameraDirector child
+        isRotating = true;
+        float elapsedTime = 0;
+        while (elapsedTime < time){
+            float t = elapsedTime / time;
+            cam.rotation = Quaternion.Euler(Vector3.Lerp(current, target, Utilities.EaseInOut(t)));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        isRotating = false;
+        cam.rotation = Quaternion.Euler(target);
     }
 
     private void UpdateScore(EnemyBase enemy){

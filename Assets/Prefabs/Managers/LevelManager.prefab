@@ -627,12 +627,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initPerspective: 1
   anim: {fileID: 1753689543936176722}
+  useLERP: 0
+  isRotating: 0
   enemySpawner: {fileID: 2927386685241210806}
   playerPlane: {fileID: 0}
   gameOverPnl: {fileID: 0}
   youWinPnl: {fileID: 0}
   ScoreTxt: {fileID: 0}
-  damageAnim: {fileID: 7107334772887753252, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
+  damageAnim: {fileID: 0}
   maxDistance: 5
   smoothTime: 0.1
   minHorizontalSpeed: 20
