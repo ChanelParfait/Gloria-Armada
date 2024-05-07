@@ -10,6 +10,8 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [SerializeField] private Weapon specialWeapon;
 
+    Powerups[] powerups;
+
     public bool isArmed = true;
 
     public Rigidbody playerRB;

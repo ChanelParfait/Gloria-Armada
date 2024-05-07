@@ -60,9 +60,7 @@ public class EnemyPlane : EnemyBase
     protected override void Die(){
         // Destroy Self and emit death explosion
         Instantiate(deathExplosion, transform.position, Quaternion.identity);
-<<<<<<< HEAD
         powerupManager.SpawnPowerUp(transform.position);
-=======
         if (deathObj != null)
         {
             GameObject deadObj = Instantiate(deathObj, transform.position, transform.rotation);
@@ -75,7 +73,6 @@ public class EnemyPlane : EnemyBase
             }
         }
 
->>>>>>> S3_AI-and-Targeting
         base.Die();
     }
 
