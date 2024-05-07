@@ -27,7 +27,11 @@ public class EnemyBase : Actor
 
     public virtual void Fire(){
         // Fire a Weapon
-        weaponManager.FireActiveWeapon();
+        if (weaponManager != null)
+        {
+            weaponManager.FireActiveWeapon();
+        }
+        
     }
 
     protected override void Die(){ 

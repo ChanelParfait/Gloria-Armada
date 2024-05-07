@@ -148,10 +148,10 @@ MonoBehaviour:
     reloadTime: 0
     maxAmmo: 0
     projectileStats:
-      speed: 6
+      speed: 8
       damage: 1
       AP: 0
-      lifetime: 10
+      lifetime: 8
       size: {x: 1, y: 1, z: 1}
       range: 0
   weaponCategory: 0

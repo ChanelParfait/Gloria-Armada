@@ -17,7 +17,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] Perspective initPerspective; 
     public Perspective currentPerspective { get; private set;} 
     [SerializeField] private Animator anim; 
-    [SerializeField] private Enemy_Spawner enemySpawner;
+
+    [SerializeField] bool useLERP = false;
+    [SerializeField] bool isRotating = false;
+    [SerializeField] private EnemySpawner enemySpawner;
     [SerializeField] private GameObject playerPlane;
 
     // UI and Visuals
@@ -54,8 +57,9 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameOverPnl = GameObject.Find("GameOver");
+        youWinPnl = GameObject.Find("YouWin");
         UpdatePerspective(initPerspective);
-        enemySpawner.UpdatePerspective(currentPerspective);
         rb.velocity = Vector3.right * 20;
 
         if (playerPlane == null)
@@ -148,16 +152,52 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void UpdatePerspective(Perspective pers){
+    public static Vector3 PerspectiveToEuler(Perspective p){
+        //Convert perspective to euler angles
+        switch (p){
+            case Perspective.Side_On:
+                return new Vector3(0, 0, 0);
+            case Perspective.Top_Down:
+                return new Vector3(90, 0, -90);
+            default:
+                Transform camDirector = GameObject.Find("CameraDirector").transform;
+                return camDirector.rotation.eulerAngles;
+        }
+    }
+
+    public void UpdatePerspective(Perspective pers){
+        Vector3 currentOrientation = PerspectiveToEuler(currentPerspective);
         currentPerspective = pers; 
+
         if (anim != null){
             anim.SetInteger("Perspective", (int)currentPerspective);
+            OnPerspectiveChange?.Invoke((int)currentPerspective);
         }
-        
-        enemySpawner.UpdatePerspective(currentPerspective); 
+        else if (useLERP && !isRotating){
+            
+            Vector3 newOrientation = PerspectiveToEuler(pers);
+            Transform camDirector = transform.Find("CameraDirector");
+
+            StartCoroutine(LerpOrientation(4f, currentOrientation, newOrientation, camDirector));
+            OnPerspectiveChange?.Invoke((int)currentPerspective);
+        }
         //jetControl.ResetPosition(5f);
         //Invoke action to update others without storing references to all objects
-        OnPerspectiveChange?.Invoke((int)currentPerspective);
+        
+    }
+
+    IEnumerator LerpOrientation(float time, Vector3 current, Vector3 target, Transform cam){
+        //Get CameraDirector child
+        isRotating = true;
+        float elapsedTime = 0;
+        while (elapsedTime < time){
+            float t = elapsedTime / time;
+            cam.rotation = Quaternion.Euler(Vector3.Lerp(current, target, Utilities.EaseInOut(t)));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        isRotating = false;
+        cam.rotation = Quaternion.Euler(target);
     }
 
     private void UpdateScore(EnemyBase enemy){
@@ -173,18 +213,37 @@ public class LevelManager : MonoBehaviour
     }
 
     private void GameOver(){
+        GameObject wreckage = GameObject.FindWithTag("PlayerWreckage");
+        //Pick a random child from player wreckage
+        Transform randomChild = wreckage.transform.GetChild(0).GetChild(UnityEngine.Random.Range(0, wreckage.transform.childCount));
+
+        StartCoroutine(ShowDeathScreen(randomChild));
+    }
+
+    IEnumerator ShowDeathScreen(Transform wreckage){
+        if (wreckage != null)
+        {
+            yield return new WaitUntil (() => wreckage.GetComponent<Rigidbody>().velocity.magnitude < 1.0f);
+
+        }
+        yield return new WaitForSeconds(30);
         //Debug.Log("Game Over");
         if (gameOverPnl != null)
         {
             gameOverPnl.SetActive(true);
             //Time.timeScale = 0; 
-        }
-        
+        }  
     }
 
-    private void YouWin(){
-        youWinPnl.SetActive(true);
-        Time.timeScale = 0; 
+    public void YouWin(){
+        //youWinPnl.SetActive(true);
+        StartCoroutine(goToNextLevel());
+    }
+
+    IEnumerator goToNextLevel(){
+        yield return new WaitForSeconds(3);
+        StopAllCoroutines();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void Restart(){

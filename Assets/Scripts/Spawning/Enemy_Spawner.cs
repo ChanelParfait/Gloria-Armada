@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Enemy_Spawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour
 {
     // enemy spawner is parented to the camera for dynamic spawning
     // spawning plane must be parallel and aligned with the player to ensure
     // that enemies are spawned on the same plane and their movement is fixed to that plane
     // if camera position or angle is changed, the spawner / spawn points must be moved to align with the player plane 
     [SerializeField] private Transform cameraTransform; 
-    [SerializeField] private Perspective currentPerspective = Perspective.Side_On; 
+    [SerializeField] private Perspective currentPerspective; 
     [SerializeField] private GameObject[] enemies; 
 
     public bool isEnabled = true;
@@ -22,7 +22,15 @@ public class Enemy_Spawner : MonoBehaviour
     Vector3 lastPosition;
 
 
-    
+    private void OnEnable(){
+        LevelManager.OnPerspectiveChange += UpdatePerspective;
+    }
+
+    private void OnDisable(){
+        // if gameobject is disabled remove all listeners
+        LevelManager.OnPerspectiveChange -= UpdatePerspective;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +58,7 @@ public class Enemy_Spawner : MonoBehaviour
     }
 
     //Spawn an enemy of given type(index) at a given spawn point 
-    private void SpawnEnemy(SpawnPointName spawnPointName, int enemyIndex){
+    public void SpawnEnemy(SpawnPointName spawnPointName, int enemyIndex){
         // given a spawn position name, find the corresponding spawn point gameobject from the list of spawn points
         GameObject spawnPoint;
         if (spawnPoints.TryGetValue(spawnPointName.ToString(), out spawnPoint)){
@@ -152,7 +160,7 @@ public class Enemy_Spawner : MonoBehaviour
             }
     }
 
-    public void UpdatePerspective(Perspective newPers){
-        currentPerspective = newPers; 
+    public void UpdatePerspective(int newPers){
+        currentPerspective = (Perspective)newPers; 
     }
 }

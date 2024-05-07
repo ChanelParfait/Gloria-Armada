@@ -17,6 +17,8 @@ TagManager:
   - Despawner
   - WinPoint
   - Powerup
+  - PlayerWeaponManager
+  - GameManager
   - PlayerWreckage
   - LevelManager
   - LevelTrigger

@@ -10,36 +10,36 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [SerializeField] private Weapon specialWeapon;
 
-    public bool isEnabled = true;
+    public bool isArmed = true;
 
     public Rigidbody playerRB;
 
-    // Test Variables
-    public GameObject testWeapon1;
-    public GameObject testWeapon2;
-
-
+    public GameObject test1;
+    public GameObject test2;
 
     // Start is called before the first frame update
     void Start()
     {
         //Get RB of parent 
         playerRB = GetComponentInParent<Rigidbody>();
-        // Used currently to test / show functionality
-        // Will later be changed to Set Weapons through Loadout Menu
-        SetPrimaryWeapon(testWeapon1);
-        SetSpecialWeapon(testWeapon2);
+
+        if(!primaryWeapon && !specialWeapon){
+            SetPrimaryWeapon(test1);
+            SetSpecialWeapon(test2);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         // Fire Primary Weapon when pressing Space
-        if(Input.GetKey(KeyCode.Space) && isEnabled){
+        if(Input.GetKey(KeyCode.Space) && isArmed){
+            //Debug.Log("Weapon: " + primaryWeapon + "Fired by: " + gameObject.name);
             FirePrimaryWeapon();
         }
         // Fire Special Weapon when pressing E
-        if(Input.GetKeyDown(KeyCode.E) && isEnabled){
+        if(Input.GetKeyDown(KeyCode.E) && isArmed){
             FireSpecialWeapon();
         }
 

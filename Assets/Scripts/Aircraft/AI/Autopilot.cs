@@ -39,7 +39,7 @@ public class Autopilot : MonoBehaviour
     public enum AutopilotState {Off, pointAt,  targetFlat, vectorAt, targetStraight, targetFormation};
     [Header("AP State")]
     public AutopilotState autopilotState = AutopilotState.Off;
-    //AutopilotState lastAutopilotState = AutopilotState.Off;
+    [SerializeField] AutopilotState lastAutopilotState = AutopilotState.Off;
     [SerializeField] private Rigidbody rb;
     Plane p;
     
@@ -111,9 +111,9 @@ public class Autopilot : MonoBehaviour
     {
         pers = (Perspective)_pers;
         rb.constraints = RigidbodyConstraints.None;
+        lastAutopilotState = autopilotState;
         autopilotState = AutopilotState.targetFlat;
         onAxes = false;
-        Debug.Log("Perspective changed to: " + pers.ToString());
     }
 
     public void setTargetObject(GameObject target){
@@ -130,6 +130,9 @@ public class Autopilot : MonoBehaviour
         if (GameObject.Find("LevelManager") != null){
             LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
             pers = lm.currentPerspective;
+        }
+        if (rb == null){
+            rb = GetComponent<Rigidbody>();
         }
         mainPIDs = new PID[] {pitchPID, rollPID, yawPID};
         autoPIDs = new PID[] {aPitchPID, aRollPID, aYawPID};
@@ -157,7 +160,8 @@ public class Autopilot : MonoBehaviour
                 return false;
             }
             else{
-                if (autopilotState != AutopilotState.Off || autopilotState != AutopilotState.targetStraight){
+                if (autopilotState != AutopilotState.Off || autopilotState != AutopilotState.targetStraight || autopilotState != AutopilotState.targetFormation){
+                    lastAutopilotState = autopilotState;
                     autopilotState = AutopilotState.targetFlat;
                     return false;
                 }
@@ -360,7 +364,10 @@ public class Autopilot : MonoBehaviour
 
     Vector3 FormationWith(GameObject targetObject, PID[] pids = null){
         Vector3 targetOffset = new Vector3(5, -10, 0);
-        Vector3 targetPosition = targetObject.transform.position + targetOffset;
+        if (targetObject == null){
+            targetObject = GameObject.Find("LevelManager").gameObject;   
+        }
+       Vector3 targetPosition = targetObject.transform.position + targetOffset;
         
         Vector3 targetVelocity = targetObject.GetComponent<Rigidbody>().velocity;
 
@@ -459,28 +466,6 @@ public class Autopilot : MonoBehaviour
             autopilotDeflection = new Vector3(Mathf.Lerp(controlInputs.x, pitch, t), Mathf.Lerp(controlInputs.y, roll, t), controlInputs.z);
         }
     }
-
-    float AutoTargetStabilize(){
-        //Attempt to smooth AoA and restrict to < 24 degrees
-        // // If angular velocity is high, stabilize the aircraft
-        // if (rb.angularVelocity.magnitude > 1f){
-        //     float pitchError = rb.angularVelocity.z;
-        //     // PID for pitch
-        //     float proportional_pitch = pitchError * Kp_pitch;
-        //     integral_pitch += pitchError * Time.deltaTime;
-        //     float integralTerm_pitch = integral_pitch * Ki_pitch;
-        //     float derivative_pitch = (pitchError - lastError_pitch) / Time.deltaTime;
-        //     float derivativeTerm_pitch = derivative_pitch * Kd_pitch;
-
-        //     // Adjust pitch control input
-        //     autoXInput = proportional_pitch + integralTerm_pitch + derivativeTerm_pitch;   
-        //     Mathf.Clamp(autoXInput, -1f, 1f);
-
-        //     lastError_pitch = pitchError;
-        // }
-
-        return -1;
-    }
     #endregion Assists
 
     public void setZTarget(float controlInputLR){
@@ -525,24 +510,27 @@ public class Autopilot : MonoBehaviour
             transform.position.Set(x, 0, z);
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezePositionY;
+            autopilotState = lastAutopilotState;
         }
         // if rb.velocity is CLOSE to right, and z is CLOSE to 0, and we are not on the axes
         else if (pers == Perspective.Side_On && !onAxes && Mathf.Abs(z) < 2 && (rb.velocity.normalized - Vector3.right).magnitude < 0.1f){
             //force the plane to the xz plane
-            transform.position.Set(x, y, 0);    
+            transform.position.Set(x, y, 0);   
+            transform.rotation = Quaternion.Euler(0, 90, 0);
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezePositionZ;
-            if (!CompareTag("Player"))
-            {
-                autopilotState = AutopilotState.targetFormation;
-            }
+            autopilotState = lastAutopilotState;
+            
         }
         else if (pers == Perspective.Null){
             onAxes = true;
             rb.constraints = RigidbodyConstraints.None;
         }
 
-        Vector3 vecToPlane =  VectorAt(targetVector, mainPIDs, VectorType.direction);
+        Vector3 vecToPlane =  PointAt(targetVector + transform.position, mainPIDs);
+        if (tz == 0){
+            vecToPlane.z += Upright();
+        }
         if (onAxes){
             Utilities.MultiplyComponents(vecToPlane, new Vector3(1, 1, 0.3f));
         }

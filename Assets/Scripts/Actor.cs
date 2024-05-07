@@ -6,7 +6,7 @@ public class Actor : MonoBehaviour
 {
     // Base Actor Class for Enemies and Player to Inherit From
     [SerializeReference] public int maxHealth;
-    public int currentHealth {get; protected set;}
+    public float currentHealth {get; protected set;}
 
     protected bool isAlive = true;
 
@@ -16,7 +16,7 @@ public class Actor : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
         if (isAlive){
             currentHealth -= damage;

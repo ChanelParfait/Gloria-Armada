@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 
+[System.Serializable]
 public enum TutorialTask{
         VerticalControls,
         HorizontalControls,
@@ -13,23 +15,32 @@ public enum TutorialTask{
         Boundary,
         PrimaryFire,
         SecondaryFire,
+        FreeFlight,
     }
 public class TutorialSequence : MonoBehaviour
 {
     PlaySpaceBoundary playSpaceBoundary;
-    Enemy_Spawner enemySpawner;
+    EnemySpawner enemySpawner;
     GameObject formationPoint;
 
+    [SerializeField] Canvas hintCanvas;
 
-    [SerializeField] DialogueManager dialogue;
+    CameraDirector camDirector;
+
+
+    DialogueManager dialogue;
     [SerializeField] DialogueScriptableObject script;
 
     Plane playerPlane;
     Autopilot ap;
+    Autopilot instructorAP;
     PlayerWeaponManager playerWeapons;
 
+    bool isEnemyDead = false;
+
    void OnEnable(){
-        DialogueManager.OnRequestPitchControl += AxisControlTask;
+        DialogueManager.OnRequestPlayerAction += PlayerTask;
+        EnemyBase.OnEnemyDeath += EnemyKilled;
    } 
 
     // Start is called before the first frame update
@@ -38,17 +49,20 @@ public class TutorialSequence : MonoBehaviour
         playSpaceBoundary = GetComponentInChildren<PlaySpaceBoundary>();
         playSpaceBoundary.enforceBoundary = false;
 
-        enemySpawner = GetComponentInChildren<Enemy_Spawner>();
+        enemySpawner = GetComponentInChildren<EnemySpawner>();
         enemySpawner.isEnabled = false;
 
         formationPoint = GameObject.Find("FormationPoint");
 
         playerPlane = GameObject.FindWithTag("Player").GetComponent<Plane>();
         playerWeapons = GameObject.FindWithTag("Player").GetComponentInChildren<PlayerWeaponManager>();
-        playerWeapons.isEnabled = false;
+        hintCanvas = GameObject.Find("PlayerPhys/Hints/Canvas").GetComponent<Canvas>();
+        playerWeapons.isArmed = false;
         ap = GameObject.FindWithTag("Player").GetComponent<Autopilot>();
+        instructorAP = GameObject.Find("InstructorPlane").GetComponent<Autopilot>();
         dialogue = GetComponent<DialogueManager>();
         dialogue.script = script;
+        camDirector = GameObject.Find("CameraDirector").GetComponent<CameraDirector>();
         StartCoroutine(Initialize());
     }
 
@@ -58,70 +72,113 @@ public class TutorialSequence : MonoBehaviour
         Debug.Log("Tutorial Sequence Started");
         playerPlane.DisableAllChannels();
         ap.setAPState(Autopilot.AutopilotState.targetFormation);
+        instructorAP.setAPState(Autopilot.AutopilotState.targetFormation);
         dialogue.StartDialogue();
+        hintCanvas.enabled = false;
+        StartCoroutine(camDirector.LerpFOV(2f, 23f));
     }
 
-    void AxisControlTask(TutorialTask task, DialogueManager requester){
-        ShowHint();
+    void PlayerTask(TutorialTask task, DialogueManager requester){
+        Debug.Log("Task Requested" + task);
         Func<bool> CompletionRequirements = null;
         switch (task)
         {
             case TutorialTask.VerticalControls:
                 //bitwise and vertical and throttle channels
+                ShowHint("W");
                 playerPlane.EnableChannel(Plane.ControlChannels.Vertical | Plane.ControlChannels.Throttle);
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
-                CompletionRequirements = () => Input.GetAxis("P1_Vertical") > 0;
+                CompletionRequirements = () => Input.GetAxis("P1_Vertical") < 0;
                 break;
             case TutorialTask.HorizontalControls:
+                ShowHint("A");
                 playerPlane.EnableChannel(Plane.ControlChannels.Horizontal | Plane.ControlChannels.Throttle);
                 CompletionRequirements = () => Input.GetAxis("P1_Horizontal") > 0;
                 break;
 
             case TutorialTask.Boost:
+                ShowHint("Shift");
                 playerPlane.EnableAllChannels();
-                CompletionRequirements = () => Input.GetAxis("P1_Throttle") > 0;
+
+                CompletionRequirements = () => playerPlane.throttle == 1.0f;
                 break;
             case TutorialTask.Boundary:
                 playSpaceBoundary.enforceBoundary = true;
                 break;
             case TutorialTask.PrimaryFire:
-                playerWeapons.enabled = true;
+                ShowHint("Space");
+                playerPlane.EnableChannel(Plane.ControlChannels.Vertical | Plane.ControlChannels.Throttle);
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
+                isEnemyDead = false;
+                playerWeapons.isArmed = true;
+                CompletionRequirements = () => isEnemyDead == true; 
+                isEnemyDead = false;
                 break;
             case TutorialTask.SecondaryFire:
-                playerWeapons.enabled = true;
+                ShowHint("E");
+                playerPlane.EnableChannel(Plane.ControlChannels.Vertical | Plane.ControlChannels.Throttle);
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
+                isEnemyDead = false;
+                playerWeapons.isArmed = true;
+                CompletionRequirements = () => isEnemyDead == true; 
+                isEnemyDead = false;
+                break;
+            case TutorialTask.FreeFlight:
+                playerPlane.EnableAllChannels();
+                playerWeapons.isArmed = true;
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
+                CompletionRequirements = () => false;
                 break;
             default:
                 //Always exit as if task completed if no task is set
                 CompletionRequirements = () => true;
                 break;
         }
+        hintCanvas.enabled = true;
         StartCoroutine(WaitForTask(CompletionRequirements, requester));
     }
 
-    void ShowHint(){
-        Debug.Log("Show Hint");
+    void ShowHint(string key){
+        hintCanvas.transform.Find("HintText").GetComponent<TextMeshProUGUI>().text = key;   
+        hintCanvas.enabled = true;
+        StartCoroutine(HintDisplay(key));
+    }
+
+    IEnumerator HintDisplay(string key){    
+        hintCanvas.transform.Find("HintText").GetComponent<TextMeshProUGUI>().text = key;   
+        yield return new WaitForSeconds(1);
+        hintCanvas.enabled = false;
     }
 
 
     IEnumerator WaitForTask(Func<bool> Req, DialogueManager requester){
         yield return new WaitUntil(() => Req());
         {
-            Debug.Log("Vertical Control Task Complete");
+            yield return new WaitForSeconds(1);
+            Debug.Log("Task Complete");
             StartCoroutine(OnCompleteTask(requester));
         }
     }
 
+    void EnemyKilled(EnemyBase enemy){
+        isEnemyDead = true;
+    }
+
     IEnumerator OnCompleteTask(DialogueManager requester){
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3f);
         playerPlane.DisableAllChannels();
-        playerWeapons.enabled = false;
+        playerWeapons.isArmed = false;
         ap.setAPState(Autopilot.AutopilotState.targetFormation);
         requester.SetTaskComplete();
+        hintCanvas.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Return)){
+            LevelManager lm  = GetComponent<LevelManager>();
+            lm.YouWin();
+        }
     }
 }

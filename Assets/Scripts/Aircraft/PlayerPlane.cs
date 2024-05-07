@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class PlayerPlane : Actor
 {
@@ -18,7 +19,7 @@ public class PlayerPlane : Actor
         audioSource = GetComponent<AudioSource>();
     }
 
-    public override void TakeDamage(int damage){
+    public override void TakeDamage(float damage){
         audioSource.Play();
         base.TakeDamage(damage);
         //Debug.Log("Current Health: " + currentHealth);
@@ -42,8 +43,7 @@ public class PlayerPlane : Actor
         //Destroy the player
         base.Die();
         //TODO: This goes before the base.Die() call
-        OnPlayerDeath?.Invoke();
-        
+        OnPlayerDeath?.Invoke();     
     }
 
     private void OnCollisionEnter(Collision col)
