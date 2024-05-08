@@ -115,6 +115,7 @@ public class TutorialSequence : MonoBehaviour
             case TutorialTask.PrimaryFire:
                 ShowHint("Space");
                 playerPlane.EnableAllChannels();
+                playSpaceBoundary.enforceBoundary = true;
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 isEnemyDead = false;
                 playerWeapons.isArmed = true;
@@ -126,12 +127,14 @@ public class TutorialSequence : MonoBehaviour
                 playerPlane.EnableAllChannels();
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 isEnemyDead = false;
+                playSpaceBoundary.enforceBoundary = true;
                 playerWeapons.isArmed = true;
                 CompletionRequirements = () => isEnemyDead == true; 
                 isEnemyDead = false;
                 break;
             case TutorialTask.FreeFlight:
                 playerPlane.EnableAllChannels();
+                playSpaceBoundary.enforceBoundary = true;
                 playerWeapons.isArmed = true;
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 CompletionRequirements = () => false;
@@ -181,6 +184,7 @@ public class TutorialSequence : MonoBehaviour
         Debug.Log("Task Complete: Returning to AP");
         playerPlane.DisableAllChannels();
         playerWeapons.isArmed = false;
+        playSpaceBoundary.enforceBoundary = false;
         ap.setAPState(Autopilot.AutopilotState.targetFormation);
         requester.SetTaskComplete();
         hintCanvas.enabled = false;

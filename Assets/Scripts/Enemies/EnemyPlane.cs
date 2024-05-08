@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Events;
 
+[System.Serializable]
 class vec3PID {
     public PID x;
     public PID y;
@@ -34,7 +35,7 @@ public class EnemyPlane : EnemyBase
     public Vector3 moveDir;
     public Vector3 orientation;
 
-    vec3PID pid = new vec3PID(1f, 0.01f, 6f);
+    [SerializeField] vec3PID pid = new vec3PID(1f, 0.01f, 22f);
 
     GameObject targetObj;
     Camera cam;
@@ -77,7 +78,10 @@ public class EnemyPlane : EnemyBase
 
     IEnumerator Initialize(){
         yield return new WaitForSeconds(0.1f);
-        rb.velocity = referenceSpeed * Utilities.MultiplyComponents(orientation, moveDir);
+        if (orientation == Vector3.zero && moveDir == Vector3.zero){
+            yield break;
+        }
+        rb.AddForce(referenceSpeed * Utilities.MultiplyComponents(orientation, moveDir), ForceMode.VelocityChange);
     }
 
     Vector2 GetCameraDimensions(){
@@ -98,9 +102,9 @@ public class EnemyPlane : EnemyBase
     Vector3 GetTargetOffset(){
         switch (currentPerspective){
             case Perspective.Top_Down:
-                return new Vector3(GetCameraDimensions().x/2 - 30.0f, 0, GetCameraDimensions().y/2 * randomOffsetComponent);
+                return new Vector3(GetCameraDimensions().y/2 - 30, 0, GetCameraDimensions().x/2 * randomOffsetComponent);
             case Perspective.Side_On:
-                return new Vector3(GetCameraDimensions().x/2 - 30.0f, GetCameraDimensions().y/2 * randomOffsetComponent,0);
+                return new Vector3(GetCameraDimensions().x/2 - 30, GetCameraDimensions().y/2 * randomOffsetComponent,0);
             case Perspective.Null:
                 return Vector3.zero;
         }
@@ -117,8 +121,13 @@ public class EnemyPlane : EnemyBase
         }
         targetOffset = GetTargetOffset();
         targetPos = targetObj.transform.position + targetOffset;
-        MoveEnemy();
 
+        if (rb.angularVelocity.magnitude > 0.5f){
+            rb.useGravity = true;
+        }
+        else {
+            MoveEnemy();
+        }
 
         timer += Time.deltaTime; 
         if(timer >= Random.Range(fireInterval, 3f)){
@@ -166,6 +175,17 @@ public class EnemyPlane : EnemyBase
         //Scale the error by the screen width
         Vector3 moveDir = pid.Solve(targetPos, transform.position);
         rb.AddForce(moveDir.normalized * speed * 20.0f);
+    }
+
+    void AvoidGround(){
+        //Raycast down to check for ground
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100.0f)){
+            //If the distance to the ground is less than 10 units, add a force upwards
+            if (hit.distance < 10.0f){
+                rb.AddForce(Vector3.up * (10 - hit.distance) * 10.0f);
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision col)

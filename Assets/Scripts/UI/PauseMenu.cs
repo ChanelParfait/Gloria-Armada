@@ -38,7 +38,7 @@ public class PauseMenu : MonoBehaviour
 
         else
         {
-            gameOverUI.GetComponent<GameOverMenu>().timerStart = true;
+            //gameOverUI.GetComponent<GameOverMenu>().timerStart = true;
         }
     }
 

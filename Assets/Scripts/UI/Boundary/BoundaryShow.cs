@@ -33,16 +33,20 @@ public class BoundaryShow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerToScreenSpace();
-        if (Mathf.Abs(playerScreenPos.x) > 0.75 || Mathf.Abs(playerScreenPos.y) > 0.7)
-        {
-            float alpha = Mathf.Max(Mathf.Abs((playerScreenPos.x - 0.7f) * 4), Mathf.Abs((playerScreenPos.y) - 0.7f) * 4);
-            image.CrossFadeAlpha(alpha, 0, true);
+        if (player != null){
+            playerToScreenSpace();
+            if (Mathf.Abs(playerScreenPos.x) > 0.75 || Mathf.Abs(playerScreenPos.y) > 0.7)
+            {
+                float alpha = Mathf.Max(Mathf.Abs((playerScreenPos.x - 0.7f) * 4), Mathf.Abs((playerScreenPos.y) - 0.7f) * 4);
+                image.CrossFadeAlpha(alpha, 0, true);
+            }
+            else
+            {
+                image.CrossFadeAlpha(0, 0.1f, true);
+            }
+
         }
-        else
-        {
-            image.CrossFadeAlpha(0, 0.1f, true);
-        }
+
         
     }
 }

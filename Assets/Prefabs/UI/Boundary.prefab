@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 1259312179745562909}
   - component: {fileID: 1199232719111677217}
   - component: {fileID: 6214990462210113723}
+  - component: {fileID: 9137387997650842552}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -194,6 +195,19 @@ MonoBehaviour:
   m_MaskInteraction: 85
   m_UseStencil: 1
   m_RaycastFilter: 0
+--- !u!114 &9137387997650842552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680010042392569204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f44b91cb606542f4eb919819d0853306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScreenPos: {x: 0, y: 0}
 --- !u!1 &6222996381925292898
 GameObject:
   m_ObjectHideFlags: 0

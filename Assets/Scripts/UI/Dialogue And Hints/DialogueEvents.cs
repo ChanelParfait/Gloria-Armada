@@ -30,7 +30,9 @@ public class DialogueEvents : ScriptableObject
 
     public void InvertControls()
     {
-        PlayerPrefs.SetInt("InvertPitch", 1);
+        int pitch = PlayerPrefs.GetInt("InvertPitch", 0);
+        pitch = pitch * -1 + 1;
+        PlayerPrefs.SetInt("InvertPitch", pitch);
     }
 
     //Change Orientation
