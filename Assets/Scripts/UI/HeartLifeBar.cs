@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class HeartLifeBar : MonoBehaviour
 {
+    public PlayerPlane playerHealth;
     public GameObject heartPrefab;
     //public PlayerLife playerLife;
     List<HealthHeart> hearts = new List<HealthHeart>();
 
-    private int maxHealth = 6; 
+    private float maxHealth; 
 
 
     private void OnEnable()
@@ -25,6 +26,7 @@ public class HeartLifeBar : MonoBehaviour
 
     private void Start()
     {
+        maxHealth = playerHealth.currentHealth;
         DrawHearts();
     }
 
@@ -59,7 +61,7 @@ public class HeartLifeBar : MonoBehaviour
 
             for(int i = 0; i < hearts.Count; i++)
             {
-                int heartStatusRemainder = Mathf.Clamp(maxHealth - (i * 2), 0, 2);
+                float heartStatusRemainder = Mathf.Clamp(maxHealth - (i * 2), 0, 2);
                 hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
             }
     }
