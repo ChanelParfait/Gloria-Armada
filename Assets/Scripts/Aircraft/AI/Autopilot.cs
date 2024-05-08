@@ -556,6 +556,9 @@ public class Autopilot : MonoBehaviour
         if (onAxes){
             SnapToAxes();
         }
+        else {
+            p.throttle = 0.7f;
+        }
         if (onAxes){
             Utilities.MultiplyComponents(apControl, new Vector3(1, 1, 1f));
         }

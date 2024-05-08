@@ -98,16 +98,18 @@ public class TutorialSequence : MonoBehaviour
             case TutorialTask.HorizontalControls:
                 ShowHint("A");
                 playerPlane.EnableAllChannels();
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 CompletionRequirements = () => Input.GetAxis("P1_Horizontal") > 0;
                 break;
-
             case TutorialTask.Boost:
                 ShowHint("Shift");
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 playerPlane.EnableAllChannels();
                 CompletionRequirements = () => playerPlane.throttle == 1.0f && Input.GetAxis("P1_Boost") == 1.0f;
                 break;
             case TutorialTask.Boundary:
                 playerPlane.EnableAllChannels();
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 playSpaceBoundary.enforceBoundary = true;
                 break;
             case TutorialTask.PrimaryFire:

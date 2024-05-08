@@ -412,4 +412,22 @@ MonoBehaviour:
         eventAction: {fileID: 0}
     dialogueEvent: {fileID: 11400000, guid: c22292e8b68346b4c8459f440f38f1b8, type: 2}
     tutorialTask: 4
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 5
+    line: Nice work, press enter to return to base
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: c22292e8b68346b4c8459f440f38f1b8, type: 2}
+    tutorialTask: 6
   timeBetweenLines: 1
