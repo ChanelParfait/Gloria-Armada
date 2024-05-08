@@ -501,7 +501,7 @@ public class Autopilot : MonoBehaviour
         float smoothing = 200.0f;
 
         // Set zAngle between 0 and 90 degrees
-        float zAngle = 60;
+        float zAngle = 80;
         // Multiply by Tan(45 dgrees) * smoothing to get the distance to the plane
         zTarget = Mathf.Tan(zAngle * Mathf.Deg2Rad * zTarget) * smoothing;
 
@@ -517,6 +517,7 @@ public class Autopilot : MonoBehaviour
 
         if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 2 && (rb.velocity.normalized - Vector3.right).magnitude < 1f){
             transform.position.Set(x, 0, z);
+            rb.MovePosition(new Vector3(x, 0, z));
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezePositionY;
             autopilotState = lastAutopilotState;
@@ -536,14 +537,45 @@ public class Autopilot : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None;
         }
 
-        Vector3 vecToPlane =  PointAt(targetVector + transform.position, mainPIDs);
+
+
+        Vector3 apControl =  PointAt(targetVector + transform.position, mainPIDs);
         if (tz == 0){
-            vecToPlane.z += Upright();
+            apControl.y += Upright();
+        }
+
+        if (onAxes){
+            SnapToAxes();
         }
         if (onAxes){
-            Utilities.MultiplyComponents(vecToPlane, new Vector3(1, 1, 0.3f));
+            Utilities.MultiplyComponents(apControl, new Vector3(1, 1, 1f));
         }
-        return vecToPlane;
+        return apControl;
+    }
+
+    void SnapToAxes(){
+        if (pers == Perspective.Top_Down){
+            //Find the elevation of the nose above the horizon 
+
+            Quaternion currentRotation = rb.rotation;
+            Vector3 euler = currentRotation.eulerAngles;
+            Quaternion unrolled = Quaternion.Euler(euler.x, euler.y, 0);
+            float truePitch = unrolled.eulerAngles.x; // This should now represent the true pitch
+            float pitchCorrection = -truePitch; // Negate current pitch to level the plane
+            Quaternion pitchCorrectionQuat = Quaternion.Euler(pitchCorrection, 0, 0);
+            Quaternion correctedRotation = unrolled * pitchCorrectionQuat;
+
+            // Now, reapply the original roll
+            Quaternion finalRotation = Quaternion.Euler(correctedRotation.eulerAngles.x, correctedRotation.eulerAngles.y, euler.z);
+
+            // Set the corrected rotation back to the rigibody
+            rb.MoveRotation(finalRotation);
+        }
+        else if (pers == Perspective.Side_On){
+            // rb.MovePosition(new Vector3(rb.transform.position.x, rb.transform.position.y, 0));
+            // rb.MoveRotation(Quaternion.Euler(0, 90, 0));
+            // rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezePositionZ;
+        }
     }
 
 

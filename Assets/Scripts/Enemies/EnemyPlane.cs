@@ -42,11 +42,21 @@ public class EnemyPlane : EnemyBase
     float randomOffsetComponent;
     Vector3 targetPos;
 
+    Perspective currentPerspective;
+
     Rigidbody rb;
     private float timer = 0;
     public GameObject deathExplosion;
 
     [SerializeField] private GameObject deathObj;
+
+    void OnEnable(){
+        LevelManager.OnPerspectiveChange += UpdatePerspective;
+    }
+
+    void OnDisable(){
+        LevelManager.OnPerspectiveChange -= UpdatePerspective;
+    }
 
     // Start is called before the first frame update
     protected override void Start()
@@ -54,6 +64,8 @@ public class EnemyPlane : EnemyBase
         base.Start();
         weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
         rb = GetComponent<Rigidbody>();
+        LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
+        currentPerspective = lm.currentPerspective;
         cam = Camera.main;
         if(targetObj == null){
             targetObj = GameObject.FindGameObjectWithTag("LevelManager");
@@ -76,6 +88,24 @@ public class EnemyPlane : EnemyBase
         return new Vector2(width, height);
     }
 
+    void UpdatePerspective(int _pers){
+        currentPerspective = (Perspective)_pers;
+        rb.MoveRotation(Quaternion.Euler(0,-90,0));
+    }
+
+    Vector3 GetTargetOffset(){
+        switch (currentPerspective){
+            case Perspective.Top_Down:
+                return new Vector3(GetCameraDimensions().x/2 - 30.0f, 0, GetCameraDimensions().y/2 * randomOffsetComponent);
+            case Perspective.Side_On:
+                return new Vector3(GetCameraDimensions().x/2 - 30.0f, GetCameraDimensions().y/2 * randomOffsetComponent,0);
+            case Perspective.Null:
+                return Vector3.zero;
+        }
+
+        return targetObj.transform.position;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -83,7 +113,7 @@ public class EnemyPlane : EnemyBase
         if(targetObj == null){
             targetObj = GameObject.FindGameObjectWithTag("LevelManager");
         }
-        targetOffset = new Vector3(GetCameraDimensions().x/2 - 10.0f, GetCameraDimensions().y/2 * randomOffsetComponent, 0);
+        targetOffset = GetTargetOffset();
         targetPos = targetObj.transform.position + targetOffset;
         MoveEnemy();
 
