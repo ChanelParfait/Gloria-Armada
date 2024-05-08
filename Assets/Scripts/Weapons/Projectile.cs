@@ -79,7 +79,7 @@ public class Projectile : MonoBehaviour
         foreach (ParticleManager pm in pms)
         {
             pm.transform.SetParent(null);   
-            pm.Detatch();
+            pm.Detach();
         }
         Destroy(gameObject);
     }

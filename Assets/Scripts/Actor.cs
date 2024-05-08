@@ -6,7 +6,7 @@ public class Actor : MonoBehaviour
 {
     // Base Actor Class for Enemies and Player to Inherit From
     [SerializeReference] public int maxHealth;
-    public int currentHealth {get; protected set;}
+    public float currentHealth {get; protected set;}
 
     protected bool isAlive = true;
 
@@ -19,7 +19,7 @@ public class Actor : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         if (isAlive){
-            currentHealth -= (int)damage;
+            currentHealth -= damage;
             if(currentHealth <= 0){
                 isAlive = false;
                 Die();
@@ -34,7 +34,7 @@ public class Actor : MonoBehaviour
         foreach (ParticleManager pm in pms)
         {
             pm.transform.SetParent(null);   
-            pm.Detatch();
+            pm.Detach();
         }
         Destroy(gameObject);
     }

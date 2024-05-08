@@ -12,6 +12,7 @@ public class DialogueEvents : ScriptableObject
         ChangeOrientation,
         AddWaypoints,
         EndScene,
+        InvertControls,
     }
 
     public EventOption eventOption;
@@ -22,15 +23,16 @@ public class DialogueEvents : ScriptableObject
     //Spawn enemy
     public void SpawnEnemy()
     {
-        GameObject formationPoint = GameObject.Find("FormationPoint");
-        //Instantiate the enemy 
-        GameObject spawnedEnemy = Instantiate(enemyPrefab, formationPoint.transform.position + Vector3.right*60, Quaternion.LookRotation(Vector3.right, Vector3.up));
-        EnemyPlane e;
-        if ((e = spawnedEnemy.GetComponent<EnemyPlane>()) != null)
-        {
-            e.referenceSpeed = formationPoint.GetComponent<Rigidbody>().velocity.x;
-        }
+        LevelManager lm = FindObjectOfType<LevelManager>();
+        lm.spawnOverTime = true;
         
+    }
+
+    public void InvertControls()
+    {
+        int pitch = PlayerPrefs.GetInt("InvertPitch", 0);
+        pitch = pitch * -1 + 1;
+        PlayerPrefs.SetInt("InvertPitch", pitch);
     }
 
     //Change Orientation
@@ -64,6 +66,9 @@ public class DialogueEvents : ScriptableObject
             case EventOption.EndScene:
                 LevelManager lm = FindObjectOfType<LevelManager>();
                 lm.YouWin();
+                break;
+            case EventOption.InvertControls:
+                InvertControls();
                 break;
         }
     }

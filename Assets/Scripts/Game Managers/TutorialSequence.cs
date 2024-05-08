@@ -16,6 +16,7 @@ public enum TutorialTask{
         PrimaryFire,
         SecondaryFire,
         FreeFlight,
+        Wait,
     }
 public class TutorialSequence : MonoBehaviour
 {
@@ -25,13 +26,19 @@ public class TutorialSequence : MonoBehaviour
 
     [SerializeField] Canvas hintCanvas;
 
+    CameraDirector camDirector;
+
 
     DialogueManager dialogue;
     [SerializeField] DialogueScriptableObject script;
 
     Plane playerPlane;
     Autopilot ap;
+    Autopilot instructorAP;
     PlayerWeaponManager playerWeapons;
+
+    float timer;
+    bool isTimerRunning = false;
 
     bool isEnemyDead = false;
 
@@ -54,10 +61,13 @@ public class TutorialSequence : MonoBehaviour
         playerPlane = GameObject.FindWithTag("Player").GetComponent<Plane>();
         playerWeapons = GameObject.FindWithTag("Player").GetComponentInChildren<PlayerWeaponManager>();
         hintCanvas = GameObject.Find("PlayerPhys/Hints/Canvas").GetComponent<Canvas>();
+        hintCanvas.enabled = false;
         playerWeapons.isArmed = false;
         ap = GameObject.FindWithTag("Player").GetComponent<Autopilot>();
+        instructorAP = GameObject.Find("InstructorPlane").GetComponent<Autopilot>();
         dialogue = GetComponent<DialogueManager>();
         dialogue.script = script;
+        camDirector = GameObject.Find("CameraDirector").GetComponent<CameraDirector>();
         StartCoroutine(Initialize());
     }
 
@@ -67,8 +77,10 @@ public class TutorialSequence : MonoBehaviour
         Debug.Log("Tutorial Sequence Started");
         playerPlane.DisableAllChannels();
         ap.setAPState(Autopilot.AutopilotState.targetFormation);
+        instructorAP.setAPState(Autopilot.AutopilotState.targetFormation);
         dialogue.StartDialogue();
-        hintCanvas.enabled = false;
+        
+        StartCoroutine(camDirector.LerpFOV(2f, 23f));
     }
 
     void PlayerTask(TutorialTask task, DialogueManager requester){
@@ -85,21 +97,25 @@ public class TutorialSequence : MonoBehaviour
                 break;
             case TutorialTask.HorizontalControls:
                 ShowHint("A");
-                playerPlane.EnableChannel(Plane.ControlChannels.Horizontal | Plane.ControlChannels.Throttle);
+                playerPlane.EnableAllChannels();
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 CompletionRequirements = () => Input.GetAxis("P1_Horizontal") > 0;
                 break;
-
             case TutorialTask.Boost:
                 ShowHint("Shift");
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 playerPlane.EnableAllChannels();
-                CompletionRequirements = () => Input.GetKeyDown(KeyCode.LeftShift);
+                CompletionRequirements = () => playerPlane.throttle == 1.0f && Input.GetAxis("P1_Boost") == 1.0f;
                 break;
             case TutorialTask.Boundary:
+                playerPlane.EnableAllChannels();
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 playSpaceBoundary.enforceBoundary = true;
                 break;
             case TutorialTask.PrimaryFire:
                 ShowHint("Space");
-                playerPlane.EnableChannel(Plane.ControlChannels.Vertical | Plane.ControlChannels.Throttle);
+                playerPlane.EnableAllChannels();
+                playSpaceBoundary.enforceBoundary = true;
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 isEnemyDead = false;
                 playerWeapons.isArmed = true;
@@ -108,25 +124,33 @@ public class TutorialSequence : MonoBehaviour
                 break;
             case TutorialTask.SecondaryFire:
                 ShowHint("E");
-                playerPlane.EnableChannel(Plane.ControlChannels.Vertical | Plane.ControlChannels.Throttle);
+                playerPlane.EnableAllChannels();
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 isEnemyDead = false;
+                playSpaceBoundary.enforceBoundary = true;
                 playerWeapons.isArmed = true;
                 CompletionRequirements = () => isEnemyDead == true; 
                 isEnemyDead = false;
                 break;
             case TutorialTask.FreeFlight:
                 playerPlane.EnableAllChannels();
+                playSpaceBoundary.enforceBoundary = true;
                 playerWeapons.isArmed = true;
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 CompletionRequirements = () => false;
+                break;
+            case TutorialTask.Wait:
+                playerPlane.DisableAllChannels();
+                playerWeapons.isArmed = false;
+                ap.setAPState(Autopilot.AutopilotState.targetFormation);
+                isTimerRunning = true;
+                CompletionRequirements = () => timer > 10.0f;
                 break;
             default:
                 //Always exit as if task completed if no task is set
                 CompletionRequirements = () => true;
                 break;
         }
-        hintCanvas.enabled = true;
         StartCoroutine(WaitForTask(CompletionRequirements, requester));
     }
 
@@ -136,9 +160,8 @@ public class TutorialSequence : MonoBehaviour
         StartCoroutine(HintDisplay(key));
     }
 
-    IEnumerator HintDisplay(string key){    
-        hintCanvas.transform.Find("HintText").GetComponent<TextMeshProUGUI>().text = key;   
-        yield return new WaitForSeconds(1);
+    IEnumerator HintDisplay(string key){     
+        yield return new WaitForSeconds(3);
         hintCanvas.enabled = false;
     }
 
@@ -146,6 +169,7 @@ public class TutorialSequence : MonoBehaviour
     IEnumerator WaitForTask(Func<bool> Req, DialogueManager requester){
         yield return new WaitUntil(() => Req());
         {
+            yield return new WaitForSeconds(1);
             Debug.Log("Task Complete");
             StartCoroutine(OnCompleteTask(requester));
         }
@@ -156,12 +180,25 @@ public class TutorialSequence : MonoBehaviour
     }
 
     IEnumerator OnCompleteTask(DialogueManager requester){
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3f);
+        Debug.Log("Task Complete: Returning to AP");
         playerPlane.DisableAllChannels();
         playerWeapons.isArmed = false;
+        playSpaceBoundary.enforceBoundary = false;
         ap.setAPState(Autopilot.AutopilotState.targetFormation);
         requester.SetTaskComplete();
         hintCanvas.enabled = false;
+
+        isTimerRunning = false;
+        timer = 0.0f;
+
+        LevelManager lm = GetComponent<LevelManager>();
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            Destroy(enemy.gameObject);
+        }
+        lm.spawnOverTime = false;
+        StopAllCoroutines();
     }
 
     // Update is called once per frame
@@ -170,6 +207,10 @@ public class TutorialSequence : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return)){
             LevelManager lm  = GetComponent<LevelManager>();
             lm.YouWin();
+        }
+
+        if (isTimerRunning){
+            timer += Time.deltaTime;
         }
     }
 }
