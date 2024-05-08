@@ -16,6 +16,7 @@ public enum TutorialTask{
         PrimaryFire,
         SecondaryFire,
         FreeFlight,
+        Wait,
     }
 public class TutorialSequence : MonoBehaviour
 {
@@ -35,6 +36,9 @@ public class TutorialSequence : MonoBehaviour
     Autopilot ap;
     Autopilot instructorAP;
     PlayerWeaponManager playerWeapons;
+
+    float timer;
+    bool isTimerRunning = false;
 
     bool isEnemyDead = false;
 
@@ -93,7 +97,7 @@ public class TutorialSequence : MonoBehaviour
                 break;
             case TutorialTask.HorizontalControls:
                 ShowHint("A");
-                playerPlane.EnableChannel(Plane.ControlChannels.Horizontal | Plane.ControlChannels.Throttle);
+                playerPlane.EnableAllChannels();
                 CompletionRequirements = () => Input.GetAxis("P1_Horizontal") > 0;
                 break;
 
@@ -103,11 +107,12 @@ public class TutorialSequence : MonoBehaviour
                 CompletionRequirements = () => playerPlane.throttle == 1.0f && Input.GetAxis("P1_Boost") == 1.0f;
                 break;
             case TutorialTask.Boundary:
+                playerPlane.EnableAllChannels();
                 playSpaceBoundary.enforceBoundary = true;
                 break;
             case TutorialTask.PrimaryFire:
                 ShowHint("Space");
-                playerPlane.EnableChannel(Plane.ControlChannels.Vertical | Plane.ControlChannels.Throttle);
+                playerPlane.EnableAllChannels();
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 isEnemyDead = false;
                 playerWeapons.isArmed = true;
@@ -116,7 +121,7 @@ public class TutorialSequence : MonoBehaviour
                 break;
             case TutorialTask.SecondaryFire:
                 ShowHint("E");
-                playerPlane.EnableChannel(Plane.ControlChannels.Vertical | Plane.ControlChannels.Throttle);
+                playerPlane.EnableAllChannels();
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 isEnemyDead = false;
                 playerWeapons.isArmed = true;
@@ -128,6 +133,13 @@ public class TutorialSequence : MonoBehaviour
                 playerWeapons.isArmed = true;
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 CompletionRequirements = () => false;
+                break;
+            case TutorialTask.Wait:
+                playerPlane.DisableAllChannels();
+                playerWeapons.isArmed = false;
+                ap.setAPState(Autopilot.AutopilotState.targetFormation);
+                isTimerRunning = true;
+                CompletionRequirements = () => timer > 10.0f;
                 break;
             default:
                 //Always exit as if task completed if no task is set
@@ -170,6 +182,16 @@ public class TutorialSequence : MonoBehaviour
         ap.setAPState(Autopilot.AutopilotState.targetFormation);
         requester.SetTaskComplete();
         hintCanvas.enabled = false;
+
+        isTimerRunning = false;
+        timer = 0.0f;
+
+        LevelManager lm = GetComponent<LevelManager>();
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            Destroy(enemy.gameObject);
+        }
+        lm.spawnOverTime = false;
         StopAllCoroutines();
     }
 
@@ -179,6 +201,10 @@ public class TutorialSequence : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return)){
             LevelManager lm  = GetComponent<LevelManager>();
             lm.YouWin();
+        }
+
+        if (isTimerRunning){
+            timer += Time.deltaTime;
         }
     }
 }

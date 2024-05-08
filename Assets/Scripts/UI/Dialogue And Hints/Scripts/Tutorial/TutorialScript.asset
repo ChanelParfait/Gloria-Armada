@@ -162,7 +162,7 @@ MonoBehaviour:
     tutorialTask: 0
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 5
-    line: Try pitching up, towards me
+    line: Try pitching up, towards the sky
     choice:
       affirm:
         optionText: 
@@ -305,8 +305,26 @@ MonoBehaviour:
     dialogueEvent: {fileID: 11400000, guid: c22292e8b68346b4c8459f440f38f1b8, type: 2}
     tutorialTask: 5
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 6
+    line: Now let's look at horizontal movement
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: bd008cb8410c396488aa319bfcbed2d1, type: 2}
+    tutorialTask: 5
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 5
-    line: Great work, exit whenever you're ready with ENTER
+    line: Wait a moment while the autpilot forms up
     choice:
       affirm:
         optionText: 
@@ -321,5 +339,77 @@ MonoBehaviour:
         newDialogueIndex: 0
         eventAction: {fileID: 0}
     dialogueEvent: {fileID: 11400000, guid: f652919abd4201b47b683c57def2a9b1, type: 2}
-    tutorialTask: 5
+    tutorialTask: 7
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 5
+    line: Try moving left, press A
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: f652919abd4201b47b683c57def2a9b1, type: 2}
+    tutorialTask: 1
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 0
+    line: It takes time to roll the plane in order to turn!
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: f652919abd4201b47b683c57def2a9b1, type: 2}
+    tutorialTask: 1
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 6
+    line: Get some practice with enemies in this mode
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: c22292e8b68346b4c8459f440f38f1b8, type: 2}
+    tutorialTask: 1
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 5
+    line: Shoot one of those down!
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: c22292e8b68346b4c8459f440f38f1b8, type: 2}
+    tutorialTask: 4
   timeBetweenLines: 1

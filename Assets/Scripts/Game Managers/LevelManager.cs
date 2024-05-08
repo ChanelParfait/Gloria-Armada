@@ -29,8 +29,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ScoreTxt; 
     public Animator damageAnim;
 
-    List<GameObject> enemies = new List<GameObject>();
-    [SerializeField] bool spawnOverTime = false;
+    public List<GameObject> enemies = new List<GameObject>();
+    public bool spawnOverTime = false;
 
     float lastSpawnTime = 0;
     float spawnInterval = 5.0f;

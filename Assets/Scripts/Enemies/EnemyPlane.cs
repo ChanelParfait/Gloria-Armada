@@ -90,7 +90,9 @@ public class EnemyPlane : EnemyBase
 
     void UpdatePerspective(int _pers){
         currentPerspective = (Perspective)_pers;
-        rb.MoveRotation(Quaternion.Euler(0,-90,0));
+        if (rb){
+            rb.MoveRotation(Quaternion.Euler(0,-90,0));
+        }
     }
 
     Vector3 GetTargetOffset(){

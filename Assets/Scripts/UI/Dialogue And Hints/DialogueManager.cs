@@ -162,7 +162,7 @@ public class DialogueManager : MonoBehaviour
                     currentDialogue[index].dialogueEvent.DoEvent();
                     break;
             }
-            if (currentDialogue[index].dialogueType == DialogueType.Dialogue && typeSpeed == defaultSpeed){
+            if (currentDialogue[index].dialogueType == DialogueType.Dialogue){
                 yield return new WaitForSeconds(0.5f);
             }          
             NPCDialogueText.text = "";

@@ -372,9 +372,18 @@ public class Autopilot : MonoBehaviour
     }
 
     Vector3 FormationWith(GameObject targetObject, PID[] pids = null){
-        Vector3 targetOffset = new Vector3(5, -10, 0);
+        Vector3 targetOffset = new Vector3(-10, -10, 10);
         if (targetObject == null){
             targetObject = GameObject.Find("LevelManager").gameObject;   
+        }
+        
+        switch (pers){
+            case Perspective.Top_Down:
+                targetOffset = new Vector3(10, 0, 10);
+                break;
+            case Perspective.Side_On:
+                targetOffset = new Vector3(10, -10, 0);
+                break;
         }
        Vector3 targetPosition = targetObject.transform.position + targetOffset;
         
