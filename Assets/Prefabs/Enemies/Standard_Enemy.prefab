@@ -46,8 +46,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5330523515528714847}
   serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 3
+  m_Drag: 0.1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -61,8 +61,8 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
+  m_IsKinematic: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!65 &1726300146057327935
@@ -98,13 +98,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2a22a1813d6d84cb1ccafe385a5e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 2
+  scoreValue: 10
   fireInterval: 3
-  totalHealth: 3
-  referenceSpeed: 0
   speed: 3
+  referenceSpeed: 0
   moveDir: {x: 0, y: 0, z: 0}
   orientation: {x: 0, y: 0, z: 0}
-  scoreValue: 10
+  targetOffset: {x: 0, y: 0, z: 0}
+  deathExplosion: {fileID: 7641901280459977050, guid: 12cd1a8c790828542bcbce48a291aa01, type: 3}
+  deathObj: {fileID: 0}
 --- !u!82 &374345652581398199
 AudioSource:
   m_ObjectHideFlags: 0

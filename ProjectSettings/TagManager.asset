@@ -16,6 +16,11 @@ TagManager:
   - EnemyProjectile
   - Despawner
   - WinPoint
+  - PlayerWeaponManager
+  - GameManager
+  - PlayerWreckage
+  - LevelManager
+  - LevelTrigger
   layers:
   - Default
   - TransparentFX
@@ -27,7 +32,7 @@ TagManager:
   - Player
   - Managers
   - Terrain
-  - 
+  - No PostProcessig
   - 
   - 
   - 

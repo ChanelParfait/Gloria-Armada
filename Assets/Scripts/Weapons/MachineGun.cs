@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class MachineGun : Weapon
 {
-    private float timer = 0; 
+    private float firerateTimer = 0; 
+
+    //Player Weapon Stats 
+    private int currentAmmo; 
+    private float reloadTimer = 0; 
+    private bool isReloading = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,19 +26,79 @@ public class MachineGun : Weapon
     }
 
     public override void Fire(Vector3 velocity)
-    {
-        if(canFire){
-            base.Fire(velocity);
-            timer = 0;
-            canFire = false;
+    {       
+        firerateTimer += Time.deltaTime;
+        if(firerateTimer >  weaponStats.fireInterval && !canFire){
+            canFire = true;
+        }
+        // If the weapon doesn't have a maximum ammo, fire as normal
+        if (weaponStats.maxAmmo == 0){
+            if(canFire){
+                base.Fire(velocity);
+                firerateTimer = 0;
+                canFire = false;
+            }
+        }
+        else{
+            reloadTimer += Time.deltaTime;
+            // If the weapon has a maximum ammo, check if the player has ammo
+            if(currentAmmo > 0 && canFire){
+                base.Fire(velocity);
+                firerateTimer = 0;
+                canFire = false;
+                currentAmmo --;
+            }
+            else if(currentAmmo == 0 && !isReloading){
+                //Debug.Log("Out of Ammo");
+                StartCoroutine(StartReload());
+            }
         }
     } 
 
-    /*public override void EnemyFire()
+    public override void EnemyFire()
     {
-        //Debug.Log("Enemy Machine Gun Fire");
-        base.Fire();
-    }*/
+        firerateTimer += Time.deltaTime;
+        if(firerateTimer >  weaponStats.fireInterval && !canFire){
+            canFire = true;
+        }
+        // If the weapon doesn't have a maximum ammo, fire as normal
+        if (weaponStats.maxAmmo == 0){
+            if(canFire){
+                base.Fire(GetProjectileStats().speed * transform.forward);
+                firerateTimer = 0;
+                canFire = false;
+            }
+        }
+        else{
+            reloadTimer += Time.deltaTime;
+            // If the weapon has a maximum ammo, check if the player has ammo
+            if(currentAmmo > 0 && canFire){
+                base.Fire(GetProjectileStats().speed * transform.forward);
+                firerateTimer = 0;
+                canFire = false;
+                currentAmmo --;
+            }
+            else if(currentAmmo == 0 && !isReloading){
+                //Debug.Log("Out of Ammo");
+                StartCoroutine(StartReload());
+            }
+        }
+    }
+
+    private IEnumerator StartReload(){
+        // start the reloading process
+        isReloading = true; 
+        yield return new WaitForSeconds(weaponStats.reloadTime);
+        FinishReload();
+    }
+
+    private void FinishReload(){
+        // returns the weapon to max ammo
+        //Debug.Log("Full Reload Complete");
+        currentAmmo = weaponStats.maxAmmo; 
+        isReloading = false;
+        OnAmmoChange?.Invoke(currentAmmo);
+    }
 
     public override void SetupWeapon(){
         //weaponStats.fireInterval = 0.5f;
@@ -57,8 +122,8 @@ public class MachineGun : Weapon
 
     private void PlayerUpdate(){
         // Increase timer
-        timer += Time.deltaTime; 
-        if(!canFire && timer >= weaponStats.fireInterval){
+        firerateTimer += Time.deltaTime; 
+        if(!canFire && firerateTimer >= weaponStats.fireInterval){
             canFire = true;
         }
     }

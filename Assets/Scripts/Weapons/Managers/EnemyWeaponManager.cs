@@ -7,13 +7,10 @@ public class EnemyWeaponManager : MonoBehaviour
     // Enemy can have many weapons, stored in a list
     public Weapon[] weapons = {};
     // Active weapon represents the weapon that can be fired
-    private Weapon ActiveWeapon;
-    private Enemy enemy;
-
+    public Weapon ActiveWeapon { get; private set; }
 
     void Start()
     {
-        enemy = GetComponent<Enemy>();
         // Set Default Active Weapon
         if(weapons.Length > 0){
             ActiveWeapon = weapons[0];

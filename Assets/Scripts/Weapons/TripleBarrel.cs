@@ -7,10 +7,22 @@ public class TripleBarrel : Weapon
     private float timer = 0; 
     private int counter = 1;
 
+    private Perspective currentPerspective;
+
+    private void OnEnable(){
+        LevelManager.OnPerspectiveChange += UpdatePerspective;
+    }
+
+    private void OnDisable(){
+        // if gameobject is disabled remove all listeners
+        LevelManager.OnPerspectiveChange -= UpdatePerspective;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         SetupWeapon();
+        currentPerspective = Perspective.Side_On;
     }
 
     // Update is called once per frame
@@ -63,7 +75,9 @@ public class TripleBarrel : Weapon
     }
 
     public override Vector3 GetSpawnPos(){
-        switch(counter){
+        Debug.Log("Trip Pers:" + currentPerspective);
+        if(currentPerspective == Perspective.Side_On){
+            switch(counter){
             case 1:
                 return gameObject.transform.position + gameObject.transform.forward * 8 + gameObject.transform.up * 3;
             case 2:
@@ -72,19 +86,53 @@ public class TripleBarrel : Weapon
                 return gameObject.transform.position + gameObject.transform.forward * 8 + gameObject.transform.up * -3;
             default:
                 return base.GetSpawnPos();
+            }
+        } 
+        else if(currentPerspective == Perspective.Top_Down){
+            switch(counter){
+            case 1:
+                return gameObject.transform.position + gameObject.transform.forward * 8 + gameObject.transform.right * 3;
+            case 2:
+                return base.GetSpawnPos();
+            case 3:
+                return gameObject.transform.position + gameObject.transform.forward * 8 + gameObject.transform.right * -3;
+            default:
+                return base.GetSpawnPos();
+            }
         }
+        else{
+            return base.GetSpawnPos();
+        }
+        
     }
 
     public override Quaternion GetSpawnRotation(){
-        switch(counter){
+        if(currentPerspective == Perspective.Side_On){
+            switch(counter){
+                case 1:
+                    return Quaternion.Euler(gameObject.transform.eulerAngles.x - 45, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
+                case 2:
+                    return base.GetSpawnRotation();
+                case 3:
+                    return Quaternion.Euler(gameObject.transform.eulerAngles.x + 45, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
+                default:
+                    return base.GetSpawnRotation();
+            }
+        }
+        else if(currentPerspective == Perspective.Top_Down){
+            switch(counter){
             case 1:
-                return Quaternion.Euler(gameObject.transform.eulerAngles.x - 45, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
+                return Quaternion.Euler(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y + 45, gameObject.transform.eulerAngles.z);
             case 2:
                 return base.GetSpawnRotation();
             case 3:
-                return Quaternion.Euler(gameObject.transform.eulerAngles.x + 45, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
+                return Quaternion.Euler(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y - 45, gameObject.transform.eulerAngles.z);
             default:
                 return base.GetSpawnRotation();
+            }
+        }
+        else{
+            return base.GetSpawnRotation();
         }
     }
 
@@ -92,6 +140,10 @@ public class TripleBarrel : Weapon
         if(counter == 1){
             base.PlaySound();
         }
+    }
+
+    public void UpdatePerspective(int newPers){
+        currentPerspective = (Perspective)newPers; 
     }
 
 }

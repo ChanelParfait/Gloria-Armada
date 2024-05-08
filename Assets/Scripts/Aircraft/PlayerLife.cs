@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class PlayerLife : MonoBehaviour
 {
-    public static event Action OnPlayerDamage;
-    public static event Action OnPlayerHeal;
+    //public static event Action OnPlayerDamage;
+    //public static event Action OnPlayerHeal;
+    public AudioSource damageSound;
+    public Animator damageAnim;
+    //[SerializeField] private GameObject gameOverScreen;
 
-    [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] GameObject deathObj;
 
     public float life, maxLife;
     // Start is called before the first frame update
@@ -28,25 +31,46 @@ public class PlayerLife : MonoBehaviour
         {
             Heal(1);
             Debug.Log("Life Recovered");
-        }*/
+        }
 
-        if (life == 0)
+        if (life <= 0)
         {
+            OnDeath();
             if (gameOverScreen.activeSelf == false)
             {
                 Time.timeScale = 0;
                 gameOverScreen.SetActive(true);
             }
+        }*/
+    }
+
+    void OnDeath(){
+        if (deathObj == null)
+        {
+            Debug.LogError("Death Object not set in PlayerLife script");
+            return;
         }
+        GameObject deadObj = Instantiate(deathObj, transform.position, transform.rotation);
+        foreach (Rigidbody rb in deadObj.GetComponentsInChildren<Rigidbody>())
+        {
+            //Add force to the rigid body
+            rb.AddForce(GetComponent<Rigidbody>().velocity, ForceMode.VelocityChange);
+            // Using the offset of the child from the parent, apply the appropriate velocity from the angular velocity
+            rb.AddTorque(GetComponent<Rigidbody>().angularVelocity, ForceMode.VelocityChange);
+        }
+        //Destroy the player
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
     public void TakeDamage(float amount)
     {
+        damageAnim.SetTrigger("DamageTaken");
+        damageSound.Play();
         if (life > 0)
         {
             life -= amount;
-            OnPlayerDamage?.Invoke();
+            //OnPlayerDamage?.Invoke();
         }
     }
 
@@ -55,7 +79,7 @@ public class PlayerLife : MonoBehaviour
         if (life < maxLife)
         {
             life += amount;
-            OnPlayerHeal?.Invoke();
+            //OnPlayerHeal?.Invoke();
         }
     }
 
@@ -70,7 +94,7 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision col)
+    /*private void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
             //Get the normal of the collision
@@ -79,9 +103,13 @@ public class PlayerLife : MonoBehaviour
             Rigidbody rb = GetComponent<Rigidbody>();
             float dot = Vector3.Dot(rb.velocity.normalized, normal);
             
+            Debug.Log(dot);
+
+            dot = Mathf.Clamp01(dot * 5);
+            
             //Reduce health by a minimum of 1healh, max of MaxLife based on dot
             float damage = Mathf.Lerp(1, maxLife, dot);
             TakeDamage(damage);
         }
-    }
+    }*/
 }
