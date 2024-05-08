@@ -372,6 +372,12 @@ public class Plane : MonoBehaviour
         if (tag =="Player" && isAlive){
             controlInputs.y = IsChannelEnabled(ControlChannels.Horizontal) ?  Input.GetAxis("P1_Horizontal") : 0;
             controlInputs.x = IsChannelEnabled(ControlChannels.Vertical) ?  Input.GetAxis("P1_Vertical") : 0;
+            
+            if (PlayerPrefs.HasKey("InvertPitch")){
+                if (PlayerPrefs.GetInt("InvertPitch") == 1){
+                    controlInputs.x *= -1;
+                }
+            }
 
             if (IsChannelEnabled(ControlChannels.Throttle)){
                 if (Input.GetKey(throttleUp))

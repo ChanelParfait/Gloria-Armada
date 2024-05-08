@@ -228,6 +228,11 @@ public class LevelManager : MonoBehaviour
         GameObject wreckage = GameObject.FindWithTag("PlayerWreckage");
         //Pick a random child from player wreckage
         Transform randomChild = wreckage.transform.GetChild(0).GetChild(UnityEngine.Random.Range(0, wreckage.transform.childCount));
+        Scene scene = SceneManager.GetActiveScene();
+        string sceneName = scene.name;
+        string playerName = PlayerPrefs.GetString("PlayerName");
+        string scene_player = sceneName + "_" + playerName;
+        PlayerPrefs.SetInt(scene_player, score);
 
         StartCoroutine(ShowDeathScreen(randomChild));
     }

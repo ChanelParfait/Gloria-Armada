@@ -32,7 +32,7 @@ MonoBehaviour:
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
         eventAction: {fileID: 0}
-    dialogueEvent: {fileID: 0}
+    dialogueEvent: {fileID: 11400000, guid: dfa33b8e3de7cde4cb8f13bd67ec0849, type: 2}
     tutorialTask: 0
   - speaker: {fileID: 11400000, guid: 25758a77975d9504382d6793350fe913, type: 2}
     dialogueType: 0
@@ -190,10 +190,10 @@ MonoBehaviour:
         eventAction: {fileID: 0}
       negate:
         optionText: Invert it
-        choiceType: 0
+        choiceType: 4
         newDialogue: {fileID: 0}
         newDialogueIndex: 0
-        eventAction: {fileID: 0}
+        eventAction: {fileID: 11400000, guid: dfa33b8e3de7cde4cb8f13bd67ec0849, type: 2}
     dialogueEvent: {fileID: 0}
     tutorialTask: 0
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
