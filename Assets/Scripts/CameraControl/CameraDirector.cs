@@ -29,6 +29,18 @@ public class CameraDirector : MonoBehaviour
         if (mainCam == null){
             mainCam = Camera.main;
         }
+    }
+
+    public IEnumerator LerpFOV(float duration, float newFOV){ 
+        float startFOV = mainCam.fieldOfView;
+        float time = 0;
+        while (time < duration){
+            float t = time/duration;
+            mainCam.fieldOfView = Mathf.LerpUnclamped(startFOV, newFOV, Utilities.EaseInOutBack(t));
+            time += Time.deltaTime;
+            yield return null;
+        }
+        mainCam.fieldOfView = newFOV;
         
     }
 

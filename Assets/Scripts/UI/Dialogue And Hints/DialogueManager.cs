@@ -10,9 +10,6 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
-    public class DialogueAction{
-        InputAction action;
-    }   
 
     public DialogueScriptableObject script;
 
@@ -20,8 +17,8 @@ public class DialogueManager : MonoBehaviour
 
     private int index;
     private int typeSpeed = 50;
-    // private int defaultSpeed = 50;
-    // private int fastSpeed = 150;
+    private int defaultSpeed = 50;
+    private int fastSpeed = 1;
 
     Canvas NPCDialogueCanvas;
     public Transform NPCBackground;
@@ -34,13 +31,6 @@ public class DialogueManager : MonoBehaviour
         public TextMeshProUGUI nameText;
         public TextMeshProUGUI dialogueText;
     }
-
-    [SerializeField] DialogueBox NPCDialogueBox = new DialogueBox();
-    [SerializeField] DialogueBox playerDialogueBox = new DialogueBox();
-
-    DialogueBox currentDialogueBox;
-
-    DialogueBox[] dialogueBoxes;
 
     [SerializeField] Canvas playerDialogueCanvas;
     public Transform playerBackground;
@@ -60,9 +50,6 @@ public class DialogueManager : MonoBehaviour
     RectTransform choiceNo;
 
     public static UnityAction<TutorialTask, DialogueManager> OnRequestPlayerAction;
-    // public static UnityAction<TutorialTask, DialogueManager> OnRequestHorizontalControl;
-    // public static UnityAction<TutorialTask, DialogueManager> OnRequestShoot;
-    // public static UnityAction<TutorialTask, DialogueManager> OnRequestShootSpecial;
 
     bool taskComplete = false;
     bool choiceMade = false;
@@ -126,7 +113,7 @@ public class DialogueManager : MonoBehaviour
             //Debug.Log("Line typed" + ", DialogueType: " + currentDialogue[index].dialogueType);
             switch (currentDialogue[index].dialogueType){
                 case DialogueType.Dialogue:
-                    yield return new WaitForSeconds(3);
+                    StartCoroutine(WaitOrSkip(3));
                     break;
                 case DialogueType.InterruptedDialogue:
                     break;
@@ -183,6 +170,21 @@ public class DialogueManager : MonoBehaviour
         }   
     }
 
+    IEnumerator WaitOrSkip(float waitTime){
+        float t = 0;
+        while (t < waitTime){
+            // Check if the space key is pressed
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                Debug.Log("Space key pressed. Skipping wait time.");
+                yield break;  // Exit the coroutine early
+            }
+            yield return null;
+            t += Time.deltaTime;
+            // Wait for the next frame   
+        }
+    }
+
     public void StartDialogue(){
         index = 0;
         StartCoroutine(TypeLine());
@@ -207,6 +209,7 @@ public class DialogueManager : MonoBehaviour
     }   
 
     private void NextLine(){
+        typeSpeed = defaultSpeed;
         if (repeatLine){
             repeatLine = false;
             StartCoroutine(TypeLine());
@@ -230,6 +233,27 @@ public class DialogueManager : MonoBehaviour
 
     public void SetTaskComplete(){
         taskComplete = true;
+    }
+
+        // Update is called once per frame
+    void Update()
+    {
+        if (Keyboard.current.spaceKey.wasPressedThisFrame){
+            typeSpeed = fastSpeed;
+        } 
+
+        //Get choice from player (lasts one frame)
+        if (choiceMade == true){
+            choiceMade = false;
+        }
+        if (Input.GetButtonDown("P1_Fire1")) {
+            isResponseYes = true;  
+            choiceMade = true;
+        }
+        if (Input.GetButtonDown("P1_Fire2")) {
+            isResponseYes = false; 
+            choiceMade = true;
+        }
     }
 
     IEnumerator AwaitChoice(){
@@ -371,22 +395,6 @@ public class DialogueManager : MonoBehaviour
             canvas.scaleFactor = Mathf.LerpUnclamped(0.7f, 1, Utilities.EaseInOutBack(t));
             canvas.transform.rotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(45, 0, Utilities.EaseInOutBack(t)));
             yield return null;
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (choiceMade == true){
-            choiceMade = false;
-        }
-        if (Input.GetButtonDown("P1_Fire1")) {
-            isResponseYes = true;  
-            choiceMade = true;
-        }
-        if (Input.GetButtonDown("P1_Fire2")) {
-            isResponseYes = false; 
-            choiceMade = true;
         }
     }
 }
