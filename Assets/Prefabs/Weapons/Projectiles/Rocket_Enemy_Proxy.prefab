@@ -19403,13 +19403,13 @@ MonoBehaviour:
       orientation: {x: 1, y: 0, z: 0}
   thrust: 1350
   thrustVectoring: 0
-  fireRate: 0
   health: 1
   isAlive: 1
   scaleVelocity: 2
   internalVelocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   acceleration: {x: 0, y: 0, z: 0}
+  enabledControls: 0
   cd: 0.02
   cl:
     serializedVersion: 2
@@ -19623,7 +19623,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   rb: {fileID: 4724966013838317634}
   ap: {fileID: 500166074313179899}
-  gun: {fileID: 1955615125115568952, guid: 93478ce0210976544bb1a24947eb49e2, type: 3}
   smoke: {fileID: 984623357335652248}
   fire: {fileID: 2437828155178675899}
   boost: {fileID: 1597674502044970073}
@@ -19645,6 +19644,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autopilotDeflection: {x: 0, y: 0, z: 0}
   autopilotState: 4
+  lastAutopilotState: 0
   rb: {fileID: 4724966013838317634}
   autoArm: 1
   pitchPID:
@@ -19697,6 +19697,10 @@ MonoBehaviour:
     range: 100
   projectileRB: {fileID: 4724966013838317634}
   hitParticle: {fileID: 0}
+  launchSound: {fileID: 0}
+  flybySound: {fileID: 0}
+  engineSound: {fileID: 0}
+  impactSound: {fileID: 0}
 --- !u!54 &4724966013838317634
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19801,7 +19805,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

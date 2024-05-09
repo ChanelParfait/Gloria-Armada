@@ -225,6 +225,9 @@ public class LevelManager : MonoBehaviour
     }
 
     private void GameOver(){
+        //Get audio listener of main camera
+        AudioListener listener = Camera.main.GetComponent<AudioListener>();
+        listener.enabled = true;
         GameObject wreckage = GameObject.FindWithTag("PlayerWreckage");
         //Pick a random child from player wreckage
         Transform randomChild = wreckage.transform.GetChild(0).GetChild(UnityEngine.Random.Range(0, wreckage.transform.childCount));

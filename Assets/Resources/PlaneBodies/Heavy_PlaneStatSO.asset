@@ -31,7 +31,7 @@ MonoBehaviour:
       orientation: {x: 1, y: 0, z: 0}
     aileron:
       area: 1
-      position: {x: 0, y: 0, z: 0}
+      position: {x: 4, y: 0, z: 0}
       orientation: {x: 1, y: 0, z: 0}
   weight: 300
   thrust: 1800
