@@ -52,7 +52,7 @@ MonoBehaviour:
     reloadTime: 5
     maxAmmo: 3
     projectileStats:
-      speed: 6
+      speed: 12
       damage: 2
       AP: 0
       lifetime: 6

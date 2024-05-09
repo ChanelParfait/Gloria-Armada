@@ -16,7 +16,7 @@ public class MissileLauncher : Weapon
     private bool isReloading = false;
 
     // time it takes for the ammo to be replensished by 1
-    private const float replenTime = 1.5f;
+    private const float replenTime = 4f;
 
     // Start is called before the first frame update
     void Start()

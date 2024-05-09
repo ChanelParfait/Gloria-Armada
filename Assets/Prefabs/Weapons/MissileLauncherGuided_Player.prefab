@@ -48,8 +48,8 @@ MonoBehaviour:
   projectile: {fileID: 6150919577730694117, guid: 012c83c9214f71c4d8f391dd4daf50d5, type: 3}
   fireSound: {fileID: 0}
   weaponStats:
-    fireInterval: 1
-    reloadTime: 5
+    fireInterval: 0.5
+    reloadTime: 8
     maxAmmo: 4
     projectileStats:
       speed: 0

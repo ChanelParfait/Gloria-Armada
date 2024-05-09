@@ -144,14 +144,14 @@ MonoBehaviour:
   projectile: {fileID: 5426895945089439378, guid: 3e917c10eb181df4c82a090a4c40a8f4, type: 3}
   fireSound: {fileID: 8300000, guid: 9fb193255d243c94882fd968feb37d01, type: 3}
   weaponStats:
-    fireInterval: 1
+    fireInterval: 0.6
     reloadTime: 0
     maxAmmo: 0
     projectileStats:
-      speed: 8
+      speed: 14
       damage: 1
       AP: 0
-      lifetime: 8
+      lifetime: 5
       size: {x: 1, y: 1, z: 1}
       range: 0
   weaponCategory: 0
