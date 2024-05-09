@@ -9,7 +9,7 @@ public class Turret : EnemyBase
     [SerializeField] GameObject azimuthObj;
     [SerializeField] GameObject elevationObj;
 
-    
+    TurretMount turretMount;
 
     [SerializeField] bool leadShot = true;
     [SerializeField] float overrideProjectileSpeed = 25.0f;
@@ -17,9 +17,17 @@ public class Turret : EnemyBase
     FieldOfView fov;
     [SerializeField] float rotationSpeed = 60.0f;
 
+    public GameObject deathExplosion;
+
     // Start is called before the first frame update
     protected override void Start()
     {
+        //If has parent && parent has turret mount script, get the turret mount script
+        if (transform.parent != null){
+            if (transform.parent.GetComponent<TurretMount>() != null){
+                turretMount = transform.parent.GetComponent<TurretMount>();
+            }
+        }
         base.Start();
         fov = GetComponentInChildren<FieldOfView>(); //FOV is a child of "Gun Turret Body" - reflecting the actual aiming direction
         weaponManager = gameObject.GetComponentInChildren<EnemyWeaponManager>();
@@ -63,6 +71,17 @@ public class Turret : EnemyBase
 
     void AimpointReset(){
         aimPoint.transform.position = transform.position + new Vector3(-50, 5, 0);
+    }
+
+    protected override void Die(){
+        //Alert turretMount that this turret has died
+        if (turretMount != null){
+            turretMount.TurretDied();
+        }
+        // Destroy Self and emit death explosion
+        Instantiate(deathExplosion, transform.position, Quaternion.identity);
+
+        base.Die();
     }
 
 

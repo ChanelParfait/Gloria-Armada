@@ -103,8 +103,8 @@ MonoBehaviour:
   fireInterval: 4
   speed: 3
   referenceSpeed: 0
-  moveDir: {x: 0, y: 0, z: 0}
-  orientation: {x: 0, y: 0, z: 0}
+  moveDir: {x: -1, y: 0, z: 0}
+  orientation: {x: -1, y: 0, z: 0}
   pid:
     x:
       Kp: 1

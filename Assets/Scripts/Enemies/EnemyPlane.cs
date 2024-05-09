@@ -37,23 +37,23 @@ public class EnemyPlane : EnemyBase
 
     [SerializeField] vec3PID pid = new vec3PID(1f, 0.01f, 22f);
 
-    GameObject targetObj;
-    Camera cam;
-    [SerializeField] Vector3 targetOffset;
-    float randomOffsetComponent;
-    Vector3 targetPos;
+    protected GameObject targetObj;
+    protected Camera cam;
+    [SerializeField] protected Vector3 targetOffset;
+    protected float randomOffsetComponent;
+    protected Vector3 targetPos;
 
-    Perspective currentPerspective;
+    protected Perspective currentPerspective;
 
-    Rigidbody rb;
-    private float timer = 0;
-    private float radarTimer = 0;
-    private float randFireTime;
+    protected Rigidbody rb;
+    protected float timer = 0;
+    protected float radarTimer = 0;
+    protected float randFireTime;
     public GameObject deathExplosion;
 
-    CameraUtils camUtils;
+    protected CameraUtils camUtils;
 
-    [SerializeField] private GameObject deathObj;
+    [SerializeField] protected GameObject deathObj;
 
     void OnEnable(){
         LevelManager.OnPerspectiveChange += UpdatePerspective;
@@ -82,7 +82,7 @@ public class EnemyPlane : EnemyBase
         
     }
 
-    IEnumerator Initialize(){
+    virtual protected IEnumerator Initialize(){
         yield return new WaitForSeconds(0.1f);
         if (orientation == Vector3.zero && moveDir == Vector3.zero){
             yield break;
@@ -97,7 +97,7 @@ public class EnemyPlane : EnemyBase
         }
     }
 
-    Vector3 GetTargetOffset(){
+    protected virtual Vector3 GetTargetOffset(){
         switch (currentPerspective){
             case Perspective.Top_Down:
                 return new Vector3(camUtils.height/2 - 30.0f, 0, camUtils.width/2 * randomOffsetComponent);
@@ -121,7 +121,7 @@ public class EnemyPlane : EnemyBase
         }
     }
 
-    void FixedUpdate(){
+    protected virtual void FixedUpdate(){
         if(targetObj == null){
             targetObj = GameObject.FindGameObjectWithTag("LevelManager");
         }
@@ -172,7 +172,6 @@ public class EnemyPlane : EnemyBase
                 rb.AddTorque(GetComponent<Rigidbody>().angularVelocity, ForceMode.VelocityChange);
             }
         }
-
         base.Die();
     }
 
@@ -194,7 +193,7 @@ public class EnemyPlane : EnemyBase
         }
     }
 
-    private void OnCollisionEnter(Collision col)
+    protected virtual void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
             //Get the normal of the collision

@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e6b22a1584cae49aa483a32a0c0780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
   scoreValue: 10
-  totalHealth: 3
   enemy: {fileID: 0}
   aimPoint: {fileID: 73802368307069823}
   azimuthObj: {fileID: 3722652043785684891}
@@ -56,6 +56,7 @@ MonoBehaviour:
   overrideProjectileSpeed: 60
   elevationConstraintAngle: 10
   rotationSpeed: 1
+  deathExplosion: {fileID: 7641901280459977050, guid: 12cd1a8c790828542bcbce48a291aa01, type: 3}
 --- !u!65 &2447133373380495537
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -113,11 +113,13 @@ public class Plane : MonoBehaviour
 
     public void SetThrottle(float _throttle){
         throttle = _throttle;
-        if (throttle == 1){
-            boost.Play();
-        }
-        else {
-            boost.Stop();
+        if (boost != null){
+            if (throttle == 1){
+                boost.Play();
+            }
+            else {
+                boost.Stop();
+            }
         }
     }
 
@@ -130,7 +132,7 @@ public class Plane : MonoBehaviour
         // Set the center of mass
         rb = GetComponent<Rigidbody>();
         rb.mass = weight;
-        rb.velocity = transform.forward * 50;
+        rb.velocity = transform.forward * spawnSpeed;
         //targetObject = GameObject.Find("TargetPoint");   
         ap = GetComponent<Autopilot>();    
         foreach (Transform child in transform){
@@ -314,6 +316,7 @@ public class Plane : MonoBehaviour
     void FixedUpdate(){
         float dt = Time.fixedDeltaTime;
 
+
         apInputs = ap.GetAPInput(controlInputs);
         blendedInputs = Utilities.ClampVec3(controlInputs + apInputs, -1, 1);
 
@@ -396,12 +399,16 @@ public class Plane : MonoBehaviour
 
         }
 
-        if (throttle == 1.0f && !boost.isPlaying){
-            boost.Play();
+        if (boost != null){
+            if (throttle == 1.0f && !boost.isPlaying){
+                boost.Play();
+            }
+            else if (throttle != 1.0f && boost.isPlaying){
+                boost.Stop();
+            }
+
         }
-        else if (throttle != 1.0f && boost.isPlaying){
-            boost.Stop();
-        }
+
 
 
         if (ap.autopilotState != Autopilot.AutopilotState.Off && ap.HasTarget() ){
@@ -415,14 +422,18 @@ public class Plane : MonoBehaviour
 
 
         // if AoA > 10, add wingtip vortices
-        if (AoA > 10){
+        if (AoA > 10 && wingtipVortices.Length > 0){
             foreach (ParticleSystem vortex in wingtipVortices){
-                vortex.Play();
+                if (vortex != null){
+                    vortex.Play();
+                }        
             }
         }
         else{
             foreach (ParticleSystem vortex in wingtipVortices){
-                vortex.Stop();
+                if (vortex != null){
+                    vortex.Stop();
+                }
             }
         }
         
