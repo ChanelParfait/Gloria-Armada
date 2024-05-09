@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1062033948207875801
+--- !u!1 &4060497078772453506
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,67 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3861783336070429717}
-  - component: {fileID: 387109662954886105}
-  - component: {fileID: 7884464371219309874}
+  - component: {fileID: 364638416167574087}
+  - component: {fileID: 6181872045121670052}
+  - component: {fileID: 4517521373377700722}
   m_Layer: 0
-  m_Name: BigBomber
+  m_Name: TripleBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3861783336070429717
+--- !u!4 &364638416167574087
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062033948207875801}
+  m_GameObject: {fileID: 4060497078772453506}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.68599, y: 13.23468, z: -7.3561144}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &387109662954886105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062033948207875801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f479efeead212a44a8fd8214a01170a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 1983747372557084855, guid: 4f95e7feecf2fda4ab8be7ba2ab70b83, type: 3}
-  fireSound: {fileID: 0}
-  weaponStats:
-    fireInterval: 0.5
-    reloadTime: 5
-    maxAmmo: 3
-    projectileStats:
-      speed: 6
-      damage: 2
-      AP: 0
-      lifetime: 6
-      size: {x: 1, y: 1, z: 1}
-      range: 0
-  weaponCategory: 1
-  isPlayerWeapon: 0
-  canFire: 1
-  spawnPosition: {x: 0, y: 0, z: 0}
---- !u!82 &7884464371219309874
+--- !u!82 &6181872045121670052
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1062033948207875801}
+  m_GameObject: {fileID: 4060497078772453506}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -158,3 +129,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4517521373377700722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4060497078772453506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ca5573709d80e745ad19041d20cc168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 5426895945089439378, guid: 3e917c10eb181df4c82a090a4c40a8f4, type: 3}
+  fireSound: {fileID: 8300000, guid: 9fb193255d243c94882fd968feb37d01, type: 3}
+  weaponStats:
+    fireInterval: 0.6
+    reloadTime: 0
+    maxAmmo: 0
+    projectileStats:
+      speed: 14
+      damage: 1
+      AP: 0
+      lifetime: 5
+      size: {x: 1, y: 1, z: 1}
+      range: 0
+  weaponCategory: 0
+  isPlayerWeapon: 0
+  canFire: 1
+  spawnPosition: {x: 0, y: 0, z: 0}

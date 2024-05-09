@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3861783336070429717}
-  - component: {fileID: 3209566285644169230}
-  - component: {fileID: 7502277592070407747}
+  - component: {fileID: 387109662954886105}
+  - component: {fileID: 7884464371219309874}
   m_Layer: 0
-  m_Name: MachineGun
+  m_Name: MissileLauncherGuided_Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +33,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3209566285644169230
+--- !u!114 &387109662954886105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,27 +42,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1062033948207875801}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 839cb99b570fa3447879c1b71b49ac98, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f479efeead212a44a8fd8214a01170a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 5426895945089439378, guid: 3e917c10eb181df4c82a090a4c40a8f4, type: 3}
-  fireSound: {fileID: 8300000, guid: 0bbee73ee57a3064781c30353e56f3c9, type: 3}
+  projectile: {fileID: 6150919577730694117, guid: 012c83c9214f71c4d8f391dd4daf50d5, type: 3}
+  fireSound: {fileID: 0}
   weaponStats:
-    fireInterval: 0.2
-    reloadTime: 0.3
+    fireInterval: 0.5
+    reloadTime: 8
     maxAmmo: 4
     projectileStats:
-      speed: 20
-      damage: 1
+      speed: 0
+      damage: 2
       AP: 0
-      lifetime: 3
+      lifetime: 6
       size: {x: 1, y: 1, z: 1}
       range: 0
-  weaponCategory: 0
-  isPlayerWeapon: 0
-  canFire: 1
+  weaponCategory: 1
+  isPlayerWeapon: 1
+  canFire: 0
   spawnPosition: {x: 0, y: 0, z: 0}
---- !u!82 &7502277592070407747
+--- !u!82 &7884464371219309874
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,7 +74,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

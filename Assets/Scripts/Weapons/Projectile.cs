@@ -24,6 +24,8 @@ public class Projectile : MonoBehaviour
     float startTime;
     public GameObject hitParticle;
 
+    public bool destroyOnHit = true;
+
 
     [SerializeField] AudioClip launchSound;
     [SerializeField] AudioClip flybySound;
@@ -86,7 +88,8 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision col){
         if(col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
-            Die();
+            if(destroyOnHit) 
+                Die();
         }
     }
 
@@ -106,7 +109,8 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "Player"){
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
-            Die();
+            if(destroyOnHit) 
+                Die();
         }
         else if(col.gameObject.tag == "Enemy"){
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
@@ -114,14 +118,16 @@ public class Projectile : MonoBehaviour
             {
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
             }
-            Die();
+            if(destroyOnHit) 
+                Die();
         }
         else if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
             MissileController missile;
             if (missile = GetComponent<MissileController>()){
                 missile.Detonate();
             }
-            Die();
+            if(destroyOnHit) 
+                Die();
         }
     }
 }

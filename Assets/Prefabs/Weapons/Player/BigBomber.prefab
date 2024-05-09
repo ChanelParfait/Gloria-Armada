@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 387109662954886105}
   - component: {fileID: 7884464371219309874}
   m_Layer: 0
-  m_Name: MissileLauncher
+  m_Name: BigBomber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,17 +45,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f479efeead212a44a8fd8214a01170a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
+  projectile: {fileID: 1983747372557084855, guid: 4f95e7feecf2fda4ab8be7ba2ab70b83, type: 3}
   fireSound: {fileID: 0}
   weaponStats:
-    fireInterval: 0.4
-    reloadTime: 8
-    maxAmmo: 4
+    fireInterval: 0.5
+    reloadTime: 5
+    maxAmmo: 3
     projectileStats:
-      speed: 9
+      speed: 12
       damage: 2
       AP: 0
-      lifetime: 10
+      lifetime: 6
       size: {x: 1, y: 1, z: 1}
       range: 0
   weaponCategory: 1
