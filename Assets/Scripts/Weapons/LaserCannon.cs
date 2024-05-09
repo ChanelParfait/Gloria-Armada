@@ -88,6 +88,6 @@ public class LaserCannon : Weapon
 
     public override Vector3 GetSpawnPos()
     {   
-        return base.GetSpawnPos() + new Vector3(0,0,weaponStats.projectileStats.size.z / 2 + 10); 
+        return base.GetSpawnPos() + gameObject.transform.forward * weaponStats.projectileStats.size.z; 
     }
 }
