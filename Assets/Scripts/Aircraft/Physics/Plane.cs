@@ -34,12 +34,12 @@ public class Plane : MonoBehaviour
     public float spawnSpeed = 50f;
 
     // Aircraft parameters
-    [SerializeField] float liftPower = 2f;
-    [SerializeField] float weight = 200;    // Weight of the aircraft (kg)
-    [SerializeField] Surfaces surfaces;
-    [SerializeField] float thrust = 1800;   // Maximum thrust (N)
+    public float liftPower = 2f;
+    public float weight = 200;    // Weight of the aircraft (kg)
+    public Surfaces surfaces;
+    public float thrust = 1800;   // Maximum thrust (N)
 
-    [SerializeField] bool thrustVectoring = false;
+    public bool thrustVectoring = false;
     Vector3 controlInputs;
     Vector3 blendedInputs;
     Vector3 apInputs;
@@ -54,7 +54,7 @@ public class Plane : MonoBehaviour
     private float AoAYaw;
     public float AoA {get; private set;}
 
-    [SerializeField] float scaleVelocity = 1.0f;
+    public float scaleVelocity = 1.0f;
     public Vector3 internalVelocity;   // Velocity of the aircraft (not passed to RB) (m/s)
     public Vector3 localVelocity;      // Velocity of the aircraft from local (m/s)
     
@@ -77,7 +77,7 @@ public class Plane : MonoBehaviour
 
     [SerializeField] ControlChannels enabledControls;
 
-    [SerializeField] float cd = 25f; //0.2f
+    public float cd = 25f; //0.2f
     [SerializeField] AnimationCurve cl = new AnimationCurve();
 
     [SerializeField] AnimationCurve pitchCurve = new AnimationCurve();

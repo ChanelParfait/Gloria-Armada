@@ -47,7 +47,11 @@ public class EnemyPlane : EnemyBase
 
     Rigidbody rb;
     private float timer = 0;
+    private float radarTimer = 0;
+    private float randFireTime;
     public GameObject deathExplosion;
+
+    CameraUtils camUtils;
 
     [SerializeField] private GameObject deathObj;
 
@@ -68,10 +72,12 @@ public class EnemyPlane : EnemyBase
         LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
         currentPerspective = lm.currentPerspective;
         cam = Camera.main;
+        camUtils = GameObject.FindObjectOfType<CameraUtils>();
         if(targetObj == null){
             targetObj = GameObject.FindGameObjectWithTag("LevelManager");
         }
         randomOffsetComponent = Random.Range(-0.4f, 0.4f);
+        randFireTime = Random.Range(0.5f, 2.0f);
         StartCoroutine(Initialize());
         
     }
@@ -84,14 +90,6 @@ public class EnemyPlane : EnemyBase
         rb.AddForce(referenceSpeed * Utilities.MultiplyComponents(orientation, moveDir), ForceMode.VelocityChange);
     }
 
-    Vector2 GetCameraDimensions(){
-        //With a perspective cam at -250 units on the z axis, find the bounds of the camera view using the camera's FOV
-        float height = 2.0f * Mathf.Tan(0.5f * cam.fieldOfView * Mathf.Deg2Rad) * 250.0f;
-        float width = height * cam.aspect;  
-
-        return new Vector2(width, height);
-    }
-
     void UpdatePerspective(int _pers){
         currentPerspective = (Perspective)_pers;
         if (rb){
@@ -102,9 +100,9 @@ public class EnemyPlane : EnemyBase
     Vector3 GetTargetOffset(){
         switch (currentPerspective){
             case Perspective.Top_Down:
-                return new Vector3(GetCameraDimensions().y/2 - 30, 0, GetCameraDimensions().x/2 * randomOffsetComponent);
+                return new Vector3(camUtils.height/2 - 30.0f, 0, camUtils.width/2 * randomOffsetComponent);
             case Perspective.Side_On:
-                return new Vector3(GetCameraDimensions().x/2 - 30, GetCameraDimensions().y/2 * randomOffsetComponent,0);
+                return new Vector3(camUtils.width/2 - 30.0f, camUtils.height/2 * randomOffsetComponent,0);
             case Perspective.Null:
                 return Vector3.zero;
         }
@@ -115,25 +113,33 @@ public class EnemyPlane : EnemyBase
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime; 
+        if(timer >= fireInterval * randFireTime){
+            randFireTime = Random.Range(0.5f, 2.0f);
+            timer = 0; 
+            Fire();
+        }
+    }
 
+    void FixedUpdate(){
         if(targetObj == null){
             targetObj = GameObject.FindGameObjectWithTag("LevelManager");
         }
         targetOffset = GetTargetOffset();
-        targetPos = targetObj.transform.position + targetOffset;
-
-        if (rb.angularVelocity.magnitude > 0.5f){
+        Vector3 targetObjPos = targetObj.transform.position;
+        targetPos = targetObjPos + targetOffset;
+        if (rb.angularVelocity.magnitude > 0.1f){
             rb.useGravity = true;
         }
         else {
             MoveEnemy();
+            radarTimer += Time.deltaTime;
+            if (radarTimer > 0.5f){
+                AvoidGround();
+                radarTimer = 0;
+            }
         }
 
-        timer += Time.deltaTime; 
-        if(timer >= Random.Range(fireInterval, 3f)){
-            timer = 0; 
-            Fire();
-        }
     }
 
     private void OnTriggerEnter(Collider col){

@@ -13,6 +13,7 @@ public struct ProjectileStats{
     public float lifetime;
     public Vector3 size; 
     public float range; 
+
 }
 
 public class Projectile : MonoBehaviour
@@ -24,9 +25,19 @@ public class Projectile : MonoBehaviour
     public GameObject hitParticle;
 
 
+    [SerializeField] AudioClip launchSound;
+    [SerializeField] AudioClip flybySound;
+    [SerializeField] AudioClip engineSound;
+    [SerializeField] AudioClip impactSound;
+
+    AudioSource audioSource;
+
+
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         projectileRB = GetComponent<Rigidbody>();
         if (projectileRB == null){
             projectileRB = gameObject.AddComponent<Rigidbody>();
@@ -36,6 +47,14 @@ public class Projectile : MonoBehaviour
         if (col == null){
             col = gameObject.AddComponent<BoxCollider>();
             col.isTrigger = true;
+        }
+        if (engineSound){
+            audioSource.clip = engineSound;
+            audioSource.time = UnityEngine.Random.Range(0, audioSource.clip.length);
+            audioSource.volume = UnityEngine.Random.Range(0.5f, 1);
+            audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+            audioSource.loop = true;
+            audioSource.Play();
         }
     }
 

@@ -4904,7 +4904,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyTime: 1
   damage: 0
+  impulse: 300
   explosionRadius: 0
+  audioClip: {fileID: 8300000, guid: 7380de7722bef3c4e933bd4a28f12bb2, type: 3}
+  audioSource: {fileID: 0}
 --- !u!82 &3689258555490957411
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4925,10 +4928,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 30
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
