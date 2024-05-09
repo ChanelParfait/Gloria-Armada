@@ -15,6 +15,7 @@ public class MachineGun : Weapon
     void Start()
     {
         SetupWeapon();
+        canFire = true;
     }
 
     // Update is called once per frame
