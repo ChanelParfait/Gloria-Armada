@@ -8063,6 +8063,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerPhys
       objectReference: {fileID: 0}
+    - target: {fileID: 3337119729129866234, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: maxHealth
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6219281314664255518, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_LightProbeUsage
       value: 0

@@ -166,12 +166,14 @@ public class Autopilot : MonoBehaviour
     public bool HasTarget(){
         //Guard against null object, or object not a plane
         if (targetObject == null){
+            //Find new target
             if (targetDict.Count > 0){
                 //targetObject = targetDict.FirstOrDefault().Value;
                 return false;
             }
+            //If no target is found && currently trying to point at something, switch to targetFlat
             else{
-                if (autopilotState != AutopilotState.Off || autopilotState != AutopilotState.targetStraight || autopilotState != AutopilotState.targetFormation){
+                if (autopilotState == AutopilotState.pointAt || autopilotState == AutopilotState.vectorAt){
                     lastAutopilotState = autopilotState;
                     autopilotState = AutopilotState.targetFlat;
                     return false;

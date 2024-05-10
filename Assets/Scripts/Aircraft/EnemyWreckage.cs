@@ -1,29 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyWreckage : MonoBehaviour
 {
-    Rigidbody rb;
+    Collider self;
     // Start is called before the first frame update
     void Start()
     {
-        //Find a random rigidbody in the children
-        rb = GetComponentInChildren<Rigidbody>();
+        self = GetComponentInChildren<Collider>();
+        StartCoroutine(timeOut());
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (rb.velocity.magnitude < 0.1f){
-            StartCoroutine(Despawn());
-        }
         
     }
 
+    void OnTriggerExit(Collider col)
+    {
+        if (col.CompareTag("Despawner"))
+        {
+            StartCoroutine(Despawn());
+        }
+    }
+
+    IEnumerator timeOut(){
+        yield return new WaitForSeconds(20);
+        Destroy(gameObject);
+    }
     IEnumerator Despawn(){
         yield return new WaitForSeconds(5);
+        ParticleManager[] pms = GetComponentsInChildren<ParticleManager>();
+        foreach (ParticleManager pm in pms)
+        {
+            pm.transform.SetParent(null);   
+            pm.Detach();
+        }
         Destroy(gameObject);
     }
 }

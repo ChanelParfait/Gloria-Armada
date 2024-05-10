@@ -467,7 +467,7 @@ MonoBehaviour:
   rollPID:
     Kp: 1
     Ki: 0.01
-    Kd: 0.2
+    Kd: 0.8
     integral: 0
     lastError: 0
   targetObjects: []

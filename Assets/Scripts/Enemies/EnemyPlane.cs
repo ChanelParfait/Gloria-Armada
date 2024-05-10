@@ -168,8 +168,11 @@ public class EnemyPlane : EnemyBase
             {
                 //Add force to the rigid body
                 rb.AddForce(GetComponent<Rigidbody>().velocity, ForceMode.VelocityChange);
-                // Using the offset of the child from the parent, apply the appropriate velocity from the angular velocity
-                rb.AddTorque(GetComponent<Rigidbody>().angularVelocity, ForceMode.VelocityChange);
+                // Translate the angular velocity of the parent by the localPosition of the child to get the correct velocity
+                Vector3 angularVelocity = GetComponent<Rigidbody>().angularVelocity;
+                Vector3 pointOffset = rb.transform.localPosition;
+                Vector3 linearVelocityAtPoint = Vector3.Cross(angularVelocity, pointOffset);
+                rb.AddForce(linearVelocityAtPoint, ForceMode.VelocityChange);
             }
         }
         base.Die();
