@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28e6b22a1584cae49aa483a32a0c0780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
   scoreValue: 10
-  totalHealth: 3
   enemy: {fileID: 0}
   aimPoint: {fileID: 73802368307069823}
   azimuthObj: {fileID: 3722652043785684891}
@@ -71,7 +71,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

@@ -4898,6 +4898,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LaserBeamRedWParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 1799638855669260115, guid: 6d33d0686e2a4894786d24fe56cde8a8, type: 3}
+      propertyPath: m_TagString
+      value: EnemyProjectile
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

@@ -55,12 +55,13 @@ public class LaserCannon : Weapon
     {
         if(currentAmmo != 0){
             Debug.Log("Fire Cannon");
-            //Debug.Log("Missle Launched");
-            base.Fire(velocity);
+            //base.Fire(velocity);
+            GameObject clone = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation(), transform); 
+            clone.GetComponent<Laser>().Launch(weaponStats.projectileStats); 
+            PlaySound();
             // Decrement Ammo
             currentAmmo --;
             OnAmmoChange?.Invoke(currentAmmo);
-            // Reset Timers
             reloadTimer = 0;
         }
         Debug.Log("Ammo: " + currentAmmo);
@@ -86,8 +87,4 @@ public class LaserCannon : Weapon
         }
     }
 
-    public override Vector3 GetSpawnPos()
-    {   
-        return base.GetSpawnPos() + gameObject.transform.forward * weaponStats.projectileStats.size.z; 
-    }
 }
