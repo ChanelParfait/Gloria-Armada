@@ -53,7 +53,6 @@ MonoBehaviour:
     lifetime: 4
     size: {x: 0, y: 0, z: 0}
     range: 0
-  projectileRB: {fileID: 0}
   hitParticle: {fileID: 0}
 --- !u!65 &5790039963995608820
 BoxCollider:
