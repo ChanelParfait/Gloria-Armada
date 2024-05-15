@@ -50,7 +50,7 @@ MonoBehaviour:
   weaponStats:
     fireInterval: 0
     reloadTime: 8
-    maxAmmo: 1
+    maxAmmo: 4
     projectileStats:
       speed: 0
       damage: 6

@@ -18,13 +18,13 @@ public class Laser : MonoBehaviour
 
     void FixedUpdate() {
         
-        if (Time.time > startTime + projectileStats.lifetime) {
+        /*if (Time.time > startTime + projectileStats.lifetime) {
             Die();
-        }
+        }*/
         // deal damage over time
     }
 
-    protected void Die(){
+/*    protected void Die(){
         if (hitParticle){
             Instantiate(hitParticle, transform.position, Quaternion.identity);
         }
@@ -35,7 +35,7 @@ public class Laser : MonoBehaviour
             pm.Detach();
         }
         Destroy(gameObject);
-    }
+    }*/
 
     protected void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "Player"){

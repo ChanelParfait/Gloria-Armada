@@ -52,7 +52,7 @@ public class SpecialMeter : MonoBehaviour
         }*/
         if (meter){
             meter.fillAmount = meterLevel;
-            if(meterLevel < 1)
+            /*if(meterLevel < 1)
                 {
                     meter.color = new Color(1, 1, 1, 1);
                     meterOuter.color = new Color(1, 1, 1, 1);
@@ -61,7 +61,7 @@ public class SpecialMeter : MonoBehaviour
                 {
                     meter.color -= new Color(0, 0, 0, Time.deltaTime);
                     meterOuter.color -= new Color(0, 0, 0, Time.deltaTime);
-                }
+                }*/
         }
         
 
@@ -97,7 +97,7 @@ public class SpecialMeter : MonoBehaviour
         }
         //Debug.Log("Level: " + ammo);
         meterLevel = ammo * (1 / maxAmmo);
-        //Debug.Log("meterLevel: " + meterLevel);
+        Debug.Log("Meter Level: " + meterLevel);
 
     }
 }
