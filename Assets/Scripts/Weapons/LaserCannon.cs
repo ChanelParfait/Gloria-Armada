@@ -54,31 +54,13 @@ public class LaserCannon : Weapon
 
     }
 
-    private IEnumerator StartReload(){
-        // start the reloading process
-        isReloading = true; 
-        // find reload time based on current charge left
-        float adjustedReloadTime = weaponStats.reloadTime - (weaponStats.reloadTime / weaponStats.maxAmmo * currentCharge);
-        Debug.Log("Reload Time: " + adjustedReloadTime);
-        yield return new WaitForSeconds(adjustedReloadTime);
-        FinishReload();
-    }
-
-    private void FinishReload(){
-        // returns the weapon to full charge
-        Debug.Log("Full Reload Complete");
-        //currentCharge = weaponStats.maxAmmo; 
-        isReloading = false;
-        //OnAmmoChange?.Invoke(currentCharge);
-    }
-
     public override void Fire(Vector3 velocity)
     {
         if(currentCharge != 0){
             //Debug.Log("Fire Cannon");
             activeProjectile = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation(), transform); 
             laser = activeProjectile.GetComponent<Laser>(); 
-            laser.UpdateStats(weaponStats.projectileStats);
+            laser.UpdateStats(weaponStats.projectileStats, damageLevels.Length);
             // loop sound while firing
             PlaySound();
             isFiring = true;
@@ -134,7 +116,7 @@ public class LaserCannon : Weapon
             weaponStats.projectileStats.damage = damageLevels[3];
         }
         if(laser){
-            laser.UpdateStats(weaponStats.projectileStats);
+            laser.UpdateStats(weaponStats.projectileStats, damageLevels.Length);
         }
     }
 
