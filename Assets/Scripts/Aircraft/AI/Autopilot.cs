@@ -43,6 +43,7 @@ public class PID{
 public class Autopilot : MonoBehaviour
 {
     [SerializeField] Vector3 autopilotDeflection = new Vector3(0, 0, 0);
+    [SerializeField] float emergencyPitch = 0;
     Vector3 controlInputs = new Vector3(0, 0, 0);
     
     public enum AutopilotState {Off, pointAt,  targetFlat, vectorAt, targetStraight, targetFormation};
@@ -100,6 +101,8 @@ public class Autopilot : MonoBehaviour
     public bool hasTarget = false;
     public bool onAxes = false;
     public float shotSpeed = 300f;
+
+    public Vector3 targetOffset = new Vector3(10, -10, -10);
 
     public float zTarget = 0;
     public float targetAngularSize;
@@ -164,12 +167,14 @@ public class Autopilot : MonoBehaviour
     public bool HasTarget(){
         //Guard against null object, or object not a plane
         if (targetObject == null){
+            //Find new target
             if (targetDict.Count > 0){
                 //targetObject = targetDict.FirstOrDefault().Value;
                 return false;
             }
+            //If no target is found && currently trying to point at something, switch to targetFlat
             else{
-                if (autopilotState != AutopilotState.Off || autopilotState != AutopilotState.targetStraight || autopilotState != AutopilotState.targetFormation){
+                if (autopilotState == AutopilotState.pointAt || autopilotState == AutopilotState.vectorAt){
                     lastAutopilotState = autopilotState;
                     autopilotState = AutopilotState.targetFlat;
                     return false;
@@ -372,19 +377,21 @@ public class Autopilot : MonoBehaviour
     }
 
     Vector3 FormationWith(GameObject targetObject, PID[] pids = null){
-        Vector3 targetOffset = new Vector3(-10, -10, 10);
         if (targetObject == null){
             targetObject = GameObject.Find("LevelManager").gameObject;   
         }
         
-        switch (pers){
-            case Perspective.Top_Down:
-                targetOffset = new Vector3(10, 0, 10);
-                break;
-            case Perspective.Side_On:
-                targetOffset = new Vector3(10, -10, 0);
-                break;
+        if (targetOffset.x == 10){
+            switch (pers){
+                case Perspective.Top_Down:
+                    targetOffset = new Vector3(10, 0, 10);
+                    break;
+                case Perspective.Side_On:
+                    targetOffset = new Vector3(10, -10, 0);
+                    break;
+            }
         }
+
        Vector3 targetPosition = targetObject.transform.position + targetOffset;
         
         Vector3 targetVelocity = targetObject.GetComponent<Rigidbody>().velocity;
@@ -464,24 +471,31 @@ public class Autopilot : MonoBehaviour
     }
 
     void AvoidGround(){
-        // Cast a ray in the velocity direction
-        if (Physics.Raycast(transform.position, rb.velocity, out RaycastHit hit, 1000))
+        if (Physics.Raycast(transform.position, rb.velocity, out RaycastHit hit, 500))
         {
+            //Debug.DrawLine(transform.position, hit.point, Color.red);
             // If the ray hits something with an rb
             //Debug.DrawRay(transform.position, rb.velocity * 1000, Color.red);
-            Vector3 normal = hit.normal;
-            // Get the angle between the velocity and the normal
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Terrain")) 
+            {
+                // Get the normal of the collision
+                Vector3 normal = hit.normal;
+                // Get the angle between the velocity and the normal
 
-            //Get the time til we hit the ground
-            float timeToHit = hit.distance / rb.velocity.magnitude;
+                // Get the time til we hit the ground
+                float timeToHit = hit.distance / rb.velocity.magnitude;
+                // reflect the vector off the ground from the hit location
+                Vector3 reflected = Vector3.Reflect(rb.velocity * 1/(timeToHit + float.MinValue), normal);
+                Vector3 avoidance = reflected;
+                Debug.DrawLine(transform.position, avoidance, Color.green);
+                float error = Vector3.SignedAngle(rb.transform.forward, avoidance, rb.transform.right) / 180f;
+                p.throttle = 1.0f;
 
-            //rollUpright 
-            float roll = Upright();
-            float pitch = -0.7f;
-            float t = Mathf.Clamp01((timeToHit - 6) * -1 / 5);
-            //Debug.Log(t + ": pitch: " + pitch + ", roll: " + roll + ", timeToHit: " + timeToHit + ", distance: " + hit.distance);
-            //LERP between auto inputs and ground avoidance based on timeToHit < 3seconds -> 0 seconds
-            autopilotDeflection = new Vector3(Mathf.Lerp(controlInputs.x, pitch, t), Mathf.Lerp(controlInputs.y, roll, t), controlInputs.z);
+                //Debug.DrawRay(hit.point, reflected, Color.green);
+
+                // rollUpright 
+                autopilotDeflection.x -= Mathf.Clamp(PIDSolve(error, ref aPitchPID), -1, 1);
+            }
         }
     }
     #endregion Assists
@@ -555,6 +569,9 @@ public class Autopilot : MonoBehaviour
 
         if (onAxes){
             SnapToAxes();
+        }
+        else {
+            p.throttle = 0.7f;
         }
         if (onAxes){
             Utilities.MultiplyComponents(apControl, new Vector3(1, 1, 1f));

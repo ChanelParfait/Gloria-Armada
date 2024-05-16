@@ -4961,6 +4961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detatched: 0
 --- !u!198 &219603479895237879
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -9857,7 +9858,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyTime: 2
   damage: 1
+  impulse: 300
   explosionRadius: 13
+  audioClip: {fileID: 8300000, guid: d9a5227318d1d42458c9e1a52523925a, type: 3}
+  audioSource: {fileID: 0}
 --- !u!82 &3765786236389569654
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9914,7 +9918,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

@@ -34,12 +34,12 @@ public class Plane : MonoBehaviour
     public float spawnSpeed = 50f;
 
     // Aircraft parameters
-    [SerializeField] float liftPower = 2f;
-    [SerializeField] float weight = 200;    // Weight of the aircraft (kg)
-    [SerializeField] Surfaces surfaces;
-    [SerializeField] float thrust = 1800;   // Maximum thrust (N)
+    public float liftPower = 2f;
+    public float weight = 200;    // Weight of the aircraft (kg)
+    public Surfaces surfaces;
+    public float thrust = 1800;   // Maximum thrust (N)
 
-    [SerializeField] bool thrustVectoring = false;
+    public bool thrustVectoring = false;
     Vector3 controlInputs;
     Vector3 blendedInputs;
     Vector3 apInputs;
@@ -54,7 +54,7 @@ public class Plane : MonoBehaviour
     private float AoAYaw;
     public float AoA {get; private set;}
 
-    [SerializeField] float scaleVelocity = 1.0f;
+    public float scaleVelocity = 1.0f;
     public Vector3 internalVelocity;   // Velocity of the aircraft (not passed to RB) (m/s)
     public Vector3 localVelocity;      // Velocity of the aircraft from local (m/s)
     
@@ -77,7 +77,7 @@ public class Plane : MonoBehaviour
 
     [SerializeField] ControlChannels enabledControls;
 
-    [SerializeField] float cd = 25f; //0.2f
+    public float cd = 25f; //0.2f
     [SerializeField] AnimationCurve cl = new AnimationCurve();
 
     [SerializeField] AnimationCurve pitchCurve = new AnimationCurve();
@@ -113,11 +113,13 @@ public class Plane : MonoBehaviour
 
     public void SetThrottle(float _throttle){
         throttle = _throttle;
-        if (throttle == 1){
-            boost.Play();
-        }
-        else {
-            boost.Stop();
+        if (boost != null){
+            if (throttle == 1){
+                boost.Play();
+            }
+            else {
+                boost.Stop();
+            }
         }
     }
 
@@ -130,7 +132,7 @@ public class Plane : MonoBehaviour
         // Set the center of mass
         rb = GetComponent<Rigidbody>();
         rb.mass = weight;
-        rb.velocity = transform.forward * 50;
+        rb.velocity = transform.forward * spawnSpeed;
         //targetObject = GameObject.Find("TargetPoint");   
         ap = GetComponent<Autopilot>();    
         foreach (Transform child in transform){
@@ -314,6 +316,7 @@ public class Plane : MonoBehaviour
     void FixedUpdate(){
         float dt = Time.fixedDeltaTime;
 
+
         apInputs = ap.GetAPInput(controlInputs);
         blendedInputs = Utilities.ClampVec3(controlInputs + apInputs, -1, 1);
 
@@ -372,6 +375,12 @@ public class Plane : MonoBehaviour
         if (tag =="Player" && isAlive){
             controlInputs.y = IsChannelEnabled(ControlChannels.Horizontal) ?  Input.GetAxis("P1_Horizontal") : 0;
             controlInputs.x = IsChannelEnabled(ControlChannels.Vertical) ?  Input.GetAxis("P1_Vertical") : 0;
+            
+            if (PlayerPrefs.HasKey("InvertPitch")){
+                if (PlayerPrefs.GetInt("InvertPitch") == 1){
+                    controlInputs.x *= -1;
+                }
+            }
 
             if (IsChannelEnabled(ControlChannels.Throttle)){
                 if (Input.GetKey(throttleUp))
@@ -390,12 +399,16 @@ public class Plane : MonoBehaviour
 
         }
 
-        if (throttle == 1.0f && !boost.isPlaying){
-            boost.Play();
+        if (boost != null){
+            if (throttle == 1.0f && !boost.isPlaying){
+                boost.Play();
+            }
+            else if (throttle != 1.0f && boost.isPlaying){
+                boost.Stop();
+            }
+
         }
-        else if (throttle != 1.0f && boost.isPlaying){
-            boost.Stop();
-        }
+
 
 
         if (ap.autopilotState != Autopilot.AutopilotState.Off && ap.HasTarget() ){
@@ -409,14 +422,18 @@ public class Plane : MonoBehaviour
 
 
         // if AoA > 10, add wingtip vortices
-        if (AoA > 10){
+        if (AoA > 10 && wingtipVortices.Length > 0){
             foreach (ParticleSystem vortex in wingtipVortices){
-                vortex.Play();
+                if (vortex != null){
+                    vortex.Play();
+                }        
             }
         }
         else{
             foreach (ParticleSystem vortex in wingtipVortices){
-                vortex.Stop();
+                if (vortex != null){
+                    vortex.Stop();
+                }
             }
         }
         

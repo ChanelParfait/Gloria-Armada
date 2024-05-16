@@ -5,7 +5,7 @@ using UnityEngine;
 public class Actor : MonoBehaviour
 {
     // Base Actor Class for Enemies and Player to Inherit From
-    [SerializeReference] public int maxHealth;
+    [SerializeReference] public float maxHealth;
     public float currentHealth {get; protected set;}
 
     protected bool isAlive = true;
@@ -13,7 +13,7 @@ public class Actor : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        currentHealth = (int)maxHealth;
+        currentHealth = maxHealth;
     }
 
     public virtual void TakeDamage(float damage)

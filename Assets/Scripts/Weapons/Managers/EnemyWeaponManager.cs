@@ -31,4 +31,8 @@ public class EnemyWeaponManager : MonoBehaviour
     public void FireActiveWeapon(){
         ActiveWeapon.EnemyFire();
     }
+
+    public void FireActiveWeapon(Vector3 referenceVelocity){
+        ActiveWeapon.Fire(referenceVelocity);
+    }
 }

@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrimaryWeapon: {fileID: 0}
   SpecialWeapon: {fileID: 0}
+  planeBody: {fileID: 0}
 --- !u!4 &53670985
 Transform:
   m_ObjectHideFlags: 0
@@ -1013,6 +1014,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 0}
+  bodyScriptableObject: {fileID: 0}
   weaponType: 1
   normalSprite: {fileID: 21300000, guid: 05854750e9718324e960feb8692beacc, type: 3}
   highlightedSprite: {fileID: 21300000, guid: 31291d0d8e35e5d44aca40d1bd539fee, type: 3}
@@ -1238,7 +1240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e33c81cc194344eb0c851211ef9281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 1062033948207875801, guid: 80f11625ba83a8e41b0066fb8e8113c8, type: 3}
+  weaponPrefab: {fileID: 1062033948207875801, guid: c2968064a6f387d42ae42e6dc19c3673, type: 3}
   weaponType: 0
   normalSprite: {fileID: 21300000, guid: 93db9404e579e864cb0f399f45d22eb3, type: 3}
   highlightedSprite: {fileID: 21300000, guid: a8a511a6a168af741bd5c1eb69186fcb, type: 3}
@@ -1474,6 +1476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 0}
+  bodyScriptableObject: {fileID: 0}
   weaponType: 0
   normalSprite: {fileID: 21300000, guid: d3d52e1107b35a74c88d438df3bbce69, type: 3}
   highlightedSprite: {fileID: 21300000, guid: 999f0bf9429e577468a75f85a90eb149, type: 3}
@@ -2469,6 +2472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 1062033948207875801, guid: 727f9549a9f244c48adccba25475ad20, type: 3}
+  bodyScriptableObject: {fileID: 0}
   weaponType: 1
   normalSprite: {fileID: 21300000, guid: 2a4b5bfab5d5d274b8f2101671f1963a, type: 3}
   highlightedSprite: {fileID: 21300000, guid: f19432b2f3ee20e40b624f1ed04d740f, type: 3}
@@ -2616,6 +2620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 0}
+  bodyScriptableObject: {fileID: 11400000, guid: 9c71535b29abb5d469cf4bd2989c137d, type: 2}
   weaponType: 2
   normalSprite: {fileID: 21300000, guid: a92d1618366584b42be3d808ebf640b6, type: 3}
   highlightedSprite: {fileID: 21300000, guid: 0b4b9f756a9d59344a10c5c667919ca0, type: 3}
@@ -3084,6 +3089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 4060497078772453506, guid: 171c6648329bce640af6e2f71ef02b94, type: 3}
+  bodyScriptableObject: {fileID: 0}
   weaponType: 0
   normalSprite: {fileID: 21300000, guid: 9b78781f427751047ab37b524fa54432, type: 3}
   highlightedSprite: {fileID: 21300000, guid: 31fd96ac18260b5418870433a7bc3d8d, type: 3}
@@ -3819,6 +3825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 1062033948207875801, guid: a6aa6fbe78513424a8a7472dd83796a5, type: 3}
+  bodyScriptableObject: {fileID: 0}
   weaponType: 1
   normalSprite: {fileID: 21300000, guid: 0405afa93ac38f44898e9b0aebc02f56, type: 3}
   highlightedSprite: {fileID: 21300000, guid: 01d0e2b3913f8804f9ce39e485de5f16, type: 3}
@@ -4044,6 +4051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 0}
+  bodyScriptableObject: {fileID: 11400000, guid: a84232ffb4ed55a499f73f7f1013a2ac, type: 2}
   weaponType: 2
   normalSprite: {fileID: 21300000, guid: cec517cec32b2c34e91682b4239c6150, type: 3}
   highlightedSprite: {fileID: 21300000, guid: 23a9b90ec6a5796488c008833b81234a, type: 3}
@@ -4316,6 +4324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 0}
+  bodyScriptableObject: {fileID: 11400000, guid: 0bc599a9d8cea334dbc624de7c0fd83b, type: 2}
   weaponType: 2
   normalSprite: {fileID: 21300000, guid: ddfea88cee971444ca4d51c224cb26ce, type: 3}
   highlightedSprite: {fileID: 21300000, guid: c6bba132f447474409c8460f2ec6b424, type: 3}
@@ -4548,7 +4557,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 308f688f16cb01e4b8418f8e8cf8febb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 23b54b4e454072d4e82397b480aed0c0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4713,6 +4722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 0}
+  bodyScriptableObject: {fileID: 0}
   weaponType: 1
   normalSprite: {fileID: 21300000, guid: 81847340ab8ef9541a9754c1083f3462, type: 3}
   highlightedSprite: {fileID: 21300000, guid: bb7394b518e2c684da97d909bdbea496, type: 3}
@@ -5174,6 +5184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 0}
+  bodyScriptableObject: {fileID: 0}
   weaponType: 2
   normalSprite: {fileID: 21300000, guid: 4ab445544fb106f468a5873cd2109228, type: 3}
   highlightedSprite: {fileID: 21300000, guid: b50d908b5bb05874cae1a86c4211b767, type: 3}

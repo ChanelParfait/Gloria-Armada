@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Events;
 
+[System.Serializable]
 class vec3PID {
     public PID x;
     public PID y;
@@ -34,21 +35,24 @@ public class EnemyPlane : EnemyBase
     public Vector3 moveDir;
     public Vector3 orientation;
 
-    vec3PID pid = new vec3PID(1f, 0.01f, 6f);
+    [SerializeField] vec3PID pid = new vec3PID(1f, 0.01f, 22f);
 
-    GameObject targetObj;
-    Camera cam;
-    [SerializeField] Vector3 targetOffset;
-    float randomOffsetComponent;
-    Vector3 targetPos;
+    protected GameObject targetObj;
+    protected Camera cam;
+    [SerializeField] protected Vector3 targetOffset;
+    protected float randomOffsetComponent;
+    protected Vector3 targetPos;
 
-    Perspective currentPerspective;
+    protected Perspective currentPerspective;
 
-    Rigidbody rb;
-    private float timer = 0;
+    protected float timer = 0;
+    protected float radarTimer = 0;
+    protected float randFireTime;
     public GameObject deathExplosion;
 
-    [SerializeField] private GameObject deathObj;
+    protected CameraUtils camUtils;
+
+    [SerializeField] protected GameObject deathObj;
 
     void OnEnable(){
         LevelManager.OnPerspectiveChange += UpdatePerspective;
@@ -64,28 +68,30 @@ public class EnemyPlane : EnemyBase
         base.Start();
         weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
         rb = GetComponent<Rigidbody>();
-        LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
-        currentPerspective = lm.currentPerspective;
-        cam = Camera.main;
-        if(targetObj == null){
-            targetObj = GameObject.FindGameObjectWithTag("LevelManager");
+        GameObject lmObj = GameObject.FindGameObjectWithTag("LevelManager");
+        if (lmObj != null){
+            LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
+            currentPerspective = lm.currentPerspective;
+            if(targetObj == null){
+                targetObj = GameObject.FindGameObjectWithTag("LevelManager");
+            }
         }
+        
+        
+        cam = Camera.main;
+        camUtils = FindObjectOfType<CameraUtils>();
         randomOffsetComponent = Random.Range(-0.4f, 0.4f);
+        randFireTime = Random.Range(0.5f, 2.0f);
         StartCoroutine(Initialize());
         
     }
 
-    IEnumerator Initialize(){
+    virtual protected IEnumerator Initialize(){
         yield return new WaitForSeconds(0.1f);
-        rb.velocity = referenceSpeed * Utilities.MultiplyComponents(orientation, moveDir);
-    }
-
-    Vector2 GetCameraDimensions(){
-        //With a perspective cam at -250 units on the z axis, find the bounds of the camera view using the camera's FOV
-        float height = 2.0f * Mathf.Tan(0.5f * cam.fieldOfView * Mathf.Deg2Rad) * 250.0f;
-        float width = height * cam.aspect;  
-
-        return new Vector2(width, height);
+        if (orientation == Vector3.zero && moveDir == Vector3.zero){
+            yield break;
+        }
+        rb.AddForce(referenceSpeed * Utilities.MultiplyComponents(orientation, moveDir), ForceMode.VelocityChange);
     }
 
     void UpdatePerspective(int _pers){
@@ -95,12 +101,12 @@ public class EnemyPlane : EnemyBase
         }
     }
 
-    Vector3 GetTargetOffset(){
+    protected virtual Vector3 GetTargetOffset(){
         switch (currentPerspective){
             case Perspective.Top_Down:
-                return new Vector3(GetCameraDimensions().x/2 - 30.0f, 0, GetCameraDimensions().y/2 * randomOffsetComponent);
+                return new Vector3(camUtils.height/2 - 30.0f, 0, camUtils.width/2 * randomOffsetComponent);
             case Perspective.Side_On:
-                return new Vector3(GetCameraDimensions().x/2 - 30.0f, GetCameraDimensions().y/2 * randomOffsetComponent,0);
+                return new Vector3(camUtils.width/2 - 30.0f, camUtils.height/2 * randomOffsetComponent,0);
             case Perspective.Null:
                 return Vector3.zero;
         }
@@ -111,20 +117,30 @@ public class EnemyPlane : EnemyBase
     // Update is called once per frame
     void Update()
     {
-
-        if(targetObj == null){
-            targetObj = GameObject.FindGameObjectWithTag("LevelManager");
-        }
-        targetOffset = GetTargetOffset();
-        targetPos = targetObj.transform.position + targetOffset;
-        MoveEnemy();
-
-
         timer += Time.deltaTime; 
-        if(timer >= Random.Range(fireInterval, 3f)){
+        if(timer >= fireInterval * randFireTime){
+            randFireTime = Random.Range(0.5f, 2.0f);
             timer = 0; 
             Fire();
         }
+    }
+
+    protected virtual void FixedUpdate(){
+        targetOffset = GetTargetOffset();
+        Vector3 targetObjPos = targetObj.transform.position;
+        targetPos = targetObjPos + targetOffset;
+        if (rb.angularVelocity.magnitude > 0.1f){
+            rb.useGravity = true;
+        }
+        else {
+            MoveEnemy();
+            radarTimer += Time.deltaTime;
+            if (radarTimer > 0.5f){
+                AvoidGround();
+                radarTimer = 0;
+            }
+        }
+
     }
 
     private void OnTriggerEnter(Collider col){
@@ -153,11 +169,13 @@ public class EnemyPlane : EnemyBase
             {
                 //Add force to the rigid body
                 rb.AddForce(GetComponent<Rigidbody>().velocity, ForceMode.VelocityChange);
-                // Using the offset of the child from the parent, apply the appropriate velocity from the angular velocity
-                rb.AddTorque(GetComponent<Rigidbody>().angularVelocity, ForceMode.VelocityChange);
+                // Translate the angular velocity of the parent by the localPosition of the child to get the correct velocity
+                Vector3 angularVelocity = GetComponent<Rigidbody>().angularVelocity;
+                Vector3 pointOffset = rb.transform.localPosition;
+                Vector3 linearVelocityAtPoint = Vector3.Cross(angularVelocity, pointOffset);
+                rb.AddForce(linearVelocityAtPoint, ForceMode.VelocityChange);
             }
         }
-
         base.Die();
     }
 
@@ -168,7 +186,18 @@ public class EnemyPlane : EnemyBase
         rb.AddForce(moveDir.normalized * speed * 20.0f);
     }
 
-    private void OnCollisionEnter(Collision col)
+    void AvoidGround(){
+        //Raycast down to check for ground
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100.0f)){
+            //If the distance to the ground is less than 10 units, add a force upwards
+            if (hit.distance < 10.0f){
+                rb.AddForce(Vector3.up * (10 - hit.distance) * 10.0f);
+            }
+        }
+    }
+
+    protected virtual void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
             //Get the normal of the collision

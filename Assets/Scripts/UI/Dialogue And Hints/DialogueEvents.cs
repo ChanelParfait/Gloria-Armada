@@ -12,6 +12,7 @@ public class DialogueEvents : ScriptableObject
         ChangeOrientation,
         AddWaypoints,
         EndScene,
+        InvertControls,
     }
 
     public EventOption eventOption;
@@ -25,6 +26,13 @@ public class DialogueEvents : ScriptableObject
         LevelManager lm = FindObjectOfType<LevelManager>();
         lm.spawnOverTime = true;
         
+    }
+
+    public void InvertControls()
+    {
+        int pitch = PlayerPrefs.GetInt("InvertPitch", 0);
+        pitch = pitch * -1 + 1;
+        PlayerPrefs.SetInt("InvertPitch", pitch);
     }
 
     //Change Orientation
@@ -58,6 +66,9 @@ public class DialogueEvents : ScriptableObject
             case EventOption.EndScene:
                 LevelManager lm = FindObjectOfType<LevelManager>();
                 lm.YouWin();
+                break;
+            case EventOption.InvertControls:
+                InvertControls();
                 break;
         }
     }
