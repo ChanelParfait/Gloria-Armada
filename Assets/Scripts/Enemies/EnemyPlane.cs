@@ -45,7 +45,6 @@ public class EnemyPlane : EnemyBase
 
     protected Perspective currentPerspective;
 
-    protected Rigidbody rb;
     protected float timer = 0;
     protected float radarTimer = 0;
     protected float randFireTime;
@@ -69,13 +68,18 @@ public class EnemyPlane : EnemyBase
         base.Start();
         weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
         rb = GetComponent<Rigidbody>();
-        LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
-        currentPerspective = lm.currentPerspective;
-        cam = Camera.main;
-        camUtils = GameObject.FindObjectOfType<CameraUtils>();
-        if(targetObj == null){
-            targetObj = GameObject.FindGameObjectWithTag("LevelManager");
+        GameObject lmObj = GameObject.FindGameObjectWithTag("LevelManager");
+        if (lmObj != null){
+            LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
+            currentPerspective = lm.currentPerspective;
+            if(targetObj == null){
+                targetObj = GameObject.FindGameObjectWithTag("LevelManager");
+            }
         }
+        
+        
+        cam = Camera.main;
+        camUtils = FindObjectOfType<CameraUtils>();
         randomOffsetComponent = Random.Range(-0.4f, 0.4f);
         randFireTime = Random.Range(0.5f, 2.0f);
         StartCoroutine(Initialize());
@@ -122,9 +126,6 @@ public class EnemyPlane : EnemyBase
     }
 
     protected virtual void FixedUpdate(){
-        if(targetObj == null){
-            targetObj = GameObject.FindGameObjectWithTag("LevelManager");
-        }
         targetOffset = GetTargetOffset();
         Vector3 targetObjPos = targetObj.transform.position;
         targetPos = targetObjPos + targetOffset;

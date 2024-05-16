@@ -43,6 +43,7 @@ public class PID{
 public class Autopilot : MonoBehaviour
 {
     [SerializeField] Vector3 autopilotDeflection = new Vector3(0, 0, 0);
+    [SerializeField] float emergencyPitch = 0;
     Vector3 controlInputs = new Vector3(0, 0, 0);
     
     public enum AutopilotState {Off, pointAt,  targetFlat, vectorAt, targetStraight, targetFormation};
@@ -470,8 +471,7 @@ public class Autopilot : MonoBehaviour
     }
 
     void AvoidGround(){
-        // Cast a ray in the halfway between the velocity and the straight down
-        if (Physics.Raycast(transform.position, rb.velocity, out RaycastHit hit, 100))
+        if (Physics.Raycast(transform.position, rb.velocity, out RaycastHit hit, 500))
         {
             //Debug.DrawLine(transform.position, hit.point, Color.red);
             // If the ray hits something with an rb
@@ -485,17 +485,16 @@ public class Autopilot : MonoBehaviour
                 // Get the time til we hit the ground
                 float timeToHit = hit.distance / rb.velocity.magnitude;
                 // reflect the vector off the ground from the hit location
-                Vector3 reflected = Vector3.Reflect(rb.velocity * hit.distance, normal);
-                Vector3 avoidance = hit.point + reflected;
+                Vector3 reflected = Vector3.Reflect(rb.velocity * 1/(timeToHit + float.MinValue), normal);
+                Vector3 avoidance = reflected;
+                Debug.DrawLine(transform.position, avoidance, Color.green);
                 float error = Vector3.SignedAngle(rb.transform.forward, avoidance, rb.transform.right) / 180f;
                 p.throttle = 1.0f;
 
                 //Debug.DrawRay(hit.point, reflected, Color.green);
 
                 // rollUpright 
-                float roll = Upright();
-                float pitch = PIDSolve(-error, ref aPitchPID);
-                autopilotDeflection.x -= pitch;
+                autopilotDeflection.x -= Mathf.Clamp(PIDSolve(error, ref aPitchPID), -1, 1);
             }
         }
     }

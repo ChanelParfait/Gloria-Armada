@@ -71,7 +71,6 @@ public class PlayerPlane : Actor
 
     void SwapTrack(){
         if (audioPlayingBoosted){
-            engineSource.Stop();
             boostedSource.Play();
         }
         else {

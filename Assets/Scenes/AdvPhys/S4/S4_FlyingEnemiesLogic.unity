@@ -4281,6 +4281,14 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2927386685241210806, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: enemies.Array.data[0]
+      value: 
+      objectReference: {fileID: 5330523515528714847, guid: 5174125a780307a4f87ca94a4e69d4b1, type: 3}
+    - target: {fileID: 2927386685241210806, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: enemies.Array.data[1]
+      value: 
+      objectReference: {fileID: 919028687121953867, guid: 4d02c69800534dd4fbbe8373fe4c4be5, type: 3}
+    - target: {fileID: 2927386685241210806, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
       propertyPath: enemies.Array.data[2]
       value: 
       objectReference: {fileID: 5583969129486550031, guid: 148d5428420aabb48b055967b104e70a, type: 3}
@@ -6944,7 +6952,7 @@ PrefabInstance:
       objectReference: {fileID: 584368077}
     - target: {fileID: 3635405933398179781, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3635405933398179781, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
       propertyPath: m_VertexColorAlwaysGammaSpace
@@ -8066,6 +8074,14 @@ PrefabInstance:
     - target: {fileID: 3337119729129866234, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: maxHealth
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4552230076764758497, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: MinDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4552230076764758497, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: rolloffMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6219281314664255518, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_LightProbeUsage

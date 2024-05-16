@@ -31,6 +31,11 @@ public class Turret : EnemyBase
         base.Start();
         fov = GetComponentInChildren<FieldOfView>(); //FOV is a child of "Gun Turret Body" - reflecting the actual aiming direction
         weaponManager = gameObject.GetComponentInChildren<EnemyWeaponManager>();
+        TryGetComponent<Rigidbody>(out rb);
+        if (rb == null)
+        {
+            rb = transform.root.GetComponent<Rigidbody>();
+        }
     }
     
     // Update is called once per frame
@@ -39,7 +44,13 @@ public class Turret : EnemyBase
         
         if (enemy != null){
             AimpointToTarget();
-            weaponManager.FireActiveWeapon();
+            if (rb != null){
+                weaponManager.FireActiveWeapon(rb.velocity);
+            }
+            else {
+                weaponManager.FireActiveWeapon();
+            }
+            
         }
         else {
             AimpointReset();
