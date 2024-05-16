@@ -22,7 +22,7 @@ public class TripleBarrel : Weapon
     void Start()
     {
         SetupWeapon();
-        currentPerspective = Perspective.Side_On;
+        //currentPerspective = Perspective.Side_On;
     }
 
     // Update is called once per frame

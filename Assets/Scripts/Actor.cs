@@ -13,12 +13,12 @@ public class Actor : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        currentHealth = (int)maxHealth;
+        currentHealth = maxHealth;
     }
 
     public virtual void TakeDamage(float damage)
     {
-        Debug.Log("Obj" + gameObject + "Damage" + damage);
+        Debug.Log("Obj: " + gameObject + " Damage: " + damage);
         if (isAlive){
             currentHealth -= damage;
             if(currentHealth <= 0){

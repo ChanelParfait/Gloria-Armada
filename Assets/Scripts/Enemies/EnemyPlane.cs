@@ -137,7 +137,7 @@ public class EnemyPlane : EnemyBase
     }
 
     private void OnTriggerEnter(Collider col){
-        // if hit by a player projectile
+        /* // if hit by a player projectile
         if(col.gameObject.tag == "PlayerProjectile"){
             // Take Damage
             TakeDamage(col.gameObject.GetComponent<Projectile>().projectileStats.damage);
@@ -145,7 +145,7 @@ public class EnemyPlane : EnemyBase
             //Debug.Log("Enemy Damage Taken:" + col.gameObject.GetComponent<Projectile>().projectileStats.damage);
             // Destroy Projectile
             Destroy(col.gameObject);
-        }
+        }*/
     }
 
     public override void TakeDamage(float damage){

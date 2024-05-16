@@ -96,8 +96,9 @@ public class SpecialMeter : MonoBehaviour
             maxAmmo = ammo;
         }
         //Debug.Log("Level: " + ammo);
+        //Debug.Log("Meter Level: " + meterLevel);
         meterLevel = ammo * (1 / maxAmmo);
-        Debug.Log("Meter Level: " + meterLevel);
+        
 
     }
 }

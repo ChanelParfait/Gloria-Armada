@@ -57,6 +57,8 @@ public class LevelManager : MonoBehaviour
     void Awake(){
         rb = GetComponent<Rigidbody>();
         currentPerspective = initPerspective;
+        UpdatePerspective(currentPerspective);
+
     }
 
     // Player, Enemy Spawner, and Camera will all need to update when perspective changes 
@@ -65,7 +67,7 @@ public class LevelManager : MonoBehaviour
     {
         gameOverPnl = GameObject.Find("GameOver");
         youWinPnl = GameObject.Find("YouWin");
-        UpdatePerspective(initPerspective);
+        StartCoroutine(WaitforLoad());
         rb.velocity = Vector3.right * 20;
 
         if (playerPlane == null)
@@ -162,6 +164,13 @@ public class LevelManager : MonoBehaviour
         if(col.tag == "WinPoint"){
             YouWin();
         }
+    }
+
+    // wait function to call events for objects not active on start / level loaded
+    private IEnumerator WaitforLoad(){
+        yield return new WaitForSeconds(1);
+        UpdatePerspective(currentPerspective);
+
     }
 
     public static Vector3 PerspectiveToEuler(Perspective p){

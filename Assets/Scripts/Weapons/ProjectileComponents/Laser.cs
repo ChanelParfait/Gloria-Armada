@@ -11,33 +11,28 @@ public class Laser : MonoBehaviour
     // Projectile with no velocity
     // Deals damage over time
     
-    public void Launch(ProjectileStats stats) {
-        startTime = Time.time;
+    public void UpdateStats(ProjectileStats stats) {
         projectileStats = stats;
     }
 
-    void FixedUpdate() {
-        
-        /*if (Time.time > startTime + projectileStats.lifetime) {
-            Die();
-        }*/
-        // deal damage over time
+    protected void OnTriggerStay(Collider col){
+        //Debug.Log("Trigger: " + projectileStats.damage / (4 * 24));
+
+        if(col.gameObject.tag == "Player"){
+            col.GetComponent<Actor>().TakeDamage(projectileStats.damage / 4); 
+        }
+        else if(col.gameObject.tag == "Enemy"){
+            Debug.Log("Enemy Hit: " + projectileStats.damage / 4);
+            col.GetComponent<Actor>().TakeDamage(projectileStats.damage / 4);
+            if (hitParticle)
+            {
+                Instantiate(hitParticle, transform.position, Quaternion.identity);
+            } 
+        }
     }
 
-/*    protected void Die(){
-        if (hitParticle){
-            Instantiate(hitParticle, transform.position, Quaternion.identity);
-        }
-        ParticleManager[] pms = GetComponentsInChildren<ParticleManager>();
-        foreach (ParticleManager pm in pms)
-        {
-            pm.transform.SetParent(null);   
-            pm.Detach();
-        }
-        Destroy(gameObject);
-    }*/
 
-    protected void OnTriggerEnter(Collider col){
+    /*protected void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "Player"){
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage); 
         }
@@ -54,5 +49,5 @@ public class Laser : MonoBehaviour
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
             } 
         }
-    }
+    }*/
 }

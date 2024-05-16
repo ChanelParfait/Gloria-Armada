@@ -8,7 +8,7 @@ using UnityEngine;
 [Serializable]
 public struct ProjectileStats{
     public float speed; 
-    public int damage;
+    public float damage;
     public int AP;
     public float lifetime;
     public Vector3 size; 
