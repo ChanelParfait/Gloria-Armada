@@ -24,35 +24,9 @@ public class SpecialMeter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*meterCooldown += Time.deltaTime;
-        if (meterLevel < 0)
-        {
-            meterLevel = 0;
-        }
-
-        if (meterLevel < 1)
-        {
-            if (meterCooldown >= 3)
-            {
-                meterLevel += 0.1f * Time.deltaTime;
-            }
-        }
-        else
-        {
-            meterLevel = 1;
-        }
-
-        if (meterLevel < 0.25f)
-        {
-            meter.color = uncharged;
-        }
-        else
-        {
-            meter.color = charged;
-        }*/
         if (meter){
             meter.fillAmount = meterLevel;
-            /*if(meterLevel < 1)
+            if(meterLevel < 1)
                 {
                     meter.color = new Color(1, 1, 1, 1);
                     meterOuter.color = new Color(1, 1, 1, 1);
@@ -61,20 +35,9 @@ public class SpecialMeter : MonoBehaviour
                 {
                     meter.color -= new Color(0, 0, 0, Time.deltaTime);
                     meterOuter.color -= new Color(0, 0, 0, Time.deltaTime);
-                }*/
+                }
         }
-        
-
-        /*if(Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            if(meterLevel >= 0.25f)
-            {
-                meterLevel -= 0.25f;
-                meterCooldown = 0;
-            }
-        }*/
-
-
+    
     }
 
     private void OnEnable(){
