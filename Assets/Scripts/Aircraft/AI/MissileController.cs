@@ -26,6 +26,10 @@ public class MissileController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        if (lm){
+            pers = lm.currentPerspective;
+        }
         planeSelf = GetComponent<Plane>();
         ap = GetComponent<Autopilot>();
         rb = GetComponent<Rigidbody>();
@@ -36,6 +40,12 @@ public class MissileController : MonoBehaviour
             Vector3 pos = this.gameObject.transform.position;
             gameObject.transform.position.Set(pos.x, pos.y, 0);
             rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezePositionZ;
+        }
+        else if (pers == Perspective.Top_Down)
+        {
+            Vector3 pos = this.gameObject.transform.position;
+            gameObject.transform.position.Set(pos.x, 0, pos.z);
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
         }
 
         rb.angularDrag = 0.01f;

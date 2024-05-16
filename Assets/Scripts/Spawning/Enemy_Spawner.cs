@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
 
     public bool isEnabled = true;
 
-    [SerializeField] private Camera mainCamera ; 
+    [SerializeField] private Camera cam ; 
     [SerializeField] Dictionary<string, GameObject> spawnPoints = new Dictionary<string, GameObject>();
 
     Vector3 velocity;
@@ -38,6 +38,7 @@ public class EnemySpawner : MonoBehaviour
             // get all spawnpoints and store them in a dict 
             spawnPoints.Add(child.gameObject.name, child.gameObject);
         }
+        cam = Camera.main;
     }
 
     // Update is called once per frame
@@ -57,6 +58,14 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    Vector2 GetCameraDimensions(){
+        //With a perspective cam at -250 units on the z axis, find the bounds of the camera view using the camera's FOV
+        float height = 2.0f * Mathf.Tan(0.5f * cam.fieldOfView * Mathf.Deg2Rad) * 250.0f;
+        float width = height * cam.aspect;  
+
+        return new Vector2(width, height);
+    }
+
     //Spawn an enemy of given type(index) at a given spawn point 
     public void SpawnEnemy(SpawnPointName spawnPointName, int enemyIndex){
         // given a spawn position name, find the corresponding spawn point gameobject from the list of spawn points
@@ -70,9 +79,30 @@ public class EnemySpawner : MonoBehaviour
                 Vector3 orientation = -GetOrientation(spawnPoint);
                 Vector3 moveDir = GetMoveDirection(spawnPoint);
 
+                //Spawn position just off screen depending on perspective
+                Vector3 spawnCenter = Vector3.zero;
+                float spawnSize = 0.0f;
+                Vector3 spawnPos = Vector3.zero;
+                switch (currentPerspective){
+                    case Perspective.Top_Down:
+                        spawnCenter = new Vector3(transform.position.x + GetCameraDimensions().y/2 + 20.0f, 0, 0);
+                        spawnSize = GetCameraDimensions().x * 0.3f;
+                        spawnPos = spawnCenter + new Vector3(0, 0, Random.Range(-spawnSize, spawnSize));
+                        orientation = cameraTransform.up * -1;
+                        break;
+                    case Perspective.Side_On:
+                        spawnCenter = new Vector3(transform.position.x + GetCameraDimensions().x/2 + 10.0f, 0, 0);
+                        spawnSize = GetCameraDimensions().y * 0.3f;
+                        spawnPos = spawnCenter + new Vector3(0, Random.Range(-spawnSize, spawnSize), 0);
+                        orientation = cameraTransform.right * -1;
+                        break;
+                }
+
+                
+
                 // spawn enemy as a child of the spawner
                 // providing it a relative position and rotation 
-                GameObject spawnedEnemy = Instantiate(enemy, spawnPoint.transform.position, Quaternion.LookRotation(orientation, Vector3.up));
+                GameObject spawnedEnemy = Instantiate(enemy, spawnPos, Quaternion.LookRotation(orientation, Vector3.up));
 
                 // set the movement direction of the enemy
                 EnemyPlane e;
@@ -80,7 +110,7 @@ public class EnemySpawner : MonoBehaviour
                 {
                     e.moveDir = moveDir;
                     e.orientation = orientation;
-                    e.referenceSpeed = velocity.x - 5;
+                    e.referenceSpeed = velocity.x;
                 }
                 else
                 {

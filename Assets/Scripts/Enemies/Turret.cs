@@ -68,6 +68,7 @@ public class Turret : EnemyBase
 
     void SearchForTarget(){
         // Smoothly rotate the turret back and forth in the X axis to scan for targets by moving aimPoint in an arc
+        //azimuthObj.transform.rotation = Quaternion.Euler(0, Mathf.Sin(Time.time) * 45, 0);
         if (fov.visibleTargets.Count > 0)
         {
             // Check if the gameObject still exists

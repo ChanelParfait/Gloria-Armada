@@ -384,7 +384,7 @@ public class Plane : MonoBehaviour
                 }
                 else
                 {
-                    throttle = 0.5f;
+                    throttle = 0.2f;
                 }
             }
 
