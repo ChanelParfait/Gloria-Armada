@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -63,10 +65,9 @@ public class Weapon : MonoBehaviour
     
     public virtual void EnemyFire()
     {
+        Debug.Log("Enemy Fire: " + projectile);
         // Get spawn position and spawn projectile object
         GameObject clone = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation()); 
-        // Set projectile Scale
-        clone.transform.localScale = weaponStats.projectileStats.size;
         // set stats of projectile
         clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats); 
         PlaySound();
@@ -82,6 +83,11 @@ public class Weapon : MonoBehaviour
     // Intended for special weapons with hold features
     public virtual void Release(){
         // for base weapon do nothing
+    }
+
+    // function to stop weapon from firing
+    public virtual void StopFiring(){
+        // for base weapon do nothing 
     }
 
     public virtual Vector3 GetSpawnPos()

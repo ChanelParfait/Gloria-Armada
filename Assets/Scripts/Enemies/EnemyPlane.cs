@@ -120,7 +120,7 @@ public class EnemyPlane : EnemyBase
             targetObj = GameObject.FindGameObjectWithTag("LevelManager");
         }
         targetOffset = GetTargetOffset();
-        targetPos = targetObj.transform.position + targetOffset;
+         targetPos = targetObj.transform.position + targetOffset;
 
         if (rb.angularVelocity.magnitude > 0.5f){
             rb.useGravity = true;
@@ -131,21 +131,10 @@ public class EnemyPlane : EnemyBase
 
         timer += Time.deltaTime; 
         if(timer >= Random.Range(fireInterval, 3f)){
+            Debug.Log("Fire on Interval");
             timer = 0; 
             Fire();
         }
-    }
-
-    private void OnTriggerEnter(Collider col){
-        /* // if hit by a player projectile
-        if(col.gameObject.tag == "PlayerProjectile"){
-            // Take Damage
-            TakeDamage(col.gameObject.GetComponent<Projectile>().projectileStats.damage);
-            //Debug.Log("Enemy Health:" + currentHealth);
-            //Debug.Log("Enemy Damage Taken:" + col.gameObject.GetComponent<Projectile>().projectileStats.damage);
-            // Destroy Projectile
-            Destroy(col.gameObject);
-        }*/
     }
 
     public override void TakeDamage(float damage){

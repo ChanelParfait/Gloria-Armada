@@ -14,6 +14,9 @@ public class EnemyWeaponManager : MonoBehaviour
         // Set Default Active Weapon
         if(weapons.Length > 0){
             ActiveWeapon = weapons[0];
+            Debug.Log("Active Weapon: " + ActiveWeapon);
+
+
         }
     }
 
@@ -29,6 +32,19 @@ public class EnemyWeaponManager : MonoBehaviour
     }
 
     public void FireActiveWeapon(){
+        Debug.Log("Active Weapon: " + ActiveWeapon);
+
         ActiveWeapon.EnemyFire();
+    }
+
+
+    // Stop Firing Function Currently only used for Laser Cannon
+    public void StopFiring(float delayTime){
+        StartCoroutine(Wait(delayTime));
+    }
+
+    private IEnumerator Wait(float waitTime){
+        yield return new WaitForSeconds(waitTime);
+        ActiveWeapon.StopFiring();
     }
 }

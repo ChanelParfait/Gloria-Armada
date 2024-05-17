@@ -70,6 +70,17 @@ public class LaserCannon : Weapon
 
     }
 
+    public override void EnemyFire()
+    {
+        Debug.Log("Enemy Laser Fire " + projectile);
+        // Fire Laser 
+        activeProjectile = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation(), transform); 
+        laser = activeProjectile.GetComponent<Laser>(); 
+        laser.UpdateStats(weaponStats.projectileStats, damageLevels.Length);
+        // loop sound while firing
+        PlaySound();
+    }
+
     
     // Function runs when holding down the weapon key 
     // Intended for special weapons with hold features
@@ -120,13 +131,14 @@ public class LaserCannon : Weapon
         }
     }
 
-    private void StopFiring(){
+    public override void StopFiring(){
         // destroy active projectile
         if(activeProjectile){
             Destroy(activeProjectile);
             activeProjectile = null;
             laser = null;
         }
+        audioSource.Stop();
         isFiring = false;
     }
 

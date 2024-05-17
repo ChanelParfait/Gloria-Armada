@@ -29,24 +29,4 @@ public class Laser : MonoBehaviour
             } 
         }
     }
-
-
-    /*protected void OnTriggerEnter(Collider col){
-        if(col.gameObject.tag == "Player"){
-            col.GetComponent<Actor>().TakeDamage(projectileStats.damage); 
-        }
-        else if(col.gameObject.tag == "Enemy"){
-            col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
-            if (hitParticle)
-            {
-                Instantiate(hitParticle, transform.position, Quaternion.identity);
-            } 
-        }
-        else if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
-            if (hitParticle)
-            {
-                Instantiate(hitParticle, transform.position, Quaternion.identity);
-            } 
-        }
-    }*/
 }
