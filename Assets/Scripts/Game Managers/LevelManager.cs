@@ -135,7 +135,8 @@ public class LevelManager : MonoBehaviour
         if (spawnOverTime){
             if (Time.time - lastSpawnTime > spawnInterval){
                 lastSpawnTime = Time.time;
-                enemySpawner.SpawnEnemy(SpawnPointName.Top_Right, UnityEngine.Random.Range(0, 3));
+                int numEnemies = enemySpawner.GetNumEnemies();
+                enemySpawner.SpawnEnemy(SpawnPointName.Top_Right, UnityEngine.Random.Range(0, numEnemies));
             }
         }
     }

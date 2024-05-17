@@ -10,6 +10,7 @@ public class Turret : EnemyBase
     [SerializeField] GameObject elevationObj;
 
     TurretMount turretMount;
+    float offsetAngle = 0;
 
     [SerializeField] bool leadShot = true;
     [SerializeField] float overrideProjectileSpeed = 25.0f;
@@ -80,6 +81,14 @@ public class Turret : EnemyBase
         aimPoint.transform.position = targetPosition;
     }
 
+    Vector3 AngleOffsetToPosition(){
+        float dist = (aimPoint.transform.position - transform.position).magnitude;
+        // Transform an offsetAngle into a position offset at the distance of the aimpoint (rotating around z)
+        float x = dist * Mathf.Cos(offsetAngle * Mathf.Deg2Rad);
+        float y = dist * Mathf.Sin(offsetAngle * Mathf.Deg2Rad);
+        return new Vector3(x, y, 0);
+    }
+
     void AimpointReset(){
         aimPoint.transform.position = transform.position + new Vector3(-50, 5, 0);
     }
@@ -97,8 +106,6 @@ public class Turret : EnemyBase
 
 
     void SearchForTarget(){
-        // Smoothly rotate the turret back and forth in the X axis to scan for targets by moving aimPoint in an arc
-        //azimuthObj.transform.rotation = Quaternion.Euler(0, Mathf.Sin(Time.time) * 45, 0);
         if (fov.visibleTargets.Count > 0)
         {
             // Check if the gameObject still exists
@@ -149,6 +156,13 @@ public class Turret : EnemyBase
             Utilities.EaseInOut(t)
         );
 
+    }
+
+    IEnumerator arcSpray(){
+        while (true){
+            azimuthObj.transform.rotation = Quaternion.Euler(0, Mathf.Sin(Time.time) * 45, 0);
+            yield return null;
+        }
     }
 
 }

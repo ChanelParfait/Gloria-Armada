@@ -9,6 +9,8 @@ public class EnemyWeaponManager : MonoBehaviour
     // Active weapon represents the weapon that can be fired
     public Weapon ActiveWeapon { get; private set; }
 
+    //public List<FiringPattern_SO> firingPatterns;
+
     void Start()
     {
         // Set Default Active Weapon

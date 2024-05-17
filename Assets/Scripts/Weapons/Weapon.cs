@@ -23,6 +23,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected WeaponStats weaponStats;
     public WeaponCategories weaponCategory;  
     public bool isPlayerWeapon = false;
+    public bool isPatternFire = false;
     public bool canFire = true;
     protected AudioSource audioSource;
     public Vector3 spawnPosition;
@@ -34,6 +35,7 @@ public class Weapon : MonoBehaviour
     // Start is called before the first frame  update
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -71,15 +73,18 @@ public class Weapon : MonoBehaviour
     
     public virtual void EnemyFire()
     {
-        //Debug.Log("Enemy Fire");
 
-        // Get spawn position and spawn projectile object
+        //Get spawn position and spawn projectile object
         GameObject clone = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation()); 
         
         //GameObject clone = Instantiate(projectile, gameObject.transform.position, gameObject.transform.rotation); 
         // set stats of projectile
         clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats); 
         PlaySound();
+    }
+
+    public virtual void EnemyPatternFire(){
+        
     }
 
     public void UpdateStats(WeaponStats newStats){
