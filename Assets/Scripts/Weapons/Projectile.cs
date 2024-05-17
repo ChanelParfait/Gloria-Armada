@@ -53,7 +53,7 @@ public class Projectile : MonoBehaviour
         if (engineSound){
             audioSource.clip = engineSound;
             audioSource.time = UnityEngine.Random.Range(0, audioSource.clip.length);
-            audioSource.volume = UnityEngine.Random.Range(0.5f, 1);
+            audioSource.volume = UnityEngine.Random.Range(1.3f, 1.5f);
             audioSource.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
             audioSource.loop = true;
             audioSource.Play();
@@ -80,8 +80,13 @@ public class Projectile : MonoBehaviour
         projectileStats = stats;
     }
 
+    public ProjectileStats GetStats(){
+        return projectileStats;
+    }
+
     void FixedUpdate() {
         if (Time.time > startTime + projectileStats.lifetime) {
+            Debug.Log("Lifetime Expired");
             Die();
         }
     }
@@ -89,7 +94,10 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter(Collision col){
         if(col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
             if(destroyOnHit) 
+            {
+                Debug.Log("Hit Terrain");
                 Die();
+            }
         }
     }
 
