@@ -71,11 +71,12 @@ public class PlayerPlane : Actor
 
     void SwapTrack(){
         if (audioPlayingBoosted){
-            boostedSource.Play();
+            engineSource.Play();
+            boostedSource.Stop();
         }
         else {
-            boostedSource.Stop();
-            engineSource.Play();
+            boostedSource.Play();
+            engineSource.Stop();
         }
         audioPlayingBoosted = !audioPlayingBoosted;
     }
@@ -104,7 +105,7 @@ public class PlayerPlane : Actor
     void Update(){
         if (plane.throttle >= 1.0f){
             if (!audioPlayingBoosted){
-                engineSource.PlayOneShot(boostEngage);
+                boostedSource.PlayOneShot(boostEngage);
                 SwapTrack();
             }
         }

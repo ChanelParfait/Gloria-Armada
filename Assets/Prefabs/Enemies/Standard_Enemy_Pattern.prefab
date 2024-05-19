@@ -110,7 +110,7 @@ MonoBehaviour:
     x:
       Kp: 1
       Ki: 0.01
-      Kd: 22
+      Kd: 6
       integral: 0
       lastError: 0
     y:
