@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839cb99b570fa3447879c1b71b49ac98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 5426895945089439378, guid: 3e917c10eb181df4c82a090a4c40a8f4, type: 3}
+  projectile: {fileID: 5426895945089439378, guid: 2d7cd29258037c242ad7630e9517e982, type: 3}
   fireSound: {fileID: 8300000, guid: 0bbee73ee57a3064781c30353e56f3c9, type: 3}
   weaponStats:
     fireInterval: 0.4
@@ -60,6 +60,7 @@ MonoBehaviour:
       range: 0
   weaponCategory: 0
   isPlayerWeapon: 0
+  isPatternFire: 0
   canFire: 1
   spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!82 &7502277592070407747

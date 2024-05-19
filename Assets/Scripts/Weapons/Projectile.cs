@@ -86,7 +86,6 @@ public class Projectile : MonoBehaviour
 
     void FixedUpdate() {
         if (Time.time > startTime + projectileStats.lifetime) {
-            Debug.Log("Lifetime Expired");
             Die();
         }
     }
@@ -95,7 +94,6 @@ public class Projectile : MonoBehaviour
         if(col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
             if(destroyOnHit) 
             {
-                Debug.Log("Hit Terrain");
                 Die();
             }
         }

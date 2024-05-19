@@ -27,15 +27,35 @@ public class Weapon : MonoBehaviour
     public bool canFire = true;
     protected AudioSource audioSource;
     public Vector3 spawnPosition;
+
+    protected Perspective currentPerspective = Perspective.Side_On;
     
     // Events 
     public static UnityAction<float> OnAmmoChange;
+
+    void OnEnable(){
+        LevelManager.OnPerspectiveChange += UpdatePerspective;
+    }
+
+    void OnDisable(){
+        LevelManager.OnPerspectiveChange -= UpdatePerspective;
+    }
+
+    void UpdatePerspective(int _pers){
+        currentPerspective = (Perspective)_pers;
+    }
 
 
     // Start is called before the first frame  update
     void Start()
     {
-
+        LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        if (lm != null){
+            currentPerspective = lm.currentPerspective;
+        }
+        else {
+            Debug.Log("Level Manager not found" + gameObject.name);
+        }
     }
 
     // Update is called once per frame

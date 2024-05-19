@@ -26,6 +26,10 @@ public class PatternShot : Weapon
     {
         SetupWeapon();
         canFire = true;
+        LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        if (lm != null){
+            currentPerspective = lm.currentPerspective;
+        }
     }
 
     // Update is called once per frame
@@ -72,12 +76,12 @@ public class PatternShot : Weapon
         if (firingPatterns == null || firingPatterns.Count == 0)
         {
             // Use the default single shot pattern if no patterns are in the list
-            StartCoroutine(defaultPattern.Fire(projectile, spawnTransform, weaponStats, this));        }
+            StartCoroutine(defaultPattern.Fire(projectile, spawnTransform, weaponStats, this, currentPerspective));        }
         else
         { 
             //Pick a random pattern from the list
             int randomPattern = Random.Range(0, firingPatterns.Count);
-            StartCoroutine(firingPatterns[randomPattern].Fire(projectile, spawnTransform, weaponStats, this));
+            StartCoroutine(firingPatterns[randomPattern].Fire(projectile, spawnTransform, weaponStats, this, currentPerspective));
         }
         PlaySound();
     }

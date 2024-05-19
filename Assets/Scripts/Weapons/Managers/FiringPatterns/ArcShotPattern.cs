@@ -11,7 +11,7 @@ public class ArcShotPattern : FiringPattern_SO
 
     public bool descending = false;
 
-    public override IEnumerator Fire(GameObject projectile, Transform spawnTransform, WeaponStats weaponStats, MonoBehaviour shooter)
+    public override IEnumerator Fire(GameObject projectile, Transform spawnTransform, WeaponStats weaponStats, MonoBehaviour shooter, Perspective pers)
     {
         if (projectile == null || spawnTransform == null)
         {
@@ -27,11 +27,18 @@ public class ArcShotPattern : FiringPattern_SO
         for (int i = 0; i < numberOfShots; i++)
         {
             float angle = startAngle + angleStep * i;
+            Vector3 angleVec = pers switch
+            {
+                Perspective.Top_Down => new Vector3(0, angle, 0),
+                Perspective.Side_On => new Vector3(angle, 0, 0),
+                _ => new Vector3(angle, 0, 0),
+            };
             Vector3 parentRotation = shooter.transform.parent.transform.rotation.eulerAngles;
-            Quaternion rotation = spawnTransform.rotation * Quaternion.Euler(angle, 0, 0);
+            Quaternion rotation = spawnTransform.rotation * Quaternion.Euler(angleVec);
             GameObject clone = GameObject.Instantiate(projectile, spawnTransform.position, rotation);
             clone.GetComponent<Rigidbody>().MoveRotation(rotation);
-            clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats, shooter.transform.parent.GetComponent<Rigidbody>().velocity);
+            //Note that parent of shooter is expected to have RB -> For turrets how do?
+            clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats, shooter.transform.GetComponentInParent<Rigidbody>().velocity);
             yield return new WaitForSeconds(delayBetweenShots);
         }
     }
