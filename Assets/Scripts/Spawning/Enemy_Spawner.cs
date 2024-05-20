@@ -72,6 +72,7 @@ public class EnemySpawner : MonoBehaviour
 
     //Spawn an enemy of given type(index) at a given spawn point 
     public void SpawnEnemy(SpawnPointName spawnPointName, int enemyIndex){
+        Debug.Log("Spawn Enemy: " + enemyIndex);
         // given a spawn position name, find the corresponding spawn point gameobject from the list of spawn points
         GameObject spawnPoint;
         if (spawnPoints.TryGetValue(spawnPointName.ToString(), out spawnPoint)){
@@ -83,7 +84,7 @@ public class EnemySpawner : MonoBehaviour
                 Vector3 orientation = enemy.GetComponent<EnemyPlane>().orientation;
                 Vector3 moveDir = enemy.GetComponent<EnemyPlane>().moveDir;
 
-                //Spawn position just off screen depending on perspective
+                /*//Spawn position just off screen depending on perspective
                 Vector3 spawnCenter = Vector3.zero;
                 float spawnSize = 0.0f;
                 Vector3 spawnPos = Vector3.zero;
@@ -100,13 +101,13 @@ public class EnemySpawner : MonoBehaviour
                         spawnPos = spawnCenter + new Vector3(0, Random.Range(-spawnSize, spawnSize), 0);
                         //orientation = cameraTransform.right * -1;
                         break;
-                }
+                }*/
 
                 
 
                 // spawn enemy as a child of the spawner
                 // providing it a relative position and rotation 
-                GameObject spawnedEnemy = Instantiate(enemy, spawnPos, Quaternion.LookRotation(orientation, Vector3.up));
+                GameObject spawnedEnemy = Instantiate(enemy, spawnPoint.transform.position, Quaternion.LookRotation(orientation, Vector3.up));
 
                 // set the movement direction of the enemy
                 EnemyPlane e;

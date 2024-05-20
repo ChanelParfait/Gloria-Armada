@@ -81,9 +81,9 @@ public class EnemyPlane : EnemyBase
         cam = Camera.main;
         camUtils = FindObjectOfType<CameraUtils>();
         randomOffsetComponent = Random.Range(-0.4f, 0.4f);
-        //timer = fireInterval - 1;
-        randFireTime = Random.Range(0.5f, 2.0f);
+        randFireTime = Random.Range(1f, 2.0f);
         StartCoroutine(Initialize());
+        timer = fireInterval - 1; 
         
     }
 

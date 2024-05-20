@@ -99,13 +99,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 2
+  rb: {fileID: 0}
   scoreValue: 10
   fire: 0
   fireInterval: 6
   speed: 3
   referenceSpeed: 0
-  moveDir: {x: 0, y: 0, z: 0}
-  orientation: {x: 0, y: 0, z: 0}
+  moveDir: {x: -1, y: 0, z: 0}
+  orientation: {x: -1, y: 0, z: 0}
   pid:
     x:
       Kp: 1
