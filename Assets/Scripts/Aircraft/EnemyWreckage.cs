@@ -11,13 +11,13 @@ public class EnemyWreckage : MonoBehaviour
     {
         self = GetComponentInChildren<Collider>();
         StartCoroutine(timeOut());
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnTriggerExit(Collider col)
@@ -28,16 +28,18 @@ public class EnemyWreckage : MonoBehaviour
         }
     }
 
-    IEnumerator timeOut(){
+    IEnumerator timeOut()
+    {
         yield return new WaitForSeconds(20);
         Destroy(gameObject);
     }
-    IEnumerator Despawn(){
+    IEnumerator Despawn()
+    {
         yield return new WaitForSeconds(5);
         ParticleManager[] pms = GetComponentsInChildren<ParticleManager>();
         foreach (ParticleManager pm in pms)
         {
-            pm.transform.SetParent(null);   
+            pm.transform.SetParent(null);
             pm.Detach();
         }
         Destroy(gameObject);

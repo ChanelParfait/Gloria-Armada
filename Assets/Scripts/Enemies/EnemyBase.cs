@@ -50,7 +50,7 @@ public class EnemyBase : Actor
     }
 
     protected override void Die(){ 
-        Debug.Log("Enemy Died: " + name + "UniqueID: " + GetInstanceID());  
+        //Debug.Log("Enemy Died: " + name + "UniqueID: " + GetInstanceID());  
         OnEnemyDeath?.Invoke(this);
         base.Die();
     }
