@@ -114,8 +114,11 @@ public class MissileLauncher : Weapon
         audioSource.clip = fireSound;
 
         if(!fireSound){
-            fireSound = (AudioClip)Resources.Load("Audio/Rocket_Sound");
-            audioSource.clip = fireSound;
+            fireSound = (AudioClip)Resources.Load("Audio/Rockets/launch");
+            if (fireSound){
+                audioSource.clip = fireSound;
+            }
+            
         }
     }
 

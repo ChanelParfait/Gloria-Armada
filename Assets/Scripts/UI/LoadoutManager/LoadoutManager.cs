@@ -133,6 +133,7 @@ public class LoadoutManager : MonoBehaviour
         if (selectedPrimaryWeapon != null && selectedSpecialWeapon != null){
             gameManager.PrimaryWeapon = selectedPrimaryWeapon.weaponPrefab;
             gameManager.SpecialWeapon = selectedSpecialWeapon.weaponPrefab;
+            gameManager.planeBody = selectedBody.bodyScriptableObject;
 
         }
         else {

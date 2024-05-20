@@ -5,7 +5,7 @@ using UnityEngine;
 public class Actor : MonoBehaviour
 {
     // Base Actor Class for Enemies and Player to Inherit From
-    [SerializeReference] public int maxHealth;
+    [SerializeReference] public float maxHealth;
     public float currentHealth {get; protected set;}
 
     protected bool isAlive = true;

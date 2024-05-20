@@ -901,6 +901,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_Missile (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_LocalPosition.x
       value: -763
@@ -2343,6 +2347,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_Missile (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_LocalPosition.x
       value: 697
@@ -3240,6 +3248,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_Gun1 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 6725758433290243296, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9140669173678732098, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9233105
@@ -3284,6 +3296,10 @@ PrefabInstance:
     - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_Name
       value: Turret_Missile (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3856,6 +3872,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_Rocket (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 196e7360b432ef54796263ebbd5432ec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 196e7360b432ef54796263ebbd5432ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1057
@@ -4040,6 +4060,10 @@ PrefabInstance:
     - target: {fileID: 6725758433290243296, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
       propertyPath: m_Name
       value: Turret_Gun1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725758433290243296, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9140669173678732098, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5554,6 +5578,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_Gun1 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6725758433290243296, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9140669173678732098, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9233105
@@ -5598,6 +5626,10 @@ PrefabInstance:
     - target: {fileID: 5872591839767887248, guid: 196e7360b432ef54796263ebbd5432ec, type: 3}
       propertyPath: m_Name
       value: Turret_Rocket (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 196e7360b432ef54796263ebbd5432ec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 196e7360b432ef54796263ebbd5432ec, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6035,6 +6067,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_Missile (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_LocalPosition.x
       value: 461
@@ -6257,6 +6293,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_Missile (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_LocalPosition.x
       value: -487.2
@@ -6313,6 +6353,10 @@ PrefabInstance:
     - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_Name
       value: Turret_Missile (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8000,6 +8044,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_Missile (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_LocalPosition.x
       value: 257
@@ -8100,6 +8148,10 @@ PrefabInstance:
     - target: {fileID: 6725758433290243296, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
       propertyPath: m_Name
       value: Turret_Gun1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725758433290243296, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9140669173678732098, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8446,6 +8498,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_Missile (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_LocalPosition.x
       value: -797
@@ -8502,6 +8558,10 @@ PrefabInstance:
     - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_Name
       value: Turret_Missile
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9889,6 +9949,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_Gun1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6725758433290243296, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9140669173678732098, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9233105
@@ -9933,6 +9997,10 @@ PrefabInstance:
     - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_Name
       value: Turret_Missile (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10270,6 +10338,10 @@ PrefabInstance:
     - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_Name
       value: Turret_Missile (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 677aef0a61c477047b6c0517be38f792, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11485,6 +11557,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_Rocket
       objectReference: {fileID: 0}
+    - target: {fileID: 5872591839767887248, guid: 196e7360b432ef54796263ebbd5432ec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8658641033630390592, guid: 196e7360b432ef54796263ebbd5432ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1118.8
@@ -11585,6 +11661,10 @@ PrefabInstance:
     - target: {fileID: 6725758433290243296, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
       propertyPath: m_Name
       value: Turret_Gun1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725758433290243296, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9140669173678732098, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
       propertyPath: m_LocalRotation.w

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 797495823986119921}
   - component: {fileID: 3621766436343345346}
   - component: {fileID: 4535850548967860990}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: boost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4843,6 +4843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detatched: 0
 --- !u!1 &1168509773419960114
 GameObject:
   m_ObjectHideFlags: 0
@@ -4859,6 +4860,7 @@ GameObject:
   - component: {fileID: 2063622229542619533}
   - component: {fileID: 7001200819396208791}
   - component: {fileID: 4552230076764758497}
+  - component: {fileID: 3151736100985191778}
   m_Layer: 7
   m_Name: PlayerPhys
   m_TagString: Player
@@ -4902,6 +4904,9 @@ MonoBehaviour:
   maxHealth: 6
   audioSource: {fileID: 0}
   deathObj: {fileID: 4159290798137297532, guid: e9ccf1c41ebb61b4995d14415ae5b2c0, type: 3}
+  engineSound: {fileID: 8300000, guid: 97248fd47c0980144ab70334ddb8ef24, type: 3}
+  boostEngage: {fileID: 8300000, guid: 2356ee4984d7eec458a6be86ef5496d1, type: 3}
+  boostedSound: {fileID: 8300000, guid: 1fc66181d4a4b2d4d867f2a5274f0663, type: 3}
 --- !u!114 &2951336494503559052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4940,7 +4945,7 @@ MonoBehaviour:
       orientation: {x: 1, y: 0, z: 0}
     aileron:
       area: 1
-      position: {x: 4, y: 0, z: 0}
+      position: {x: 7, y: 0, z: 0}
       orientation: {x: 1, y: 0, z: 0}
   thrust: 1800
   thrustVectoring: 0
@@ -5194,7 +5199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autopilotDeflection: {x: 0, y: 0, z: 0}
   autopilotState: 2
-  lastAutopilotState: 0
+  lastAutopilotState: 2
   rb: {fileID: 6182760409746918969}
   autoArm: 0
   pitchPID:
@@ -5212,7 +5217,7 @@ MonoBehaviour:
   rollPID:
     Kp: 1
     Ki: 0.001
-    Kd: 0.85
+    Kd: 0.7
     integral: 0
     lastError: 0
   targetObjects: []
@@ -5387,6 +5392,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &3151736100985191778
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168509773419960114}
+  m_Enabled: 1
 --- !u!1 &4516825297399139526
 GameObject:
   m_ObjectHideFlags: 0
@@ -5399,7 +5412,7 @@ GameObject:
   - component: {fileID: 2408597013414804574}
   - component: {fileID: 6219281314664255518}
   - component: {fileID: 6862967932187155586}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: wingtipL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6696,7 +6709,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 0.627451}
+        key0: {r: 1, g: 1, b: 1, a: 0.8745098}
         key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -10230,6 +10243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detatched: 0
 --- !u!1 &5124061948501627520
 GameObject:
   m_ObjectHideFlags: 0
@@ -10242,7 +10256,7 @@ GameObject:
   - component: {fileID: 6690889685156807857}
   - component: {fileID: 3865242935699703752}
   - component: {fileID: 8010824393663527018}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: wingtipR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11539,7 +11553,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 0.627451}
+        key0: {r: 1, g: 1, b: 1, a: 0.8745098}
         key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -15073,6 +15087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detatched: 0
 --- !u!1 &8012318085517979214
 GameObject:
   m_ObjectHideFlags: 0
@@ -15085,7 +15100,7 @@ GameObject:
   - component: {fileID: 6651390922727057364}
   - component: {fileID: 3650995947300920150}
   - component: {fileID: 3186821459560118974}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19916,6 +19931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detatched: 0
 --- !u!1 &8931380740068753388
 GameObject:
   m_ObjectHideFlags: 0
@@ -19928,7 +19944,7 @@ GameObject:
   - component: {fileID: 5900609437313271690}
   - component: {fileID: 4296844143597499299}
   - component: {fileID: 7498134632266278327}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24759,6 +24775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detatched: 0
 --- !u!1001 &3042125635388901829
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24815,6 +24832,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: PlayerWeaponManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5694165871972618649, guid: 67050f1860d0d5642acf40517d9f21c7, type: 3}
+      propertyPath: test1
+      value: 
+      objectReference: {fileID: 1062033948207875801, guid: c2968064a6f387d42ae42e6dc19c3673, type: 3}
+    - target: {fileID: 5694165871972618649, guid: 67050f1860d0d5642acf40517d9f21c7, type: 3}
+      propertyPath: test2
+      value: 
+      objectReference: {fileID: 1062033948207875801, guid: a6aa6fbe78513424a8a7472dd83796a5, type: 3}
     - target: {fileID: 5694165871972618649, guid: 67050f1860d0d5642acf40517d9f21c7, type: 3}
       propertyPath: testWeapon1
       value: 

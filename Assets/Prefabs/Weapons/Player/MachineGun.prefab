@@ -55,7 +55,7 @@ MonoBehaviour:
       speed: 20
       damage: 1
       AP: 0
-      lifetime: 10
+      lifetime: 3
       size: {x: 1, y: 1, z: 1}
       range: 0
   weaponCategory: 0
