@@ -8220,7 +8220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3337119729129866234, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: maxHealth
-      value: 30
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4552230076764758497, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: MinDistance
@@ -9477,9 +9477,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3774928288739054522, guid: 97575c20ea66c2c4680c0332af6ac8cd, type: 3}
+      propertyPath: pid.x.Kd
+      value: 22
+      objectReference: {fileID: 0}
     - target: {fileID: 4804257649457233061, guid: 97575c20ea66c2c4680c0332af6ac8cd, type: 3}
       propertyPath: m_Name
       value: Enemy_Boss_JetTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 5356486401159693154, guid: 97575c20ea66c2c4680c0332af6ac8cd, type: 3}
+      propertyPath: m_Mass
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 8476103059814711930, guid: 97575c20ea66c2c4680c0332af6ac8cd, type: 3}
       propertyPath: m_LocalPosition.x

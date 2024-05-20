@@ -214,7 +214,7 @@ public class LevelManager : MonoBehaviour
     }
 
     private void UpdateScore(EnemyBase enemy){
-        Debug.Log("Update Score");
+        //Debug.Log("Update Score");
         if(ScoreTxt){
             score += enemy.scoreValue;
             ScoreTxt.text = score.ToString();
