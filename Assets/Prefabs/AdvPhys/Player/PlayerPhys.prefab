@@ -4904,9 +4904,9 @@ MonoBehaviour:
   maxHealth: 6
   audioSource: {fileID: 0}
   deathObj: {fileID: 4159290798137297532, guid: e9ccf1c41ebb61b4995d14415ae5b2c0, type: 3}
-  engineSound: {fileID: 8300000, guid: 97248fd47c0980144ab70334ddb8ef24, type: 3}
+  engineSound: {fileID: 8300000, guid: 09971f695ea052544bce3e950d989fac, type: 3}
   boostEngage: {fileID: 8300000, guid: 2356ee4984d7eec458a6be86ef5496d1, type: 3}
-  boostedSound: {fileID: 8300000, guid: 1fc66181d4a4b2d4d867f2a5274f0663, type: 3}
+  boostedSound: {fileID: 8300000, guid: 965c2d36d61f0ad41a69268fef73a31a, type: 3}
 --- !u!114 &2951336494503559052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5198,6 +5198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autopilotDeflection: {x: 0, y: 0, z: 0}
+  emergencyPitch: 0
   autopilotState: 2
   lastAutopilotState: 2
   rb: {fileID: 6182760409746918969}
@@ -5228,6 +5229,7 @@ MonoBehaviour:
   hasTarget: 0
   onAxes: 0
   shotSpeed: 20
+  targetOffset: {x: 10, y: -10, z: -10}
   zTarget: 0
   targetAngularSize: 1.0776951
   pers: 0

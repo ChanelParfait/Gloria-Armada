@@ -31,6 +31,10 @@ public class EnemySpawner : MonoBehaviour
         LevelManager.OnPerspectiveChange -= UpdatePerspective;
     }
 
+    public int GetNumEnemies(){
+        return enemies.Length;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -85,13 +89,13 @@ public class EnemySpawner : MonoBehaviour
                 Vector3 spawnPos = Vector3.zero;
                 switch (currentPerspective){
                     case Perspective.Top_Down:
-                        spawnCenter = new Vector3(transform.position.x + GetCameraDimensions().y/2 + 20.0f, 0, 0);
+                        spawnCenter = new Vector3(transform.position.x + GetCameraDimensions().y/2 + 40.0f, 0, 0);
                         spawnSize = GetCameraDimensions().x * 0.3f;
                         spawnPos = spawnCenter + new Vector3(0, 0, Random.Range(-spawnSize, spawnSize));
                         //orientation = cameraTransform.up * -1;
                         break;
                     case Perspective.Side_On:
-                        spawnCenter = new Vector3(transform.position.x + GetCameraDimensions().x/2 + 10.0f, 0, 0);
+                        spawnCenter = new Vector3(transform.position.x + GetCameraDimensions().x/2 + 40.0f, 0, 0);
                         spawnSize = GetCameraDimensions().y * 0.3f;
                         spawnPos = spawnCenter + new Vector3(0, Random.Range(-spawnSize, spawnSize), 0);
                         //orientation = cameraTransform.right * -1;

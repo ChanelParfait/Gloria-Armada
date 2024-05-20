@@ -137,7 +137,8 @@ public class LevelManager : MonoBehaviour
         if (spawnOverTime){
             if (Time.time - lastSpawnTime > spawnInterval){
                 lastSpawnTime = Time.time;
-                enemySpawner.SpawnEnemy(SpawnPointName.Top_Right, UnityEngine.Random.Range(0, 3));
+                int numEnemies = enemySpawner.GetNumEnemies();
+                enemySpawner.SpawnEnemy(SpawnPointName.Top_Right, UnityEngine.Random.Range(0, numEnemies));
             }
         }
     }
@@ -222,7 +223,7 @@ public class LevelManager : MonoBehaviour
     }
 
     private void UpdateScore(EnemyBase enemy){
-        Debug.Log("Update Score");
+        //Debug.Log("Update Score");
         if(ScoreTxt){
             score += enemy.scoreValue;
             ScoreTxt.text = score.ToString();
