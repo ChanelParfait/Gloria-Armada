@@ -124,6 +124,8 @@ public class Weapon : MonoBehaviour
     {
         // Default spawn rotation is the rotation of the weapon
         return gameObject.transform.rotation;
+    }
+    
     public virtual void EnemyPatternFire(){
         
     }

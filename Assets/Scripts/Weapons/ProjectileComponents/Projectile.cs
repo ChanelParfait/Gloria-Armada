@@ -93,10 +93,7 @@ public class Projectile : MonoBehaviour
     protected void OnCollisionEnter(Collision col){
         
         if(col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
-            if(destroyOnHit) 
-            {
-                Die();
-            }
+            Die();
         }
     }
 
