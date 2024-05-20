@@ -10,8 +10,7 @@ public class EnemyBase : Actor
     // Events
     public static UnityAction<EnemyBase> OnEnemyDeath;
     protected EnemyWeaponManager weaponManager; 
-
-    [SerializeReference] public float fireTime; 
+ 
     // How much the score increases on enemy death
     public int scoreValue = 10; 
     public bool fire = false; 
@@ -42,10 +41,7 @@ public class EnemyBase : Actor
         // Fire a Weapon
         if (weaponManager != null)
         {
-            weaponManager.FireActiveWeapon();
-             Debug.Log("Fire Time: " + fireTime);  
-
-            weaponManager.StopFiring(fireTime);
+            weaponManager.FireActiveWeapon(); 
         }
         
     }

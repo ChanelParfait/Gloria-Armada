@@ -38,13 +38,4 @@ public class EnemyWeaponManager : MonoBehaviour
     }
 
 
-    // Stop Firing Function Currently only used for Laser Cannon
-    public void StopFiring(float delayTime){
-        StartCoroutine(Wait(delayTime));
-    }
-
-    private IEnumerator Wait(float waitTime){
-        yield return new WaitForSeconds(waitTime);
-        ActiveWeapon.StopFiring();
-    }
 }

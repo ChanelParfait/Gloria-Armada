@@ -51,6 +51,7 @@ MonoBehaviour:
     fireInterval: 0
     reloadTime: 8
     maxAmmo: 4
+    fireTime: 4
     projectileStats:
       speed: 0
       damage: 6
@@ -61,8 +62,6 @@ MonoBehaviour:
   weaponCategory: 1
   isPlayerWeapon: 1
   canFire: 0
-  spawnPosition: {x: 0, y: 0, z: 0}
-  fireTime: 4
 --- !u!82 &7884464371219309874
 AudioSource:
   m_ObjectHideFlags: 0

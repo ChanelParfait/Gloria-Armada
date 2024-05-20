@@ -13,6 +13,8 @@ public struct WeaponStats{
     public float reloadTime; 
     // total ammo that can be stored at a time
     public int maxAmmo;
+    // time that the weapon can be continuously fired for
+    public float fireTime;
     public ProjectileStats projectileStats;
 
 }
@@ -27,7 +29,6 @@ public class Weapon : MonoBehaviour
     public bool isPlayerWeapon = false;
     public bool canFire = true;
     protected AudioSource audioSource;
-    public Vector3 spawnPosition;
     
     // Events 
     public static UnityAction<float> OnAmmoChange;

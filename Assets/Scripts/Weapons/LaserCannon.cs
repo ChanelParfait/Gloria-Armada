@@ -1,20 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using Unity.Mathematics;
 using UnityEngine;
 
 public class LaserCannon : Weapon
 {
     //Remaining charge of weapon 
-    private float currentCharge; 
-    public float fireTime;
-    //private float firerateTimer = 0; 
-    private float reloadTimer = 0; 
+    public GameObject warningLaser;
+    private float currentCharge;  
     private bool isReloading = false;
     private bool isFiring = false;
     private int[] damageLevels = {1, 2, 4, 8};
     private float holdTimer = 0;
+
+    public float delayTime = 1;
     // reference to projectile 
     GameObject activeProjectile;
     Laser laser;
@@ -29,15 +30,13 @@ public class LaserCannon : Weapon
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        reloadTimer += Time.deltaTime;
-        if(currentCharge <= 0){
+        if(currentCharge <= 0 && isPlayerWeapon){
             StopFiring();
         }
 
         if (isFiring){
             UpdateDamage();
-            float adjustedFireTime = fireTime / weaponStats.maxAmmo * currentCharge;
+            float adjustedFireTime = weaponStats.fireTime / weaponStats.maxAmmo * currentCharge;
             currentCharge = Mathf.Lerp(currentCharge, 0, Time.deltaTime / adjustedFireTime);
             OnAmmoChange?.Invoke(currentCharge);
         } 
@@ -72,13 +71,26 @@ public class LaserCannon : Weapon
 
     public override void EnemyFire()
     {
-        Debug.Log("Enemy Laser Fire " + projectile);
-        // Fire Laser 
-        activeProjectile = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation(), transform); 
-        laser = activeProjectile.GetComponent<Laser>(); 
-        laser.UpdateStats(weaponStats.projectileStats, damageLevels.Length);
-        // loop sound while firing
-        PlaySound();
+        StartCoroutine(FireWarning());        
+    }
+
+    private void DelayedEnemyFire()
+    {
+        if(currentCharge > 0){
+            Debug.Log("Enemy Laser Fire " + projectile);
+            // Fire Laser 
+            activeProjectile = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation(), transform); 
+            laser = activeProjectile.GetComponent<Laser>(); 
+            laser.UpdateStats(weaponStats.projectileStats, 4);
+            // loop sound while firing
+            PlaySound();
+            currentCharge --;
+            StartCoroutine(HoldEnemyFire(weaponStats.fireTime));
+        }
+        else{
+            Debug.Log("Out of Charge");
+        }
+        
     }
 
     
@@ -99,16 +111,23 @@ public class LaserCannon : Weapon
         //StartCoroutine(StartReload());
         isReloading = true; 
         holdTimer = 0;
-        reloadTimer = 0;
+    }
+
+    private IEnumerator FireWarning(){
+        // instantiate warning laser
+        GameObject line = Instantiate(warningLaser, GetSpawnPos(), GetSpawnRotation(), transform); 
+        // wait for delay time
+        yield return new WaitForSeconds(delayTime);
+        // destroy warning laser
+        Destroy(line);
+        // fire weapon  
+        DelayedEnemyFire();
     }
 
 
     public override void SetupWeapon(){
         currentCharge = weaponStats.maxAmmo;
-        OnAmmoChange?.Invoke(currentCharge);
-        // start at lowest damage level
         weaponStats.projectileStats.damage = damageLevels[0];
-
         audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.clip = fireSound;
     }
@@ -133,6 +152,8 @@ public class LaserCannon : Weapon
 
     public override void StopFiring(){
         // destroy active projectile
+        Debug.Log("Stop Firing ");
+
         if(activeProjectile){
             Destroy(activeProjectile);
             activeProjectile = null;
@@ -140,6 +161,13 @@ public class LaserCannon : Weapon
         }
         audioSource.Stop();
         isFiring = false;
+    }
+
+    private IEnumerator HoldEnemyFire(float waitTime){
+        Debug.Log("Hold for: " + waitTime);
+
+        yield return new WaitForSeconds(waitTime);
+        StopFiring();
     }
 
 }

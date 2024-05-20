@@ -48,9 +48,10 @@ MonoBehaviour:
   projectile: {fileID: 4670324799686410404, guid: ce22b499eaf8e65498178eb3ce367b03, type: 3}
   fireSound: {fileID: 8300000, guid: a53e348be58a7364291e9d1b133adb8f, type: 3}
   weaponStats:
-    fireInterval: 0
+    fireInterval: 6
     reloadTime: 0
-    maxAmmo: 0
+    maxAmmo: 3
+    fireTime: 3
     projectileStats:
       speed: 0
       damage: 6
@@ -61,8 +62,8 @@ MonoBehaviour:
   weaponCategory: 1
   isPlayerWeapon: 0
   canFire: 0
-  spawnPosition: {x: 0, y: 0, z: 0}
-  fireTime: 0
+  warningLaser: {fileID: 4496507639563546046, guid: 165e747cc0086984e8c5bc4a055f3b76, type: 3}
+  delayTime: 2
 --- !u!82 &7884464371219309874
 AudioSource:
   m_ObjectHideFlags: 0

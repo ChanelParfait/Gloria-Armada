@@ -72,6 +72,7 @@ public class EnemyPlane : EnemyBase
             targetObj = GameObject.FindGameObjectWithTag("LevelManager");
         }
         randomOffsetComponent = Random.Range(-0.4f, 0.4f);
+        timer = fireInterval - 1;
         StartCoroutine(Initialize());
         
     }
@@ -119,8 +120,8 @@ public class EnemyPlane : EnemyBase
         if(targetObj == null){
             targetObj = GameObject.FindGameObjectWithTag("LevelManager");
         }
-        targetOffset = GetTargetOffset();
-         targetPos = targetObj.transform.position + targetOffset;
+        //targetOffset = GetTargetOffset();
+        //targetPos = targetObj.transform.position + targetOffset;
 
         if (rb.angularVelocity.magnitude > 0.5f){
             rb.useGravity = true;
@@ -130,7 +131,7 @@ public class EnemyPlane : EnemyBase
         }
 
         timer += Time.deltaTime; 
-        if(timer >= Random.Range(fireInterval, 3f)){
+        if(timer >= Random.Range(fireInterval, fireInterval + 1f)){
             Debug.Log("Fire on Interval");
             timer = 0; 
             Fire();
