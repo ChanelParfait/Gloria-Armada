@@ -124,8 +124,7 @@ public class EnemyPlane : EnemyBase
             timer = 0; 
             Fire();
         }
-        targetOffset = GetTargetOffset();
-        targetPos = targetObj.transform.position + targetOffset;
+    }
 
     protected virtual void FixedUpdate(){
         targetOffset = GetTargetOffset();
