@@ -61,6 +61,7 @@ public class Autopilot : MonoBehaviour
     Plane p;
 
     [SerializeField] bool autoArm = true;
+    private bool defaultAutoArm = true;
 
     public bool InFormation { get; private set; }
 
@@ -548,15 +549,16 @@ public class Autopilot : MonoBehaviour
                 // Get the time til we hit the ground
                 float timeToHit = hit.distance / rb.velocity.magnitude;
                 // reflect the vector off the ground from the hit location
-                Vector3 reflected = Vector3.Reflect(rb.velocity * 1 / (timeToHit + float.MinValue), normal);
-                Vector3 avoidance = reflected;
-                Debug.DrawLine(transform.position, avoidance, Color.green);
+                Vector3 reflected = Vector3.Reflect(rb.velocity * 1 / (timeToHit + float.Epsilon), normal);
+                Vector3 avoidance = hit.point + reflected;
+                Debug.DrawLine(hit.point, avoidance, Color.green);
                 float error = Vector3.SignedAngle(rb.transform.forward, avoidance, rb.transform.right) / 180f;
                 p.throttle = 1.0f;
 
                 //Debug.DrawRay(hit.point, reflected, Color.green);
 
                 // rollUpright 
+                //autopilotDeflection.y += Upright();
                 autopilotDeflection.x -= Mathf.Clamp(PIDSolve(error, ref aPitchPID), -1, 1);
             }
         }
@@ -577,6 +579,8 @@ public class Autopilot : MonoBehaviour
     // Target a 2D plane based on LevelManager perspective
     Vector3 AutoTargetPlane(bool positional = false, float holdAltitude = float.MaxValue)
     {
+        defaultAutoArm = autoArm;
+        autoArm = true;
         // If we are not already on the plane then go to it
         float x = rb.transform.position.x;
         float y = rb.transform.position.y;
@@ -588,7 +592,7 @@ public class Autopilot : MonoBehaviour
         float signX = Mathf.Sign(x);
         float signY = Mathf.Sign(y);
         float signZ = Mathf.Sign(z);
-        float smoothing = 200.0f;
+        float smoothing = 160.0f;
 
         // Set zAngle between 0 and 90 degrees
         float zAngle = 80;
@@ -606,7 +610,7 @@ public class Autopilot : MonoBehaviour
             targetVector = new Vector3(60, 0, 0); //As a position
         }
 
-        if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 1 && (rb.velocity.normalized - Vector3.right).magnitude < 2f)
+        if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 0.5f && (rb.velocity.normalized - Vector3.right).magnitude < 0.5f)
         {
             transform.position.Set(x, 0, z);
             rb.MovePosition(new Vector3(x, 0, z));
@@ -615,7 +619,7 @@ public class Autopilot : MonoBehaviour
             autopilotState = lastAutopilotState;
         }
         // if rb.velocity is CLOSE to right, and z is CLOSE to 0, and we are not on the axes
-        else if (pers == Perspective.Side_On && !onAxes && Mathf.Abs(z) < 1 && (rb.velocity.normalized - Vector3.right).magnitude < 2)
+        else if (pers == Perspective.Side_On && !onAxes && Mathf.Abs(z) < 0.5f && (rb.velocity.normalized - Vector3.right).magnitude < 0.5f)
         {
             //force the plane to the xz plane
             rb.MovePosition(new Vector3(x, y, 0));
@@ -641,6 +645,7 @@ public class Autopilot : MonoBehaviour
 
         if (onAxes)
         {
+            autoArm = defaultAutoArm;
             SnapToAxes();
         }
         else

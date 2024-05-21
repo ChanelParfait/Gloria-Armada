@@ -187,7 +187,7 @@ public class EnemyPlane : EnemyBase
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 100.0f)){
             //If the distance to the ground is less than 10 units, add a force upwards
             if (hit.distance < 10.0f){
-                rb.AddForce(Vector3.up * (10 - hit.distance) * 10.0f);
+                rb.AddForce(Vector3.up * (10 - hit.distance) * 20.0f);
             }
         }
     }
@@ -199,11 +199,11 @@ public class EnemyPlane : EnemyBase
             Vector3 normal = col.contacts[0].normal;
             //Get dot product of the normal and the velocity
             Rigidbody rb = GetComponent<Rigidbody>();
-            float dot = Vector3.Dot(rb.velocity.normalized, normal);
+            float dot = Vector3.Dot(rb.velocity.normalized, normal) * rb.velocity.magnitude;
             
             //Debug.Log(dot);
 
-            dot = Mathf.Clamp01(dot * 5);
+            dot = Mathf.Clamp01(dot);
             
             //Reduce health by a minimum of 1health, max of MaxLife based on dot
             int damage = (int)Mathf.Lerp(1,maxHealth, dot);

@@ -233,6 +233,42 @@ MonoBehaviour:
     dialogueEvent: {fileID: 0}
     tutorialTask: 2
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 0
+    line: The faster you go, the more responsive the plane is
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 2
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
+    dialogueType: 0
+    line: But you'll have less time to react to threats!
+    choice:
+      affirm:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+      negate:
+        optionText: 
+        choiceType: 0
+        newDialogue: {fileID: 0}
+        newDialogueIndex: 0
+        eventAction: {fileID: 0}
+    dialogueEvent: {fileID: 0}
+    tutorialTask: 2
+  - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 6
     line: Alright, let's get ourselves a test target!
     choice:
@@ -342,7 +378,7 @@ MonoBehaviour:
     tutorialTask: 7
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 5
-    line: Try moving left, press A
+    line: Try moving right, press 'D'
     choice:
       affirm:
         optionText: 

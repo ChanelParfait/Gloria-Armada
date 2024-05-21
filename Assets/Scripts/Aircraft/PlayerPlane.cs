@@ -92,11 +92,11 @@ public class PlayerPlane : Actor
             Vector3 normal = col.contacts[0].normal;
             //Get dot product of the normal and the velocity
             Rigidbody rb = GetComponent<Rigidbody>();
-            float dot = Vector3.Dot(rb.velocity.normalized, normal);
+            float dot = Vector3.Dot(rb.velocity.normalized, normal) * rb.velocity.magnitude;
             
             //Debug.Log(dot);
 
-            dot = Mathf.Clamp01(dot * 5);
+            dot = Mathf.Clamp01(dot);
             
             //Reduce health by a minimum of 1health, max of MaxLife based on dot
             int damage = (int)Mathf.Lerp(1,maxHealth, dot);

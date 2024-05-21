@@ -2336,6 +2336,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 674909139210087522, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: autoArm
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 674909139210087522, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: rollPID.Kd
       value: 0.85
       objectReference: {fileID: 0}
@@ -4361,7 +4365,7 @@ PrefabInstance:
       objectReference: {fileID: 949054471}
     - target: {fileID: 876247702513173626, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
       propertyPath: spawnOverTime
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 876247702513173626, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
       propertyPath: initPerspective
@@ -4394,6 +4398,10 @@ PrefabInstance:
     - target: {fileID: 8350215954295267770, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
       propertyPath: m_Name
       value: LevelManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8587433572751822397, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: m_Size.z
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4573,6 +4581,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1168509773419960114, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
   m_PrefabInstance: {fileID: 656870839}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &949054473 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3337119729129866234, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+  m_PrefabInstance: {fileID: 656870839}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949054471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb7bf86409900f499368b9f70206844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &973383593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7379,6 +7398,10 @@ PrefabInstance:
       propertyPath: m_WorldSpaceTargetObject
       value: 
       objectReference: {fileID: 1878751303}
+    - target: {fileID: 1416248140715569942, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
+      propertyPath: playerHealth
+      value: 
+      objectReference: {fileID: 949054473}
     - target: {fileID: 1700060233469541737, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
       propertyPath: m_UiScaleMode
       value: 1
@@ -7487,6 +7510,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1231821320}
+    - target: {fileID: 6513076472532644446, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7808474404614065885, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
