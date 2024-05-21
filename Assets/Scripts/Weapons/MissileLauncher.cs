@@ -16,7 +16,7 @@ public class MissileLauncher : Weapon
     private bool isReloading = false;
 
     // time it takes for the ammo to be replensished by 1
-    private const float replenTime = 1.5f;
+    private const float replenTime = 4f;
 
     // Start is called before the first frame update
     void Start()
@@ -87,15 +87,23 @@ public class MissileLauncher : Weapon
 
     }
 
-    /*public override void EnemyFire(Rigidbody rb)
-    {
-        //Debug.Log("Enemy Missile Fire");
-        base.Fire(rb);
-    }*/
+    public override void EnemyFire()
+    {   
+        if(currentAmmo > 0){
+            //Debug.Log("Enemy Missile Fire");
+            base.EnemyFire();
+            // Decrement Ammo
+            currentAmmo --;
+        }
+        else{
+            //Debug.Log("Out of Ammo");
+        }
+        
+
+    }
 
     public override void SetupWeapon(){
         currentAmmo = weaponStats.maxAmmo;
-        OnAmmoChange?.Invoke(currentAmmo);
 
         if(!projectile){
             // Find and Retrieve Missile Prefab from Resources Folder
@@ -106,8 +114,11 @@ public class MissileLauncher : Weapon
         audioSource.clip = fireSound;
 
         if(!fireSound){
-            fireSound = (AudioClip)Resources.Load("Audio/Rocket_Sound");
-            audioSource.clip = fireSound;
+            fireSound = (AudioClip)Resources.Load("Audio/Rockets/launch");
+            if (fireSound){
+                audioSource.clip = fireSound;
+            }
+            
         }
     }
 

@@ -7,8 +7,6 @@ public class TripleBarrel : Weapon
     private float timer = 0; 
     private int counter = 1;
 
-    private Perspective currentPerspective;
-
     private void OnEnable(){
         LevelManager.OnPerspectiveChange += UpdatePerspective;
     }
@@ -22,7 +20,7 @@ public class TripleBarrel : Weapon
     void Start()
     {
         SetupWeapon();
-        currentPerspective = Perspective.Side_On;
+        //currentPerspective = Perspective.Side_On;
     }
 
     // Update is called once per frame

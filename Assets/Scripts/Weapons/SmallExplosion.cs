@@ -13,10 +13,30 @@ public class SmallExplosion : MonoBehaviour
 
     [SerializeField] float explosionRadius = 13.0f;
 
+    [SerializeField] AudioClip audioClip;
+    [SerializeField] AudioSource audioSource;
+
     Collider col;
     // Start is called before the first frame update
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        if (audioClip != null)
+        {
+            audioSource.clip = audioClip;
+
+            audioSource.volume = Random.Range(0.8f, 1.0f);
+            audioSource.pitch = Random.Range(0.8f, 1.1f);
+            audioSource.Play();
+        }
+
+
+
+
+        // Only do the damage assessment if the effect does damage (optimize)
+        if (damage <= 0){
+            return;
+        }
         // Get all colliders within the explosion radius
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
 

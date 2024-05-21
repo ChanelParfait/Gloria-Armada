@@ -285,6 +285,9 @@ public class DialogueManager : MonoBehaviour
                 break;
             case ChoiceType.EndDialogue:
                 break;
+            case ChoiceType.Event:
+                chosen.eventAction.DoEvent();
+                break;
         }
     }
     IEnumerator PopInBox(Canvas canvas, Transform background){
