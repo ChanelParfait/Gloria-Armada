@@ -176,7 +176,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider col){
-        //Debug.Log("Trigger");
+        Debug.Log("Trigger");
 
         if(col.tag == "SpawnTrigger" && isEnabled){
             // upon colliding with a spawn trigger, retrieve spawn parameters and start the spawning coroutine
