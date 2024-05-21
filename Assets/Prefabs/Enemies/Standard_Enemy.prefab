@@ -338,6 +338,10 @@ PrefabInstance:
       propertyPath: projectile
       value: 
       objectReference: {fileID: 2326073902769116228, guid: f2acc87826ef5994f8215ae446816a1b, type: 3}
+    - target: {fileID: 3209566285644169230, guid: c2968064a6f387d42ae42e6dc19c3673, type: 3}
+      propertyPath: weaponStats.fireInterval
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3861783336070429717, guid: c2968064a6f387d42ae42e6dc19c3673, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

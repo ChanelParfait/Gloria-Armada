@@ -21,14 +21,14 @@ public class MachineGun : Weapon
     // Update is called once per frame
     void Update()
     {
-        if(isPlayerWeapon){
-            PlayerUpdate();
+        firerateTimer += Time.deltaTime; 
+        if(!canFire && firerateTimer >= weaponStats.fireInterval){
+            canFire = true;
         }
     }
 
     public override void Fire(Vector3 velocity)
     {       
-        firerateTimer += Time.deltaTime;
         if(firerateTimer >  weaponStats.fireInterval && !canFire){
             canFire = true;
         }
@@ -41,7 +41,6 @@ public class MachineGun : Weapon
             }
         }
         else{
-            reloadTimer += Time.deltaTime;
             // If the weapon has a maximum ammo, check if the player has ammo
             if(currentAmmo > 0 && canFire){
                 base.Fire(velocity);
@@ -56,9 +55,8 @@ public class MachineGun : Weapon
         }
     } 
 
-    /*public override void EnemyFire()
+    public override void EnemyFire()
     {
-        firerateTimer += Time.deltaTime;
         if(firerateTimer >  weaponStats.fireInterval && !canFire){
             canFire = true;
         }
@@ -71,7 +69,6 @@ public class MachineGun : Weapon
             }
         }
         else{
-            reloadTimer += Time.deltaTime;
             // If the weapon has a maximum ammo, check if the player has ammo
             if(currentAmmo > 0 && canFire){
                 base.Fire(GetProjectileStats().speed * transform.forward);
@@ -84,7 +81,7 @@ public class MachineGun : Weapon
                 StartCoroutine(StartReload());
             }
         }
-    }*/
+    }
 
     private IEnumerator StartReload(){
         // start the reloading process
@@ -118,14 +115,6 @@ public class MachineGun : Weapon
         if(!fireSound){
            Object audioPrefab = Resources.Load("Audio/Enemy_Plasma");
             fireSound = (AudioClip)audioPrefab;
-        }
-    }
-
-    private void PlayerUpdate(){
-        // Increase timer
-        firerateTimer += Time.deltaTime; 
-        if(!canFire && firerateTimer >= weaponStats.fireInterval){
-            canFire = true;
         }
     }
 }
