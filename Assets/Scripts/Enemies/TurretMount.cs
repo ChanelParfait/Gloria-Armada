@@ -11,7 +11,9 @@ public class TurretMount : MonoBehaviour
     public bool OnFire = false;
 
     [SerializeField] float timer;
-    [SerializeField] float fireInterval = 1;
+
+    //To be used to deal damage to the owner of the turret
+    //[SerializeField] float fireInterval = 1;
      // Start is called before the first frame update
     void Start()
     {

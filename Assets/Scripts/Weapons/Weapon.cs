@@ -30,6 +30,8 @@ public class Weapon : MonoBehaviour
     public bool isPatternFire = false;
     public bool canFire = true;
     protected AudioSource audioSource;
+    public Vector3 spawnPosition;
+
     protected Perspective currentPerspective = Perspective.Side_On;
     
     // Events 
@@ -87,8 +89,6 @@ public class Weapon : MonoBehaviour
     
     public virtual void EnemyFire()
     {
-        Debug.Log("Enemy Fire: " + projectile);
-        // Get spawn position and spawn projectile object
 
         //Get spawn position and spawn projectile object
         GameObject clone = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation()); 
@@ -125,7 +125,7 @@ public class Weapon : MonoBehaviour
         // Default spawn rotation is the rotation of the weapon
         return gameObject.transform.rotation;
     }
-    
+
     public virtual void EnemyPatternFire(){
         
     }

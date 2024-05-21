@@ -134,13 +134,13 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if (spawnOverTime){
+        if (spawnOverTime){
             if (Time.time - lastSpawnTime > spawnInterval){
                 lastSpawnTime = Time.time;
                 int numEnemies = enemySpawner.GetNumEnemies();
-                enemySpawner.SpawnEnemy(SpawnPointName.Top_Right, UnityEngine.Random.Range(0, numEnemies));
+                enemySpawner.SpawnEnemy(SpawnPointName.Random, UnityEngine.Random.Range(0, numEnemies));
             }
-        }*/
+        }
     }
 
     private void OnEnable(){
@@ -223,7 +223,7 @@ public class LevelManager : MonoBehaviour
     }
 
     private void UpdateScore(EnemyBase enemy){
-        Debug.Log("Update Score");
+        //Debug.Log("Update Score");
         if(ScoreTxt){
             score += enemy.scoreValue;
             ScoreTxt.text = score.ToString();
