@@ -1241,6 +1241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 1062033948207875801, guid: c2968064a6f387d42ae42e6dc19c3673, type: 3}
+  bodyScriptableObject: {fileID: 0}
   weaponType: 0
   normalSprite: {fileID: 21300000, guid: 93db9404e579e864cb0f399f45d22eb3, type: 3}
   highlightedSprite: {fileID: 21300000, guid: a8a511a6a168af741bd5c1eb69186fcb, type: 3}

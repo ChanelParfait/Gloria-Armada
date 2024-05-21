@@ -61,7 +61,9 @@ MonoBehaviour:
       range: 0
   weaponCategory: 1
   isPlayerWeapon: 0
+  isPatternFire: 0
   canFire: 0
+  spawnPosition: {x: 0, y: 0, z: 0}
   warningLaser: {fileID: 4496507639563546046, guid: 165e747cc0086984e8c5bc4a055f3b76, type: 3}
   delayTime: 2
 --- !u!82 &7884464371219309874
@@ -73,7 +75,7 @@ AudioSource:
   m_GameObject: {fileID: 1062033948207875801}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
