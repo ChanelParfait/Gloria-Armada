@@ -154,7 +154,9 @@ public class EnemyPlane : EnemyBase
     protected override void Die(){
         // Destroy Self and emit death explosion
         GameObject powerCrate = Instantiate(deathExplosion, transform.position, Quaternion.identity);
-        powerupManager.SpawnPowerUp(transform.position, rb.velocity);
+        if (powerupManager != null){
+            powerupManager.SpawnPowerUp(transform.position, rb.velocity);
+        }
         if (deathObj != null)
         {
             GameObject deadObj = Instantiate(deathObj, transform.position, transform.rotation);
