@@ -42,7 +42,9 @@ public class PlayerPlane : Actor
     }
 
     public override void TakeDamage(float damage){
-        audioSource.Play();
+        if (audioSource.enabled){
+            audioSource.Play();
+        }
         base.TakeDamage(damage);
         //Debug.Log("Current Health: " + currentHealth);
         OnPlayerDamage?.Invoke(this);
@@ -51,7 +53,7 @@ public class PlayerPlane : Actor
     protected override void Die(){   
         if (deathObj == null)
         {
-            Debug.LogError("Death Object not set in PlayerLife script");
+            Debug.LogError("Death Object not set");
             return;
         }
         GameObject deadObj = Instantiate(deathObj, transform.position, transform.rotation);
