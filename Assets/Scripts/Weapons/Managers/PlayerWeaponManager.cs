@@ -28,15 +28,16 @@ public class PlayerWeaponManager : MonoBehaviour
         switch (powerup)
         {
             case PowerupType.PrimaryDamageUp:
-                primaryWeapon.GetWeaponStats().projectileStats.damage *= 2; // Double bullet damage
+                primaryWeapon.GetWeaponStats().projectileStats.damage *= 1.25f;
+                 Debug.Log("Damage Up");
                 break;
             case PowerupType.BulletSpeedUp:
-                primaryWeapon.GetWeaponStats().projectileStats.speed *= 2;  
+                primaryWeapon.GetWeaponStats().projectileStats.speed *= 1.25f;  
                 Debug.Log("Bullet Speed Up");
                 break;
             case PowerupType.FirerateUp:
-                primaryWeapon.GetWeaponStats().fireInterval *= 0.5f; // Double firerate
-                primaryWeapon.GetWeaponStats().reloadTime *= 0.5f; // Double firerate
+                primaryWeapon.GetWeaponStats().fireInterval *= 0.80f; 
+                primaryWeapon.GetWeaponStats().reloadTime *= 0.80f; 
                 Debug.Log("Firerate Up");
                 break;
             case PowerupType.BulletSizeUp:

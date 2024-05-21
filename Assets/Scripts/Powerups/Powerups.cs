@@ -45,19 +45,6 @@ public class Powerups : MonoBehaviour
      private void ApplyPowerupEffect(PowerupType type)
     {
         playerWeaponManager.AddPowerup(type);
-        // switch (type)
-        // {
-        //     case PowerupType.DamageUp:
-        //         ProjectileStats currentStats = playerWeaponManager.GetPrimaryWeapon().GetProjectileStats();
-        //         currentStats.damage *= 2; // Double bullet speed             
-        //         Debug.Log("Damage up");
-        //         break;
-        //     case PowerupType.BulletSpeedUp:
-        //         currentStats = playerWeaponManager.GetPrimaryWeapon().GetProjectileStats();
-        //         currentStats.speed *= 1.25f; // Double bullet speed             
-        //         Debug.Log("Bullet Speed Up");
-        //         break;
-        // }
     }
 
      private void OnTriggerEnter(Collider col)

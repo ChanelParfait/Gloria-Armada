@@ -52,8 +52,6 @@ public class EnemyPlane : EnemyBase
 
 
     [SerializeField] private PowerupManager powerupManager;
-
-    [SerializeField] private GameObject deathObj;
     
     protected CameraUtils camUtils;
 
