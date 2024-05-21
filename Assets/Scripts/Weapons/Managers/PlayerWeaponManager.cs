@@ -27,7 +27,7 @@ public class PlayerWeaponManager : MonoBehaviour
         //Apply the powerup effect to the weapon stats
         switch (powerup)
         {
-            case PowerupType.DamageUp:
+            case PowerupType.PrimaryDamageUp:
                 primaryWeapon.GetWeaponStats().projectileStats.damage *= 2; // Double bullet damage
                 break;
             case PowerupType.BulletSpeedUp:
@@ -41,6 +41,30 @@ public class PlayerWeaponManager : MonoBehaviour
                 break;
             case PowerupType.BulletSizeUp:
                 primaryWeapon.GetWeaponStats().projectileStats.size *= 2; // Double bullet size
+                break;
+            case PowerupType.BurnDamage:
+                //
+                break;
+            case PowerupType.FreezeShots:
+                //
+                break;
+            case PowerupType.ExplodingShots:
+                //
+                break;
+            case PowerupType.LightningChain:
+                //
+                break;
+            case PowerupType.SpecialDamageUp:
+                //
+                break;
+            case PowerupType.SplitShot:
+                //
+                break;
+            case PowerupType.APDamage:
+                //
+                break;
+            case PowerupType.HomingShots:
+                //
                 break;
         }
     }

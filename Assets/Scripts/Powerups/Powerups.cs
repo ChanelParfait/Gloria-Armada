@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum PowerupType {
-    DamageUp,
+    PrimaryDamageUp,
     BulletSpeedUp,
     FirerateUp,
     BulletSizeUp,
+    BurnDamage,
+    FreezeShots,
+    ExplodingShots,
+    LightningChain,
+    SpecialDamageUp,
+    SplitShot,
+    APDamage,
+    HomingShots
 }
 
 public class Powerups : MonoBehaviour
@@ -37,20 +45,19 @@ public class Powerups : MonoBehaviour
      private void ApplyPowerupEffect(PowerupType type)
     {
         playerWeaponManager.AddPowerup(type);
-        switch (type)
-        {
-            case PowerupType.DamageUp:
-                ProjectileStats currentStats = playerWeaponManager.GetPrimaryWeapon().GetProjectileStats();
-                currentStats.damage *= 2; // Double bullet speed             
-                Debug.Log("Damage up");
-                break;
-            case PowerupType.BulletSpeedUp:
-                currentStats = playerWeaponManager.GetPrimaryWeapon().GetProjectileStats();
-                currentStats.speed *= 1.25f; // Double bullet speed             
-                //playerWeaponManager.GetPrimaryWeapon().weaponStats.projectileStats(currentStats);   
-                Debug.Log("Bullet Speed Up");
-                break;
-        }
+        // switch (type)
+        // {
+        //     case PowerupType.DamageUp:
+        //         ProjectileStats currentStats = playerWeaponManager.GetPrimaryWeapon().GetProjectileStats();
+        //         currentStats.damage *= 2; // Double bullet speed             
+        //         Debug.Log("Damage up");
+        //         break;
+        //     case PowerupType.BulletSpeedUp:
+        //         currentStats = playerWeaponManager.GetPrimaryWeapon().GetProjectileStats();
+        //         currentStats.speed *= 1.25f; // Double bullet speed             
+        //         Debug.Log("Bullet Speed Up");
+        //         break;
+        // }
     }
 
      private void OnTriggerEnter(Collider col)
