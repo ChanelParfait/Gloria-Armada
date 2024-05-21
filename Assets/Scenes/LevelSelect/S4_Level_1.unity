@@ -886,10 +886,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6479009298115349164, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
       insertIndex: -1
       addedObject: {fileID: 581779778}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8350215954295267770, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2089608219}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
 --- !u!1 &302188185
 GameObject:
@@ -6530,7 +6527,7 @@ PrefabInstance:
       objectReference: {fileID: 1733479940}
     - target: {fileID: 3337119729129866234, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: maxHealth
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4516825297399139526, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       propertyPath: m_Layer
@@ -9541,25 +9538,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057578107}
   m_CullTransparentMesh: 1
---- !u!1 &2089608214 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8350215954295267770, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
-  m_PrefabInstance: {fileID: 286267083}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2089608219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2089608214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a152afdfd02d1f4090430d2927ab9eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  activationTime: 6
 --- !u!1001 &2116550166
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9819,7 +9797,7 @@ GameObject:
   - component: {fileID: 694059697181357972}
   - component: {fileID: 2066284131759887825}
   m_Layer: 5
-  m_Name: GameOverMenu
+  m_Name: LevelClearrMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9891,34 +9869,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
---- !u!114 &2363179637060686918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5787550087062338271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 560dd963a58e3d14896391444972203a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shouldCursorBeVisible: 0
---- !u!114 &2583198851936534059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5787550087062338271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfd03a2e8564d8747859f8393ac89652, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timerStart: 0
-  gameOverUI: {fileID: 626349000716352045}
-  gameHUD: {fileID: 1849828312}
 --- !u!222 &2743204054042964712
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9939,6 +9889,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HeartBar
       objectReference: {fileID: 0}
+    - target: {fileID: 1892333745965753780, guid: 38c0ebdd4480b5144b36b67ec6ccb67b, type: 3}
+      propertyPath: heartPrefab
+      value: 
+      objectReference: {fileID: 2121093183430745625, guid: 5306627e6c55ea743bc0df64facde4bf, type: 3}
     - target: {fileID: 1892333745965753780, guid: 38c0ebdd4480b5144b36b67ec6ccb67b, type: 3}
       propertyPath: playerHealth
       value: 
@@ -10023,6 +9977,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6018626738730198268, guid: 38c0ebdd4480b5144b36b67ec6ccb67b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10091,15 +10049,13 @@ GameObject:
   - component: {fileID: 2161372880275761933}
   - component: {fileID: 6872770746315925490}
   - component: {fileID: 8135218031003816737}
-  - component: {fileID: 2363179637060686918}
-  - component: {fileID: 2583198851936534059}
   m_Layer: 5
-  m_Name: GameOver (1)
+  m_Name: LevelClear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6276335479639675955
 RectTransform:
   m_ObjectHideFlags: 0
