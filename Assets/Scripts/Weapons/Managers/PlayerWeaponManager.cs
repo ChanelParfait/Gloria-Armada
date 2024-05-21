@@ -10,12 +10,65 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [SerializeField] private Weapon specialWeapon;
 
+    [SerializeField] List<PowerupType> powerups = new();
+
     public bool isArmed = true;
 
     public Rigidbody playerRB;
 
     public GameObject test1;
     public GameObject test2;
+
+    public void AddPowerup(PowerupType powerup){
+        powerups.Add(powerup);
+
+        Weapon primaryWeapon = GetPrimaryWeapon();
+        Weapon specialWeapon = GetSpecialWeapon();
+        //Apply the powerup effect to the weapon stats
+        switch (powerup)
+        {
+            case PowerupType.PrimaryDamageUp:
+                primaryWeapon.GetWeaponStats().projectileStats.damage *= 1.25f;
+                 Debug.Log("Damage Up");
+                break;
+            case PowerupType.BulletSpeedUp:
+                primaryWeapon.GetWeaponStats().projectileStats.speed *= 1.25f;  
+                Debug.Log("Bullet Speed Up");
+                break;
+            case PowerupType.FirerateUp:
+                primaryWeapon.GetWeaponStats().fireInterval *= 0.80f; 
+                primaryWeapon.GetWeaponStats().reloadTime *= 0.80f; 
+                Debug.Log("Firerate Up");
+                break;
+            case PowerupType.BulletSizeUp:
+                primaryWeapon.GetWeaponStats().projectileStats.size *= 2; // Double bullet size
+                break;
+            // case PowerupType.BurnDamage:
+            //     //
+            //     break;
+            // case PowerupType.FreezeShots:
+            //     //
+            //     break;
+            // case PowerupType.ExplodingShots:
+            //     //
+            //     break;
+            // case PowerupType.LightningChain:
+            //     //
+            //     break;
+            // case PowerupType.SpecialDamageUp:
+            //     //
+            //     break;
+            // case PowerupType.SplitShot:
+            //     //
+            //     break;
+            // case PowerupType.APDamage:
+            //     //
+            //     break;
+            // case PowerupType.HomingShots:
+            //     //
+            //     break;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()

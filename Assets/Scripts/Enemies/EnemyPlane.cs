@@ -50,6 +50,9 @@ public class EnemyPlane : EnemyBase
     protected float randFireTime;
     public GameObject deathExplosion;
 
+
+    [SerializeField] private PowerupManager powerupManager;
+    
     protected CameraUtils camUtils;
 
     [SerializeField] protected GameObject deathObj;
@@ -67,6 +70,7 @@ public class EnemyPlane : EnemyBase
     {   
         base.Start();
         weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
+        powerupManager = GameObject.FindObjectOfType<PowerupManager>();
         rb = GetComponent<Rigidbody>();
         GameObject lmObj = GameObject.FindGameObjectWithTag("LevelManager");
         if (lmObj != null){
@@ -149,7 +153,10 @@ public class EnemyPlane : EnemyBase
 
     protected override void Die(){
         // Destroy Self and emit death explosion
-        Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        GameObject powerCrate = Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        if (powerupManager != null){
+            powerupManager.SpawnPowerUp(transform.position, rb.velocity);
+        }
         if (deathObj != null)
         {
             GameObject deadObj = Instantiate(deathObj, transform.position, transform.rotation);

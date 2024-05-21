@@ -101,6 +101,7 @@ MonoBehaviour:
   maxHealth: 2
   rb: {fileID: 0}
   scoreValue: 10
+  fire: 0
   fireInterval: 3
   speed: 3
   referenceSpeed: 0
@@ -127,6 +128,7 @@ MonoBehaviour:
       lastError: 0
   targetOffset: {x: 0, y: 0, z: 0}
   deathExplosion: {fileID: 7641901280459977050, guid: 12cd1a8c790828542bcbce48a291aa01, type: 3}
+  powerupManager: {fileID: 0}
   deathObj: {fileID: 0}
 --- !u!82 &374345652581398199
 AudioSource:
@@ -137,7 +139,7 @@ AudioSource:
   m_GameObject: {fileID: 5330523515528714847}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -413,6 +415,7 @@ MonoBehaviour:
     fireInterval: 0.4
     reloadTime: 1
     maxAmmo: 0
+    fireTime: 0
     projectileStats:
       speed: 15
       damage: 1
