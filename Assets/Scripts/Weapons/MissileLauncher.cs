@@ -50,7 +50,7 @@ public class MissileLauncher : Weapon
         // Add one to ammo and reset reload timer
         currentAmmo ++;
         reloadTimer = 0;
-        Debug.Log("Ammo: " + currentAmmo);
+        //Debug.Log("Ammo: " + currentAmmo);
         OnAmmoChange?.Invoke(currentAmmo);
         
     }
@@ -64,7 +64,7 @@ public class MissileLauncher : Weapon
 
     private void FinishReload(){
         // returns the weapon to max ammo
-        Debug.Log("Full Reload Complete");
+        //Debug.Log("Full Reload Complete");
         currentAmmo = weaponStats.maxAmmo; 
         isReloading = false;
         OnAmmoChange?.Invoke(currentAmmo);
@@ -77,13 +77,15 @@ public class MissileLauncher : Weapon
             base.Fire(velocity);
             // Decrement Ammo
             currentAmmo --;
+            //Debug.Log("Ammo: " + currentAmmo);
+
             OnAmmoChange?.Invoke(currentAmmo);
             canFire = false;
             // Reset Timers
             reloadTimer = 0;
             firerateTimer = 0;
         }
-        Debug.Log("Ammo: " + currentAmmo);
+        //Debug.Log("Ammo: " + currentAmmo);
 
     }
 
@@ -97,6 +99,9 @@ public class MissileLauncher : Weapon
 
     public override void SetupWeapon(){
         currentAmmo = weaponStats.maxAmmo;
+        if(isPlayerWeapon){
+            OnAmmoChange?.Invoke(currentAmmo);
+        }
 
         if(!projectile){
             // Find and Retrieve Missile Prefab from Resources Folder

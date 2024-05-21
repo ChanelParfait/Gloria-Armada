@@ -56,7 +56,7 @@ public class MachineGun : Weapon
         }
     } 
 
-    public override void EnemyFire()
+    /*public override void EnemyFire()
     {
         firerateTimer += Time.deltaTime;
         if(firerateTimer >  weaponStats.fireInterval && !canFire){
@@ -84,7 +84,7 @@ public class MachineGun : Weapon
                 StartCoroutine(StartReload());
             }
         }
-    }
+    }*/
 
     private IEnumerator StartReload(){
         // start the reloading process
