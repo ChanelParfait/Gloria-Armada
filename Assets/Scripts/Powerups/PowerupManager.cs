@@ -32,11 +32,13 @@ public class PowerupManager : MonoBehaviour
             return false;
         }
     }    
-    public void SpawnPowerUp(Vector3 enemyPosition)
+    public void SpawnPowerUp(Vector3 enemyPosition, Vector3 velocity)
     {
 
         if(CheckDrop()){
-            Instantiate(PowerupPrefab, enemyPosition, Quaternion.identity);
+            GameObject powerUp = Instantiate(PowerupPrefab, enemyPosition, Quaternion.identity);
+            Rigidbody rb = powerUp.GetComponentInChildren<Rigidbody>();
+            rb.AddForce(velocity, ForceMode.VelocityChange);
             //Debug.Log("Power-up spawned at: " + enemyPosition);
         }
      

@@ -6,15 +6,15 @@ public enum PowerupType {
     PrimaryDamageUp,
     BulletSpeedUp,
     FirerateUp,
-    BulletSizeUp,
-    BurnDamage,
-    FreezeShots,
-    ExplodingShots,
-    LightningChain,
-    SpecialDamageUp,
-    SplitShot,
-    APDamage,
-    HomingShots
+    BulletSizeUp
+    // BurnDamage,
+    // FreezeShots,
+    // ExplodingShots,
+    // LightningChain,
+    // SpecialDamageUp,
+    // SplitShot,
+    // APDamage,
+    // HomingShots
 }
 
 public class Powerups : MonoBehaviour

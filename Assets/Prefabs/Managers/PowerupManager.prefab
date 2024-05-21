@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9abc8222618ee488c84ef864fb69b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PowerupPrefab: {fileID: 2870301257477728436, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+  PowerupPrefab: {fileID: 6707243512788891348, guid: 9227f77bcdbf769408fb37ed77c321f4, type: 3}
   powerupItems: []
-  dropChance: 100
+  dropChance: 20
