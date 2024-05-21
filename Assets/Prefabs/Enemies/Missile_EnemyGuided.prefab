@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   rb: {fileID: 0}
-  scoreValue: 10
+  scoreValue: 20
   fire: 0
   fireInterval: 4
   speed: 3

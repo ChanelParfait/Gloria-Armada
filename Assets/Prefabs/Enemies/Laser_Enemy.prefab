@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   rb: {fileID: 0}
-  scoreValue: 30
+  scoreValue: 40
   fire: 0
   fireInterval: 6
   speed: 4
@@ -128,6 +128,7 @@ MonoBehaviour:
       lastError: 0
   targetOffset: {x: 0, y: 0, z: 0}
   deathExplosion: {fileID: 7641901280459977050, guid: 12cd1a8c790828542bcbce48a291aa01, type: 3}
+  powerupManager: {fileID: 0}
   deathObj: {fileID: 0}
 --- !u!82 &3701978883294950984
 AudioSource:
