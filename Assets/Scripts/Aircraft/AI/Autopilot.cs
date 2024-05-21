@@ -606,7 +606,7 @@ public class Autopilot : MonoBehaviour
             targetVector = new Vector3(60, 0, 0); //As a position
         }
 
-        if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 2 && (rb.velocity.normalized - Vector3.right).magnitude < 1f)
+        if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 1 && (rb.velocity.normalized - Vector3.right).magnitude < 2f)
         {
             transform.position.Set(x, 0, z);
             rb.MovePosition(new Vector3(x, 0, z));
@@ -615,7 +615,7 @@ public class Autopilot : MonoBehaviour
             autopilotState = lastAutopilotState;
         }
         // if rb.velocity is CLOSE to right, and z is CLOSE to 0, and we are not on the axes
-        else if (pers == Perspective.Side_On && !onAxes && Mathf.Abs(z) < 2 && (rb.velocity.normalized - Vector3.right).magnitude < 0.1f)
+        else if (pers == Perspective.Side_On && !onAxes && Mathf.Abs(z) < 1 && (rb.velocity.normalized - Vector3.right).magnitude < 2)
         {
             //force the plane to the xz plane
             rb.MovePosition(new Vector3(x, y, 0));
