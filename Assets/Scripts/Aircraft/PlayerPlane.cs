@@ -32,9 +32,11 @@ public class PlayerPlane : Actor
         currentHealth = maxHealth;
         audioSource = GetComponent<AudioSource>();
         engineSource = gameObject.AddComponent<AudioSource>();
+        engineSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
         engineSource.clip = engineSound;
         engineSource.loop = true;
         boostedSource = gameObject.AddComponent<AudioSource>();
+        boostedSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;
         boostedSource.clip = boostedSound;
         boostedSource.loop = true;
 
