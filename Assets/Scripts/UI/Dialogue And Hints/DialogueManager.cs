@@ -113,7 +113,7 @@ public class DialogueManager : MonoBehaviour
             //Debug.Log("Line typed" + ", DialogueType: " + currentDialogue[index].dialogueType);
             switch (currentDialogue[index].dialogueType){
                 case DialogueType.Dialogue:
-                    yield return new WaitForSeconds(3);
+                    StartCoroutine(WaitOrSkip(3));
                     break;
                 case DialogueType.InterruptedDialogue:
                     break;
@@ -162,12 +162,27 @@ public class DialogueManager : MonoBehaviour
                     currentDialogue[index].dialogueEvent.DoEvent();
                     break;
             }
-            if (currentDialogue[index].dialogueType == DialogueType.Dialogue && typeSpeed == defaultSpeed){
+            if (currentDialogue[index].dialogueType == DialogueType.Dialogue){
                 yield return new WaitForSeconds(0.5f);
             }          
             NPCDialogueText.text = "";
             NextLine();
         }   
+    }
+
+    IEnumerator WaitOrSkip(float waitTime){
+        float t = 0;
+        while (t < waitTime){
+            // Check if the space key is pressed
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                Debug.Log("Space key pressed. Skipping wait time.");
+                yield break;  // Exit the coroutine early
+            }
+            yield return null;
+            t += Time.deltaTime;
+            // Wait for the next frame   
+        }
     }
 
     public void StartDialogue(){
@@ -269,6 +284,9 @@ public class DialogueManager : MonoBehaviour
                 index = chosen.newDialogueIndex;
                 break;
             case ChoiceType.EndDialogue:
+                break;
+            case ChoiceType.Event:
+                chosen.eventAction.DoEvent();
                 break;
         }
     }

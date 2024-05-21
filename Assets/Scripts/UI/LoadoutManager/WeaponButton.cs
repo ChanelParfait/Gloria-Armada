@@ -7,6 +7,7 @@ public class WeaponButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
     //public int weaponID; // Or use a more complex type like an object reference
     public GameObject weaponPrefab;
+    public PlaneStats bodyScriptableObject;
     public WeaponType weaponType;
 
     public Sprite normalSprite;

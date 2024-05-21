@@ -5,7 +5,7 @@ using UnityEngine;
 public class Actor : MonoBehaviour
 {
     // Base Actor Class for Enemies and Player to Inherit From
-    [SerializeReference] public int maxHealth;
+    [SerializeReference] public float maxHealth;
     public float currentHealth {get; protected set;}
 
     protected bool isAlive = true;
@@ -18,6 +18,7 @@ public class Actor : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
+        //Debug.Log("Obj: " + gameObject + " Damage: " + damage);
         if (isAlive){
             currentHealth -= damage;
             if(currentHealth <= 0){
@@ -34,7 +35,7 @@ public class Actor : MonoBehaviour
         foreach (ParticleManager pm in pms)
         {
             pm.transform.SetParent(null);   
-            pm.Detatch();
+            pm.Detach();
         }
         Destroy(gameObject);
     }

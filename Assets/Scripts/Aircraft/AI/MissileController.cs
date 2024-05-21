@@ -17,7 +17,7 @@ public class MissileController : MonoBehaviour
     [SerializeField] float selfDetTime = 3.0f;
     Vector3 lastPosition;
     [SerializeField] GameObject detonationEffect;
-    [SerializeField]LayerMask collisionMask;
+    [SerializeField] LayerMask collisionMask;
 
     FieldOfView fov;
 
@@ -26,6 +26,11 @@ public class MissileController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        if (lm)
+        {
+            pers = lm.currentPerspective;
+        }
         planeSelf = GetComponent<Plane>();
         ap = GetComponent<Autopilot>();
         rb = GetComponent<Rigidbody>();
@@ -35,7 +40,13 @@ public class MissileController : MonoBehaviour
         {
             Vector3 pos = this.gameObject.transform.position;
             gameObject.transform.position.Set(pos.x, pos.y, 0);
-            rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY  | RigidbodyConstraints.FreezePositionZ;
+            rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionZ;
+        }
+        else if (pers == Perspective.Top_Down)
+        {
+            Vector3 pos = this.gameObject.transform.position;
+            gameObject.transform.position.Set(pos.x, 0, pos.z);
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
         }
 
         rb.angularDrag = 0.01f;
@@ -49,7 +60,7 @@ public class MissileController : MonoBehaviour
         ap.onAxes = true;
         planeSelf.SetThrottle(0.0f);
         // Wait for a short time before homing in on player
-        StartCoroutine(Wait());  
+        StartCoroutine(Wait());
     }
 
     // Coroutine for missile to wait before homing in on player
@@ -75,9 +86,10 @@ public class MissileController : MonoBehaviour
         Detonate();
     }
 
-    public void Detonate(){
+    public void Detonate()
+    {
         //StopAllCoroutines();
-        if(detonationEffect)
+        if (detonationEffect)
         {
             Instantiate(detonationEffect, transform.position, Quaternion.identity);
         }
@@ -94,7 +106,8 @@ public class MissileController : MonoBehaviour
     //     }
     // }
 
-    void FixedUpdate(){
+    void FixedUpdate()
+    {
         var diff = rb.position - lastPosition;
         lastPosition = rb.position;
 
@@ -103,10 +116,12 @@ public class MissileController : MonoBehaviour
         RaycastHit hit;
         float width = 2.5f;
 
-        if (!isArmed){
+        if (!isArmed)
+        {
             return;
         }
-        if (Physics.SphereCast(ray, width, out hit, diff.magnitude, collisionMask.value)) {
+        if (Physics.SphereCast(ray, width, out hit, diff.magnitude, collisionMask.value))
+        {
             //Plane other = hit.collider.GetComponent<Plane>();
             Detonate();
         }

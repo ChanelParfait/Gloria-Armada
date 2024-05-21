@@ -12,15 +12,39 @@ public class PlayerPlane : Actor
     public static event UnityAction OnPlayerDeath;
 
     [SerializeField] GameObject deathObj;
+
+    [SerializeField] AudioClip engineSound;
+
+    [SerializeField] AudioClip boostEngage;
+    [SerializeField] AudioClip boostedSound;
+
+    Plane plane;
+
+    private bool audioPlayingBoosted = false;
+
+    AudioSource engineSource;
+    AudioSource boostedSource;
     // Start is called before the first frame update
     override protected void Start()
     {
+        plane = GetComponent<Plane>();
+
         currentHealth = maxHealth;
         audioSource = GetComponent<AudioSource>();
+        engineSource = gameObject.AddComponent<AudioSource>();
+        engineSource.clip = engineSound;
+        engineSource.loop = true;
+        boostedSource = gameObject.AddComponent<AudioSource>();
+        boostedSource.clip = boostedSound;
+        boostedSource.loop = true;
+
+        SwapTrack();
     }
 
     public override void TakeDamage(float damage){
-        audioSource.Play();
+        if (audioSource.enabled){
+            audioSource.Play();
+        }
         base.TakeDamage(damage);
         //Debug.Log("Current Health: " + currentHealth);
         OnPlayerDamage?.Invoke(this);
@@ -29,7 +53,7 @@ public class PlayerPlane : Actor
     protected override void Die(){   
         if (deathObj == null)
         {
-            Debug.LogError("Death Object not set in PlayerLife script");
+            Debug.LogError("Death Object not set");
             return;
         }
         GameObject deadObj = Instantiate(deathObj, transform.position, transform.rotation);
@@ -43,7 +67,20 @@ public class PlayerPlane : Actor
         //Destroy the player
         base.Die();
         //TODO: This goes before the base.Die() call
-        OnPlayerDeath?.Invoke();     
+        OnPlayerDeath?.Invoke();  
+
+    }
+
+    void SwapTrack(){
+        if (audioPlayingBoosted){
+            engineSource.Play();
+            boostedSource.Stop();
+        }
+        else {
+            boostedSource.Play();
+            engineSource.Stop();
+        }
+        audioPlayingBoosted = !audioPlayingBoosted;
     }
 
     private void OnCollisionEnter(Collision col)
@@ -63,6 +100,23 @@ public class PlayerPlane : Actor
             int damage = (int)Mathf.Lerp(1,maxHealth, dot);
 
             TakeDamage(damage);
+        }
+    }
+
+    // Update is called once per frame
+    void Update(){
+        if (plane.throttle >= 1.0f){
+            if (!audioPlayingBoosted){
+                boostedSource.PlayOneShot(boostEngage);
+                SwapTrack();
+            }
+        }
+        else {
+            if (audioPlayingBoosted){
+                SwapTrack();
+            }
+            engineSource.pitch = Mathf.Lerp(0.5f, 1.0f, plane.throttle);
+            engineSource.volume = Mathf.Lerp(0.9f, 1.0f, plane.throttle);
         }
     }
     

@@ -103,10 +103,30 @@ MonoBehaviour:
   fireInterval: 4
   speed: 3
   referenceSpeed: 0
-  moveDir: {x: 0, y: 0, z: 0}
-  orientation: {x: 0, y: 0, z: 0}
+  moveDir: {x: -1, y: 0, z: 0}
+  orientation: {x: -1, y: 0, z: 0}
+  pid:
+    x:
+      Kp: 1
+      Ki: 0.01
+      Kd: 22
+      integral: 0
+      lastError: 0
+    y:
+      Kp: 1
+      Ki: 0.01
+      Kd: 22
+      integral: 0
+      lastError: 0
+    z:
+      Kp: 1
+      Ki: 0.01
+      Kd: 22
+      integral: 0
+      lastError: 0
+  targetOffset: {x: 0, y: 0, z: 0}
   deathExplosion: {fileID: 7641901280459977050, guid: 12cd1a8c790828542bcbce48a291aa01, type: 3}
-  powerupManager: {fileID: 8694571463313691911, guid: 1df9884301790490bb9aaef6ca2b9daf, type: 3}
+  deathObj: {fileID: 0}
 --- !u!82 &4763586288305748271
 AudioSource:
   m_ObjectHideFlags: 0
@@ -163,7 +183,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

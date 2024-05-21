@@ -5,7 +5,7 @@ using UnityEngine;
 public class ParticleManager : MonoBehaviour
 {
     ParticleSystem ps;
-    bool detatched = false;
+    [SerializeField] bool detatched = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,10 +19,13 @@ public class ParticleManager : MonoBehaviour
         }     
     }
 
-    public void Detatch(){
-        var em = ps.emission;
-        em.enabled = false;
+    public void Detach(){
+        ps.Stop();
         // on last particle death
+        detatched = true;
+        if (!ps.IsAlive()) {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame

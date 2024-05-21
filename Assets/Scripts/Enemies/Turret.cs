@@ -9,7 +9,8 @@ public class Turret : EnemyBase
     [SerializeField] GameObject azimuthObj;
     [SerializeField] GameObject elevationObj;
 
-    
+    TurretMount turretMount;
+    float offsetAngle = 0;
 
     [SerializeField] bool leadShot = true;
     [SerializeField] float overrideProjectileSpeed = 25.0f;
@@ -17,12 +18,25 @@ public class Turret : EnemyBase
     FieldOfView fov;
     [SerializeField] float rotationSpeed = 60.0f;
 
+    public GameObject deathExplosion;
+
     // Start is called before the first frame update
     protected override void Start()
     {
+        //If has parent && parent has turret mount script, get the turret mount script
+        if (transform.parent != null){
+            if (transform.parent.GetComponent<TurretMount>() != null){
+                turretMount = transform.parent.GetComponent<TurretMount>();
+            }
+        }
         base.Start();
         fov = GetComponentInChildren<FieldOfView>(); //FOV is a child of "Gun Turret Body" - reflecting the actual aiming direction
         weaponManager = gameObject.GetComponentInChildren<EnemyWeaponManager>();
+        TryGetComponent<Rigidbody>(out rb);
+        if (rb == null)
+        {
+            rb = transform.root.GetComponent<Rigidbody>();
+        }
     }
     
     // Update is called once per frame
@@ -31,7 +45,13 @@ public class Turret : EnemyBase
         
         if (enemy != null){
             AimpointToTarget();
-            weaponManager.FireActiveWeapon();
+            if (rb != null){
+                weaponManager.FireActiveWeapon(rb.velocity);
+            }
+            else {
+                weaponManager.FireActiveWeapon();
+            }
+            
         }
         else {
             AimpointReset();
@@ -61,14 +81,31 @@ public class Turret : EnemyBase
         aimPoint.transform.position = targetPosition;
     }
 
+    Vector3 AngleOffsetToPosition(){
+        float dist = (aimPoint.transform.position - transform.position).magnitude;
+        // Transform an offsetAngle into a position offset at the distance of the aimpoint (rotating around z)
+        float x = dist * Mathf.Cos(offsetAngle * Mathf.Deg2Rad);
+        float y = dist * Mathf.Sin(offsetAngle * Mathf.Deg2Rad);
+        return new Vector3(x, y, 0);
+    }
+
     void AimpointReset(){
         aimPoint.transform.position = transform.position + new Vector3(-50, 5, 0);
     }
 
+    protected override void Die(){
+        //Alert turretMount that this turret has died
+        if (turretMount != null){
+            turretMount.TurretDied();
+        }
+        // Destroy Self and emit death explosion
+        Instantiate(deathExplosion, transform.position, Quaternion.identity);
+
+        base.Die();
+    }
+
 
     void SearchForTarget(){
-        // Smoothly rotate the turret back and forth in the X axis to scan for targets by moving aimPoint in an arc
-        //azimuthObj.transform.rotation = Quaternion.Euler(0, Mathf.Sin(Time.time) * 45, 0);
         if (fov.visibleTargets.Count > 0)
         {
             // Check if the gameObject still exists
@@ -119,6 +156,13 @@ public class Turret : EnemyBase
             Utilities.EaseInOut(t)
         );
 
+    }
+
+    IEnumerator arcSpray(){
+        while (true){
+            azimuthObj.transform.rotation = Quaternion.Euler(0, Mathf.Sin(Time.time) * 45, 0);
+            yield return null;
+        }
     }
 
 }

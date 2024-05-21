@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 33}
-  m_SizeDelta: {x: 300, y: 62.5}
+  m_SizeDelta: {x: 500, y: 62.5}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &651311679704621659
 CanvasRenderer:
@@ -113,4 +113,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6433078226cee7d40a7b769be912102d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHealth: {fileID: 0}
   heartPrefab: {fileID: 2121093183430745625, guid: 5306627e6c55ea743bc0df64facde4bf, type: 3}

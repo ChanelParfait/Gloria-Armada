@@ -94,6 +94,14 @@ public class PlayerWeaponManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E) && isArmed){
             FireSpecialWeapon();
         }
+        if(Input.GetKey(KeyCode.E) && isArmed){
+            // Special.Hold()
+            specialWeapon.Hold();
+        }
+        if(Input.GetKeyUp(KeyCode.E) && isArmed){
+            // Special.Release()
+            specialWeapon.Release();
+        }
 
     }
 
