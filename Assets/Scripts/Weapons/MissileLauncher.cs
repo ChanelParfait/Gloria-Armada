@@ -90,13 +90,13 @@ public class MissileLauncher : Weapon
     public override void EnemyFire()
     {   
         if(currentAmmo > 0){
-            Debug.Log("Enemy Missile Fire");
+            //Debug.Log("Enemy Missile Fire");
             base.EnemyFire();
             // Decrement Ammo
             currentAmmo --;
         }
         else{
-            Debug.Log("Out of Ammo");
+            //Debug.Log("Out of Ammo");
         }
         
 
