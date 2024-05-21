@@ -26,9 +26,12 @@ public class HeartLifeBar : MonoBehaviour
 
     private void Start()
     {
-        maxHealth = playerHealth.currentHealth;
+        Debug.Log("Starting healthbar");
+        maxHealth = playerHealth.maxHealth;
+        Debug.Log("Player Max Health = " + maxHealth);
         DrawHearts();
     }
+ 
 
     public void DrawHearts(PlayerPlane plane)
     {
