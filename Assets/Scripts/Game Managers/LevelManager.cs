@@ -67,6 +67,8 @@ public class LevelManager : MonoBehaviour
     {
         gameOverPnl = GameObject.Find("GameOver");
         youWinPnl = GameObject.Find("YouWin");
+        damageAnim = GameObject.Find("DamageCirclePrefab").GetComponent<Animator>();
+        ScoreTxt = GameObject.Find("Score/Text (TMP)").GetComponent<TextMeshProUGUI>();
         StartCoroutine(WaitforLoad());
         rb.velocity = Vector3.right * 20;
 

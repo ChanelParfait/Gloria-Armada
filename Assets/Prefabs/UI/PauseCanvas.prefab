@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 6442904156056303521}
-  gameHUD: {fileID: 3635405933398179781, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
+  gameHUD: {fileID: 0}
   plane: {fileID: 1168509773419960114, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
   gameOverUI: {fileID: 1064338346397557976, guid: fde2ffd9239b8e642b44039e843a9d2b, type: 3}
 --- !u!114 &4893657716619585269
