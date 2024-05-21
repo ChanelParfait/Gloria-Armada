@@ -1567,6 +1567,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 949054471}
     - target: {fileID: 2780932760021887502, guid: 84f91e52815d8e74786e395fa5b29539, type: 3}
+      propertyPath: spawnOverTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2780932760021887502, guid: 84f91e52815d8e74786e395fa5b29539, type: 3}
       propertyPath: initPerspective
       value: 0
       objectReference: {fileID: 0}
