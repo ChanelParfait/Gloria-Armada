@@ -98,12 +98,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2a22a1813d6d84cb1ccafe385a5e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2
+  maxHealth: 5
   rb: {fileID: 0}
-  scoreValue: 10
+  scoreValue: 30
   fire: 0
   fireInterval: 6
-  speed: 3
+  speed: 4
   referenceSpeed: 0
   moveDir: {x: -1, y: 0, z: 0}
   orientation: {x: -1, y: 0, z: 0}
@@ -315,7 +315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -76774849123431624, guid: a6d92c50672afbd4dac6b276b0bd7ee8, type: 3}
       propertyPath: weaponStats.maxAmmo
-      value: 2
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -76774849123431624, guid: a6d92c50672afbd4dac6b276b0bd7ee8, type: 3}
       propertyPath: weaponStats.fireTime
