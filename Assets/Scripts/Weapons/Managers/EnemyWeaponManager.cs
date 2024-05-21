@@ -16,6 +16,7 @@ public class EnemyWeaponManager : MonoBehaviour
         // Set Default Active Weapon
         if(weapons.Length > 0){
             ActiveWeapon = weapons[0];
+            //Debug.Log("Active Weapon: " + ActiveWeapon);
         }
     }
 
@@ -31,6 +32,7 @@ public class EnemyWeaponManager : MonoBehaviour
     }
 
     public void FireActiveWeapon(){
+        //Debug.Log("Active Weapon: " + ActiveWeapon);
         ActiveWeapon.EnemyFire();
     }
 

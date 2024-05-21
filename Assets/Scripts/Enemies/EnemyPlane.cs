@@ -81,8 +81,9 @@ public class EnemyPlane : EnemyBase
         cam = Camera.main;
         camUtils = FindObjectOfType<CameraUtils>();
         randomOffsetComponent = Random.Range(-0.4f, 0.4f);
-        randFireTime = Random.Range(0.5f, 2.0f);
+        randFireTime = Random.Range(1f, 2.0f);
         StartCoroutine(Initialize());
+        timer = fireInterval - 1; 
         
     }
 
@@ -139,19 +140,6 @@ public class EnemyPlane : EnemyBase
                 AvoidGround();
                 radarTimer = 0;
             }
-        }
-
-    }
-
-    private void OnTriggerEnter(Collider col){
-        // if hit by a player projectile
-        if(col.gameObject.tag == "PlayerProjectile"){
-            // Take Damage
-            TakeDamage(col.gameObject.GetComponent<Projectile>().projectileStats.damage);
-            //Debug.Log("Enemy Health:" + currentHealth);
-            //Debug.Log("Enemy Damage Taken:" + col.gameObject.GetComponent<Projectile>().projectileStats.damage);
-            // Destroy Projectile
-            Destroy(col.gameObject);
         }
     }
 

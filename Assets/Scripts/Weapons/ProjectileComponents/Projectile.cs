@@ -8,7 +8,7 @@ using UnityEngine;
 [Serializable]
 public struct ProjectileStats{
     public float speed; 
-    public int damage;
+    public float damage;
     public int AP;
     public float lifetime;
     public Vector3 size; 
@@ -21,10 +21,10 @@ public class Projectile : MonoBehaviour
     // Base Class for All Projectile Objects
     public ProjectileStats projectileStats; 
     public Rigidbody projectileRB;
-    float startTime;
+    private float startTime;
     public GameObject hitParticle;
 
-    public bool destroyOnHit = true;
+    //public bool destroyOnHit = true;
 
 
     [SerializeField] AudioClip launchSound;
@@ -90,16 +90,14 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision col){
+    protected void OnCollisionEnter(Collision col){
+        
         if(col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
-            if(destroyOnHit) 
-            {
-                Die();
-            }
+            Die();
         }
     }
 
-    private void Die(){
+    protected void Die(){
         if (hitParticle){
             Instantiate(hitParticle, transform.position, Quaternion.identity);
         }
@@ -112,28 +110,25 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider col){
+    protected void OnTriggerEnter(Collider col){
         if(col.gameObject.tag == "Player"){
-            col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
-            if(destroyOnHit) 
-                Die();
+            col.GetComponent<Actor>().TakeDamage(projectileStats.damage); 
+            Die();
         }
         else if(col.gameObject.tag == "Enemy"){
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
             if (hitParticle)
             {
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
-            }
-            if(destroyOnHit) 
-                Die();
+            } 
+            Die();
         }
         else if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
             MissileController missile;
             if (missile = GetComponent<MissileController>()){
                 missile.Detonate();
-            }
-            if(destroyOnHit) 
-                Die();
+            } 
+            Die();
         }
     }
 }

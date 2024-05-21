@@ -18,6 +18,7 @@ public class Actor : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
+        //Debug.Log("Obj: " + gameObject + " Damage: " + damage);
         if (isAlive){
             currentHealth -= damage;
             if(currentHealth <= 0){

@@ -87,15 +87,23 @@ public class MissileLauncher : Weapon
 
     }
 
-    /*public override void EnemyFire(Rigidbody rb)
-    {
-        //Debug.Log("Enemy Missile Fire");
-        base.Fire(rb);
-    }*/
+    public override void EnemyFire()
+    {   
+        if(currentAmmo > 0){
+            //Debug.Log("Enemy Missile Fire");
+            base.EnemyFire();
+            // Decrement Ammo
+            currentAmmo --;
+        }
+        else{
+            //Debug.Log("Out of Ammo");
+        }
+        
+
+    }
 
     public override void SetupWeapon(){
         currentAmmo = weaponStats.maxAmmo;
-        OnAmmoChange?.Invoke(currentAmmo);
 
         if(!projectile){
             // Find and Retrieve Missile Prefab from Resources Folder

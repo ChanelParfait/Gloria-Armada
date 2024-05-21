@@ -98,7 +98,7 @@ public class MachineGun : Weapon
         //Debug.Log("Full Reload Complete");
         currentAmmo = weaponStats.maxAmmo; 
         isReloading = false;
-        OnAmmoChange?.Invoke(currentAmmo);
+        //OnAmmoChange?.Invoke(currentAmmo);
     }
 
     public override void SetupWeapon(){

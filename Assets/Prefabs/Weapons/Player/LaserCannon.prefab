@@ -45,23 +45,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9e1da07a4b1dc741a5fb8f436f82dfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 6422803521351215627, guid: 68dc1137f1d84cd45b67539f99fcce60, type: 3}
+  projectile: {fileID: 4670324799686410404, guid: 4ef1dd58332d2c34c8ae5f82baa776dd, type: 3}
   fireSound: {fileID: 8300000, guid: a53e348be58a7364291e9d1b133adb8f, type: 3}
   weaponStats:
     fireInterval: 0
     reloadTime: 8
-    maxAmmo: 1
+    maxAmmo: 4
+    fireTime: 4
     projectileStats:
       speed: 0
-      damage: 3
+      damage: 6
       AP: 0
       lifetime: 4
-      size: {x: 1, y: 1, z: 100}
+      size: {x: 1, y: 1, z: 1}
       range: 0
   weaponCategory: 1
   isPlayerWeapon: 1
   canFire: 0
-  spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!82 &7884464371219309874
 AudioSource:
   m_ObjectHideFlags: 0
@@ -73,7 +73,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

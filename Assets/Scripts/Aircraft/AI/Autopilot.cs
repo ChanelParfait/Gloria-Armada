@@ -51,7 +51,6 @@ public class PID
 public class Autopilot : MonoBehaviour
 {
     [SerializeField] Vector3 autopilotDeflection = new Vector3(0, 0, 0);
-    [SerializeField] float emergencyPitch = 0;
     Vector3 controlInputs = new Vector3(0, 0, 0);
 
     public enum AutopilotState { Off, pointAt, targetFlat, vectorAt, targetStraight, targetFormation };
