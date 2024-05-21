@@ -57,6 +57,8 @@ public class LevelManager : MonoBehaviour
     void Awake(){
         rb = GetComponent<Rigidbody>();
         currentPerspective = initPerspective;
+        UpdatePerspective(currentPerspective);
+
     }
 
     // Player, Enemy Spawner, and Camera will all need to update when perspective changes 
@@ -65,7 +67,7 @@ public class LevelManager : MonoBehaviour
     {
         gameOverPnl = GameObject.Find("GameOver");
         youWinPnl = GameObject.Find("YouWin");
-        UpdatePerspective(initPerspective);
+        StartCoroutine(WaitforLoad());
         rb.velocity = Vector3.right * 20;
 
         if (playerPlane == null)
@@ -135,7 +137,8 @@ public class LevelManager : MonoBehaviour
         if (spawnOverTime){
             if (Time.time - lastSpawnTime > spawnInterval){
                 lastSpawnTime = Time.time;
-                enemySpawner.SpawnEnemy(SpawnPointName.Top_Right, UnityEngine.Random.Range(0, 2));
+                int numEnemies = enemySpawner.GetNumEnemies();
+                enemySpawner.SpawnEnemy(SpawnPointName.Random, UnityEngine.Random.Range(0, numEnemies));
             }
         }
     }
@@ -162,6 +165,13 @@ public class LevelManager : MonoBehaviour
         if(col.tag == "WinPoint"){
             YouWin();
         }
+    }
+
+    // wait function to call events for objects not active on start / level loaded
+    private IEnumerator WaitforLoad(){
+        yield return new WaitForSeconds(1);
+        UpdatePerspective(currentPerspective);
+
     }
 
     public static Vector3 PerspectiveToEuler(Perspective p){
@@ -213,7 +223,7 @@ public class LevelManager : MonoBehaviour
     }
 
     private void UpdateScore(EnemyBase enemy){
-        Debug.Log("Update Score");
+        //Debug.Log("Update Score");
         if(ScoreTxt){
             score += enemy.scoreValue;
             ScoreTxt.text = score.ToString();
@@ -225,26 +235,47 @@ public class LevelManager : MonoBehaviour
     }
 
     private void GameOver(){
+        //Get audio listener of main camera
+        AudioListener listener = Camera.main.GetComponent<AudioListener>();
+        listener.enabled = true;
         GameObject wreckage = GameObject.FindWithTag("PlayerWreckage");
         //Pick a random child from player wreckage
         Transform randomChild = wreckage.transform.GetChild(0).GetChild(UnityEngine.Random.Range(0, wreckage.transform.childCount));
+        Scene scene = SceneManager.GetActiveScene();
+        string sceneName = scene.name;
+        string playerName = PlayerPrefs.GetString("PlayerName");
+        string scene_player = sceneName + "_" + playerName;
+        PlayerPrefs.SetInt(scene_player, score);
 
         StartCoroutine(ShowDeathScreen(randomChild));
     }
 
     IEnumerator ShowDeathScreen(Transform wreckage){
+        GameOverMenu gm = gameOverPnl.GetComponent<GameOverMenu>();
         if (wreckage != null)
         {
-            yield return new WaitUntil (() => wreckage.GetComponent<Rigidbody>().velocity.magnitude < 1.0f);
+            Debug.Log("Waiting for wreck to settle");
+            Func<bool> Req = () => wreckage.GetComponent<Rigidbody>().velocity.magnitude == .0f;
+            yield return StartCoroutine(WaitOrSkip(10.0f, Req));
+            gameOverPnl.SetActive(true);
+            gameOverPnl.GetComponent<GameOverMenu>().timerStart = true;
 
         }
-        yield return new WaitForSeconds(30);
-        //Debug.Log("Game Over");
-        if (gameOverPnl != null)
-        {
-            gameOverPnl.SetActive(true);
-            //Time.timeScale = 0; 
-        }  
+    }
+
+    IEnumerator WaitOrSkip(float waitTime, Func<bool> skipRequirement){
+        float t = 0;
+        while (t < waitTime){
+            // Check if the space key is pressed
+            if (skipRequirement() && t > 2.0f)
+            {
+                Debug.Log("Requirement Met - skipping");
+                yield break;  // Exit the coroutine early
+            }
+            yield return null;
+            t += Time.deltaTime;
+            // Wait for the next frame   
+        }
     }
 
     public void YouWin(){

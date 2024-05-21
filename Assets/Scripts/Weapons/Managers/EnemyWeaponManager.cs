@@ -9,11 +9,14 @@ public class EnemyWeaponManager : MonoBehaviour
     // Active weapon represents the weapon that can be fired
     public Weapon ActiveWeapon { get; private set; }
 
+    //public List<FiringPattern_SO> firingPatterns;
+
     void Start()
     {
         // Set Default Active Weapon
         if(weapons.Length > 0){
             ActiveWeapon = weapons[0];
+            //Debug.Log("Active Weapon: " + ActiveWeapon);
         }
     }
 
@@ -29,6 +32,11 @@ public class EnemyWeaponManager : MonoBehaviour
     }
 
     public void FireActiveWeapon(){
+        //Debug.Log("Active Weapon: " + ActiveWeapon);
         ActiveWeapon.EnemyFire();
+    }
+
+    public void FireActiveWeapon(Vector3 referenceVelocity){
+        ActiveWeapon.Fire(referenceVelocity);
     }
 }

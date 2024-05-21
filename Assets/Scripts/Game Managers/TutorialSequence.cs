@@ -98,21 +98,24 @@ public class TutorialSequence : MonoBehaviour
             case TutorialTask.HorizontalControls:
                 ShowHint("A");
                 playerPlane.EnableAllChannels();
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 CompletionRequirements = () => Input.GetAxis("P1_Horizontal") > 0;
                 break;
-
             case TutorialTask.Boost:
                 ShowHint("Shift");
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 playerPlane.EnableAllChannels();
                 CompletionRequirements = () => playerPlane.throttle == 1.0f && Input.GetAxis("P1_Boost") == 1.0f;
                 break;
             case TutorialTask.Boundary:
                 playerPlane.EnableAllChannels();
+                ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 playSpaceBoundary.enforceBoundary = true;
                 break;
             case TutorialTask.PrimaryFire:
                 ShowHint("Space");
                 playerPlane.EnableAllChannels();
+                playSpaceBoundary.enforceBoundary = true;
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 isEnemyDead = false;
                 playerWeapons.isArmed = true;
@@ -124,12 +127,14 @@ public class TutorialSequence : MonoBehaviour
                 playerPlane.EnableAllChannels();
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 isEnemyDead = false;
+                playSpaceBoundary.enforceBoundary = true;
                 playerWeapons.isArmed = true;
                 CompletionRequirements = () => isEnemyDead == true; 
                 isEnemyDead = false;
                 break;
             case TutorialTask.FreeFlight:
                 playerPlane.EnableAllChannels();
+                playSpaceBoundary.enforceBoundary = true;
                 playerWeapons.isArmed = true;
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
                 CompletionRequirements = () => false;
@@ -179,6 +184,7 @@ public class TutorialSequence : MonoBehaviour
         Debug.Log("Task Complete: Returning to AP");
         playerPlane.DisableAllChannels();
         playerWeapons.isArmed = false;
+        playSpaceBoundary.enforceBoundary = false;
         ap.setAPState(Autopilot.AutopilotState.targetFormation);
         requester.SetTaskComplete();
         hintCanvas.enabled = false;

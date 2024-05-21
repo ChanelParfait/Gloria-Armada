@@ -48,8 +48,8 @@ MonoBehaviour:
   projectile: {fileID: 0}
   fireSound: {fileID: 0}
   weaponStats:
-    fireInterval: 0.25
-    reloadTime: 5
+    fireInterval: 0.4
+    reloadTime: 8
     maxAmmo: 4
     projectileStats:
       speed: 9
