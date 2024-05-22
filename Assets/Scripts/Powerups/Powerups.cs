@@ -6,13 +6,13 @@ public enum PowerupType {
     PrimaryDamageUp,
     BulletSpeedUp,
     FirerateUp,
-    BulletSizeUp
+    BulletSizeUp,
     // BurnDamage,
     // FreezeShots,
     // ExplodingShots,
     // LightningChain,
     // SpecialDamageUp,
-    // SplitShot,
+    SplitShot,
     // APDamage,
     // HomingShots
 }
