@@ -52,6 +52,8 @@ public class LevelManager : MonoBehaviour
 
     // Events // 
     public static event Action<int> OnPerspectiveChange;
+    
+
 
     //bool isGameOver = false;
 
@@ -157,6 +159,7 @@ public class LevelManager : MonoBehaviour
         EnemyBase.OnEnemyDeath += UpdateScore;
         PlayerPlane.OnPlayerDeath += GameOver;
         PlayerPlane.OnPlayerDamage += PlayDamageEffect;
+        BossEnemy.OnBossDeath += YouWin;
 
     }
 
@@ -165,6 +168,8 @@ public class LevelManager : MonoBehaviour
         EnemyBase.OnEnemyDeath -= UpdateScore;
         PlayerPlane.OnPlayerDeath -= GameOver;
         PlayerPlane.OnPlayerDamage -= PlayDamageEffect;
+        BossEnemy.OnBossDeath -= YouWin;
+
     }
 
     private void OnTriggerEnter(Collider col){
@@ -288,8 +293,11 @@ public class LevelManager : MonoBehaviour
     }
 
     public void YouWin(){
+        //
         //youWinPnl.SetActive(true);
-        StartCoroutine(goToNextLevel());
+        Debug.Log("Level Completed!");
+
+        //StartCoroutine(goToNextLevel());
     }
 
     IEnumerator goToNextLevel(){
