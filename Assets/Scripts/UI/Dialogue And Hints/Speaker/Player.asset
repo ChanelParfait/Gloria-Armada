@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   speakerName: Player
-  image: {fileID: 0}
+  image: {fileID: 21300000, guid: db5d6d3b31c47c349b08dbddd04b5a8a, type: 3}
   type: 0
   faction: 0

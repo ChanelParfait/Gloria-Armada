@@ -24,6 +24,7 @@ public class DialogueManager : MonoBehaviour
     public Transform NPCBackground;
     public TextMeshProUGUI NPCNameText;
     public TextMeshProUGUI NPCDialogueText;
+    public Image NPCCharacterImage;
 
     class DialogueBox{
         public Canvas canvas;
@@ -37,10 +38,14 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI playerNameText;
     public TextMeshProUGUI playerDialogueText;
 
+    public Image playerCharacterImage;
+
     Canvas currentCanvas;
     Transform currentBackground;
     TextMeshProUGUI currentNameText;
     TextMeshProUGUI currentDialogueText;
+
+    Image currentCharacterImage;
 
     Canvas promptContinue;
     RectTransform promptContinueDialog;
@@ -67,11 +72,13 @@ public class DialogueManager : MonoBehaviour
         NPCBackground = NPCDialogueCanvas.transform.Find("Background");
         NPCDialogueText = NPCDialogueCanvas.transform.Find("Background/Dialogue").GetComponent<TextMeshProUGUI>();
         NPCNameText = NPCDialogueCanvas.transform.Find("Background/CharacterPicture/CharacterName").GetComponent<TextMeshProUGUI>();
-        playerDialogueCanvas = GameObject.Find("ConversationR").GetComponent<Canvas>();
+        NPCCharacterImage = NPCBackground.transform.Find("CharacterPicture").GetComponent<Image>();
 
+        playerDialogueCanvas = GameObject.Find("ConversationR").GetComponent<Canvas>();
         playerDialogueText = playerDialogueCanvas.transform.Find("Background/Dialogue").GetComponent<TextMeshProUGUI>();
         playerNameText = playerDialogueCanvas.transform.Find("Background/CharacterPicture/CharacterName").GetComponent<TextMeshProUGUI>();
         playerBackground = playerDialogueCanvas.transform.Find("Background");
+        playerCharacterImage = playerBackground.transform.Find("CharacterPicture").GetComponent<Image>();
         promptContinue = GameObject.Find("PromptContinue").GetComponent<Canvas>();
         promptContinueDialog = promptContinue.transform.Find("Mask/PromptDescription").GetComponent<RectTransform>();
         choicePrompts = GameObject.Find("ChoicePrompts").GetComponent<Canvas>();
@@ -93,9 +100,12 @@ public class DialogueManager : MonoBehaviour
         currentBackground = currentDialogue[index].speaker.type == SpeakerType.NPC ? NPCBackground : playerBackground;
         currentNameText = currentDialogue[index].speaker.type == SpeakerType.NPC ? NPCNameText : playerNameText;
         currentDialogueText = currentDialogue[index].speaker.type == SpeakerType.NPC ? NPCDialogueText : playerDialogueText;
+        currentCharacterImage = currentDialogue[index].speaker.type == SpeakerType.NPC ? NPCCharacterImage : playerCharacterImage;
+    
 
         currentNameText.text = currentDialogue[index].speaker.name;
         currentDialogueText.text = "";
+        currentCharacterImage.sprite = currentDialogue[index].speaker.image;
 
         if (currentCanvas.enabled == false){
             currentCanvas.enabled = true;
@@ -323,13 +333,13 @@ public class DialogueManager : MonoBehaviour
         Vector2 fromPosition = wipeIn ? initPosition : new Vector2(0, 0);
         Vector2 toPosition = wipeIn ? new Vector2(0, 0) : initPosition;
         rect.anchoredPosition = fromPosition;
-        rect.localRotation = wipeIn ? Quaternion.Euler(0, 0, 30): Quaternion.Euler(0, 0, 0);
+        rect.localRotation = wipeIn ? Quaternion.Euler(0, 0, 5): Quaternion.Euler(0, 0, 0);
         float t = 0;
         while (t < 1){
             t += 2 * Time.deltaTime;
             rect.anchoredPosition = new Vector2(Mathf.LerpUnclamped(fromPosition.x, toPosition.x, Utilities.EaseInOutBack(t)),
                                                 Mathf.LerpUnclamped(fromPosition.x, toPosition.x, Utilities.EaseInOutBack(t)));
-            rect.transform.rotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(30, 0, Utilities.EaseInOutBack(t)));
+            rect.transform.rotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(5, 0, Utilities.EaseInOutBack(t)));
             yield return null;
         }
     }
@@ -341,7 +351,7 @@ public class DialogueManager : MonoBehaviour
         while (t < 1){
             t += 2* Time.deltaTime;
             rect.anchoredPosition = new Vector2(Mathf.LerpUnclamped(0, 1000, Utilities.EaseInOutBack(t)), 0);
-            rect.localRotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(0, 30, Utilities.EaseInOutBack(t)));
+            rect.localRotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(0, 5, Utilities.EaseInOutBack(t)));
             yield return null;
         }
     }
@@ -355,7 +365,7 @@ public class DialogueManager : MonoBehaviour
             t += Time.deltaTime;
             rect.anchoredPosition = new Vector3(0, Mathf.LerpUnclamped(0, 2, Utilities.EaseInOutBack(t)), 0);
             rect.localRotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(0, 5, Utilities.EaseInOutBack(t)));
-            rect.localScale = new Vector3(1, Mathf.LerpUnclamped(1, 1.4f, Utilities.EaseInOutBack(t)), 1);
+            rect.localScale = new Vector3(1, Mathf.LerpUnclamped(1, 1.1f, Utilities.EaseInOutBack(t)), 1);
             yield return null;
         }
         StartCoroutine(BounceIn(rect));
@@ -364,12 +374,14 @@ public class DialogueManager : MonoBehaviour
         // Take a canvas and start it slightly below size, at an angle then LERP to it being full size, horizontal
         rect.anchoredPosition = new Vector3(0, 2);
         rect.localRotation = Quaternion.Euler(0, 0, 5);
+        float alpha = rect.GetComponent<Image>().color.a;
         float t = 0;
         while (t < 1){
             t += Time.deltaTime;
             rect.anchoredPosition = new Vector3(0, Mathf.LerpUnclamped(10, 0, Utilities.EaseInOutBack(t)), 0);
             rect.localRotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(5, 0, Utilities.EaseInOutBack(t)));
-            rect.localScale = new Vector3(1, Mathf.LerpUnclamped(1.4f, 1, Utilities.EaseInOutBack(t)), 1);
+            rect.localScale = new Vector3(1, Mathf.LerpUnclamped(0.1f, 1, Utilities.EaseInOutBack(t)), 1);
+            alpha = Mathf.LerpUnclamped(1, 0, Utilities.EaseInOut(t));
             yield return null;
         }
         StartCoroutine(WipeOutRect(rect));

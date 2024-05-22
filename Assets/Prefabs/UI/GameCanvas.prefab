@@ -413,7 +413,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8855561991953780595}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -603,7 +603,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2277678596508296740, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
       propertyPath: m_Color.a
-      value: 1
+      value: 0.03529412
       objectReference: {fileID: 0}
     - target: {fileID: 3876144742722985991, guid: 1e08a3972d8de834d9e0f269f1f138b7, type: 3}
       propertyPath: m_canvas

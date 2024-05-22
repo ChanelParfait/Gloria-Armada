@@ -96,10 +96,10 @@ public class TutorialSequence : MonoBehaviour
                 CompletionRequirements = () => Input.GetAxis("P1_Vertical") < 0;
                 break;
             case TutorialTask.HorizontalControls:
-                ShowHint("A");
+                ShowHint("D");
                 playerPlane.EnableAllChannels();
                 ap.setAPState(Autopilot.AutopilotState.targetFlat);
-                CompletionRequirements = () => Input.GetAxis("P1_Horizontal") > 0;
+                CompletionRequirements = () => Input.GetAxis("P1_Horizontal") < 0;
                 break;
             case TutorialTask.Boost:
                 ShowHint("Shift");

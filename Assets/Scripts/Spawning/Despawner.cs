@@ -20,8 +20,7 @@ public class Despawner : MonoBehaviour
         if(col.tag == "Enemy" || col.tag == "PlayerProjectile" || col.tag == "EnemyProjectile"){
             //Debug.Log("Despawn: " + col.name);
             Destroy(col.gameObject);
-        }
-        
+        }   
     }
     
 }
