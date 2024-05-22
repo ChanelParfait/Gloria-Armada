@@ -18,6 +18,12 @@ public class SpecialMeter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (meter == null)
+        {
+            //Find the meter from GameCanvas/PlayerHUD/Special/SpecialInner
+            meter = GameObject.Find("GameCanvas/PlayerHUD/Special/Special_Inner").GetComponent<Image>();
+            meterOuter = GameObject.Find("GameCanvas/PlayerHUD/Special").GetComponent<Image>();
+        }
         meterLevel = 1; 
     }
 

@@ -5217,7 +5217,7 @@ MonoBehaviour:
   rollPID:
     Kp: 1
     Ki: 0.001
-    Kd: 0.7
+    Kd: 0.85
     integral: 0
     lastError: 0
   targetObjects: []
@@ -24840,7 +24840,7 @@ PrefabInstance:
     - target: {fileID: 5694165871972618649, guid: 67050f1860d0d5642acf40517d9f21c7, type: 3}
       propertyPath: test2
       value: 
-      objectReference: {fileID: 1062033948207875801, guid: a6aa6fbe78513424a8a7472dd83796a5, type: 3}
+      objectReference: {fileID: 1062033948207875801, guid: b75e8d5ebbd1bdb4c8f18f75c8e29051, type: 3}
     - target: {fileID: 5694165871972618649, guid: 67050f1860d0d5642acf40517d9f21c7, type: 3}
       propertyPath: testWeapon1
       value: 

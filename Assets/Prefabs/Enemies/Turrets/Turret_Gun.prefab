@@ -50,6 +50,7 @@ MonoBehaviour:
   maxHealth: 0
   rb: {fileID: 0}
   scoreValue: 10
+  fire: 0
   enemy: {fileID: 0}
   aimPoint: {fileID: 5014994174253834196}
   azimuthObj: {fileID: 7628627719845462674}
@@ -188,6 +189,10 @@ PrefabInstance:
       propertyPath: MinDistance
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 568890709989204003, guid: 3d04493e6ac5414489280cfd0a741ba6, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 24300002, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
     - target: {fileID: 568890709989204003, guid: 3d04493e6ac5414489280cfd0a741ba6, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 1
