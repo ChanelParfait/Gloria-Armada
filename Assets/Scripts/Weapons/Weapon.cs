@@ -25,6 +25,10 @@ public class Weapon : MonoBehaviour
     [SerializeReference] protected GameObject projectile; 
     [SerializeReference] protected AudioClip fireSound;
     [SerializeField] protected WeaponStats weaponStats;
+
+    // A list of components to be added to the projectile on firing
+    public List<Component> projectileComponents = new List<Component>();
+
     public WeaponCategories weaponCategory;  
     public bool isPlayerWeapon = false;
     public bool isPatternFire = false;
@@ -87,6 +91,9 @@ public class Weapon : MonoBehaviour
         clone.transform.localScale = weaponStats.projectileStats.size;
         // Set stats of projectile and provide player velocity
         clone.GetComponent<Projectile>().Launch(weaponStats.projectileStats, velocity); 
+        foreach (Component comp in projectileComponents){
+            clone.AddComponent(comp.GetType());
+        }
         // Play firing audio
         PlaySound();
     }

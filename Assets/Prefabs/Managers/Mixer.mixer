@@ -11,6 +11,7 @@ AudioMixerController:
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}
+  - {fileID: 2333609407404491797}
   m_StartSnapshot: {fileID: 24500006}
   m_SuspendThreshold: -5.1
   m_EnableSuspend: 1
@@ -64,12 +65,29 @@ AudioMixerSnapshotController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Snapshot
+  m_Name: Start
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: a4bbf8cf4f60f934f85064f9c2cf8548
   m_FloatValues:
-    aa2d7f1d8b5518149b7379d7caa36137: -80
+    6b64bdd2ea41ab94abedb1f6a261a675: 22000
+    71c306141fdd1e3449313cd35ae7283a: 1
+    aa2d7f1d8b5518149b7379d7caa36137: -4.2
     9ed0873d9414b1646a6eef8757bdc143: -80
+  m_TransitionOverrides: {}
+--- !u!245 &2333609407404491797
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: OnDeath
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 9402be6c3dbf91a4ca549d3478bff5da
+  m_FloatValues:
+    6b64bdd2ea41ab94abedb1f6a261a675: 1105
+    71c306141fdd1e3449313cd35ae7283a: 1
+    aa2d7f1d8b5518149b7379d7caa36137: -3.6451206
+    9ed0873d9414b1646a6eef8757bdc143: 0
   m_TransitionOverrides: {}
 --- !u!244 &8526164506441938803
 AudioMixerEffectController:
@@ -88,4 +106,4 @@ AudioMixerEffectController:
     m_GUID: 71c306141fdd1e3449313cd35ae7283a
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 1
-  m_Bypass: 1
+  m_Bypass: 0

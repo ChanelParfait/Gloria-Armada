@@ -17,6 +17,25 @@ public class PlaySpaceBoundary : MonoBehaviour
     float height;
     float width;
 
+    void OnEnable(){
+        LevelManager.OnPerspectiveChange += TempBoundaryDisable;
+    }
+
+    void OnDisable(){
+        LevelManager.OnPerspectiveChange -= TempBoundaryDisable;
+    }
+
+    void TempBoundaryDisable(int _pers){
+        enforceBoundary = false;
+        StartCoroutine(UpdatePerspective(_pers));
+    }
+
+    IEnumerator UpdatePerspective(int _pers){
+        yield return new WaitForSeconds(1);
+        enforceBoundary = true;
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
