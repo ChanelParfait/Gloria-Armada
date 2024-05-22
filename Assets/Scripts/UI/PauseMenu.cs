@@ -2,18 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool gameIsPaused = false;
+
+    public bool settingsOpen = false;
     public GameObject pauseMenuUI;
     public Canvas gameHUD;
     public GameObject plane;
     public GameObject gameOverUI;
 
+    public GameObject settingsMenu;
+
     // Start is called before the first frame update
     void Start()
     {
+        Scene scene = SceneManager.GetActiveScene();
+        GameObject[] lvlObjs = scene.GetRootGameObjects();
+        //iterate over lvl objects to find settingsCanvas
+        foreach (GameObject obj in lvlObjs)
+        {
+            if (obj.name == "SettingsCanvas")
+            {
+                settingsMenu = obj;
+            }
+        }
         
     }
 
@@ -23,9 +38,14 @@ public class PauseMenu : MonoBehaviour
         if (plane != null)
         {
             //Checks if the game is paused or not when ESC is pressed, then pause or unpause
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.P))
             {
-                if (gameIsPaused)
+                if (settingsOpen)
+                {
+                    CloseSettings();
+                    return;
+                }
+                else if (gameIsPaused)
                 {
                     Resume();
                 }
@@ -69,6 +89,7 @@ public class PauseMenu : MonoBehaviour
         {
 
             pauseMenuUI.SetActive(false);
+            settingsMenu.SetActive(false);
             Time.timeScale = 1;
             gameHUD.enabled = true;
             gameIsPaused = false;
@@ -92,5 +113,21 @@ public class PauseMenu : MonoBehaviour
         //Restart current scene, and makes sure time isn't stopped when the scene loads
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+
+    public void OpenSettings()
+    {
+        //Opens the settings menu
+        settingsOpen = true;
+        pauseMenuUI.SetActive(false);
+        settingsMenu.SetActive(true);
+    }
+
+    public void CloseSettings()
+    {
+        //Closes the settings menu
+        settingsOpen = false;
+        pauseMenuUI.SetActive(true);
+        settingsMenu.SetActive(false);
     }
 }
