@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Instructor
   m_EditorClassIdentifier: 
   speakerName: Instructor
-  image: {fileID: 21300000, guid: ad4148593b05d0f47980774815c325fe, type: 3}
+  image: {fileID: 21300000, guid: 72391e5e83edf16439cabd7979fdcdfc, type: 3}
   type: 1
   faction: 1

@@ -706,10 +706,12 @@ MonoBehaviour:
   NPCBackground: {fileID: 0}
   NPCNameText: {fileID: 0}
   NPCDialogueText: {fileID: 0}
+  NPCCharacterImage: {fileID: 0}
   playerDialogueCanvas: {fileID: 0}
   playerBackground: {fileID: 0}
   playerNameText: {fileID: 0}
   playerDialogueText: {fileID: 0}
+  playerCharacterImage: {fileID: 0}
 --- !u!4 &762686825 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3081795491148218501, guid: 84f91e52815d8e74786e395fa5b29539, type: 3}
@@ -808,6 +810,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2849742605499434816, guid: eca8690600869c847892ed7df90fffb1, type: 3}
     - {fileID: 7566916060554437246, guid: eca8690600869c847892ed7df90fffb1, type: 3}
+    - {fileID: 6781669119567091345, guid: eca8690600869c847892ed7df90fffb1, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4385540100760702148, guid: eca8690600869c847892ed7df90fffb1, type: 3}
     - {fileID: 3868724341607198352, guid: eca8690600869c847892ed7df90fffb1, type: 3}
@@ -1114,6 +1117,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 7850326035111304422, guid: eca8690600869c847892ed7df90fffb1, type: 3}
     - {fileID: 7566916060554437246, guid: eca8690600869c847892ed7df90fffb1, type: 3}
+    - {fileID: 6781669119567091345, guid: eca8690600869c847892ed7df90fffb1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -1563,6 +1567,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5574889430071013314, guid: 8b1d080c8559d46439c41be0cac5b6bb, type: 3}
+      propertyPath: plane
+      value: 
+      objectReference: {fileID: 949054471}
+    - target: {fileID: 5574889430071013314, guid: 8b1d080c8559d46439c41be0cac5b6bb, type: 3}
+      propertyPath: gameHUD
+      value: 
+      objectReference: {fileID: 1940579423}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1576,6 +1588,11 @@ Transform:
 --- !u!224 &1940579419 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1796382485969895098, guid: 4b91d478001a4fc49a92c201ad89842e, type: 3}
+  m_PrefabInstance: {fileID: 1760408832207649005}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &1940579423 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 6819302583399954789, guid: 4b91d478001a4fc49a92c201ad89842e, type: 3}
   m_PrefabInstance: {fileID: 1760408832207649005}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1972551537

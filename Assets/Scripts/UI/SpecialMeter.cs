@@ -20,7 +20,6 @@ public class SpecialMeter : MonoBehaviour
     {
         if (meter == null)
         {
-            Debug.LogError("Meter not found");
             //Find the meter from GameCanvas/PlayerHUD/Special/SpecialInner
             meter = GameObject.Find("GameCanvas/PlayerHUD/Special/Special_Inner").GetComponent<Image>();
             meterOuter = GameObject.Find("GameCanvas/PlayerHUD/Special").GetComponent<Image>();

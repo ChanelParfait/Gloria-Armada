@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -29,7 +30,27 @@ public class PauseMenu : MonoBehaviour
                 settingsMenu = obj;
             }
         }
+        EnsureSettingsButtonListener();
         
+    }
+
+    void EnsureSettingsButtonListener()
+    {
+        Button[] buttons = settingsMenu.GetComponentsInChildren<Button>();
+        foreach (Button button in buttons)
+        {
+            if (button.name == "Button")
+            {
+                Button btn = button;
+                PauseMenu pauseMenu = GetComponent<PauseMenu>();
+                Debug.Log("Checking for listeners on SettingsBackButton");
+                Debug.Log("Target: " + btn.onClick.GetPersistentTarget(0));
+                if (btn.onClick.GetPersistentTarget(0) != pauseMenu)
+                {
+                    btn.onClick.AddListener(pauseMenu.CloseSettings);
+                }
+            }
+        }
     }
 
     // Update is called once per frame
