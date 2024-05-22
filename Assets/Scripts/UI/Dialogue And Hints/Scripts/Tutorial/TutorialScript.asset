@@ -198,7 +198,7 @@ MonoBehaviour:
     tutorialTask: 0
   - speaker: {fileID: 11400000, guid: 99a13692fba11874d8c99ffb9b127745, type: 2}
     dialogueType: 0
-    line: If you change your mind there is a setting for it
+    line: You can always change it in the pause menu 'P'
     choice:
       affirm:
         optionText: 

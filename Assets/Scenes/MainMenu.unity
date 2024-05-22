@@ -21405,6 +21405,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1027596254}
+    - target: {fileID: 8624681056374823839, guid: f1eb3de2b2eceb6419e2a9aff5b11d5a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSettings
+      objectReference: {fileID: 0}
+    - target: {fileID: 8624681056374823839, guid: f1eb3de2b2eceb6419e2a9aff5b11d5a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsToggle, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

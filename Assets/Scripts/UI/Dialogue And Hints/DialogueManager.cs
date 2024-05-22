@@ -323,7 +323,7 @@ public class DialogueManager : MonoBehaviour
         Vector2 fromPosition = wipeIn ? initPosition : new Vector2(0, 0);
         Vector2 toPosition = wipeIn ? new Vector2(0, 0) : initPosition;
         rect.anchoredPosition = fromPosition;
-        rect.localRotation = wipeIn ? Quaternion.Euler(0, 0, 30): Quaternion.Euler(0, 0, 0);
+        rect.localRotation = wipeIn ? Quaternion.Euler(0, 0, 5): Quaternion.Euler(0, 0, 0);
         float t = 0;
         while (t < 1){
             t += 2 * Time.deltaTime;
@@ -341,7 +341,7 @@ public class DialogueManager : MonoBehaviour
         while (t < 1){
             t += 2* Time.deltaTime;
             rect.anchoredPosition = new Vector2(Mathf.LerpUnclamped(0, 1000, Utilities.EaseInOutBack(t)), 0);
-            rect.localRotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(0, 30, Utilities.EaseInOutBack(t)));
+            rect.localRotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(0, 5, Utilities.EaseInOutBack(t)));
             yield return null;
         }
     }
@@ -355,7 +355,7 @@ public class DialogueManager : MonoBehaviour
             t += Time.deltaTime;
             rect.anchoredPosition = new Vector3(0, Mathf.LerpUnclamped(0, 2, Utilities.EaseInOutBack(t)), 0);
             rect.localRotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(0, 5, Utilities.EaseInOutBack(t)));
-            rect.localScale = new Vector3(1, Mathf.LerpUnclamped(1, 1.4f, Utilities.EaseInOutBack(t)), 1);
+            rect.localScale = new Vector3(1, Mathf.LerpUnclamped(1, 1.1f, Utilities.EaseInOutBack(t)), 1);
             yield return null;
         }
         StartCoroutine(BounceIn(rect));
@@ -364,12 +364,14 @@ public class DialogueManager : MonoBehaviour
         // Take a canvas and start it slightly below size, at an angle then LERP to it being full size, horizontal
         rect.anchoredPosition = new Vector3(0, 2);
         rect.localRotation = Quaternion.Euler(0, 0, 5);
+        float alpha = rect.GetComponent<Image>().color.a;
         float t = 0;
         while (t < 1){
             t += Time.deltaTime;
             rect.anchoredPosition = new Vector3(0, Mathf.LerpUnclamped(10, 0, Utilities.EaseInOutBack(t)), 0);
             rect.localRotation = Quaternion.Euler(0, 0, Mathf.LerpUnclamped(5, 0, Utilities.EaseInOutBack(t)));
-            rect.localScale = new Vector3(1, Mathf.LerpUnclamped(1.4f, 1, Utilities.EaseInOutBack(t)), 1);
+            rect.localScale = new Vector3(1, Mathf.LerpUnclamped(0.1f, 1, Utilities.EaseInOutBack(t)), 1);
+            alpha = Mathf.LerpUnclamped(1, 0, Utilities.EaseInOut(t));
             yield return null;
         }
         StartCoroutine(WipeOutRect(rect));
