@@ -5217,7 +5217,7 @@ MonoBehaviour:
   rollPID:
     Kp: 1
     Ki: 0.001
-    Kd: 0.7
+    Kd: 0.85
     integral: 0
     lastError: 0
   targetObjects: []
@@ -5306,7 +5306,7 @@ AudioSource:
   m_GameObject: {fileID: 1168509773419960114}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
   m_audioClip: {fileID: 8300000, guid: 6fc616f6e9aad6d47b54c333751687b1, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -5689,7 +5689,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0.4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -6710,7 +6710,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 0.8745098}
+        key0: {r: 1, g: 1, b: 1, a: 1}
         key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -10179,7 +10179,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10533,7 +10533,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0.4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -11554,7 +11554,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 0.8745098}
+        key0: {r: 1, g: 1, b: 1, a: 1}
         key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -15023,7 +15023,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24840,7 +24840,7 @@ PrefabInstance:
     - target: {fileID: 5694165871972618649, guid: 67050f1860d0d5642acf40517d9f21c7, type: 3}
       propertyPath: test2
       value: 
-      objectReference: {fileID: 1062033948207875801, guid: a6aa6fbe78513424a8a7472dd83796a5, type: 3}
+      objectReference: {fileID: 1062033948207875801, guid: b75e8d5ebbd1bdb4c8f18f75c8e29051, type: 3}
     - target: {fileID: 5694165871972618649, guid: 67050f1860d0d5642acf40517d9f21c7, type: 3}
       propertyPath: testWeapon1
       value: 

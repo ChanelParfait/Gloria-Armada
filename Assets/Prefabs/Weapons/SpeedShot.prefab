@@ -51,6 +51,7 @@ MonoBehaviour:
     fireInterval: 0.2
     reloadTime: 0.3
     maxAmmo: 2
+    fireTime: 0
     projectileStats:
       speed: 40
       damage: 1
@@ -60,6 +61,7 @@ MonoBehaviour:
       range: 0
   weaponCategory: 0
   isPlayerWeapon: 0
+  isPatternFire: 0
   canFire: 1
   spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!82 &7502277592070407747
@@ -71,7 +73,7 @@ AudioSource:
   m_GameObject: {fileID: 1062033948207875801}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.25
