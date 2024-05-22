@@ -245,6 +245,16 @@ public class LevelManager : MonoBehaviour
     }
 
     private void PlayDamageEffect(PlayerPlane playerPlane){
+        AudioSource src = playerPlane.GetComponent<AudioSource>();
+        AudioMixer sfx_Mix = src.outputAudioMixerGroup.audioMixer;
+        AudioMixerSnapshot[] snapshots = new AudioMixerSnapshot[2];
+        snapshots[0] = sfx_Mix.FindSnapshot("Start");
+        snapshots[1] = sfx_Mix.FindSnapshot("OnDeath");
+
+        float invMuffle = Mathf.Clamp01(playerPlane.currentHealth / playerPlane.maxHealth);
+        float dmgMuffle = 1 - invMuffle;
+
+        sfx_Mix.TransitionToSnapshots(snapshots, new float[] {invMuffle,dmgMuffle}, 0.5f);
         damageAnim.SetTrigger("DamageTaken");
     }
 
