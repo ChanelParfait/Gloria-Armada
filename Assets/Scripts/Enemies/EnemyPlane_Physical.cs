@@ -23,6 +23,10 @@ public class EnemyPlane_Physical : EnemyPlane
         StartCoroutine(Initialize());
     }
 
+    protected override void UpdatePerspective(int _pers){
+        return;
+    }
+
     override protected IEnumerator Initialize(){
         yield return StartCoroutine(base.Initialize());
         yield return new WaitForSeconds(2);

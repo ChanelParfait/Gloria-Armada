@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4763586288305748271}
   - component: {fileID: 4602154282337982386}
   m_Layer: 6
-  m_Name: Missile_EnemyGuided
+  m_Name: Enemy_Air_MissileGuided
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

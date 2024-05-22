@@ -580,6 +580,7 @@ public class Autopilot : MonoBehaviour
     Vector3 AutoTargetPlane(bool positional = false, float holdAltitude = float.MaxValue)
     {
         defaultAutoArm = autoArm;
+        
         //autoArm = true;
         // If we are not already on the plane then go to it
         float x = rb.transform.position.x;

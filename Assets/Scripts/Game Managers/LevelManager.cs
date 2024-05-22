@@ -83,6 +83,11 @@ public class LevelManager : MonoBehaviour
         //Find masterAudioMixer and set volume to playerPrefs
         AudioSource src = playerPlane.GetComponent<AudioSource>();
         AudioMixer sfx_Mix = src.outputAudioMixerGroup.audioMixer;
+        AudioMixerSnapshot[] snapshots = new AudioMixerSnapshot[2];
+        snapshots[0] = sfx_Mix.FindSnapshot("OnDeath");
+        snapshots[1] = sfx_Mix.FindSnapshot("Start");
+        sfx_Mix.TransitionToSnapshots(snapshots, new float[] {0,1}, 0.5f);
+
         sfx_Mix.SetFloat("SFX_Volume", Mathf.Log10(PlayerPrefs.GetFloat("Saved_SFX_Volume", 0.5f)) * 20);
 
         //This is the minimum velocity to keep the player moving
@@ -247,6 +252,16 @@ public class LevelManager : MonoBehaviour
         //Get audio listener of main camera
         AudioListener listener = Camera.main.GetComponent<AudioListener>();
         listener.enabled = true;
+        //Find the mixer and unBypass
+        AudioSource src = GetComponent<AudioSource>();
+        AudioClip deathSound = src.clip;
+        src.PlayOneShot(deathSound);
+        AudioMixer sfx_Mix = src.outputAudioMixerGroup.audioMixer;
+        //Transition from Start -> OnDeath snapshots
+        AudioMixerSnapshot[] snapshots = new AudioMixerSnapshot[2];
+        snapshots[0] = sfx_Mix.FindSnapshot("Start");
+        snapshots[1] = sfx_Mix.FindSnapshot("OnDeath");
+        sfx_Mix.TransitionToSnapshots(snapshots, new float[] {0,1}, 0.5f);
         GameObject wreckage = GameObject.FindWithTag("PlayerWreckage");
         //Pick a random child from player wreckage
         Transform randomChild = wreckage.transform.GetChild(0).GetChild(UnityEngine.Random.Range(0, wreckage.transform.childCount));
