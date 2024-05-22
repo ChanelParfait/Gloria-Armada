@@ -86,7 +86,7 @@ public class LaserCannon : Weapon
             // Fire Laser 
             activeProjectile = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation(), transform); 
             laser = activeProjectile.GetComponent<Laser>(); 
-            laser.UpdateStats(weaponStats.projectileStats, 4);
+            laser.UpdateStats(weaponStats.projectileStats, 8);
             // loop sound while firing
             PlaySound();
             currentCharge --;
