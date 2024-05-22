@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
@@ -61,6 +62,8 @@ public class LevelManager : MonoBehaviour
         currentPerspective = initPerspective;
         UpdatePerspective(currentPerspective);
 
+
+
     }
 
     // Player, Enemy Spawner, and Camera will all need to update when perspective changes 
@@ -79,6 +82,10 @@ public class LevelManager : MonoBehaviour
             //Find the player by tag
             playerPlane = GameObject.FindGameObjectWithTag("Player");
         }
+        //Find masterAudioMixer and set volume to playerPrefs
+        AudioSource src = playerPlane.GetComponent<AudioSource>();
+        AudioMixer sfx_Mix = src.outputAudioMixerGroup.audioMixer;
+        sfx_Mix.SetFloat("SFX_Volume", Mathf.Log10(PlayerPrefs.GetFloat("Saved_SFX_Volume", 0.5f)) * 20);
 
         //This is the minimum velocity to keep the player moving
         //rb.velocity = Vector3.right * 20;
