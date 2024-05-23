@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum PowerupType {
-    PrimaryDamageUp,
-    BulletSpeedUp,
-    FirerateUp,
-    BulletSizeUp,
-    // BurnDamage,
+    // PrimaryDamageUp,
+    // BulletSpeedUp,
+    // FirerateUp,
+    // BulletSizeUp,
+    BurnDamage,
     // FreezeShots,
     // ExplodingShots,
     // LightningChain,
     // SpecialDamageUp,
-    SplitShot,
+    //SplitShot,
     // APDamage,
     // HomingShots
 }

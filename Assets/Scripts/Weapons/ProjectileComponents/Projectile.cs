@@ -117,6 +117,13 @@ public class Projectile : MonoBehaviour
         }
         else if(col.gameObject.tag == "Enemy"){
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
+            EnemyPlane enemy = col.GetComponent<EnemyPlane>();
+            Burn burn = GetComponent<Burn>();
+            if (burn != null)
+            {
+                burn.ApplyBurn(enemy);
+            }
+            
             if (hitParticle)
             {
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
