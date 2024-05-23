@@ -26,7 +26,7 @@ public class LevelManager : MonoBehaviour
 
     // UI and Visuals
     [SerializeField] private GameObject gameOverPnl; 
-    [SerializeField] private GameObject youWinPnl; 
+    [SerializeField] private GameObject levelClearPnl; 
     [SerializeField] private TextMeshProUGUI ScoreTxt; 
     public Animator damageAnim;
 
@@ -35,6 +35,8 @@ public class LevelManager : MonoBehaviour
 
     float lastSpawnTime = 0;
     float spawnInterval = 5.0f;
+
+    float levelTimer = 0;
 
 
     // UI Values
@@ -69,7 +71,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         gameOverPnl = GameObject.Find("GameOver");
-        youWinPnl = GameObject.Find("YouWin");
+        levelClearPnl = GameObject.Find("LevelClear");
         damageAnim = GameObject.Find("DamageCirclePrefab").GetComponent<Animator>();
         ScoreTxt = GameObject.Find("Score/Text (TMP)").GetComponent<TextMeshProUGUI>();
         StartCoroutine(WaitforLoad());
@@ -83,6 +85,11 @@ public class LevelManager : MonoBehaviour
         //Find masterAudioMixer and set volume to playerPrefs
         AudioSource src = playerPlane.GetComponent<AudioSource>();
         AudioMixer sfx_Mix = src.outputAudioMixerGroup.audioMixer;
+        AudioMixerSnapshot[] snapshots = new AudioMixerSnapshot[2];
+        snapshots[0] = sfx_Mix.FindSnapshot("OnDeath");
+        snapshots[1] = sfx_Mix.FindSnapshot("Start");
+        sfx_Mix.TransitionToSnapshots(snapshots, new float[] {0,1}, 0.5f);
+
         sfx_Mix.SetFloat("SFX_Volume", Mathf.Log10(PlayerPrefs.GetFloat("Saved_SFX_Volume", 0.5f)) * 20);
 
         //This is the minimum velocity to keep the player moving
@@ -150,6 +157,7 @@ public class LevelManager : MonoBehaviour
                 enemySpawner.SpawnEnemy(SpawnPointName.Random, UnityEngine.Random.Range(0, numEnemies));
             }
         }
+        levelTimer += Time.deltaTime;
     }
 
     private void OnEnable(){
@@ -170,8 +178,10 @@ public class LevelManager : MonoBehaviour
     private void OnTriggerEnter(Collider col){
         if(col.tag == "TransitionPoint"){
             UpdatePerspective(col.GetComponent<TransitionPoint>().GetPerspective());
+            playerPlane.GetComponent<Autopilot>().yTarget = col.transform.position.y;
         }
-        if(col.tag == "WinPoint"){
+        if(col.CompareTag("WinPoint")){
+            Debug.Log("You Win");
             YouWin();
         }
     }
@@ -240,24 +250,41 @@ public class LevelManager : MonoBehaviour
     }
 
     private void PlayDamageEffect(PlayerPlane playerPlane){
+        AudioSource src = playerPlane.GetComponent<AudioSource>();
+        AudioMixer sfx_Mix = src.outputAudioMixerGroup.audioMixer;
+        AudioMixerSnapshot[] snapshots = new AudioMixerSnapshot[2];
+        snapshots[0] = sfx_Mix.FindSnapshot("Start");
+        snapshots[1] = sfx_Mix.FindSnapshot("OnDeath");
+
+        float invMuffle = Mathf.Clamp01(playerPlane.currentHealth / playerPlane.maxHealth);
+        float dmgMuffle = 1 - invMuffle;
+
+        sfx_Mix.TransitionToSnapshots(snapshots, new float[] {invMuffle,dmgMuffle}, 0.5f);
         damageAnim.SetTrigger("DamageTaken");
     }
 
     private void GameOver(){
-        //Get audio listener of main camera
+        //Audio transitions
         AudioListener listener = Camera.main.GetComponent<AudioListener>();
         listener.enabled = true;
+        AudioSource src = GetComponent<AudioSource>();
+        AudioClip deathSound = src.clip;
+        src.PlayOneShot(deathSound);
+        AudioMixer sfx_Mix = src.outputAudioMixerGroup.audioMixer;
+        AudioMixerSnapshot[] snapshots = new AudioMixerSnapshot[2];
+        snapshots[0] = sfx_Mix.FindSnapshot("Start");
+        snapshots[1] = sfx_Mix.FindSnapshot("OnDeath");
+        sfx_Mix.TransitionToSnapshots(snapshots, new float[] {0,1}, 0.5f);
+
+        //Wreckage
         GameObject wreckage = GameObject.FindWithTag("PlayerWreckage");
         //Pick a random child from player wreckage
         Transform randomChild = wreckage.transform.GetChild(0).GetChild(UnityEngine.Random.Range(0, wreckage.transform.childCount));
-        Scene scene = SceneManager.GetActiveScene();
-        string sceneName = scene.name;
-        string playerName = PlayerPrefs.GetString("PlayerName");
-        string scene_player = sceneName + "_" + playerName;
-        PlayerPrefs.SetInt(scene_player, score);
 
         StartCoroutine(ShowDeathScreen(randomChild));
     }
+
+
 
     IEnumerator ShowDeathScreen(Transform wreckage){
         GameOverMenu gm = gameOverPnl.GetComponent<GameOverMenu>();
@@ -268,7 +295,6 @@ public class LevelManager : MonoBehaviour
             yield return StartCoroutine(WaitOrSkip(10.0f, Req));
             gameOverPnl.SetActive(true);
             gameOverPnl.GetComponent<GameOverMenu>().timerStart = true;
-
         }
     }
 
@@ -288,16 +314,48 @@ public class LevelManager : MonoBehaviour
     }
 
     public void YouWin(){
-        //youWinPnl.SetActive(true);
-        StartCoroutine(goToNextLevel());
+        StartCoroutine(LerpTime(0, 1.0f));
+        SaveScoreTime();
+        levelClearPnl.GetComponent<Canvas>().enabled = true;    
     }
 
-    IEnumerator goToNextLevel(){
-        yield return new WaitForSeconds(3);
-        StopAllCoroutines();
+    void SaveScoreTime()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        string sceneName = scene.name;
+        string playerName = PlayerPrefs.GetString("PlayerName");
+        string scene_player = sceneName + "_" + playerName;
+        HighScoreManager.HighScoreEntry highScoreEntry = new()
+                                        {
+                                            level = sceneName,
+                                            name = playerName,
+                                            score = score,
+                                            time = levelTimer
+                                        };
+        levelClearPnl.GetComponent<Canvas>().enabled = true;
+        levelClearPnl.GetComponent<HighScoreManager>().AddHighScoreEntry(highScoreEntry);
+    }
+
+    IEnumerator LerpTime(float finalScale, float lerpPeriod)
+    {
+        float elapsedTime = 0;
+        float startScale = Time.timeScale;
+
+        while (elapsedTime < lerpPeriod)
+        {
+            Time.timeScale = Mathf.Lerp(startScale, finalScale, elapsedTime / lerpPeriod);
+            elapsedTime += Time.unscaledDeltaTime; // Use unscaledDeltaTime to ignore time scale
+            yield return null;
+        }
+
+        Time.timeScale = finalScale;
+    }
+
+    public void goToNextLevel(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
+    //Referenced by unityAction onClick in Pause Menu / GameOverMenu
     private void Restart(){
         SceneManager.LoadScene(1);
         Time.timeScale = 1; 

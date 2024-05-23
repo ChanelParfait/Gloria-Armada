@@ -115,7 +115,7 @@ public class Projectile : MonoBehaviour
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage); 
             Die();
         }
-        else if(col.gameObject.tag == "Enemy"){
+        else if(col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("EnemyBoss")){
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
             EnemyPlane enemy = col.GetComponent<EnemyPlane>();
             Burn burn = GetComponent<Burn>();

@@ -19,7 +19,8 @@ public class VolumeSlider : MonoBehaviour
 
     public void SetVolume(float volume){
         //RefreshSlider(volume);  
-        Debug.Log(volume);
+        Debug.Log("Volume: " + volume);
+        if (volume == 0) volume = 0.0001f;
         audioMixer.SetFloat("SFX_Volume", Mathf.Log10(volume) * 20);
         PlayerPrefs.SetFloat("Saved_SFX_Volume", volume);
     }
