@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -20,8 +19,6 @@ public class PlayerPlane : Actor
     [SerializeField] AudioClip boostedSound;
 
     Plane plane;
-
-    public bool invincible = false;
 
     private bool audioPlayingBoosted = false;
 
@@ -47,7 +44,6 @@ public class PlayerPlane : Actor
     }
 
     public override void TakeDamage(float damage){
-        if (invincible) return;
         if (audioSource.enabled){
             audioSource.Play();
         }
@@ -94,12 +90,6 @@ public class PlayerPlane : Actor
         if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
             //Get the normal of the collision
             Vector3 normal = col.contacts[0].normal;
-
-            if (invincible){
-                //Bounce the plane off the terrain by reflecting rb velocity about the normal
-                Rigidbody rigidBody = GetComponent<Rigidbody>();
-                rigidBody.velocity = Vector3.Reflect(rigidBody.velocity, normal);
-            }
             //Get dot product of the normal and the velocity
             Rigidbody rb = GetComponent<Rigidbody>();
             float dot = Vector3.Dot(rb.velocity.normalized, normal) * rb.velocity.magnitude;

@@ -98,12 +98,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2a22a1813d6d84cb1ccafe385a5e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  maxHealth: 2
   rb: {fileID: 0}
-  scoreValue: 40
+  scoreValue: 10
   fire: 0
   fireInterval: 6
-  speed: 4
+  speed: 3
   referenceSpeed: 0
   moveDir: {x: -1, y: 0, z: 0}
   orientation: {x: -1, y: 0, z: 0}
@@ -128,7 +128,6 @@ MonoBehaviour:
       lastError: 0
   targetOffset: {x: 0, y: 0, z: 0}
   deathExplosion: {fileID: 7641901280459977050, guid: 12cd1a8c790828542bcbce48a291aa01, type: 3}
-  powerupManager: {fileID: 0}
   deathObj: {fileID: 0}
 --- !u!82 &3701978883294950984
 AudioSource:
@@ -316,7 +315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -76774849123431624, guid: a6d92c50672afbd4dac6b276b0bd7ee8, type: 3}
       propertyPath: weaponStats.maxAmmo
-      value: 8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -76774849123431624, guid: a6d92c50672afbd4dac6b276b0bd7ee8, type: 3}
       propertyPath: weaponStats.fireTime
