@@ -76,6 +76,7 @@ public class EnemyPlane : EnemyBase
         if (lmObj != null){
             LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
             currentPerspective = lm.currentPerspective;
+            UpdatePerspective((int)currentPerspective);
             if(targetObj == null){
                 targetObj = GameObject.FindGameObjectWithTag("LevelManager");
             }
@@ -91,6 +92,7 @@ public class EnemyPlane : EnemyBase
         
     }
 
+
     virtual protected IEnumerator Initialize(){
         yield return new WaitForSeconds(0.1f);
         if (orientation == Vector3.zero && moveDir == Vector3.zero){
@@ -99,11 +101,49 @@ public class EnemyPlane : EnemyBase
         rb.AddForce(referenceSpeed * Utilities.MultiplyComponents(orientation, moveDir), ForceMode.VelocityChange);
     }
 
-    void UpdatePerspective(int _pers){
+    protected virtual void UpdatePerspective(int _pers){
         currentPerspective = (Perspective)_pers;
-        if (rb){
-            rb.MoveRotation(Quaternion.Euler(0,-90,0));
+        if (rb == null){
+            return;
         }
+        rb.MoveRotation(Quaternion.Euler(0,-90,0)); 
+        //Switch case on perspective and teleport plane to the axes
+        switch (currentPerspective){
+            case Perspective.Top_Down:
+                rb.MovePosition(new Vector3(transform.position.x, 0, transform.position.z));
+                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+                rb.constraints = RigidbodyConstraints.FreezePositionY;
+                if (CompareTag("EnemyBoss")){
+                    StartCoroutine(RotateTo(true));
+                }
+                break;
+            case Perspective.Side_On:
+                rb.MovePosition(new Vector3(transform.position.x, transform.position.y, 0));
+                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                rb.constraints = RigidbodyConstraints.FreezePositionZ;
+                if (CompareTag("EnemyBoss")){
+                    StartCoroutine(RotateTo(false));
+                }
+                break;
+            case Perspective.Null:
+                rb.constraints = RigidbodyConstraints.None;
+                break;
+        }   
+    }
+
+    IEnumerator RotateTo(bool toHorizontal)
+    {
+        float initZ = transform.rotation.eulerAngles.z;
+        float finalZ = toHorizontal ? 90 : 0; 
+        //Lerp from initial to final rotation over 1 second
+        for (float t = 0; t < 1; t += Time.deltaTime)
+        {
+            Vector3 newRot = transform.rotation.eulerAngles;
+            newRot.z = Mathf.Lerp(initZ, finalZ, Utilities.EaseInOut(t));
+            transform.rotation = Quaternion.Euler(newRot);
+            yield return null;
+        }
+        //transform.rotation.eulerAngles.Set(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, finalZ);
     }
 
     protected virtual Vector3 GetTargetOffset(){

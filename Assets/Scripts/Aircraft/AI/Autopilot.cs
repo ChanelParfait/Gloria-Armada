@@ -114,6 +114,7 @@ public class Autopilot : MonoBehaviour
     public Vector3 targetOffset = new Vector3(10, -10, -10);
 
     public float zTarget = 0;
+    public float yTarget = 0;
     public float targetAngularSize;
 
     [SerializeField] Perspective pers = Perspective.Null;
@@ -583,7 +584,7 @@ public class Autopilot : MonoBehaviour
         //autoArm = true;
         // If we are not already on the plane then go to it
         float x = rb.transform.position.x;
-        float y = rb.transform.position.y;
+        float y = rb.transform.position.y - yTarget;
         if (holdAltitude != float.MaxValue)
         {
             y = holdAltitude - y;
@@ -601,6 +602,8 @@ public class Autopilot : MonoBehaviour
 
         float ty = Mathf.Min(signY * -y * y, smoothing);
         float tz = Mathf.Min(signZ * -z * z, smoothing); // By default -> got to the center of the screen
+
+        Debug.DrawLine(rb.transform.position, new Vector3(rb.transform.position.x + smoothing, y, rb.transform.position.z), Color.red);
         if (pers == Perspective.Side_On) { ty = onAxes ? 0 : ty; }
         if (pers == Perspective.Top_Down) { tz = onAxes ? zTarget : tz; } // In top-down, go to point defined by player input
 
@@ -610,23 +613,31 @@ public class Autopilot : MonoBehaviour
             targetVector = new Vector3(60, 0, 0); //As a position
         }
 
-        if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 0.5f && (rb.velocity.normalized - Vector3.right).magnitude < 0.5f)
+        if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 1 && (rb.velocity.normalized - Vector3.right).magnitude < 1)
         {
             transform.position.Set(x, 0, z);
             rb.MovePosition(new Vector3(x, 0, z));
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezePositionY;
             autopilotState = lastAutopilotState;
+            if (CompareTag("Player")){
+                PlayerPlane playerPlane = GetComponent<PlayerPlane>();
+                playerPlane.invincible = false;
+            }
         }
         // if rb.velocity is CLOSE to right, and z is CLOSE to 0, and we are not on the axes
         else if (pers == Perspective.Side_On && !onAxes && Mathf.Abs(z) < 0.5f && (rb.velocity.normalized - Vector3.right).magnitude < 0.5f)
         {
             //force the plane to the xz plane
-            rb.MovePosition(new Vector3(x, y, 0));
+            rb.MovePosition(new Vector3(x, yTarget, 0));
             rb.MoveRotation(Quaternion.Euler(0, 90, 0));
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionZ;
             autopilotState = lastAutopilotState;
+            if (CompareTag("Player")){
+                PlayerPlane playerPlane = GetComponent<PlayerPlane>();
+                playerPlane.invincible = false;
+            }
 
         }
         else if (pers == Perspective.Null)
@@ -645,16 +656,16 @@ public class Autopilot : MonoBehaviour
 
         if (onAxes)
         {
-            autoArm = defaultAutoArm;
             SnapToAxes();
+            Utilities.MultiplyComponents(apControl, new Vector3(1, 1, 1f));
         }
         else
         {
             p.throttle = 0.7f;
-        }
-        if (onAxes)
-        {
-            Utilities.MultiplyComponents(apControl, new Vector3(1, 1, 1f));
+            if (CompareTag("Player")){
+                PlayerPlane playerPlane = GetComponent<PlayerPlane>();
+                playerPlane.invincible = true;
+            }
         }
         return apControl;
     }

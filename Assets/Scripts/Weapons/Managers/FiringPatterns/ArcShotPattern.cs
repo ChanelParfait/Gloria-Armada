@@ -33,7 +33,6 @@ public class ArcShotPattern : FiringPattern_SO
                 Perspective.Side_On => new Vector3(angle, 0, 0),
                 _ => new Vector3(angle, 0, 0),
             };
-            Vector3 parentRotation = shooter.transform.parent.transform.rotation.eulerAngles;
             Quaternion rotation = spawnTransform.rotation * Quaternion.Euler(angleVec);
             GameObject clone = GameObject.Instantiate(projectile, spawnTransform.position, rotation);
             clone.GetComponent<Rigidbody>().MoveRotation(rotation);

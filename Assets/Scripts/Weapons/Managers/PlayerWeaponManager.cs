@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 public class PlayerWeaponManager : MonoBehaviour
 {
@@ -41,7 +42,10 @@ public class PlayerWeaponManager : MonoBehaviour
                 Debug.Log("Firerate Up");
                 break;
             case PowerupType.BulletSizeUp:
-                primaryWeapon.GetWeaponStats().projectileStats.size *= 2; // Double bullet size
+                if (primaryWeapon.GetWeaponStats().projectileStats.size.magnitude > 6.0f){
+                    return;
+                }
+                primaryWeapon.GetWeaponStats().projectileStats.size *= 1.25f; // Double bullet size
                 break;
             // case PowerupType.BurnDamage:
             //     //
@@ -58,9 +62,15 @@ public class PlayerWeaponManager : MonoBehaviour
             // case PowerupType.SpecialDamageUp:
             //     //
             //     break;
-            // case PowerupType.SplitShot:
-            //     //
-            //     break;
+            case PowerupType.SplitShot:
+                //Get the splitShot component from Resources
+                Split splitShot = new();
+                if (primaryWeapon.projectileComponents.Contains(splitShot)){
+                    specialWeapon.projectileComponents.Add(new Split());
+                    return;
+                }
+                primaryWeapon.projectileComponents.Add(splitShot);
+                break;
             // case PowerupType.APDamage:
             //     //
             //     break;

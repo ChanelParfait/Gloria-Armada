@@ -4907,6 +4907,7 @@ MonoBehaviour:
   engineSound: {fileID: 8300000, guid: 09971f695ea052544bce3e950d989fac, type: 3}
   boostEngage: {fileID: 8300000, guid: 2356ee4984d7eec458a6be86ef5496d1, type: 3}
   boostedSound: {fileID: 8300000, guid: 965c2d36d61f0ad41a69268fef73a31a, type: 3}
+  invincible: 0
 --- !u!114 &2951336494503559052
 MonoBehaviour:
   m_ObjectHideFlags: 0
