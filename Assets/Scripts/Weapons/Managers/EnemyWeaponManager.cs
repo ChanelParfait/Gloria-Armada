@@ -32,7 +32,7 @@ public class EnemyWeaponManager : MonoBehaviour
     }
 
     public void FireActiveWeapon(){
-        //Debug.Log("Active Weapon: " + ActiveWeapon);
+        Debug.Log("Active Weapon: " + ActiveWeapon);
         ActiveWeapon.EnemyFire();
     }
 
