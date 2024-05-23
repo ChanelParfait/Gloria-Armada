@@ -581,7 +581,6 @@ public class Autopilot : MonoBehaviour
     Vector3 AutoTargetPlane(bool positional = false, float holdAltitude = float.MaxValue)
     {
         defaultAutoArm = autoArm;
-        
         //autoArm = true;
         // If we are not already on the plane then go to it
         float x = rb.transform.position.x;
@@ -614,13 +613,17 @@ public class Autopilot : MonoBehaviour
             targetVector = new Vector3(60, 0, 0); //As a position
         }
 
-        if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 0.5f && (rb.velocity.normalized - Vector3.right).magnitude < 0.5f)
+        if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 1 && (rb.velocity.normalized - Vector3.right).magnitude < 1)
         {
             transform.position.Set(x, 0, z);
             rb.MovePosition(new Vector3(x, 0, z));
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezePositionY;
             autopilotState = lastAutopilotState;
+            if (CompareTag("Player")){
+                PlayerPlane playerPlane = GetComponent<PlayerPlane>();
+                playerPlane.invincible = false;
+            }
         }
         // if rb.velocity is CLOSE to right, and z is CLOSE to 0, and we are not on the axes
         else if (pers == Perspective.Side_On && !onAxes && Mathf.Abs(z) < 0.5f && (rb.velocity.normalized - Vector3.right).magnitude < 0.5f)
@@ -631,6 +634,10 @@ public class Autopilot : MonoBehaviour
             onAxes = true;
             rb.constraints = RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionZ;
             autopilotState = lastAutopilotState;
+            if (CompareTag("Player")){
+                PlayerPlane playerPlane = GetComponent<PlayerPlane>();
+                playerPlane.invincible = false;
+            }
 
         }
         else if (pers == Perspective.Null)
@@ -649,16 +656,16 @@ public class Autopilot : MonoBehaviour
 
         if (onAxes)
         {
-            autoArm = defaultAutoArm;
             SnapToAxes();
+            Utilities.MultiplyComponents(apControl, new Vector3(1, 1, 1f));
         }
         else
         {
             p.throttle = 0.7f;
-        }
-        if (onAxes)
-        {
-            Utilities.MultiplyComponents(apControl, new Vector3(1, 1, 1f));
+            if (CompareTag("Player")){
+                PlayerPlane playerPlane = GetComponent<PlayerPlane>();
+                playerPlane.invincible = true;
+            }
         }
         return apControl;
     }
