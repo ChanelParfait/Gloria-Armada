@@ -175,6 +175,7 @@ public class LevelManager : MonoBehaviour
     private void OnTriggerEnter(Collider col){
         if(col.tag == "TransitionPoint"){
             UpdatePerspective(col.GetComponent<TransitionPoint>().GetPerspective());
+            playerPlane.GetComponent<Autopilot>().yTarget = col.transform.position.y;
         }
         if(col.tag == "WinPoint"){
             YouWin();
