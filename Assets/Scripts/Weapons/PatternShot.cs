@@ -20,7 +20,8 @@ public class PatternShot : Weapon
 
     void Awake(){
         defaultPattern = ScriptableObject.CreateInstance<SingleShotPattern>();
-        spawnTransform = gameObject.transform;
+        spawnTransform = new GameObject().transform;
+        spawnTransform.SetPositionAndRotation(transform.position, transform.rotation);
     }
     void Start()
     {
