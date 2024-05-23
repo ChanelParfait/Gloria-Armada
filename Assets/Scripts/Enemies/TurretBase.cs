@@ -11,8 +11,6 @@ public class TurretBase : EnemyBase
 
     protected float randFireTime;
     protected float timer = 0;
-
-    
     
 
 
@@ -46,7 +44,6 @@ public class TurretBase : EnemyBase
             timer = 0; 
             Fire();
         }
-        
     }
 
     protected override void Die(){

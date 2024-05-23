@@ -71,26 +71,25 @@ public class LaserCannon : Weapon
 
     public override void EnemyFire()
     {
-        if(currentCharge > 0){      
-            StartCoroutine(FireWarning());   
-        }
-        else{
-            Debug.Log("Out of Charge");
-        }  
+        StartCoroutine(FireWarning());        
     }
 
     private void DelayedEnemyFire()
     {
-        
+        if(currentCharge > 0){
             Debug.Log("Enemy Laser Fire " + projectile);
             // Fire Laser 
             activeProjectile = Instantiate(projectile, GetSpawnPos(), GetSpawnRotation(), transform); 
             laser = activeProjectile.GetComponent<Laser>(); 
-            laser.UpdateStats(weaponStats.projectileStats, 8);
+            laser.UpdateStats(weaponStats.projectileStats, 4);
             // loop sound while firing
             PlaySound();
             currentCharge --;
             StartCoroutine(HoldEnemyFire(weaponStats.fireTime));
+        }
+        else{
+            Debug.Log("Out of Charge");
+        }
         
     }
 

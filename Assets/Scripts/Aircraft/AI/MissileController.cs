@@ -1,30 +1,24 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MissileController : MonoBehaviour
 {
     public GameObject enemy;
+    private Autopilot ap;
+    private Plane planeSelf;
+    private Rigidbody rb;
+    private bool isArmed = false;
+    [SerializeField] private float waitTime = 0.5f;
+    [SerializeField] private float burnTime = 1.0f;
+    [SerializeField] private float selfDetTime = 3.0f;
+    private Vector3 lastPosition;
+    [SerializeField] private GameObject detonationEffect;
+    [SerializeField] private LayerMask collisionMask;
+    private FieldOfView fov;
+    private Perspective pers = Perspective.Side_On;
 
-    Autopilot ap;
-    Plane planeSelf;
-    Rigidbody rb;
-
-    bool isArmed = false;
-    [SerializeField] float waitTime = 0.5f;
-    [SerializeField] float burnTime = 1.0f;
-    [SerializeField] float selfDetTime = 3.0f;
-    Vector3 lastPosition;
-    [SerializeField] GameObject detonationEffect;
-    [SerializeField] LayerMask collisionMask;
-
-    FieldOfView fov;
-
-
-    Perspective pers = Perspective.Side_On;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         LevelManager lm = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         if (lm)
@@ -60,27 +54,27 @@ public class MissileController : MonoBehaviour
         ap.onAxes = true;
         planeSelf.SetThrottle(0.0f);
         // Wait for a short time before homing in on player
-        StartCoroutine(Wait());
+        _ = StartCoroutine(Wait());
     }
 
     // Coroutine for missile to wait before homing in on player
-    IEnumerator Wait()
+    private IEnumerator Wait()
     {
         yield return new WaitForSeconds(waitTime);
         planeSelf.SetThrottle(1.0f);
         isArmed = true;
-        StartCoroutine(BurnOut());
+        _ = StartCoroutine(BurnOut());
     }
 
     // Coroutine for setting thrust to 0 after a certain amount of time
-    IEnumerator BurnOut()
+    private IEnumerator BurnOut()
     {
         yield return new WaitForSeconds(burnTime);
         planeSelf.SetThrottle(0.0f);
-        StartCoroutine(SelfDestruct());
+        _ = StartCoroutine(SelfDestruct());
     }
 
-    IEnumerator SelfDestruct()
+    private IEnumerator SelfDestruct()
     {
         yield return new WaitForSeconds(selfDetTime);
         Detonate();
@@ -91,7 +85,7 @@ public class MissileController : MonoBehaviour
         //StopAllCoroutines();
         if (detonationEffect)
         {
-            Instantiate(detonationEffect, transform.position, Quaternion.identity);
+            _ = Instantiate(detonationEffect, transform.position, Quaternion.identity);
         }
         Destroy(gameObject);
     }
@@ -106,21 +100,20 @@ public class MissileController : MonoBehaviour
     //     }
     // }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         var diff = rb.position - lastPosition;
         lastPosition = rb.position;
 
-        Ray ray = new Ray(lastPosition - diff, diff.normalized * 2);
+        Ray ray = new(lastPosition - diff, diff.normalized * 2);
         Debug.DrawRay(lastPosition - diff, diff.normalized * 2, Color.red, 0.1f);
-        RaycastHit hit;
         float width = 2.5f;
 
         if (!isArmed)
         {
             return;
         }
-        if (Physics.SphereCast(ray, width, out hit, diff.magnitude, collisionMask.value))
+        if (Physics.SphereCast(ray, width, out _, diff.magnitude, collisionMask.value))
         {
             //Plane other = hit.collider.GetComponent<Plane>();
             Detonate();
@@ -128,7 +121,7 @@ public class MissileController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (enemy == null)
         {
