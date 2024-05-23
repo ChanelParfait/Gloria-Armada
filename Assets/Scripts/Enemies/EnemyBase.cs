@@ -44,7 +44,6 @@ public class EnemyBase : Actor
         // Fire a Weapon
         if (weaponManager != null)
         {
-            Debug.Log("Fire");
             weaponManager.FireActiveWeapon(); 
         }
         
