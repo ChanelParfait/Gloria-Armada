@@ -7,6 +7,7 @@ public class PowerupManager : MonoBehaviour
     public string[] powerupItems; // Array to store the names of powerup items
     [SerializeField] private float dropChance = 5f;
 
+    Burn burn;
 
     
     void Start()
@@ -42,6 +43,26 @@ public class PowerupManager : MonoBehaviour
             //Debug.Log("Power-up spawned at: " + enemyPosition);
         }
      
+    }
+    
+    public IEnumerator BurnDamageOverTime(EnemyPlane enemy, float burnDamage, float burnDuration, float burnTime)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < burnDuration)
+        {
+            if (enemy != null)
+            {
+                enemy.maxHealth -= burnDamage;
+                Debug.Log("Burn damage applied. Current health: " + enemy.maxHealth);
+                yield return new WaitForSeconds(burnTime);
+                elapsed += burnTime;
+            }
+            else
+            {
+                break; // Stop coroutine if enemy is null (e.g., if it is destroyed)
+            }
+        }
     }
 
 }

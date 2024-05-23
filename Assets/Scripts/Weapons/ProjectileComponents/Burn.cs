@@ -1,52 +1,44 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 
 public class Burn : MonoBehaviour
 {
-    //damage per tick
+    // Damage per tick
     public float burnDamage = 0.5f;
-    [SerializeField]
-    float burnDuration = 5f;
-    [SerializeField]
-    float burnTime = 1f;
+    public float burnDuration = 5f;
+    public float burnTime = 1f;
     public bool isBurning;
- 
+
     public GameObject projectileObj;
     Projectile projectile;
 
+    PowerupManager powerupManager;
+    EnemyPlane enemy;  // Store the enemy reference
 
-    // Start is called before the first frame update
     void Start()
     {
         projectileObj = gameObject;
         projectile = projectileObj.GetComponent<Projectile>();
+        powerupManager = FindObjectOfType<PowerupManager>();
     }
 
+    void OnDestroy()
+    {
+        if (isBurning  && enemy != null)
+        {
+            isBurning = true;
+            Debug.Log("Raahhh");
+            StartCoroutine(powerupManager.BurnDamageOverTime(enemy, burnDamage, burnDuration, burnTime));
+        }
+    }
 
     public void ApplyBurn(EnemyPlane enemy)
     {
-        if (!isBurning)
+        this.enemy = enemy;  // Store the enemy reference
+        if (!isBurning && powerupManager != null)
         {
             isBurning = true;
-            StartCoroutine(BurnDamageOverTime(enemy));
+            StartCoroutine(powerupManager.BurnDamageOverTime(enemy, burnDamage, burnDuration, burnTime));
         }
-    }
-
-    //Triggers tick damage on the enemy for 5 seconds or until dead
-    private IEnumerator BurnDamageOverTime(EnemyPlane enemy)
-    {
-        float elapsed;
-        if (enemy != null)
-            {
-            for (elapsed = 0f; elapsed < burnDuration; elapsed += burnTime)
-            {
-                enemy.maxHealth -= burnDamage;
-                Debug.Log("Burn damage applied. Current health: " + enemy.maxHealth);
-                yield return new WaitForSeconds(burnTime);
-            }
-        }
-        isBurning = false;
     }
 }
