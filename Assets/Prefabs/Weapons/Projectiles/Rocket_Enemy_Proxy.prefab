@@ -19673,7 +19673,9 @@ MonoBehaviour:
   hasTarget: 0
   onAxes: 0
   shotSpeed: 300
+  targetOffset: {x: 10, y: -10, z: -10}
   zTarget: 0
+  yTarget: 0
   targetAngularSize: 0
   pers: 0
 --- !u!114 &2621917639392063258
@@ -19758,7 +19760,7 @@ AudioSource:
   m_GameObject: {fileID: 4355265953626248377}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

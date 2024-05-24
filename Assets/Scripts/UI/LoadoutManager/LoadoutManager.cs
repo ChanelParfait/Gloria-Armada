@@ -58,6 +58,13 @@ public class LoadoutManager : MonoBehaviour
 
     }
 
+    void Start(){
+        if (Cursor.lockState != CursorLockMode.None)
+            Cursor.lockState = CursorLockMode.None;
+        if (Cursor.visible != true)
+            Cursor.visible = true;
+    }
+
     private void Update()
     {
         // When the return key is pressed, click the launch button
