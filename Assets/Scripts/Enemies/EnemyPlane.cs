@@ -276,9 +276,9 @@ public class EnemyPlane : EnemyBase
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 100.0f))
         {
             //If the distance to the ground is less than 10 units, add a force upwards
-            if (hit.distance < 20.0f)
+            if (hit.distance < 40.0f)
             {
-                rb.AddForce((10 - hit.distance) * 40.0f * Vector3.up);
+                rb.AddForce((40 - hit.distance) * 40.0f * Vector3.up);
             }
         }
     }

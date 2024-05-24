@@ -201,23 +201,6 @@ MonoBehaviour:
   deathExplosion: {fileID: 7641901280459977050, guid: 12cd1a8c790828542bcbce48a291aa01, type: 3}
   powerupManager: {fileID: 0}
   deathObj: {fileID: 4159290798137297532, guid: e9ccf1c41ebb61b4995d14415ae5b2c0, type: 3}
---- !u!1 &188143382 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8509849530793302560, guid: 4b91d478001a4fc49a92c201ad89842e, type: 3}
-  m_PrefabInstance: {fileID: 1760408832207649005}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &188143383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 188143382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 934f1656dd89e1b458367ffeb2a936b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &236561235 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3287434280380182090, guid: 4b91d478001a4fc49a92c201ad89842e, type: 3}
@@ -1957,10 +1940,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1796382485969895098, guid: 4b91d478001a4fc49a92c201ad89842e, type: 3}
       insertIndex: 6
       addedObject: {fileID: 569209967}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8509849530793302560, guid: 4b91d478001a4fc49a92c201ad89842e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 188143383}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b91d478001a4fc49a92c201ad89842e, type: 3}
 --- !u!1001 &2958115596062350157
 PrefabInstance:
