@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1038453863497866403}
   - component: {fileID: 1425102549796391944}
   - component: {fileID: 3860083503341854315}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4905,7 +4905,7 @@ GameObject:
   - component: {fileID: 5075316451062301173}
   - component: {fileID: 4433902390837724229}
   - component: {fileID: 3765786236389569654}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: ExplosionHuge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
