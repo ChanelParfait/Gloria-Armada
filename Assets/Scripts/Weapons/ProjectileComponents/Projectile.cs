@@ -115,15 +115,27 @@ public class Projectile : MonoBehaviour
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage); 
             Die();
         }
-        else if(col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("EnemyBoss")){
+        else if(col.gameObject.CompareTag("Enemy") || col.gameObject.CompareTag("EnemyBoss"))
+        {
             col.GetComponent<Actor>().TakeDamage(projectileStats.damage);
+            EnemyBase enemy = col.GetComponent<EnemyBase>();
+            if (TryGetComponent<Burn>(out Burn burn))
+            {
+                burn.ApplyBurn(enemy);
+            }
+            if (TryGetComponent<LightningChain>(out LightningChain lightning))
+            {
+                lightning.ApplyArcDamage(enemy);
+            }
+            
             if (hitParticle)
             {
                 Instantiate(hitParticle, transform.position, Quaternion.identity);
             } 
             Die();
         }
-        else if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
+        else if (col.gameObject.layer == LayerMask.NameToLayer("Terrain"))
+        {
             MissileController missile;
             if (missile = GetComponent<MissileController>()){
                 missile.Detonate();

@@ -32,6 +32,7 @@ public class TurretBase : EnemyBase
 
         randFireTime = Random.Range(1f, 2.0f);
         timer = fireInterval - 1; 
+        base.Start();
         
     }
 

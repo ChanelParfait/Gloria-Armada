@@ -32,7 +32,7 @@ public class PlayerPlane : Actor
     {
         plane = GetComponent<Plane>();
 
-        currentHealth = maxHealth;
+        CurrentHealth = maxHealth;
         audioSource = GetComponent<AudioSource>();
         engineSource = gameObject.AddComponent<AudioSource>();
         engineSource.outputAudioMixerGroup = audioSource.outputAudioMixerGroup;

@@ -245,9 +245,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 30
+  currentHealth: 0
   rb: {fileID: 5356486401159693154}
   scoreValue: 10
   fire: 0
+  onFire: 0
+  fireEffectPrefab: {fileID: 0}
   fireInterval: 3
   speed: 3
   referenceSpeed: 0
@@ -257,7 +260,7 @@ MonoBehaviour:
     x:
       Kp: 1
       Ki: 0.01
-      Kd: 0.5
+      Kd: 6
       integral: 0
       lastError: 0
     y:

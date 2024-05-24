@@ -13,6 +13,8 @@ public class PlayerWeaponManager : MonoBehaviour
 
     [SerializeField] List<PowerupType> powerups = new();
 
+    public List<System.Type> projectileComponentTypes = new();
+
     public bool isArmed = true;
 
     public Rigidbody playerRB;
@@ -47,29 +49,23 @@ public class PlayerWeaponManager : MonoBehaviour
                 }
                 primaryWeapon.GetWeaponStats().projectileStats.size *= 1.25f; // Double bullet size
                 break;
-            // case PowerupType.BurnDamage:
-            //     //
-            //     break;
+            case PowerupType.BurnDamage:
+                AddProjectileComponent(typeof(Burn));
+                break;
             // case PowerupType.FreezeShots:
             //     //
             //     break;
             // case PowerupType.ExplodingShots:
             //     //
             //     break;
-            // case PowerupType.LightningChain:
-            //     //
-            //     break;
+            case PowerupType.LightningChain:
+                AddProjectileComponent(typeof(LightningChain));
+                break;
             // case PowerupType.SpecialDamageUp:
             //     //
             //     break;
             case PowerupType.SplitShot:
-                //Get the splitShot component from Resources
-                Split splitShot = new();
-                if (primaryWeapon.projectileComponents.Contains(splitShot)){
-                    specialWeapon.projectileComponents.Add(new Split());
-                    return;
-                }
-                primaryWeapon.projectileComponents.Add(splitShot);
+                AddProjectileComponent(typeof(Split));
                 break;
             // case PowerupType.APDamage:
             //     //
@@ -78,6 +74,17 @@ public class PlayerWeaponManager : MonoBehaviour
             //     //
             //     break;
         }
+    }
+
+    void AddProjectileComponent(System.Type componentType){
+        // TODO: Adding multiple of same component
+
+        // If the component is not already added, add it to the projectileComponents list
+        if (primaryWeapon.projectileComponents.Contains(componentType)){
+            specialWeapon.projectileComponents.Add(componentType);
+            return;
+        }
+        else {primaryWeapon.projectileComponents.Add(componentType);}
     }
 
     // Start is called before the first frame update
