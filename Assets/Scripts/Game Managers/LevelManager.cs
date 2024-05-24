@@ -186,6 +186,7 @@ public class LevelManager : MonoBehaviour
         EnemyBase.OnEnemyDeath += UpdateScore;
         PlayerPlane.OnPlayerDeath += GameOver;
         PlayerPlane.OnPlayerDamage += PlayDamageEffect;
+        BossEnemy.OnBossDeath += YouWin;
 
     }
 
@@ -194,6 +195,8 @@ public class LevelManager : MonoBehaviour
         EnemyBase.OnEnemyDeath -= UpdateScore;
         PlayerPlane.OnPlayerDeath -= GameOver;
         PlayerPlane.OnPlayerDamage -= PlayDamageEffect;
+        BossEnemy.OnBossDeath -= YouWin;
+
     }
 
     private void OnTriggerEnter(Collider col){

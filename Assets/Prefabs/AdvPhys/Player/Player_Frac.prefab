@@ -1086,6 +1086,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6207072621826498824}
     m_Modifications:
+    - target: {fileID: 1706505100020898331, guid: 5c446f525bb391e4ebaac5065d3a9947, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706505100020898331, guid: 5c446f525bb391e4ebaac5065d3a9947, type: 3}
+      propertyPath: m_VertexStreams.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706505100020898331, guid: 5c446f525bb391e4ebaac5065d3a9947, type: 3}
+      propertyPath: m_VertexStreams.Array.data[2]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706505100020898331, guid: 5c446f525bb391e4ebaac5065d3a9947, type: 3}
+      propertyPath: m_VertexStreams.Array.data[3]
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 9112560447220901259, guid: 5c446f525bb391e4ebaac5065d3a9947, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.13699426
@@ -1148,6 +1164,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7209831895285861493}
     m_Modifications:
+    - target: {fileID: 1706505100020898331, guid: 5c446f525bb391e4ebaac5065d3a9947, type: 3}
+      propertyPath: m_UseCustomVertexStreams
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706505100020898331, guid: 5c446f525bb391e4ebaac5065d3a9947, type: 3}
+      propertyPath: m_VertexStreams.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706505100020898331, guid: 5c446f525bb391e4ebaac5065d3a9947, type: 3}
+      propertyPath: m_VertexStreams.Array.data[2]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1706505100020898331, guid: 5c446f525bb391e4ebaac5065d3a9947, type: 3}
+      propertyPath: m_VertexStreams.Array.data[3]
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 9112560447220901259, guid: 5c446f525bb391e4ebaac5065d3a9947, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
