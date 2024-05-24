@@ -1072,7 +1072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8145203520018443969, guid: 6cad46c2646b82245bcfbcf80707c01c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8805182082084051557, guid: 6cad46c2646b82245bcfbcf80707c01c, type: 3}
       propertyPath: m_Enabled
@@ -6695,6 +6695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNameText: {fileID: 0}
+  playerNameInput: {fileID: 0}
   nameEdit: {fileID: 0}
 --- !u!114 &1027596254
 MonoBehaviour:
