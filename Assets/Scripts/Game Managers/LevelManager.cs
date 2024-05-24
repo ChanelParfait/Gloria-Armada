@@ -28,7 +28,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPnl; 
     [SerializeField] private GameObject levelClearPnl; 
     [SerializeField] private TextMeshProUGUI ScoreTxt; 
-    [SerializeField] private TextMeshProUGUI TimerTxt;
+    [SerializeField] private TextMeshProUGUI timerTxt;
+
+    [SerializeField] private GameManager gameManager;
     public Animator damageAnim;
 
     public List<GameObject> enemies = new List<GameObject>();
@@ -63,6 +65,11 @@ public class LevelManager : MonoBehaviour
         currentPerspective = initPerspective;
         UpdatePerspective(currentPerspective);
 
+        gameManager = GameManager.instance;
+        if (gameManager == null){
+            GameObject gmObject = new GameObject("GameManager");
+            gameManager = gmObject.AddComponent<GameManager>();
+        }
 
 
     }
@@ -73,10 +80,16 @@ public class LevelManager : MonoBehaviour
     {
         gameOverPnl = GameObject.Find("GameOver");
         levelClearPnl = GameObject.Find("LevelClear");
-        EnsureNextLevelButtonListener();
+        if (levelClearPnl != null){
+            EnsureNextLevelButtonListener();
+        }
         damageAnim = GameObject.Find("DamageCirclePrefab").GetComponent<Animator>();
-        ScoreTxt = GameObject.Find("Score/Text (TMP)").GetComponent<TextMeshProUGUI>();
-        TimerTxt = GameObject.Find("Timer/Text (TMP)").GetComponent<TextMeshProUGUI>();
+        GameObject timerObj = GameObject.Find("Timer");
+        if (timerObj != null){
+            ScoreTxt = GameObject.Find("Score/Text (TMP)").GetComponent<TextMeshProUGUI>();
+            timerTxt = GameObject.Find("Timer/Text (TMP)").GetComponent<TextMeshProUGUI>();
+        }
+        
         StartCoroutine(WaitforLoad());
         rb.velocity = Vector3.right * 20;
 
@@ -161,7 +174,8 @@ public class LevelManager : MonoBehaviour
             }
         }
         levelTimer += Time.deltaTime;
-        TimerTxt.text = System.TimeSpan.FromSeconds((double)levelTimer).ToString(@"m\:ss");
+        if (timerTxt != null)
+        timerTxt.text = System.TimeSpan.FromSeconds((double)levelTimer).ToString(@"m\:ss");
     }
 
     private void OnEnable(){
@@ -182,10 +196,12 @@ public class LevelManager : MonoBehaviour
     private void OnTriggerEnter(Collider col){
         if(col.tag == "TransitionPoint"){
             UpdatePerspective(col.GetComponent<TransitionPoint>().GetPerspective());
-            playerPlane.GetComponent<Autopilot>().yTarget = col.transform.position.y;
+            if (playerPlane != null){
+                playerPlane.GetComponent<Autopilot>().yTarget = col.transform.position.y;
+            }
         }
         if(col.CompareTag("WinPoint")){
-            Debug.Log("You Win");
+            Debug.Log("Hit win point");
             YouWin();
         }
     }
@@ -319,9 +335,16 @@ public class LevelManager : MonoBehaviour
 
     public void YouWin(){
         StartCoroutine(LerpTime(0, 1.0f));
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (levelClearPnl == null){
+            gameManager.SetNextScene(nextSceneIndex);
+            //Go to the loadout
+            gameManager.OnLevelComplete(nextSceneIndex);
+            return;
+        }
         SaveScoreTime();
         levelClearPnl.GetComponent<Canvas>().enabled = true;  
-        Debug.Log("Win");
+        gameManager.SetNextScene(nextSceneIndex);
         
     }
 
@@ -382,8 +405,11 @@ public class LevelManager : MonoBehaviour
     }
 
     public void GoToNextLevel(){
-        Debug.Log("LoadingNextScene");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //Find gm instance
+
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+        gameManager.GetComponent<GameManager>().OnLevelComplete(nextSceneIndex);
     }
 
     //Referenced by unityAction onClick in Pause Menu / GameOverMenu

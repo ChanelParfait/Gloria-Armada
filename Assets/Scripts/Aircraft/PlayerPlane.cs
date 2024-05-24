@@ -12,6 +12,8 @@ public class PlayerPlane : Actor
     public static event UnityAction<PlayerPlane> OnPlayerDamage;
     public static event UnityAction OnPlayerDeath;
 
+    public static event UnityAction<float> OnUpdateHealth;
+
     [SerializeField] GameObject deathObj;
 
     [SerializeField] AudioClip engineSound;
@@ -54,6 +56,12 @@ public class PlayerPlane : Actor
         base.TakeDamage(damage);
         //Debug.Log("Current Health: " + currentHealth);
         OnPlayerDamage?.Invoke(this);
+    }
+
+    public void SetHealth(float health)
+    {
+        CurrentHealth = health;
+        OnUpdateHealth?.Invoke(health);
     }
 
     protected override void Die(){   

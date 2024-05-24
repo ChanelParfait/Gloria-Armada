@@ -22,6 +22,7 @@ public class LoadoutManager : MonoBehaviour
     public Button[] BodyButtons;
     public WeaponButton DefaultPrimary;
     public WeaponButton DefaultSpecial;
+    public WeaponButton DefaultBody;
 
     public Button launchButton;
     public Button escapeButton;
@@ -36,8 +37,9 @@ public class LoadoutManager : MonoBehaviour
 
     void OnEnable()
     {
+        GameManager gm = GameManager.instance;
         launchButton.onClick.AddListener(ConfirmSelections);
-        launchButton.onClick.AddListener(sceneLoader.LoadNextScene);
+        launchButton.onClick.AddListener(gm.LoadNextLevel);
         escapeButton.onClick.AddListener(sceneLoader.LoadPreviousScene);
     }
 
@@ -52,6 +54,7 @@ public class LoadoutManager : MonoBehaviour
 
         SelectWeapon(DefaultPrimary);
         SelectWeapon(DefaultSpecial);
+        SelectWeapon(DefaultBody);
 
     }
 
@@ -124,11 +127,7 @@ public class LoadoutManager : MonoBehaviour
 
     public void ConfirmSelections()
     {
-        // on Launch, get the weaponID of primary and special weapon buttons
-        // and pass them to the game manager
-        //Debug.Log("Weapons Confirmed");
-
-        GameManager gameManager =  GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>(); 
+        GameManager gameManager = GameManager.instance;
         // 
         if (selectedPrimaryWeapon != null && selectedSpecialWeapon != null){
             gameManager.PrimaryWeapon = selectedPrimaryWeapon.weaponPrefab;

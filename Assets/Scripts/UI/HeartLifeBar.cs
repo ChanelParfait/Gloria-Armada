@@ -6,22 +6,20 @@ public class HeartLifeBar : MonoBehaviour
 {
     public PlayerPlane playerHealth;
     public GameObject heartPrefab;
-    //public PlayerLife playerLife;
     List<HealthHeart> hearts = new List<HealthHeart>();
 
     private float maxHealth; 
 
-
     private void OnEnable()
     {
         PlayerPlane.OnPlayerDamage += DrawHearts;
-        //PlayerLife.OnPlayerHeal += DrawHearts;
+        PlayerPlane.OnUpdateHealth += DrawHearts;
     }
 
     private void OnDisable()
     {
         PlayerPlane.OnPlayerDamage -= DrawHearts;
-        //PlayerLife.OnPlayerHeal -= DrawHearts;
+        PlayerPlane.OnUpdateHealth -= DrawHearts;
     }
 
     private void Start()
@@ -31,42 +29,48 @@ public class HeartLifeBar : MonoBehaviour
         Debug.Log("Player Max Health = " + maxHealth);
         DrawHearts();
     }
- 
 
     public void DrawHearts(PlayerPlane plane)
     {
         Debug.Log("Draw Hearts");
         ClearHearts();
-        float maxLifeRemainder = maxHealth % 2;
-        int heartsToMake = (int)((maxHealth * 0.5f) + maxLifeRemainder);
+        int heartsToMake = Mathf.CeilToInt(maxHealth / 2.0f);
+        Debug.Log("Hearts to make: " + heartsToMake);
+
         for (int i = 0; i < heartsToMake; i++)
         {
             CreateEmptyHeart();
         }
 
-        for(int i = 0; i < hearts.Count; i++)
+        for (int i = 0; i < hearts.Count; i++)
         {
             int heartStatusRemainder = (int)Mathf.Clamp(plane.CurrentHealth - (i * 2), 0, 2);
             hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
         }
     }
 
+    public void DrawHearts(float _maxHealth){
+        this.maxHealth = _maxHealth;
+        DrawHearts();
+    }
+
     public void DrawHearts()
     {   
-        // Draw Hearts at Full Health
+        Debug.Log("Draw Hearts at Full Health");
         ClearHearts();
-            float maxLifeRemainder = maxHealth % 2;
-            int heartsToMake = (int)((maxHealth * 0.5f) + maxLifeRemainder);
-            for (int i = 0; i < heartsToMake; i++)
-            {
-                CreateEmptyHeart();
-            }
+        int heartsToMake = Mathf.CeilToInt(maxHealth / 2.0f);
+        Debug.Log("Hearts to make: " + heartsToMake);
 
-            for(int i = 0; i < hearts.Count; i++)
-            {
-                float heartStatusRemainder = Mathf.Clamp(maxHealth - (i * 2), 0, 2);
-                hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
-            }
+        for (int i = 0; i < heartsToMake; i++)
+        {
+            CreateEmptyHeart();
+        }
+
+        for (int i = 0; i < hearts.Count; i++)
+        {
+            int heartStatusRemainder = (int)Mathf.Clamp(maxHealth - (i * 2), 0, 2);
+            hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
+        }
     }
 
     public void CreateEmptyHeart()
@@ -85,6 +89,6 @@ public class HeartLifeBar : MonoBehaviour
         {
             Destroy(t.gameObject);
         }
-        hearts = new List<HealthHeart>();
+        hearts.Clear();
     }
 }
