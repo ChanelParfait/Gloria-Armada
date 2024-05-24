@@ -100,7 +100,7 @@ public class HighScoreManager : MonoBehaviour
         //If canvas is active, 
         Canvas canvas = GetComponent<Canvas>();
         if (canvas.isActiveAndEnabled){
-            Debug.Log("Canvas enabled");
+            //Debug.Log("Canvas enabled");
             Cursor.lockState = CursorLockMode.None;
             if (Cursor.visible == false)
             {

@@ -23,11 +23,11 @@ public class MothershipCore : Actor
     // Update is called once per frame
     void Update()
     {
-        if(currentHealth <= (maxHealth / 3) * 1){
+        if(CurrentHealth <= (maxHealth / 3) * 1){
             // set active heart to heart 3
             SetActiveHeart(3);
         }
-        else if(currentHealth <= (maxHealth / 3) * 2){
+        else if(CurrentHealth <= (maxHealth / 3) * 2){
             // set active heart to heart 2
             SetActiveHeart(2);
         }
