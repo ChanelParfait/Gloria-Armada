@@ -245,9 +245,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 30
+  currentHealth: 0
   rb: {fileID: 5356486401159693154}
   scoreValue: 10
   fire: 0
+  onFire: 0
+  fireEffectPrefab: {fileID: 0}
   fireInterval: 3
   speed: 3
   referenceSpeed: 0
@@ -257,7 +260,7 @@ MonoBehaviour:
     x:
       Kp: 1
       Ki: 0.01
-      Kd: 0.5
+      Kd: 6
       integral: 0
       lastError: 0
     y:
@@ -275,7 +278,7 @@ MonoBehaviour:
   targetOffset: {x: 0, y: 0, z: 0}
   deathExplosion: {fileID: 7641901280459977050, guid: 12cd1a8c790828542bcbce48a291aa01, type: 3}
   powerupManager: {fileID: 0}
-  deathObj: {fileID: 0}
+  deathObj: {fileID: 4374772965981836583, guid: 8d2777225af5dd54984b749f485d70b7, type: 3}
 --- !u!54 &5356486401159693154
 Rigidbody:
   m_ObjectHideFlags: 0

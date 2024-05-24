@@ -44,9 +44,10 @@ public class PauseMenu : MonoBehaviour
                 Button btn = button;
                 PauseMenu pauseMenu = GetComponent<PauseMenu>();
                 Debug.Log("Checking for listeners on SettingsBackButton");
-                Debug.Log("Target: " + btn.onClick.GetPersistentTarget(0));
+                Debug.Log("SettingsBackTarget: " + btn.onClick.GetPersistentTarget(0));
                 if (btn.onClick.GetPersistentTarget(0) != pauseMenu)
                 {
+                    Debug.Log("Adding listener to SettingsBackButton");
                     btn.onClick.AddListener(pauseMenu.CloseSettings);
                 }
             }

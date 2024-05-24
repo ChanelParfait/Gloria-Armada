@@ -11,8 +11,6 @@ public class TurretBase : EnemyBase
 
     protected float randFireTime;
     protected float timer = 0;
-
-    
     
 
 
@@ -34,6 +32,7 @@ public class TurretBase : EnemyBase
 
         randFireTime = Random.Range(1f, 2.0f);
         timer = fireInterval - 1; 
+        base.Start();
         
     }
 
@@ -46,7 +45,6 @@ public class TurretBase : EnemyBase
             timer = 0; 
             Fire();
         }
-        
     }
 
     protected override void Die(){

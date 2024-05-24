@@ -1,29 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
-using UnityEngine.Events;
 
 [System.Serializable]
-class vec3PID {
+internal class Vec3PID
+{
     public PID x;
     public PID y;
     public PID z;
 
-    public vec3PID(float p, float i, float d){
+    public Vec3PID(float p, float i, float d)
+    {
         x = new PID(p, i, d);
         y = new PID(p, i, d);
         z = new PID(p, i, d);
     }
 
-    public Vector3 Solve(Vector3 target, Vector3 current){
+    public Vector3 Solve(Vector3 target, Vector3 current)
+    {
         return new Vector3(x.Solve(target.x, current.x), y.Solve(target.y, current.y), z.Solve(target.z, current.z));
     }
 
-    public Vector3 Solve(Vector3 error){
+    public Vector3 Solve(Vector3 error)
+    {
         return new Vector3(x.Solve(error.x), y.Solve(error.y), z.Solve(error.z));
-    
+
     }
 }
 
@@ -35,7 +35,7 @@ public class EnemyPlane : EnemyBase
     public Vector3 moveDir;
     public Vector3 orientation;
 
-    [SerializeField] vec3PID pid = new vec3PID(1f, 0.01f, 22f);
+    [SerializeField] private Vec3PID pid = new(1f, 0.01f, 22f);
 
     protected GameObject targetObj;
     protected Camera cam;
@@ -52,89 +52,100 @@ public class EnemyPlane : EnemyBase
 
 
     [SerializeField] private PowerupManager powerupManager;
-    
+
     protected CameraUtils camUtils;
 
     [SerializeField] protected GameObject deathObj;
 
-    void OnEnable(){
+    private void OnEnable()
+    {
         LevelManager.OnPerspectiveChange += UpdatePerspective;
     }
 
-    void OnDisable(){
+    private void OnDisable()
+    {
         LevelManager.OnPerspectiveChange -= UpdatePerspective;
     }
 
     // Start is called before the first frame update
     protected override void Start()
-    {   
+    {
         base.Start();
         weaponManager = gameObject.GetComponent<EnemyWeaponManager>();
         powerupManager = GameObject.FindObjectOfType<PowerupManager>();
         rb = GetComponent<Rigidbody>();
         GameObject lmObj = GameObject.FindGameObjectWithTag("LevelManager");
-        if (lmObj != null){
+        if (lmObj != null)
+        {
             LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
             currentPerspective = lm.currentPerspective;
             UpdatePerspective((int)currentPerspective);
-            if(targetObj == null){
+            if (targetObj == null)
+            {
                 targetObj = GameObject.FindGameObjectWithTag("LevelManager");
             }
         }
-        
-        
+
+
         cam = Camera.main;
         camUtils = FindObjectOfType<CameraUtils>();
         randomOffsetComponent = Random.Range(-0.4f, 0.4f);
         randFireTime = Random.Range(1f, 2.0f);
-        StartCoroutine(Initialize());
-        timer = fireInterval - 1; 
-        
+        _ = StartCoroutine(Initialize());
+        timer = fireInterval - 1;
+
     }
 
 
-    virtual protected IEnumerator Initialize(){
+    virtual protected IEnumerator Initialize()
+    {
         yield return new WaitForSeconds(0.1f);
-        if (orientation == Vector3.zero && moveDir == Vector3.zero){
+        if (orientation == Vector3.zero && moveDir == Vector3.zero)
+        {
             yield break;
         }
         rb.AddForce(referenceSpeed * Utilities.MultiplyComponents(orientation, moveDir), ForceMode.VelocityChange);
     }
 
-    protected virtual void UpdatePerspective(int _pers){
+    protected virtual void UpdatePerspective(int _pers)
+    {
         currentPerspective = (Perspective)_pers;
-        if (rb == null){
+        if (rb == null)
+        {
             return;
         }
-        rb.MoveRotation(Quaternion.Euler(0,-90,0)); 
+        rb.MoveRotation(Quaternion.Euler(0, -90, 0));
         //Switch case on perspective and teleport plane to the axes
-        switch (currentPerspective){
+        switch (currentPerspective)
+        {
             case Perspective.Top_Down:
                 rb.MovePosition(new Vector3(transform.position.x, 0, transform.position.z));
                 transform.position = new Vector3(transform.position.x, 0, transform.position.z);
                 rb.constraints = RigidbodyConstraints.FreezePositionY;
-                if (CompareTag("EnemyBoss")){
-                    StartCoroutine(RotateTo(true));
+                if (CompareTag("EnemyBoss"))
+                {
+                    _ = StartCoroutine(RotateTo(true));
                 }
                 break;
             case Perspective.Side_On:
                 rb.MovePosition(new Vector3(transform.position.x, transform.position.y, 0));
                 transform.position = new Vector3(transform.position.x, transform.position.y, 0);
                 rb.constraints = RigidbodyConstraints.FreezePositionZ;
-                if (CompareTag("EnemyBoss")){
-                    StartCoroutine(RotateTo(false));
+                if (CompareTag("EnemyBoss"))
+                {
+                    _ = StartCoroutine(RotateTo(false));
                 }
                 break;
             case Perspective.Null:
                 rb.constraints = RigidbodyConstraints.None;
                 break;
-        }   
+        }
     }
 
-    IEnumerator RotateTo(bool toHorizontal)
+    private IEnumerator RotateTo(bool toHorizontal)
     {
         float initZ = transform.rotation.eulerAngles.z;
-        float finalZ = toHorizontal ? 90 : 0; 
+        float finalZ = toHorizontal ? 90 : 0;
         //Lerp from initial to final rotation over 1 second
         for (float t = 0; t < 1; t += Time.deltaTime)
         {
@@ -146,55 +157,61 @@ public class EnemyPlane : EnemyBase
         //transform.rotation.eulerAngles.Set(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, finalZ);
     }
 
-    protected virtual Vector3 GetTargetOffset(){
-        switch (currentPerspective){
-            case Perspective.Top_Down:
-                return new Vector3(camUtils.height/2 - 30.0f, 0, camUtils.width/2 * randomOffsetComponent);
-            case Perspective.Side_On:
-                return new Vector3(camUtils.width/2 - 30.0f, camUtils.height/2 * randomOffsetComponent,0);
-            case Perspective.Null:
-                return Vector3.zero;
-        }
-
-        return targetObj.transform.position;
+    protected virtual Vector3 GetTargetOffset()
+    {
+        return currentPerspective switch
+        {
+            Perspective.Top_Down => new Vector3((camUtils.height / 2) - 30.0f, 0, camUtils.width / 2 * randomOffsetComponent),
+            Perspective.Side_On => new Vector3((camUtils.width / 2) - 30.0f, camUtils.height / 2 * randomOffsetComponent, 0),
+            Perspective.Null => Vector3.zero,
+            _ => targetObj.transform.position,
+        };
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        timer += Time.deltaTime; 
-        if(timer >= fireInterval * randFireTime){
+        timer += Time.deltaTime;
+        if (timer >= fireInterval * randFireTime)
+        {
             randFireTime = Random.Range(0.5f, 2.0f);
-            timer = 0; 
+            timer = 0;
             Fire();
         }
     }
 
-    protected virtual void FixedUpdate(){
+    protected virtual void FixedUpdate()
+    {
         targetOffset = GetTargetOffset();
         Vector3 targetObjPos = targetObj.transform.position;
         targetPos = targetObjPos + targetOffset;
-        if (rb.angularVelocity.magnitude > 0.1f){
+        if (rb.angularVelocity.magnitude > 0.1f)
+        {
             rb.useGravity = true;
         }
-        else {
+        else
+        {
             MoveEnemy();
             radarTimer += Time.deltaTime;
-            if (radarTimer > 0.5f){
+            if (radarTimer > 0.2f)
+            {
                 AvoidGround();
                 radarTimer = 0;
             }
         }
     }
 
-    public override void TakeDamage(float damage){
+    public override void TakeDamage(float damage)
+    {
         base.TakeDamage(damage);
     }
 
-    protected override void Die(){
+    protected override void Die()
+    {
         // Destroy Self and emit death explosion
-        GameObject powerCrate = Instantiate(deathExplosion, transform.position, Quaternion.identity);
-        if (powerupManager != null){
+        _ = Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        if (powerupManager != null)
+        {
             powerupManager.SpawnPowerUp(transform.position, rb.velocity);
         }
         if (deathObj != null)
@@ -214,39 +231,42 @@ public class EnemyPlane : EnemyBase
         base.Die();
     }
 
-    protected virtual void MoveEnemy(){
-        Vector3 error = targetPos - transform.position;
+    protected virtual void MoveEnemy()
+    {
+        _ = targetPos - transform.position;
         //Scale the error by the screen width
         Vector3 moveDir = pid.Solve(targetPos, transform.position);
         rb.AddForce(moveDir.normalized * speed * 20.0f);
     }
 
-    void AvoidGround(){
+    private void AvoidGround()
+    {
         //Raycast down to check for ground
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100.0f)){
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100.0f))
+        {
             //If the distance to the ground is less than 10 units, add a force upwards
-            if (hit.distance < 10.0f){
-                rb.AddForce(Vector3.up * (10 - hit.distance) * 20.0f);
+            if (hit.distance < 20.0f)
+            {
+                Debug.Log("Avoiding Ground - object: " + name);
+                rb.AddForce((10 - hit.distance) * 40.0f * Vector3.up);
             }
         }
     }
 
     protected virtual void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.layer == LayerMask.NameToLayer("Terrain")){
+        if (col.gameObject.layer == LayerMask.NameToLayer("Terrain"))
+        {
             //Get the normal of the collision
             Vector3 normal = col.contacts[0].normal;
             //Get dot product of the normal and the velocity
             Rigidbody rb = GetComponent<Rigidbody>();
             float dot = Vector3.Dot(rb.velocity.normalized, normal) * rb.velocity.magnitude;
-            
-            //Debug.Log(dot);
-
             dot = Mathf.Clamp01(dot);
-            
+
             //Reduce health by a minimum of 1health, max of MaxLife based on dot
-            int damage = (int)Mathf.Lerp(1,maxHealth, dot);
+            int damage = (int)Mathf.Lerp(1, maxHealth, dot);
 
             TakeDamage(damage);
         }

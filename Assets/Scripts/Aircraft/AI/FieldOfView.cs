@@ -11,14 +11,14 @@ public class FieldOfView : MonoBehaviour
     public LayerMask layerMask;
     public LayerMask obstacleMask;
 
-    public List<Transform> visibleTargets = new List<Transform>();
+    public List<Transform> visibleTargets = new();
 
-    void Start()
+    private void Start()
     {
-        StartCoroutine(FindTargetsWithDelay(.2f));
+        _ = StartCoroutine(FindTargetsWithDelay(.2f));
     }
 
-    IEnumerator FindTargetsWithDelay(float delay)
+    private IEnumerator FindTargetsWithDelay(float delay)
     {
         while (true)
         {
@@ -27,7 +27,7 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
-    void FindVisibleTargets()
+    private void FindVisibleTargets()
     {
         visibleTargets.Clear();
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, layerMask);

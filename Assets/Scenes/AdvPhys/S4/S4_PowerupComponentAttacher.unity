@@ -253,6 +253,10 @@ PrefabInstance:
       propertyPath: m_WorldSpaceTargetObject
       value: 
       objectReference: {fileID: 127925515}
+    - target: {fileID: 3635405933398179781, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5000984407007536241, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -458,11 +462,83 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerupManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8694571463313691911, guid: 1df9884301790490bb9aaef6ca2b9daf, type: 3}
+      propertyPath: damageUpPrefab
+      value: 
+      objectReference: {fileID: 9014011602821650569, guid: ce1ebdd5ad49c4745baa13579fa867c2, type: 3}
+    - target: {fileID: 8694571463313691911, guid: 1df9884301790490bb9aaef6ca2b9daf, type: 3}
+      propertyPath: wideShotPrefab
+      value: 
+      objectReference: {fileID: 359282892939091849, guid: e8703321902c57b4aa7256cab5cb0b7e, type: 3}
+    - target: {fileID: 8694571463313691911, guid: 1df9884301790490bb9aaef6ca2b9daf, type: 3}
+      propertyPath: rapidFirePrefab
+      value: 
+      objectReference: {fileID: 566776686207174305, guid: 9f1457c3b2946b64db1cdf81688fd6fe, type: 3}
+    - target: {fileID: 8694571463313691911, guid: 1df9884301790490bb9aaef6ca2b9daf, type: 3}
+      propertyPath: splitShotPrefab
+      value: 
+      objectReference: {fileID: 1881124930751896721, guid: f3fe8d87b64cf7041aaf8b3585e56982, type: 3}
+    - target: {fileID: 8694571463313691911, guid: 1df9884301790490bb9aaef6ca2b9daf, type: 3}
+      propertyPath: burningShotPrefab
+      value: 
+      objectReference: {fileID: 6953616886974424373, guid: c90e0bdb695662245bc5d00df3c1f948, type: 3}
+    - target: {fileID: 8694571463313691911, guid: 1df9884301790490bb9aaef6ca2b9daf, type: 3}
+      propertyPath: powerupPrefabs.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1df9884301790490bb9aaef6ca2b9daf, type: 3}
+--- !u!1 &889324191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 889324193}
+  - component: {fileID: 889324192}
+  m_Layer: 0
+  m_Name: Lightning
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &889324192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889324191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 218418d0aac454c808b75e8a2d0af384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chainRange: 15
+  chainDamage: 1
+  chainTickRate: 0.5
+  chainEffectPrefab: {fileID: 0}
+--- !u!4 &889324193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889324191}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1600, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &940723035
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,6 +900,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3337119729129866234, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+      propertyPath: invincible
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3082928228261147946, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
@@ -1039,3 +1119,4 @@ SceneRoots:
   - {fileID: 1010809654}
   - {fileID: 487010403}
   - {fileID: 2113792958}
+  - {fileID: 889324193}
