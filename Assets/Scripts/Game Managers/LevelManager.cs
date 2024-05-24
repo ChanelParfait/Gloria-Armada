@@ -28,6 +28,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPnl; 
     [SerializeField] private GameObject levelClearPnl; 
     [SerializeField] private TextMeshProUGUI ScoreTxt; 
+    [SerializeField] private TextMeshProUGUI TimerTxt;
     public Animator damageAnim;
 
     public List<GameObject> enemies = new List<GameObject>();
@@ -72,8 +73,10 @@ public class LevelManager : MonoBehaviour
     {
         gameOverPnl = GameObject.Find("GameOver");
         levelClearPnl = GameObject.Find("LevelClear");
+        EnsureNextLevelButtonListener();
         damageAnim = GameObject.Find("DamageCirclePrefab").GetComponent<Animator>();
         ScoreTxt = GameObject.Find("Score/Text (TMP)").GetComponent<TextMeshProUGUI>();
+        TimerTxt = GameObject.Find("Timer/Text (TMP)").GetComponent<TextMeshProUGUI>();
         StartCoroutine(WaitforLoad());
         rb.velocity = Vector3.right * 20;
 
@@ -158,6 +161,7 @@ public class LevelManager : MonoBehaviour
             }
         }
         levelTimer += Time.deltaTime;
+        TimerTxt.text = System.TimeSpan.FromSeconds((double)levelTimer).ToString(@"m\:ss");
     }
 
     private void OnEnable(){
@@ -316,9 +320,35 @@ public class LevelManager : MonoBehaviour
     public void YouWin(){
         StartCoroutine(LerpTime(0, 1.0f));
         SaveScoreTime();
-        levelClearPnl.GetComponent<Canvas>().enabled = true;    
+        levelClearPnl.GetComponent<Canvas>().enabled = true;  
+        Debug.Log("Win");
+        
     }
 
+    void EnsureNextLevelButtonListener()
+    {
+        Button[] buttons = levelClearPnl.GetComponentsInChildren<Button>();
+        Debug.Log("Found buttons" + buttons.Length);
+        foreach (Button button in buttons)
+        {
+            Debug.Log("ButtonName: " + button.name);
+            if (button.name == "NextLevelButton")
+            {
+                Button btn = button;
+                
+                PauseMenu pauseMenu = GetComponent<PauseMenu>();
+                Debug.Log("Checking for listeners on NextLevelButton");
+                Debug.Log("NextLevelTarget: " + btn.onClick.GetPersistentTarget(0));
+                LevelManager lm = GetComponent<LevelManager>();
+                btn.onClick.AddListener(lm.GoToNextLevel);
+                if (btn.onClick.GetPersistentTarget(0) != lm)
+                {
+                    Debug.Log("Adding listener to NextLevelButton");
+                    btn.onClick.AddListener(lm.GoToNextLevel);
+                }
+            }
+        }
+    }
     void SaveScoreTime()
     {
         Scene scene = SceneManager.GetActiveScene();
@@ -351,7 +381,8 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = finalScale;
     }
 
-    public void goToNextLevel(){
+    public void GoToNextLevel(){
+        Debug.Log("LoadingNextScene");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
