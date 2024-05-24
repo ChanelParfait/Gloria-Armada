@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8606409731060266825}
   - component: {fileID: 5438031606138236342}
   - component: {fileID: 7408575220444941765}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Sub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4899,7 +4899,7 @@ GameObject:
   - component: {fileID: 1474083238980979483}
   - component: {fileID: 6978207574608728908}
   - component: {fileID: 1643254009879845441}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: SpeedShot_Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}

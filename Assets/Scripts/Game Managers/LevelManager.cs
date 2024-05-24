@@ -115,6 +115,7 @@ public class LevelManager : MonoBehaviour
         //rb.velocity = Vector3.right * 20;
     }
 
+
     void FixedUpdate(){
         // Calculate the current distance from the target to the camera's position
         
@@ -186,6 +187,7 @@ public class LevelManager : MonoBehaviour
         EnemyBase.OnEnemyDeath += UpdateScore;
         PlayerPlane.OnPlayerDeath += GameOver;
         PlayerPlane.OnPlayerDamage += PlayDamageEffect;
+        BossEnemy.OnBossDeath += TriggerDelayedWin;
 
     }
 
@@ -194,6 +196,18 @@ public class LevelManager : MonoBehaviour
         EnemyBase.OnEnemyDeath -= UpdateScore;
         PlayerPlane.OnPlayerDeath -= GameOver;
         PlayerPlane.OnPlayerDamage -= PlayDamageEffect;
+        BossEnemy.OnBossDeath -= TriggerDelayedWin;
+
+    }
+
+    void TriggerDelayedWin(){
+        StartCoroutine(WaitThenWin());
+    }
+
+    
+    IEnumerator WaitThenWin(){
+        yield return new WaitForSeconds(5);
+        YouWin();
     }
 
     private void OnTriggerEnter(Collider col){
@@ -335,6 +349,8 @@ public class LevelManager : MonoBehaviour
             // Wait for the next frame   
         }
     }
+
+
 
     public void YouWin(){
         StartCoroutine(LerpTime(0, 1.0f));

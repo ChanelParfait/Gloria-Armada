@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 43273233858047346}
   - component: {fileID: 3689258555490957411}
   - component: {fileID: 3315575242656941838}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: HitParticlePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
