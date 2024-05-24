@@ -7,7 +7,7 @@ public class EnemyPlane_Physical : EnemyPlane
     // Start is called before the first frame update
     protected override void Start()
     {
-        currentHealth = maxHealth;
+        CurrentHealth = maxHealth;
         rb = GetComponent<Rigidbody>();
         LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
         ap = GetComponent<Autopilot>();

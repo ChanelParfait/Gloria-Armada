@@ -4,28 +4,49 @@ using UnityEngine;
 
 public class ParticleManager : MonoBehaviour
 {
-    ParticleSystem ps;
+    [SerializeField] ParticleSystem ps;
     [SerializeField] bool detatched = false;
     // Start is called before the first frame update
     void Start()
     {
+
+        ps = GetComponent<ParticleSystem>();
+        
+
+        if (ps == null){
+            Debug.Log("No Particle System Attached to Particle Manager");
+            return;
+        }
         //if the object has no parent, set as detatched from the getgo
         if (transform.parent == null){
             detatched = true;
+            ps.transform.SetParent(null);
         }
-        ps = GetComponent<ParticleSystem>();
-        if (ps != null && detatched) {
+        if (detatched) {
             ps.Play();
         }     
     }
 
     public void Detach(){
-        ps.Stop();
-        // on last particle death
         detatched = true;
-        if (!ps.IsAlive()) {
-            Destroy(gameObject);
+
+        if (ps == null){
+            Debug.Log("Died: Particle manager has no particle system attached on death");
+            TryGetComponent<ParticleSystem>(out ParticleSystem ps);
+            Debug.Log("Tried to get component" + ps);
+            if (ps == null){
+                return;
+            }
+            
         }
+        // on last particle death
+        if (ps != null){
+            ps.Stop();
+            if (!ps.IsAlive()) {
+                Destroy(gameObject);
+            }
+        }
+
     }
 
     // Update is called once per frame

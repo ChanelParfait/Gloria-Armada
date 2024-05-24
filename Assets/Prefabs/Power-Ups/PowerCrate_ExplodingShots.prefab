@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 9e36cbfcb4a06144c8b657b2f49e5ce9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9e36cbfcb4a06144c8b657b2f49e5ce9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9e36cbfcb4a06144c8b657b2f49e5ce9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9e36cbfcb4a06144c8b657b2f49e5ce9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 8a8ef15ba93f0ec4da33a508cad113bd, type: 2}
     - target: {fileID: 919132149155446097, guid: 9e36cbfcb4a06144c8b657b2f49e5ce9, type: 3}
       propertyPath: m_Name
-      value: PowerCrate_DamageUp 1
+      value: PowerCrate_ExplodingShots
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
