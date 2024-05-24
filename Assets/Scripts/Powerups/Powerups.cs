@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum PowerupType {
-    // PrimaryDamageUp,
-    // BulletSpeedUp,
-    // FirerateUp,
-    // BulletSizeUp,
+    PrimaryDamageUp,
+    BulletSpeedUp,
+    FirerateUp,
+    BulletSizeUp,
     BurnDamage,
     // FreezeShots,
     // ExplodingShots,
-    // LightningChain,
+    LightningChain,
     // SpecialDamageUp,
     SplitShot,
     // APDamage,
@@ -23,11 +23,48 @@ public class Powerups : MonoBehaviour
     // [SerializeField] private Projectile projectile; 
     [SerializeField] PowerupType powerupType;
 
+    GameObject BoxMesh;
+
+    public GameObject emptyCratePrefab;
+
+    public GameObject primaryDamageUpPrefab;
+    public GameObject bulletSpeedUpPrefab;
+    public GameObject fireRateUpPrefab;
+    public GameObject bulletSizeUpPrefab;
+    public GameObject burnDamagePrefab;
+    public GameObject freezeShotsPrefab;
+    public GameObject explodingShotsPrefab;
+    public GameObject lightningChainPrefab;
+    public GameObject specialDamageUpPrefab;
+    public GameObject splitShotPrefab;
+
     
     void Start()
     {
         playerWeaponManager = FindObjectOfType<PlayerWeaponManager>();
         powerupType = GetRandomPowerup();
+        // Set the box mesh to the powerup type
+        BoxMesh = powerupType switch
+        {
+            PowerupType.PrimaryDamageUp => primaryDamageUpPrefab,
+            PowerupType.BulletSpeedUp => bulletSpeedUpPrefab,
+            PowerupType.FirerateUp => fireRateUpPrefab,
+            PowerupType.BulletSizeUp => bulletSizeUpPrefab,
+            PowerupType.BurnDamage => burnDamagePrefab,
+            PowerupType.SplitShot => splitShotPrefab,
+            PowerupType.LightningChain => lightningChainPrefab,
+            _ => emptyCratePrefab,
+        };
+
+        if (BoxMesh == null)
+        {
+            BoxMesh = emptyCratePrefab;
+            return;
+        }
+        // Instantiate the powerup box mesh as a child object
+        Instantiate(BoxMesh, transform.position, Quaternion.identity, transform);
+
+        
     }
 
     // Update is called once per frame

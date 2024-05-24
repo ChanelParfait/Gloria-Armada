@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [RequireComponent(typeof(LineRenderer))]
 public class ElectricityArc : MonoBehaviour
 {
     public Transform shooter;
     public Transform target;
-    public Transform startPoint;
-    public Transform endPoint;
     public int segmentCount = 20;
     public float arcHeight = 2;
     public float updateFrequency = 0.05f;
@@ -26,8 +23,16 @@ public class ElectricityArc : MonoBehaviour
 
     public void SetTarget(Transform target)
     {
+        if (target == null){
+            if (lineRenderer != null){
+                lineRenderer.enabled = false;
+            }
+            
+            return;
+        }
         this.target = target;
     }
+
     public void SetShooter(Transform shooter)
     {
         this.shooter = shooter;
@@ -35,33 +40,13 @@ public class ElectricityArc : MonoBehaviour
 
     IEnumerator UpdateArc()
     {
-        
-
         while (true)
         {
             if (target != null && shooter != null)
             {
-                startPoint.position = shooter.position;
-                endPoint.position = target.position;
+                GenerateArcPoints();
+                lineRenderer.SetPositions(arcPoints.ToArray());
             }
-            else if (target != null && shooter == null)
-            {
-                startPoint.position = transform.position;
-                endPoint.position = target.position;
-
-            }
-            else if (target == null && shooter != null)
-            {
-                startPoint.position = shooter.position;
-                endPoint.position = transform.position;
-            }
-            else if (target == null && shooter == null)
-            {
-                startPoint.position = transform.position;
-                endPoint.position = transform.position;
-            }
-            GenerateArcPoints();
-            lineRenderer.SetPositions(arcPoints.ToArray());
             yield return new WaitForSeconds(updateFrequency);
         }
     }
@@ -72,12 +57,11 @@ public class ElectricityArc : MonoBehaviour
         for (int i = 0; i < segmentCount; i++)
         {
             float t = (float)i / (segmentCount - 1);
-            Vector3 point = Vector3.Lerp(startPoint.position, endPoint.position, t);
-            // 1 out of every 10 points will have a scale factor of 8
+            Vector3 point = Vector3.Lerp(shooter.position, target.position, t);
             float adjArcSize = i % 5 == 0 ? arcHeight * 3 : arcHeight;
-            point.y += Random.Range(-adjArcSize, adjArcSize); // Simple arc with sine wave
-            point.x += Random.Range(-adjArcSize, adjArcSize); // Small random variation
-            point.z += Random.Range(-adjArcSize, adjArcSize); // Small random variation
+            point.y += Random.Range(-adjArcSize, adjArcSize);
+            point.x += Random.Range(-adjArcSize, adjArcSize);
+            point.z += Random.Range(-adjArcSize, adjArcSize);
             arcPoints.Add(point);
         }
     }

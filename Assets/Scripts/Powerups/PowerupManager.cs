@@ -5,6 +5,7 @@ public class PowerupManager : MonoBehaviour
 {
     public GameObject PowerupPrefab;
     public string[] powerupItems; // Array to store the names of powerup items
+
     [SerializeField] private float dropChance = 5f;
     
     void Start()
@@ -39,7 +40,6 @@ public class PowerupManager : MonoBehaviour
             rb.AddForce(velocity, ForceMode.VelocityChange);
             //Debug.Log("Power-up spawned at: " + enemyPosition);
         }
-     
     }
     
 

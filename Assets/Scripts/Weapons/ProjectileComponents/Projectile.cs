@@ -123,6 +123,10 @@ public class Projectile : MonoBehaviour
             {
                 burn.ApplyBurn(enemy);
             }
+            if (TryGetComponent<LightningChain>(out LightningChain lightning))
+            {
+                lightning.ApplyArcDamage(enemy);
+            }
             
             if (hitParticle)
             {

@@ -30,27 +30,27 @@ public class PlayerWeaponManager : MonoBehaviour
         //Apply the powerup effect to the weapon stats
         switch (powerup)
         {
-            // case PowerupType.PrimaryDamageUp:
-            //     primaryWeapon.GetWeaponStats().projectileStats.damage *= 1.25f;
-            //      Debug.Log("Damage Up");
-            //     break;
-            // case PowerupType.BulletSpeedUp:
-            //     primaryWeapon.GetWeaponStats().projectileStats.speed *= 1.25f;  
-            //     Debug.Log("Bullet Speed Up");
-            //     break;
-            // case PowerupType.FirerateUp:
-            //     primaryWeapon.GetWeaponStats().fireInterval *= 0.80f; 
-            //     primaryWeapon.GetWeaponStats().reloadTime *= 0.80f; 
-            //     Debug.Log("Firerate Up");
-            //     break;
-            // case PowerupType.BulletSizeUp:
-            //     if (primaryWeapon.GetWeaponStats().projectileStats.size.magnitude > 6.0f){
-            //         return;
-            //     }
-            //     primaryWeapon.GetWeaponStats().projectileStats.size *= 1.25f; // Double bullet size
-            //     break;
+            case PowerupType.PrimaryDamageUp:
+                primaryWeapon.GetWeaponStats().projectileStats.damage *= 1.25f;
+                 Debug.Log("Damage Up");
+                break;
+            case PowerupType.BulletSpeedUp:
+                primaryWeapon.GetWeaponStats().projectileStats.speed *= 1.25f;  
+                Debug.Log("Bullet Speed Up");
+                break;
+            case PowerupType.FirerateUp:
+                primaryWeapon.GetWeaponStats().fireInterval *= 0.80f; 
+                primaryWeapon.GetWeaponStats().reloadTime *= 0.80f; 
+                Debug.Log("Firerate Up");
+                break;
+            case PowerupType.BulletSizeUp:
+                if (primaryWeapon.GetWeaponStats().projectileStats.size.magnitude > 6.0f){
+                    return;
+                }
+                primaryWeapon.GetWeaponStats().projectileStats.size *= 1.25f; // Double bullet size
+                break;
             case PowerupType.BurnDamage:
-                AddComponent(typeof(Burn));
+                AddProjectileComponent(typeof(Burn));
                 break;
             // case PowerupType.FreezeShots:
             //     //
@@ -58,14 +58,14 @@ public class PlayerWeaponManager : MonoBehaviour
             // case PowerupType.ExplodingShots:
             //     //
             //     break;
-            // case PowerupType.LightningChain:
-            //     //
-            //     break;
+            case PowerupType.LightningChain:
+                AddProjectileComponent(typeof(LightningChain));
+                break;
             // case PowerupType.SpecialDamageUp:
             //     //
             //     break;
             case PowerupType.SplitShot:
-                AddComponent(typeof(Split));
+                AddProjectileComponent(typeof(Split));
                 break;
             // case PowerupType.APDamage:
             //     //
@@ -76,7 +76,7 @@ public class PlayerWeaponManager : MonoBehaviour
         }
     }
 
-    void AddComponent(System.Type componentType){
+    void AddProjectileComponent(System.Type componentType){
         // TODO: Adding multiple of same component
 
         // If the component is not already added, add it to the projectileComponents list

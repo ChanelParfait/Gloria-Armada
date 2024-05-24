@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2706378880491932246}
   m_Layer: 0
-  m_Name: Empty_PowerCrate
+  m_Name: EmptyCrateMeshPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 6707243512788891348}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -138.04227, y: 2.554119, z: 67.281906}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -101,10 +101,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6953616886974424373, guid: c90e0bdb695662245bc5d00df3c1f948, type: 3}
     - target: {fileID: 5765086994041075900, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
-      propertyPath: emptyCratePrefab
-      value: 
-      objectReference: {fileID: 6707243512788891348, guid: 956a07023270ec843a52a155fd7af6a0, type: 3}
-    - target: {fileID: 5765086994041075900, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
       propertyPath: fireRateUpPrefab
       value: 
       objectReference: {fileID: 566776686207174305, guid: 9f1457c3b2946b64db1cdf81688fd6fe, type: 3}
@@ -129,8 +125,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9014011602821650569, guid: ce1ebdd5ad49c4745baa13579fa867c2, type: 3}
     m_RemovedComponents:
-    - {fileID: 1959436307271679403, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
-    - {fileID: 4383594227288672609, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+    - {fileID: 5765086994041075900, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+    - {fileID: 8554566776081753439, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+    - {fileID: 1892300865444652920, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

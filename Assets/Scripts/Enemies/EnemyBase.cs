@@ -23,7 +23,7 @@ public class EnemyBase : Actor
     private Coroutine burnCoroutine;
     [SerializeField] private GameObject fireEffectPrefab; // Reference to the fire particle effect prefab
 
-    private GameObject currentFireEffect;
+    protected GameObject currentFireEffect;
 
     protected virtual void Awake(){
         LoadFireEffectPrefab();
@@ -37,19 +37,9 @@ public class EnemyBase : Actor
     }
 
 
-     void Update(){
-
-        /*if(fire){
-            Fire();
-            fire = false;
-        }*/
-     }
-
     protected void Setup(){
         
     }
-
-
 
     public virtual void Fire(){
         // Fire a Weapon
@@ -113,7 +103,7 @@ public class EnemyBase : Actor
         while (elapsed < burnDuration)
         {
             TakeDamage(burnDamage);
-            Debug.Log("Burn damage applied. Current health: " + CurrentHealth);
+            Debug.Log("Burn damage applied. Current health: " + CurrentHealth + ", Burn Damage: " + burnDamage);
             elapsed += burnTime;
             yield return new WaitForSeconds(burnTime);    
         }
