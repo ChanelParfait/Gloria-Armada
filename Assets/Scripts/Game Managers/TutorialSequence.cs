@@ -195,7 +195,8 @@ public class TutorialSequence : MonoBehaviour
         LevelManager lm = GetComponent<LevelManager>();
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            Destroy(enemy.gameObject);
+            EnemyPlane enemyPlane = enemy.GetComponent<EnemyPlane>();
+            enemyPlane.Flee();
         }
         lm.spawnOverTime = false;
         StopAllCoroutines();
