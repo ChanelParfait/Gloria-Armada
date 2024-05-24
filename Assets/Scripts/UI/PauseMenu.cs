@@ -95,7 +95,7 @@ public class PauseMenu : MonoBehaviour
 
         //To be used in the Resume button to make sure the game is paused when the player resumes the game
         gameIsPaused = true;
-
+        Debug.Log("Game is paused - showingCursor");
         //Locks the cursor and makes it invisible
         Cursor.lockState = CursorLockMode.None;
         if (Cursor.visible == false)

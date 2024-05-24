@@ -95,6 +95,19 @@ public class HighScoreManager : MonoBehaviour
             DisplayCurrentScore(currentHighScoreEntry);
         }
     }
+    
+    void Update(){
+        //If canvas is active, 
+        Canvas canvas = GetComponent<Canvas>();
+        if (canvas.isActiveAndEnabled){
+            Debug.Log("Canvas enabled");
+            Cursor.lockState = CursorLockMode.None;
+            if (Cursor.visible == false)
+            {
+                Cursor.visible = true;
+            }
+        }
+    }
 
     public void SaveHighScores()
     {

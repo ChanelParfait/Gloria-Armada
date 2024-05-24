@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour
     public bool spawnOverTime = false;
 
     float lastSpawnTime = 0;
-    float spawnInterval = 5.0f;
+    float spawnInterval = 10.0f;
 
     float levelTimer = 0;
 
@@ -70,8 +70,11 @@ public class LevelManager : MonoBehaviour
             GameObject gmObject = new GameObject("GameManager");
             gameManager = gmObject.AddComponent<GameManager>();
         }
+    }
 
-
+    // Set to spawn rate to spawn enemies every 'interval' seconds
+    public void SetSpawnInterval(float interval){
+        spawnInterval = interval;
     }
 
     // Player, Enemy Spawner, and Camera will all need to update when perspective changes 
