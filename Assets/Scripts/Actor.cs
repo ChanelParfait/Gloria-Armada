@@ -6,7 +6,12 @@ public class Actor : MonoBehaviour
 {
     // Base Actor Class for Enemies and Player to Inherit From
     [SerializeReference] public float maxHealth;
-    public float currentHealth {get; protected set;}
+    [SerializeField] private float currentHealth;
+    public float CurrentHealth
+    {
+        get { return currentHealth; }
+        protected set { currentHealth = value; }
+    }
 
     protected bool isAlive = true;
 

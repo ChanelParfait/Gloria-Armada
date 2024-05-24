@@ -12,7 +12,7 @@ public enum PowerupType {
     // ExplodingShots,
     // LightningChain,
     // SpecialDamageUp,
-    //SplitShot,
+    SplitShot,
     // APDamage,
     // HomingShots
 }

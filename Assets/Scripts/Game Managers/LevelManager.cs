@@ -256,7 +256,7 @@ public class LevelManager : MonoBehaviour
         snapshots[0] = sfx_Mix.FindSnapshot("Start");
         snapshots[1] = sfx_Mix.FindSnapshot("OnDeath");
 
-        float invMuffle = Mathf.Clamp01(playerPlane.currentHealth / playerPlane.maxHealth);
+        float invMuffle = Mathf.Clamp01(playerPlane.CurrentHealth / playerPlane.maxHealth);
         float dmgMuffle = 1 - invMuffle;
 
         sfx_Mix.TransitionToSnapshots(snapshots, new float[] {invMuffle,dmgMuffle}, 0.5f);
