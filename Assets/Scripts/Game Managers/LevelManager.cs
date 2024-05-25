@@ -354,11 +354,15 @@ public class LevelManager : MonoBehaviour
 
     public void YouWin(){
         StartCoroutine(LerpTime(0, 1.0f));
+        //Save this level index as maxLevelComplete
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int maxLevelComplete = Mathf.Max(PlayerPrefs.GetInt("maxLevelCompleted", 0), currentSceneIndex);
+        PlayerPrefs.SetInt("MaxLevelCompleted", maxLevelComplete);
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (levelClearPnl == null){
             gameManager.SetNextScene(nextSceneIndex);
             //Go to the loadout
-            gameManager.OnLevelComplete(nextSceneIndex);
+            gameManager.GoToLevelViaLoadout(nextSceneIndex);
             return;
         }
         SaveScoreTime();
@@ -395,6 +399,11 @@ public class LevelManager : MonoBehaviour
     {
         Scene scene = SceneManager.GetActiveScene();
         string sceneName = scene.name;
+
+        //High scores in playerPrefs are saved as "Levelx_Score" and "Levelx_Time"
+        PlayerPrefs.SetInt(sceneName + "_Score", score);
+        PlayerPrefs.SetFloat(sceneName + "_Time", levelTimer);
+
         string playerName = PlayerPrefs.GetString("PlayerName");
         string scene_player = sceneName + "_" + playerName;
         HighScoreManager.HighScoreEntry highScoreEntry = new()
@@ -406,6 +415,16 @@ public class LevelManager : MonoBehaviour
                                         };
         levelClearPnl.GetComponent<Canvas>().enabled = true;
         levelClearPnl.GetComponent<HighScoreManager>().AddHighScoreEntry(highScoreEntry);
+    }
+
+    void SaveTotalScoreTime(){
+        //Save total score and time
+        int totalScore = PlayerPrefs.GetInt("TotalScore", 0);
+        float totalTime = PlayerPrefs.GetFloat("TotalTime", 0);
+        PlayerPrefs.SetInt("TotalScore", totalScore + score);
+        PlayerPrefs.SetFloat("TotalTime", totalTime + levelTimer);
+
+        
     }
 
     IEnumerator LerpTime(float finalScale, float lerpPeriod)
@@ -428,7 +447,7 @@ public class LevelManager : MonoBehaviour
 
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
-        gameManager.GetComponent<GameManager>().OnLevelComplete(nextSceneIndex);
+        gameManager.GetComponent<GameManager>().GoToLevelViaLoadout(nextSceneIndex);
     }
 
     //Referenced by unityAction onClick in Pause Menu / GameOverMenu

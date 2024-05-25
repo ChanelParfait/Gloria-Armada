@@ -57,15 +57,14 @@ public class GameManager : MonoBehaviour
         if (playerWeapons){
             PlayerWeaponManager manager = playerWeapons.GetComponent<PlayerWeaponManager>();
             if (manager){
-                manager.SetPrimaryWeapon(PrimaryWeapon);
-                manager.SetSpecialWeapon(SpecialWeapon);
-                // set body 
+                if (PrimaryWeapon != null) manager.SetPrimaryWeapon(PrimaryWeapon);
+                if (SpecialWeapon != null) manager.SetSpecialWeapon(SpecialWeapon);
             }
         }
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (playerWeapons){
             Plane playerPlaneStats = player.GetComponent<Plane>();
-            if (playerPlaneStats){
+            if (playerPlaneStats != null && planeBody != null){
                 playerPlaneStats.surfaces = planeBody.surfaces;
                 playerPlaneStats.weight = planeBody.weight;
                 playerPlaneStats.thrust = planeBody.thrust;
@@ -75,7 +74,7 @@ public class GameManager : MonoBehaviour
                 playerPlaneStats.liftPower = planeBody.liftPower;
             }
             PlayerPlane playerPlane = player.GetComponent<PlayerPlane>();
-            if (playerPlane){
+            if (playerPlane != null && planeBody != null){
                 playerPlane.maxHealth = planeBody.health;
                 playerPlane.SetHealth(planeBody.health);
             }
@@ -84,12 +83,13 @@ public class GameManager : MonoBehaviour
     }
 
     // Method to be called when a level is completed
-    public void OnLevelComplete(int nextLevelIndex)
+    public void GoToLevelViaLoadout(int nextLevelIndex)
     {
         //If the next index is out of bounds, set nextLevel index to 4 ("Level_1")
         if (SceneManager.sceneCountInBuildSettings < nextLevelIndex)
         {
             Debug.Log("Scenes in buid:" + SceneManager.sceneCountInBuildSettings + " nextLevelIndex:" + nextLevelIndex);
+            Debug.Log("Game Manager setting next level to Level_1, going to mainMenu");
             nextLevelIndex = 4;
             //Load the main menu (index 0)
             SceneManager.LoadScene(0);
@@ -97,6 +97,13 @@ public class GameManager : MonoBehaviour
         }
         //If the next scene index is the loadout scene, set the next scene to the next level
         if (nextLevelIndex == 2) nextLevelIndex = 4;
+        //If last level -> end of game
+        if (nextLevelIndex == 8) {
+            SceneManager.LoadScene(8);
+            return;
+        }
+
+        //otherwise, go to loadout scene and carry over the next level
         SetNextScene(nextLevelIndex);
         SceneManager.LoadScene(loadoutSceneName);
     }
@@ -117,9 +124,8 @@ public class GameManager : MonoBehaviour
             if (player){
                 PlayerWeaponManager manager = player.GetComponent<PlayerWeaponManager>();
                 if (manager){
-                    manager.SetPrimaryWeapon(PrimaryWeapon);
-                    manager.SetSpecialWeapon(SpecialWeapon);
-                    // set body 
+                    if (PrimaryWeapon != null) manager.SetPrimaryWeapon(PrimaryWeapon);
+                    if (SpecialWeapon != null) manager.SetSpecialWeapon(SpecialWeapon);
                 }
             }
             StartCoroutine(ApplyLoadout());

@@ -6,6 +6,7 @@ public class SettingsToggle : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject settingsMenu;
+    public GameObject playMenu;
 
     void Update()
     {
@@ -14,6 +15,12 @@ public class SettingsToggle : MonoBehaviour
             if (settingsMenu.activeSelf == true)
             {
                 settingsMenu.SetActive(false);
+                mainMenu.SetActive(true);
+            }
+
+            if (playMenu.activeSelf == true)
+            {
+                playMenu.SetActive(false);
                 mainMenu.SetActive(true);
             }
         }
@@ -30,6 +37,20 @@ public class SettingsToggle : MonoBehaviour
         else
         {
             settingsMenu.SetActive(true);
+            mainMenu.SetActive(false);
+        }
+    }
+    public void TogglePlay()
+    {
+        if (playMenu.GetComponent<Canvas>().enabled == true)
+        {
+            playMenu.GetComponent<Canvas>().enabled = false;
+            mainMenu.SetActive(true);
+        }
+
+        else
+        {
+            playMenu.GetComponent<Canvas>().enabled = true;
             mainMenu.SetActive(false);
         }
     }
