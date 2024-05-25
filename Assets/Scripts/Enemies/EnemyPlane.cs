@@ -6,7 +6,7 @@ internal class Vec3PID
 {
     public PID x;
     public PID y;
-    public PID z;
+    public PID z; 
 
     public Vec3PID(float p, float i, float d)
     {
@@ -49,6 +49,8 @@ public class EnemyPlane : EnemyBase
     protected float radarTimer = 0;
     protected float randFireTime;
     public GameObject deathExplosion;
+
+    bool isLeaving;
 
 
     [SerializeField] private PowerupManager powerupManager;
@@ -180,11 +182,39 @@ public class EnemyPlane : EnemyBase
         }
     }
 
+    public void Flee(bool flee = true)
+    {
+        isLeaving = true;
+    }
+
+    void GetFleePosition()
+    {
+        Vector3 fleePos = transform.position + Vector3.right * 100;
+        Vector3 offset = Vector3.zero;
+        if (currentPerspective == Perspective.Top_Down)
+        {
+            offset = new Vector3(-camUtils.height * 4, 0, 4 * Random.Range(-camUtils.width, camUtils.width));
+        }
+        else if (currentPerspective == Perspective.Side_On)
+        {
+            offset = new Vector3(-camUtils.width * 4, 4 * Random.Range(0, camUtils.height), 0);
+        }
+        fleePos += offset;
+
+        targetPos = fleePos;
+    }
+
     protected virtual void FixedUpdate()
     {
-        targetOffset = GetTargetOffset();
-        Vector3 targetObjPos = targetObj.transform.position;
-        targetPos = targetObjPos + targetOffset;
+        if (!isLeaving){
+            targetOffset = GetTargetOffset();
+            Vector3 targetObjPos = targetObj.transform.position;
+            targetPos = targetObjPos + targetOffset;
+        }
+        else {
+            GetFleePosition();
+        }
+
         if (rb.angularVelocity.magnitude > 0.1f)
         {
             rb.useGravity = true;
@@ -236,7 +266,7 @@ public class EnemyPlane : EnemyBase
         _ = targetPos - transform.position;
         //Scale the error by the screen width
         Vector3 moveDir = pid.Solve(targetPos, transform.position);
-        rb.AddForce(moveDir.normalized * speed * 20.0f);
+        rb.AddForce(20.0f * speed * moveDir.normalized);
     }
 
     private void AvoidGround()
@@ -248,7 +278,7 @@ public class EnemyPlane : EnemyBase
             //If the distance to the ground is less than 10 units, add a force upwards
             if (hit.distance < 20.0f)
             {
-                rb.AddForce((10 - hit.distance) * 40.0f * Vector3.up);
+                rb.AddForce((20 - hit.distance) * 20.0f * Vector3.up);
             }
         }
     }

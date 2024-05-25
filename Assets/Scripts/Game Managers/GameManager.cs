@@ -5,12 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private GameManager Instance; 
+    public static GameManager instance; 
     // Player Values 
     public GameObject PrimaryWeapon;
     public GameObject SpecialWeapon;
 
     public PlaneStats planeBody;
+
+    public string loadoutSceneName = "Loadout"; // Name of your loadout scene
+    [SerializeField] string nextLevelSceneName; // Index of the next level scene
 
     void OnEnable()
     {
@@ -26,8 +29,8 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
-        if (Instance == null)
-            Instance = this;
+        if (instance == null)
+            instance = this;
         else
             Destroy(gameObject);
     }
@@ -41,6 +44,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SetNextScene(int nextSceneIndex){
+        string nextScenePath = SceneUtility.GetScenePathByBuildIndex(nextSceneIndex);
+        nextLevelSceneName = System.IO.Path.GetFileNameWithoutExtension(nextScenePath);
     }
 
     IEnumerator ApplyLoadout(){
@@ -66,18 +74,46 @@ public class GameManager : MonoBehaviour
                 playerPlaneStats.cd = planeBody.cd;
                 playerPlaneStats.liftPower = planeBody.liftPower;
             }
-            Actor playerPlane = player.GetComponent<Actor>();
+            PlayerPlane playerPlane = player.GetComponent<PlayerPlane>();
             if (playerPlane){
                 playerPlane.maxHealth = planeBody.health;
+                playerPlane.SetHealth(planeBody.health);
             }
         }
 
     }
 
+    // Method to be called when a level is completed
+    public void OnLevelComplete(int nextLevelIndex)
+    {
+        //If the next index is out of bounds, set nextLevel index to 4 ("Level_1")
+        if (SceneManager.sceneCountInBuildSettings < nextLevelIndex)
+        {
+            Debug.Log("Scenes in buid:" + SceneManager.sceneCountInBuildSettings + " nextLevelIndex:" + nextLevelIndex);
+            nextLevelIndex = 4;
+            //Load the main menu (index 0)
+            SceneManager.LoadScene(0);
+            return;
+        }
+        //If the next scene index is the loadout scene, set the next scene to the next level
+        if (nextLevelIndex == 2) nextLevelIndex = 4;
+        SetNextScene(nextLevelIndex);
+        SceneManager.LoadScene(loadoutSceneName);
+    }
+    // Method to be called from the loadout scene to proceed to the next level
+    public void LoadNextLevel()
+    {
+        //If loadout scene, load the intro scene
+        if (SceneManager.GetActiveScene().buildIndex == 2){
+            SceneManager.LoadScene(3);
+            return;
+        }
+        SceneManager.LoadScene(nextLevelSceneName);
+    }
+
     void OnSceneChanged(Scene scene, LoadSceneMode mode){
-        if (SceneManager.GetActiveScene().buildIndex == 4){
-            // Set up player
-            GameObject player  = GameObject.FindGameObjectWithTag("PlayerWeaponManager");
+        if (scene.buildIndex >= 4){
+            GameObject player  = GameObject.Find("PlayerPhys/Player_Prefab");
             if (player){
                 PlayerWeaponManager manager = player.GetComponent<PlayerWeaponManager>();
                 if (manager){
@@ -87,7 +123,6 @@ public class GameManager : MonoBehaviour
                 }
             }
             StartCoroutine(ApplyLoadout());
-            
-        }
+        }     
     }
 }
