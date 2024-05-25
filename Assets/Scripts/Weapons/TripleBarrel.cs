@@ -108,11 +108,11 @@ public class TripleBarrel : Weapon
         if(currentPerspective == Perspective.Side_On){
             switch(counter){
                 case 1:
-                    return Quaternion.Euler(gameObject.transform.eulerAngles.x - 45, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
+                    return Quaternion.Euler(gameObject.transform.eulerAngles.x - 30, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
                 case 2:
                     return base.GetSpawnRotation();
                 case 3:
-                    return Quaternion.Euler(gameObject.transform.eulerAngles.x + 45, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
+                    return Quaternion.Euler(gameObject.transform.eulerAngles.x + 30, gameObject.transform.eulerAngles.y, gameObject.transform.eulerAngles.z);
                 default:
                     return base.GetSpawnRotation();
             }
@@ -120,11 +120,11 @@ public class TripleBarrel : Weapon
         else if(currentPerspective == Perspective.Top_Down){
             switch(counter){
             case 1:
-                return Quaternion.Euler(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y + 45, gameObject.transform.eulerAngles.z);
+                return Quaternion.Euler(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y + 30, gameObject.transform.eulerAngles.z);
             case 2:
                 return base.GetSpawnRotation();
             case 3:
-                return Quaternion.Euler(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y - 45, gameObject.transform.eulerAngles.z);
+                return Quaternion.Euler(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y - 30, gameObject.transform.eulerAngles.z);
             default:
                 return base.GetSpawnRotation();
             }

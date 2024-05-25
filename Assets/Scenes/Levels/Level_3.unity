@@ -8308,6 +8308,38 @@ PrefabInstance:
       propertyPath: enemies.Array.data[5]
       value: 
       objectReference: {fileID: 5330523515528714847, guid: 5174125a780307a4f87ca94a4e69d4b1, type: 3}
+    - target: {fileID: 6479009298115349164, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479009298115349164, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -250
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479009298115349164, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479009298115349164, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479009298115349164, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479009298115349164, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479009298115349164, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6479009298115349164, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8350215954295267770, guid: 37dadd7ca28208d498c993acd14a1462, type: 3}
       propertyPath: m_Name
       value: LevelManager
