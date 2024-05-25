@@ -92,7 +92,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5765086994041075900, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+      propertyPath: splitShotPrefab
+      value: 
+      objectReference: {fileID: 1881124930751896721, guid: f3fe8d87b64cf7041aaf8b3585e56982, type: 3}
+    - target: {fileID: 5765086994041075900, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+      propertyPath: burnDamagePrefab
+      value: 
+      objectReference: {fileID: 6953616886974424373, guid: c90e0bdb695662245bc5d00df3c1f948, type: 3}
+    - target: {fileID: 5765086994041075900, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+      propertyPath: emptyCratePrefab
+      value: 
+      objectReference: {fileID: 6707243512788891348, guid: 956a07023270ec843a52a155fd7af6a0, type: 3}
+    - target: {fileID: 5765086994041075900, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+      propertyPath: fireRateUpPrefab
+      value: 
+      objectReference: {fileID: 566776686207174305, guid: 9f1457c3b2946b64db1cdf81688fd6fe, type: 3}
+    - target: {fileID: 5765086994041075900, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+      propertyPath: freezeShotsPrefab
+      value: 
+      objectReference: {fileID: 3382826690044005176, guid: ec403184fe52ab247aa2650dde17ef2e, type: 3}
+    - target: {fileID: 5765086994041075900, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+      propertyPath: bulletSizeUpPrefab
+      value: 
+      objectReference: {fileID: 359282892939091849, guid: e8703321902c57b4aa7256cab5cb0b7e, type: 3}
+    - target: {fileID: 5765086994041075900, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+      propertyPath: explodingShotsPrefab
+      value: 
+      objectReference: {fileID: 2926638782538836880, guid: 87aa554d74119944b8f6cdfce0cbcb3e, type: 3}
+    - target: {fileID: 5765086994041075900, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+      propertyPath: lightningChainPrefab
+      value: 
+      objectReference: {fileID: 4423425524648509841, guid: 85cbd22187e79e04db470ceeee0580b7, type: 3}
+    - target: {fileID: 5765086994041075900, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+      propertyPath: primaryDamageUpPrefab
+      value: 
+      objectReference: {fileID: 9014011602821650569, guid: ce1ebdd5ad49c4745baa13579fa867c2, type: 3}
+    m_RemovedComponents:
+    - {fileID: 1959436307271679403, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+    - {fileID: 4383594227288672609, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

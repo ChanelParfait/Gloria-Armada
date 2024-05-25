@@ -6,11 +6,16 @@ public class Actor : MonoBehaviour
 {
     // Base Actor Class for Enemies and Player to Inherit From
     [SerializeReference] public float maxHealth;
-    public float currentHealth {get; protected set;}
+    [SerializeField] private float currentHealth;
+    public float CurrentHealth
+    {
+        get { return currentHealth; }
+        protected set { currentHealth = value; }
+    }
 
     protected bool isAlive = true;
+    protected bool isDying = false;
 
-    // Start is called before the first frame update
     protected virtual void Start()
     {
         currentHealth = maxHealth;
@@ -18,25 +23,29 @@ public class Actor : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        //Debug.Log("Obj: " + gameObject + " Damage: " + damage);
-        if (isAlive){
+        if (isAlive)
+        {
             currentHealth -= damage;
-            if(currentHealth <= 0){
+            if (currentHealth <= 0)
+            {
                 isAlive = false;
                 Die();
             }
         }
     }
+    
+    protected virtual void Die()
+    {
+        isDying = true;
 
-    protected virtual void Die(){
-        // Death Function 
-        // If any children are particle managers or have particle managers, detach them
+        // Detach and stop any particle systems
         ParticleManager[] pms = GetComponentsInChildren<ParticleManager>();
         foreach (ParticleManager pm in pms)
         {
-            pm.transform.SetParent(null);   
+            pm.transform.SetParent(null);
             pm.Detach();
         }
+
         Destroy(gameObject);
     }
 }

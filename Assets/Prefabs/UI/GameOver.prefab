@@ -132,6 +132,7 @@ MonoBehaviour:
   timerStart: 0
   gameOverUI: {fileID: 6207637236362880042}
   gameHUD: {fileID: 3635405933398179781, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
+  levelSelectMenu: {fileID: 0}
 --- !u!1 &1387009367329266158
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,7 +327,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1535126125763247588}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9029037337327460396}
+        m_TargetAssemblyTypeName: GameOverMenu, Assembly-CSharp
+        m_MethodName: OpenLevelSelectCanvas
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3565757515014088103
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,9 +31,13 @@ public class PauseMenu : MonoBehaviour
             {
                 settingsMenu = obj;
             }
+            if (obj.name == "LevelSelectCanvas")
+            {
+                levelSelectMenu = obj;
+            }
         }
         EnsureSettingsButtonListener();
-        
+        EnsureLevelSelectBackButtonListener();
     }
 
     void EnsureSettingsButtonListener()
@@ -46,10 +50,30 @@ public class PauseMenu : MonoBehaviour
                 Button btn = button;
                 PauseMenu pauseMenu = GetComponent<PauseMenu>();
                 Debug.Log("Checking for listeners on SettingsBackButton");
-                Debug.Log("Target: " + btn.onClick.GetPersistentTarget(0));
+                Debug.Log("SettingsBackTarget: " + btn.onClick.GetPersistentTarget(0));
                 if (btn.onClick.GetPersistentTarget(0) != pauseMenu)
                 {
+                    Debug.Log("Adding listener to SettingsBackButton");
                     btn.onClick.AddListener(pauseMenu.CloseSettings);
+                }
+            }
+        }
+    }
+
+    void EnsureLevelSelectBackButtonListener(){
+        Button[] buttons = levelSelectMenu.GetComponentsInChildren<Button>();
+        foreach (Button button in buttons)
+        {
+            if (button.name == "BackButton")
+            {
+                Button btn = button;
+                PauseMenu pauseMenu = GetComponent<PauseMenu>();
+                Debug.Log("Checking for listeners on LevelSelectBackButton");
+                Debug.Log("LevelSelectBackTarget: " + btn.onClick.GetPersistentTarget(0));
+                if (btn.onClick.GetPersistentTarget(0) != pauseMenu)
+                {
+                    Debug.Log("Adding listener to LevelSelectBackButton");
+                    btn.onClick.AddListener(pauseMenu.CloseLevelSelect);
                 }
             }
         }
@@ -66,6 +90,11 @@ public class PauseMenu : MonoBehaviour
                 if (settingsOpen)
                 {
                     CloseSettings();
+                    return;
+                }
+                else if (levelSelectOpen)
+                {
+                    CloseLevelSelect();
                     return;
                 }
                 else if (gameIsPaused)
@@ -96,7 +125,7 @@ public class PauseMenu : MonoBehaviour
 
         //To be used in the Resume button to make sure the game is paused when the player resumes the game
         gameIsPaused = true;
-
+        Debug.Log("Game is paused - showingCursor");
         //Locks the cursor and makes it invisible
         Cursor.lockState = CursorLockMode.None;
         if (Cursor.visible == false)
@@ -113,6 +142,7 @@ public class PauseMenu : MonoBehaviour
 
             pauseMenuUI.SetActive(false);
             settingsMenu.SetActive(false);
+            levelSelectMenu.SetActive(false);
             Time.timeScale = 1;
             gameHUD.enabled = true;
             gameIsPaused = false;
@@ -153,13 +183,16 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         settingsMenu.SetActive(false);
     }
+    
 
     public void OpenLevelSelect()
     {
         //Opens the level select menu
+        
         levelSelectOpen = true;
         pauseMenuUI.SetActive(false);
-        levelSelectMenu.SetActive(true);
+        levelSelectMenu.GetComponent<Canvas>().enabled = true;  
+        levelSelectMenu.GetComponent<LevelSelection>().UpdateMaxLevelComplete();
     }
 
     public void CloseLevelSelect()
@@ -167,6 +200,6 @@ public class PauseMenu : MonoBehaviour
         //Closes the level select menu
         levelSelectOpen = false;
         pauseMenuUI.SetActive(true);
-        levelSelectMenu.SetActive(false);
+        levelSelectMenu.GetComponent<Canvas>().enabled = false;
     }
 }

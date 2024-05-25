@@ -155,6 +155,8 @@ MonoBehaviour:
   PrimaryWeapon: {fileID: 0}
   SpecialWeapon: {fileID: 0}
   planeBody: {fileID: 0}
+  loadoutSceneName: Loadout
+  nextLevelSceneName: Level_1
 --- !u!4 &53670985
 Transform:
   m_ObjectHideFlags: 0
@@ -1422,6 +1424,7 @@ MonoBehaviour:
   BodyButtons: []
   DefaultPrimary: {fileID: 761020989}
   DefaultSpecial: {fileID: 1655796186}
+  DefaultBody: {fileID: 1260349973}
   launchButton: {fileID: 839039073}
   escapeButton: {fileID: 441646058}
 --- !u!1 &792084275
@@ -1947,9 +1950,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 839039073}
-        m_TargetAssemblyTypeName: ChangeScene, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 53670984}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: LoadNextLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4717,12 +4720,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873293660}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87e33c81cc194344eb0c851211ef9281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 1062033948207875801, guid: b75e8d5ebbd1bdb4c8f18f75c8e29051, type: 3}
   bodyScriptableObject: {fileID: 0}
   weaponType: 1
   normalSprite: {fileID: 21300000, guid: 81847340ab8ef9541a9754c1083f3462, type: 3}

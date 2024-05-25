@@ -28,13 +28,16 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject gameOverPnl; 
     [SerializeField] private GameObject levelClearPnl; 
     [SerializeField] private TextMeshProUGUI ScoreTxt; 
+    [SerializeField] private TextMeshProUGUI timerTxt;
+
+    [SerializeField] private GameManager gameManager;
     public Animator damageAnim;
 
     public List<GameObject> enemies = new List<GameObject>();
     public bool spawnOverTime = false;
 
     float lastSpawnTime = 0;
-    float spawnInterval = 5.0f;
+    float spawnInterval = 10.0f;
 
     float levelTimer = 0;
 
@@ -62,8 +65,16 @@ public class LevelManager : MonoBehaviour
         currentPerspective = initPerspective;
         UpdatePerspective(currentPerspective);
 
+        gameManager = GameManager.instance;
+        if (gameManager == null){
+            GameObject gmObject = new GameObject("GameManager");
+            gameManager = gmObject.AddComponent<GameManager>();
+        }
+    }
 
-
+    // Set to spawn rate to spawn enemies every 'interval' seconds
+    public void SetSpawnInterval(float interval){
+        spawnInterval = interval;
     }
 
     // Player, Enemy Spawner, and Camera will all need to update when perspective changes 
@@ -72,8 +83,16 @@ public class LevelManager : MonoBehaviour
     {
         gameOverPnl = GameObject.Find("GameOver");
         levelClearPnl = GameObject.Find("LevelClear");
+        if (levelClearPnl != null){
+            EnsureNextLevelButtonListener();
+        }
         damageAnim = GameObject.Find("DamageCirclePrefab").GetComponent<Animator>();
-        ScoreTxt = GameObject.Find("Score/Text (TMP)").GetComponent<TextMeshProUGUI>();
+        GameObject timerObj = GameObject.Find("Timer");
+        if (timerObj != null){
+            ScoreTxt = GameObject.Find("Score/Text (TMP)").GetComponent<TextMeshProUGUI>();
+            timerTxt = GameObject.Find("Timer/Text (TMP)").GetComponent<TextMeshProUGUI>();
+        }
+        
         StartCoroutine(WaitforLoad());
         rb.velocity = Vector3.right * 20;
 
@@ -95,6 +114,7 @@ public class LevelManager : MonoBehaviour
         //This is the minimum velocity to keep the player moving
         //rb.velocity = Vector3.right * 20;
     }
+
 
     void FixedUpdate(){
         // Calculate the current distance from the target to the camera's position
@@ -158,6 +178,8 @@ public class LevelManager : MonoBehaviour
             }
         }
         levelTimer += Time.deltaTime;
+        if (timerTxt != null)
+        timerTxt.text = System.TimeSpan.FromSeconds((double)levelTimer).ToString(@"m\:ss");
     }
 
     private void OnEnable(){
@@ -165,7 +187,7 @@ public class LevelManager : MonoBehaviour
         EnemyBase.OnEnemyDeath += UpdateScore;
         PlayerPlane.OnPlayerDeath += GameOver;
         PlayerPlane.OnPlayerDamage += PlayDamageEffect;
-        BossEnemy.OnBossDeath += YouWin;
+        BossEnemy.OnBossDeath += TriggerDelayedWin;
 
     }
 
@@ -174,17 +196,29 @@ public class LevelManager : MonoBehaviour
         EnemyBase.OnEnemyDeath -= UpdateScore;
         PlayerPlane.OnPlayerDeath -= GameOver;
         PlayerPlane.OnPlayerDamage -= PlayDamageEffect;
-        BossEnemy.OnBossDeath -= YouWin;
+        BossEnemy.OnBossDeath -= TriggerDelayedWin;
 
+    }
+
+    void TriggerDelayedWin(){
+        StartCoroutine(WaitThenWin());
+    }
+
+    
+    IEnumerator WaitThenWin(){
+        yield return new WaitForSeconds(5);
+        YouWin();
     }
 
     private void OnTriggerEnter(Collider col){
         if(col.tag == "TransitionPoint"){
             UpdatePerspective(col.GetComponent<TransitionPoint>().GetPerspective());
-            playerPlane.GetComponent<Autopilot>().yTarget = col.transform.position.y;
+            if (playerPlane != null){
+                playerPlane.GetComponent<Autopilot>().yTarget = col.transform.position.y;
+            }
         }
         if(col.CompareTag("WinPoint")){
-            Debug.Log("You Win");
+            Debug.Log("Hit win point");
             YouWin();
         }
     }
@@ -259,7 +293,7 @@ public class LevelManager : MonoBehaviour
         snapshots[0] = sfx_Mix.FindSnapshot("Start");
         snapshots[1] = sfx_Mix.FindSnapshot("OnDeath");
 
-        float invMuffle = Mathf.Clamp01(playerPlane.currentHealth / playerPlane.maxHealth);
+        float invMuffle = Mathf.Clamp01(playerPlane.CurrentHealth / playerPlane.maxHealth);
         float dmgMuffle = 1 - invMuffle;
 
         sfx_Mix.TransitionToSnapshots(snapshots, new float[] {invMuffle,dmgMuffle}, 0.5f);
@@ -316,12 +350,51 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+
+
     public void YouWin(){
         StartCoroutine(LerpTime(0, 1.0f));
+        //Save this level index as maxLevelComplete
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int maxLevelComplete = Mathf.Max(PlayerPrefs.GetInt("maxLevelCompleted", 0), currentSceneIndex);
+        PlayerPrefs.SetInt("MaxLevelCompleted", maxLevelComplete);
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (levelClearPnl == null){
+            gameManager.SetNextScene(nextSceneIndex);
+            //Go to the loadout
+            gameManager.GoToLevelViaLoadout(nextSceneIndex);
+            return;
+        }
         SaveScoreTime();
-        levelClearPnl.GetComponent<Canvas>().enabled = true;    
+        levelClearPnl.GetComponent<Canvas>().enabled = true;  
+        gameManager.SetNextScene(nextSceneIndex);
+        
     }
 
+    void EnsureNextLevelButtonListener()
+    {
+        Button[] buttons = levelClearPnl.GetComponentsInChildren<Button>();
+        Debug.Log("Found buttons" + buttons.Length);
+        foreach (Button button in buttons)
+        {
+            Debug.Log("ButtonName: " + button.name);
+            if (button.name == "NextLevelButton")
+            {
+                Button btn = button;
+                
+                PauseMenu pauseMenu = GetComponent<PauseMenu>();
+                Debug.Log("Checking for listeners on NextLevelButton");
+                Debug.Log("NextLevelTarget: " + btn.onClick.GetPersistentTarget(0));
+                LevelManager lm = GetComponent<LevelManager>();
+                btn.onClick.AddListener(lm.GoToNextLevel);
+                if (btn.onClick.GetPersistentTarget(0) != lm)
+                {
+                    Debug.Log("Adding listener to NextLevelButton");
+                    btn.onClick.AddListener(lm.GoToNextLevel);
+                }
+            }
+        }
+    }
     void SaveScoreTime()
     {
         Scene scene = SceneManager.GetActiveScene();
@@ -354,8 +427,12 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = finalScale;
     }
 
-    public void goToNextLevel(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    public void GoToNextLevel(){
+        //Find gm instance
+
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+        gameManager.GetComponent<GameManager>().GoToLevelViaLoadout(nextSceneIndex);
     }
 
     //Referenced by unityAction onClick in Pause Menu / GameOverMenu

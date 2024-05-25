@@ -24,8 +24,12 @@ public class ArcShotPattern : FiringPattern_SO
         float angleStep = arc / (numberOfShots - 1) * direction;
         float startAngle = -arc / 2 * direction;
 
+
+
         for (int i = 0; i < numberOfShots; i++)
         {
+            //Move the spawnTransform to the shooter's position
+            spawnTransform.position = shooter.transform.position;
             float angle = startAngle + angleStep * i;
             Vector3 angleVec = pers switch
             {
