@@ -10,12 +10,14 @@ public class PauseMenu : MonoBehaviour
     public static bool gameIsPaused = false;
 
     public bool settingsOpen = false;
+    public bool levelSelectOpen = false;
     public GameObject pauseMenuUI;
     public Canvas gameHUD;
     public GameObject plane;
     public GameObject gameOverUI;
 
     public GameObject settingsMenu;
+    public GameObject levelSelectMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -151,5 +153,21 @@ public class PauseMenu : MonoBehaviour
         settingsOpen = false;
         pauseMenuUI.SetActive(true);
         settingsMenu.SetActive(false);
+    }
+
+    public void OpenLevelSelect()
+    {
+        //Opens the level select menu
+        levelSelectOpen = true;
+        pauseMenuUI.SetActive(false);
+        levelSelectMenu.SetActive(true);
+    }
+
+    public void CloseLevelSelect()
+    {
+        //Closes the level select menu
+        levelSelectOpen = false;
+        pauseMenuUI.SetActive(true);
+        levelSelectMenu.SetActive(false);
     }
 }
