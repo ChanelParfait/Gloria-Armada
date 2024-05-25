@@ -46,6 +46,29 @@ public class HighScoreManager : MonoBehaviour
         jsonFilePath = Path.Combine(Application.persistentDataPath, "highscores.json");
         CopyDefaultFileIfNotExists();
         LoadHighScores();
+        
+
+        //If the scene is "GameClear" then save the high score from playerPrefs
+        if (SceneManager.GetActiveScene().name == "GameClear"){
+            SaveTotalHighScore();
+        }
+
+        
+
+    }
+
+    void SaveTotalHighScore(){
+        string level = SceneManager.GetActiveScene().name;
+        //Add up the playerPrefs scores and times "Level_x_Score" and "Level_x_Time"
+        int score = 0;
+        float time = 0;
+        for (int i = 1; i <= 4; i++){
+            score += PlayerPrefs.GetInt("Level_" + i + "_Score", 0);
+            time += PlayerPrefs.GetFloat("Level_" + i + "_Time", 0);
+        }
+        string name = PlayerPrefs.GetString("PlayerName", "Player");
+        HighScoreEntry newEntry = new HighScoreEntry { level = level, name = name, score = score, time = time };
+        AddHighScoreEntry(newEntry);
     }
 
     void CopyDefaultFileIfNotExists()

@@ -405,7 +405,6 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetFloat(sceneName + "_Time", levelTimer);
 
         string playerName = PlayerPrefs.GetString("PlayerName");
-        string scene_player = sceneName + "_" + playerName;
         HighScoreManager.HighScoreEntry highScoreEntry = new()
                                         {
                                             level = sceneName,
@@ -415,16 +414,6 @@ public class LevelManager : MonoBehaviour
                                         };
         levelClearPnl.GetComponent<Canvas>().enabled = true;
         levelClearPnl.GetComponent<HighScoreManager>().AddHighScoreEntry(highScoreEntry);
-    }
-
-    void SaveTotalScoreTime(){
-        //Save total score and time
-        int totalScore = PlayerPrefs.GetInt("TotalScore", 0);
-        float totalTime = PlayerPrefs.GetFloat("TotalTime", 0);
-        PlayerPrefs.SetInt("TotalScore", totalScore + score);
-        PlayerPrefs.SetFloat("TotalTime", totalTime + levelTimer);
-
-        
     }
 
     IEnumerator LerpTime(float finalScale, float lerpPeriod)
