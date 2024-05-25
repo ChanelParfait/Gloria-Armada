@@ -97,6 +97,13 @@ public class GameManager : MonoBehaviour
         }
         //If the next scene index is the loadout scene, set the next scene to the next level
         if (nextLevelIndex == 2) nextLevelIndex = 4;
+        //If last level -> end of game
+        if (nextLevelIndex == 8) {
+            SceneManager.LoadScene(8);
+            return;
+        }
+
+        //otherwise, go to loadout scene and carry over the next level
         SetNextScene(nextLevelIndex);
         SceneManager.LoadScene(loadoutSceneName);
     }
