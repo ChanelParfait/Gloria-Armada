@@ -114,9 +114,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 30
+  currentHealth: 0
   rb: {fileID: 0}
   scoreValue: 50
   fire: 0
+  onFire: 0
+  fireEffectPrefab: {fileID: 0}
   fireInterval: 0
   speed: 8
   referenceSpeed: 0
@@ -178,7 +181,7 @@ MonoBehaviour:
       position: {x: 0, y: 0, z: -4}
       orientation: {x: 0, y: 1, z: 0}
     horizontalStabilizer:
-      area: 0.8
+      area: 2
       position: {x: 0, y: 0, z: -4}
       orientation: {x: 1, y: 0, z: 0}
     aileron:
@@ -495,6 +498,7 @@ MonoBehaviour:
   shotSpeed: 300
   targetOffset: {x: -10, y: -10, z: -10}
   zTarget: 0
+  yTarget: 0
   targetAngularSize: 0
   pers: 0
 --- !u!65 &6725141911510713556

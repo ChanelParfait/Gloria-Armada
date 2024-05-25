@@ -31,9 +31,13 @@ public class PauseMenu : MonoBehaviour
             {
                 settingsMenu = obj;
             }
+            if (obj.name == "LevelSelectCanvas")
+            {
+                levelSelectMenu = obj;
+            }
         }
         EnsureSettingsButtonListener();
-        
+        EnsureLevelSelectBackButtonListener();
     }
 
     void EnsureSettingsButtonListener()
@@ -56,6 +60,25 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    void EnsureLevelSelectBackButtonListener(){
+        Button[] buttons = levelSelectMenu.GetComponentsInChildren<Button>();
+        foreach (Button button in buttons)
+        {
+            if (button.name == "BackButton")
+            {
+                Button btn = button;
+                PauseMenu pauseMenu = GetComponent<PauseMenu>();
+                Debug.Log("Checking for listeners on LevelSelectBackButton");
+                Debug.Log("LevelSelectBackTarget: " + btn.onClick.GetPersistentTarget(0));
+                if (btn.onClick.GetPersistentTarget(0) != pauseMenu)
+                {
+                    Debug.Log("Adding listener to LevelSelectBackButton");
+                    btn.onClick.AddListener(pauseMenu.CloseLevelSelect);
+                }
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -67,6 +90,11 @@ public class PauseMenu : MonoBehaviour
                 if (settingsOpen)
                 {
                     CloseSettings();
+                    return;
+                }
+                else if (levelSelectOpen)
+                {
+                    CloseLevelSelect();
                     return;
                 }
                 else if (gameIsPaused)
@@ -114,6 +142,7 @@ public class PauseMenu : MonoBehaviour
 
             pauseMenuUI.SetActive(false);
             settingsMenu.SetActive(false);
+            levelSelectMenu.SetActive(false);
             Time.timeScale = 1;
             gameHUD.enabled = true;
             gameIsPaused = false;
@@ -154,13 +183,16 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         settingsMenu.SetActive(false);
     }
+    
 
     public void OpenLevelSelect()
     {
         //Opens the level select menu
+        
         levelSelectOpen = true;
         pauseMenuUI.SetActive(false);
-        levelSelectMenu.SetActive(true);
+        levelSelectMenu.GetComponent<Canvas>().enabled = true;  
+        levelSelectMenu.GetComponent<LevelSelection>().UpdateMaxLevelComplete();
     }
 
     public void CloseLevelSelect()
@@ -168,6 +200,6 @@ public class PauseMenu : MonoBehaviour
         //Closes the level select menu
         levelSelectOpen = false;
         pauseMenuUI.SetActive(true);
-        levelSelectMenu.SetActive(false);
+        levelSelectMenu.GetComponent<Canvas>().enabled = false;
     }
 }

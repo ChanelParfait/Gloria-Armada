@@ -42,15 +42,15 @@ public class SettingsToggle : MonoBehaviour
     }
     public void TogglePlay()
     {
-        if (playMenu.activeSelf == true)
+        if (playMenu.GetComponent<Canvas>().enabled == true)
         {
-            playMenu.SetActive(false);
+            playMenu.GetComponent<Canvas>().enabled = false;
             mainMenu.SetActive(true);
         }
 
         else
         {
-            playMenu.SetActive(true);
+            playMenu.GetComponent<Canvas>().enabled = true;
             mainMenu.SetActive(false);
         }
     }

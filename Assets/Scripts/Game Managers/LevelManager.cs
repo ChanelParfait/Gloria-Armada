@@ -354,11 +354,15 @@ public class LevelManager : MonoBehaviour
 
     public void YouWin(){
         StartCoroutine(LerpTime(0, 1.0f));
+        //Save this level index as maxLevelComplete
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int maxLevelComplete = Mathf.Max(PlayerPrefs.GetInt("maxLevelCompleted", 0), currentSceneIndex);
+        PlayerPrefs.SetInt("MaxLevelCompleted", maxLevelComplete);
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (levelClearPnl == null){
             gameManager.SetNextScene(nextSceneIndex);
             //Go to the loadout
-            gameManager.OnLevelComplete(nextSceneIndex);
+            gameManager.GoToLevelViaLoadout(nextSceneIndex);
             return;
         }
         SaveScoreTime();
@@ -428,7 +432,7 @@ public class LevelManager : MonoBehaviour
 
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 
-        gameManager.GetComponent<GameManager>().OnLevelComplete(nextSceneIndex);
+        gameManager.GetComponent<GameManager>().GoToLevelViaLoadout(nextSceneIndex);
     }
 
     //Referenced by unityAction onClick in Pause Menu / GameOverMenu
