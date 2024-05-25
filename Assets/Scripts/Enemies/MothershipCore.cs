@@ -36,7 +36,7 @@ public class MothershipCore : Actor
             rb.velocity = new Vector3(playerPlane.internalVelocity.x + playerPlane.localVelocity.x, 0, 0);
         }
         else{
-            if(Vector3.Distance(gameObject.transform.position, playerPlane.gameObject.transform.position) < 100){
+            if(Vector3.Distance(gameObject.transform.position, playerPlane.gameObject.transform.position) < 60){
                 isMoving = true;
             }
         }
