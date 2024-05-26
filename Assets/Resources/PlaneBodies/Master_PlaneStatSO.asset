@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86521414d0a3f8b4ab6ca48ddfe02752, type: 3}
-  m_Name: Heavy_PlaneStatSO
+  m_Name: Master_PlaneStatSO
   m_EditorClassIdentifier: 
   surfaces:
     wing:
@@ -33,11 +33,11 @@ MonoBehaviour:
       area: 1
       position: {x: 4, y: 0, z: 0}
       orientation: {x: 1, y: 0, z: 0}
-  weight: 300
+  weight: 180
   thrust: 1800
   thrustVectoring: 0
   scaleVelocity: 1
   cd: 0.2
-  liftPower: 1
-  health: 12
-  defaultPowerups: 000000000200000001000000
+  liftPower: 2.5
+  health: 1
+  defaultPowerups: 000000000100000002000000
