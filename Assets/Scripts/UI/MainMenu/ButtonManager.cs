@@ -52,5 +52,7 @@ public class ButtonManager : MonoBehaviour
 
         playerNameInput.text = playerName;
         PlayerPrefs.SetString("PlayerName", playerName);
+        string name = PlayerPrefs.GetString("PlayerName", "Player");
+        Debug.Log("PlayerName: " + name);   
     }
 }
