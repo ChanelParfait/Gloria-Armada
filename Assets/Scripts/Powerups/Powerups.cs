@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum PowerupType {
     PrimaryDamageUp,
@@ -21,14 +20,10 @@ public enum PowerupType {
 public class Powerups : MonoBehaviour
 {
     [SerializeField] private PlayerWeaponManager playerWeaponManager; 
-
-    PowerupManager powerupManager;
     // [SerializeField] private Projectile projectile; 
     [SerializeField] PowerupType powerupType;
 
     GameObject BoxMesh;
-
-    Image powerupIcon;
 
     public GameObject emptyCratePrefab;
 
@@ -43,16 +38,6 @@ public class Powerups : MonoBehaviour
     public GameObject specialDamageUpPrefab;
     public GameObject splitShotPrefab;
 
-    
-    public Image primaryDamageUpImage;
-    public Image bulletSpeedUpImage;
-    public Image fireRateUpImage;
-    public Image bulletSizeUpImage;
-    public Image burnDamageImage;
-    public Image freezeShotsImage;
-    public Image lightningChainImage;
-    public Image specialDamageUpImage;
-    public Image splitShotImage;
     
     void Start()
     {
@@ -71,19 +56,6 @@ public class Powerups : MonoBehaviour
             // PowerupType.SpecialDamageUp => specialDamageUpPrefab,
             PowerupType.FreezeShots => freezeShotsPrefab,
             _ => emptyCratePrefab,
-        };
-        powerupIcon = powerupType switch
-        {
-            PowerupType.PrimaryDamageUp => primaryDamageUpImage,
-            PowerupType.BulletSpeedUp => bulletSpeedUpImage,
-            PowerupType.FirerateUp => fireRateUpImage,
-            PowerupType.BulletSizeUp => bulletSizeUpImage,
-            PowerupType.BurnDamage => burnDamageImage,
-            PowerupType.SplitShot => splitShotImage,
-            PowerupType.LightningChain => lightningChainImage,
-            PowerupType.SpecialDamageUp => specialDamageUpImage,
-            PowerupType.FreezeShots => freezeShotsImage,
-            _ => emptyImage,
         };
 
         if (BoxMesh == null)
@@ -109,45 +81,11 @@ public class Powerups : MonoBehaviour
         return (PowerupType)Random.Range(0, System.Enum.GetValues(typeof(PowerupType)).Length);
     }
 
-    private void ApplyPowerupEffect(PowerupType type)
+     private void ApplyPowerupEffect(PowerupType type)
     {
         playerWeaponManager.AddPowerup(type);
-        // Get the sprite for the collected powerup from the prefab
-        Sprite powerupSprite = GetPowerupSprite(type);
-        if (powerupSprite != null && powerupManager != null)
-        {
-            powerupManager.AddPowerup(powerupSprite);
-        }
     }
 
-    private Sprite GetPowerupSprite(PowerupType type)
-    {
-        switch (type)
-        {
-            case PowerupType.PrimaryDamageUp:
-                return primaryDamageUpPrefab.GetComponent<SpriteRenderer>().sprite;
-            case PowerupType.BulletSpeedUp:
-                return bulletSpeedUpPrefab.GetComponent<SpriteRenderer>().sprite;
-            case PowerupType.FirerateUp:
-                return fireRateUpPrefab.GetComponent<SpriteRenderer>().sprite;
-            case PowerupType.BulletSizeUp:
-                return bulletSizeUpPrefab.GetComponent<SpriteRenderer>().sprite;
-            case PowerupType.BurnDamage:
-                return burnDamagePrefab.GetComponent<SpriteRenderer>().sprite;
-            case PowerupType.FreezeShots:
-                return freezeShotsPrefab.GetComponent<SpriteRenderer>().sprite;
-            case PowerupType.LightningChain:
-                return lightningChainPrefab.GetComponent<SpriteRenderer>().sprite;
-            case PowerupType.SpecialDamageUp:
-                return specialDamageUpPrefab.GetComponent<SpriteRenderer>().sprite;
-            case PowerupType.SplitShot:
-                return splitShotPrefab.GetComponent<SpriteRenderer>().sprite;
-            default:
-                return null;
-        }
-    }
-
-    
      private void OnTriggerEnter(Collider col)
     {
         // Check if the colliding object is the player
