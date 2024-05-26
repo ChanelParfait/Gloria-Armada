@@ -105,6 +105,10 @@ public class MissileLauncher : Weapon
     public override void SetupWeapon(){
         currentAmmo = weaponStats.maxAmmo;
 
+        if(isPlayerWeapon){
+            OnAmmoChange?.Invoke(currentAmmo);
+        }
+
         if(!projectile){
             // Find and Retrieve Missile Prefab from Resources Folder
             projectile = (GameObject)Resources.Load("Projectiles/Missile_Player");

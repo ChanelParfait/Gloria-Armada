@@ -729,6 +729,8 @@ MonoBehaviour:
   gameOverPnl: {fileID: 0}
   levelClearPnl: {fileID: 0}
   ScoreTxt: {fileID: 0}
+  timerTxt: {fileID: 0}
+  gameManager: {fileID: 0}
   damageAnim: {fileID: 0}
   enemies: []
   spawnOverTime: 0
@@ -748,7 +750,7 @@ AudioSource:
   m_GameObject: {fileID: 8350215954295267770}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
+  OutputAudioMixerGroup: {fileID: 7652226094477299871, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
   m_audioClip: {fileID: 8300000, guid: 4172836f461fd1d4e90c086335f9e874, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
