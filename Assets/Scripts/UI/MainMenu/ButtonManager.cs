@@ -5,8 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
 public class ButtonManager : MonoBehaviour
 {
     public TextMeshProUGUI playerNameText;
@@ -14,16 +12,16 @@ public class ButtonManager : MonoBehaviour
     public GameObject nameEdit;
     string playerName;
 
-    void Start(){
+    void Start()
+    {
         nameEdit = GameObject.Find("NameEdit");
         playerNameText = nameEdit.transform.Find("Text Area/Text").GetComponent<TextMeshProUGUI>();
         playerNameInput = nameEdit.GetComponent<TMP_InputField>();
         playerName = PlayerPrefs.GetString("PlayerName", "PLAYER");
         playerNameInput.text = playerName;
-
     }
 
-     public void QuitGame()
+    public void QuitGame()
     {
         Application.Quit();
     }
@@ -31,19 +29,17 @@ public class ButtonManager : MonoBehaviour
     public void SetName()
     {
         // Remove any characters that aren't letters or numbers
-        string inputText = playerNameText.text;
+        string inputText = playerNameInput.text; // Access the input field's text
         string sanitizedText = Regex.Replace(inputText, @"[^a-zA-Z0-9]", "");
 
         // Only get the first 6 characters of the sanitized name
-        //Debug.Log(sanitizedText.Length);
-
         if (sanitizedText.Length <= 1)
         {
             playerName = "PLAYER";
         }
-        else if (sanitizedText.Length > 7)
+        else if (sanitizedText.Length > 6)
         {
-            playerName = sanitizedText.Remove(6);
+            playerName = sanitizedText.Substring(0, 6); // Use Substring instead of Remove
         }
         else
         {
@@ -52,7 +48,8 @@ public class ButtonManager : MonoBehaviour
 
         playerNameInput.text = playerName;
         PlayerPrefs.SetString("PlayerName", playerName);
-        string name = PlayerPrefs.GetString("PlayerName", "Player");
-        Debug.Log("PlayerName: " + name);   
+        string name = PlayerPrefs.GetString("PlayerName", "NULL");
+        Debug.Log("PlayerName: " + name);
+        Debug.Log("PlayerName: " + playerName);
     }
 }
