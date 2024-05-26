@@ -40,3 +40,4 @@ MonoBehaviour:
   cd: 0.2
   liftPower: 1
   health: 12
+  defaultPowerups: 000000000200000001000000

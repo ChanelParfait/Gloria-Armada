@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4431121, g: 0.49232316, b: 0.57202566, a: 1}
+  m_IndirectSpecularColor: {r: 0.16511223, g: 0.20700431, b: 0.2868659, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -826,7 +826,7 @@ PrefabInstance:
     - target: {fileID: 6841859542840894369, guid: e7edccc096d677842b0b341bae1f9a76, type: 3}
       propertyPath: playerLife
       value: 
-      objectReference: {fileID: 949054476}
+      objectReference: {fileID: 0}
     - target: {fileID: 8634281443496567223, guid: e7edccc096d677842b0b341bae1f9a76, type: 3}
       propertyPath: m_canvas
       value: 
@@ -4264,17 +4264,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1168509773419960114, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
   m_PrefabInstance: {fileID: 656870839}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &949054476 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4936141611755476538, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
-  m_PrefabInstance: {fileID: 656870839}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 949054471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 282e7828be1654a46872c4d94972946e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &964957479
 GameObject:
   m_ObjectHideFlags: 0
@@ -7815,8 +7804,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d1435919890fa40adab369c1f04ab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settingsOpen: 0
+  levelSelectOpen: 0
   pauseMenuUI: {fileID: 276990562}
   gameHUD: {fileID: 1849828312}
+  plane: {fileID: 0}
+  gameOverUI: {fileID: 0}
+  settingsMenu: {fileID: 0}
+  levelSelectMenu: {fileID: 0}
 --- !u!114 &1798830910
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4818,8 +4818,8 @@ ParticleSystemRenderer:
   m_AllowRoll: 1
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
-  m_UseCustomVertexStreams: 0
-  m_VertexStreams: 00010304
+  m_UseCustomVertexStreams: 1
+  m_VertexStreams: 00030409
   m_UseCustomTrailVertexStreams: 0
   m_TrailVertexStreams: 00010304
   m_Mesh: {fileID: 289301614986012343, guid: b6b89b13d4320ce419eb0648730ee4c4, type: 3}
@@ -4843,6 +4843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
   detatched: 0
 --- !u!1 &1168509773419960114
 GameObject:
@@ -4902,6 +4903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 6
+  currentHealth: 0
   audioSource: {fileID: 0}
   deathObj: {fileID: 4159290798137297532, guid: e9ccf1c41ebb61b4995d14415ae5b2c0, type: 3}
   engineSound: {fileID: 8300000, guid: 09971f695ea052544bce3e950d989fac, type: 3}
@@ -5231,6 +5233,7 @@ MonoBehaviour:
   shotSpeed: 20
   targetOffset: {x: 10, y: -10, z: -10}
   zTarget: 0
+  yTarget: 0
   targetAngularSize: 1.0776951
   pers: 0
 --- !u!54 &6182760409746918969
@@ -5284,7 +5287,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168509773419960114}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 5522f833f7785a44faef084ca377a8f7, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -5307,7 +5310,7 @@ AudioSource:
   m_GameObject: {fileID: 1168509773419960114}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
+  OutputAudioMixerGroup: {fileID: 7652226094477299871, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
   m_audioClip: {fileID: 8300000, guid: 6fc616f6e9aad6d47b54c333751687b1, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -10245,6 +10248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
   detatched: 0
 --- !u!1 &5124061948501627520
 GameObject:
@@ -15089,6 +15093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
   detatched: 0
 --- !u!1 &8012318085517979214
 GameObject:
@@ -19933,6 +19938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
   detatched: 0
 --- !u!1 &8931380740068753388
 GameObject:
@@ -24777,6 +24783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
   detatched: 0
 --- !u!1001 &3042125635388901829
 PrefabInstance:

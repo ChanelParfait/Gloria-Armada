@@ -6,7 +6,11 @@ public class CameraUtils : MonoBehaviour
 {
 
     public Vector3 forwardEdge;
+
+    //Camera width in world units at z = 0
     public float width;
+
+    //Camera height in world units at z = 0
     public float height;
 
     public float forwardEdgeDistance;

@@ -27,9 +27,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/Level_3.unity
     guid: f37cc03d3d676e745b6dc2bc35aa40b9
   - enabled: 1
+    path: Assets/Scenes/Levels/Level_4.unity
+    guid: aff6d16b0c6291a4a998a6845d2ee2c4
+  - enabled: 1
+    path: Assets/Scenes/GameClear.unity
+    guid: ecdd9b4b6f69c4748ba97e8b468d742d
+  - enabled: 0
     path: Assets/Scenes/AdvPhys/S3_TurretGunAim.unity
     guid: 9bd61c5c2a66ca54481b6a554a606858
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/AdvPhys/S1/SampleSceneIntegration.unity
     guid: a091db6419451044ca6f1cb83a1d7fcd
   m_configObjects: {}

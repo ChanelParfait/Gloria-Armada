@@ -12,6 +12,8 @@ public class PlayerPlane : Actor
     public static event UnityAction<PlayerPlane> OnPlayerDamage;
     public static event UnityAction OnPlayerDeath;
 
+    public static event UnityAction<float> OnUpdateHealth;
+
     [SerializeField] GameObject deathObj;
 
     [SerializeField] AudioClip engineSound;
@@ -56,6 +58,12 @@ public class PlayerPlane : Actor
         OnPlayerDamage?.Invoke(this);
     }
 
+    public void SetHealth(float health)
+    {
+        CurrentHealth = health;
+        OnUpdateHealth?.Invoke(health);
+    }
+
     protected override void Die(){   
         if (deathObj == null)
         {
@@ -95,19 +103,17 @@ public class PlayerPlane : Actor
             //Get the normal of the collision
             Vector3 normal = col.contacts[0].normal;
 
-            if (invincible){
-                //Bounce the plane off the terrain by reflecting rb velocity about the normal
-                Rigidbody rigidBody = GetComponent<Rigidbody>();
-                rigidBody.velocity = Vector3.Reflect(rigidBody.velocity, normal);
-            }
+
             //Get dot product of the normal and the velocity
             Rigidbody rb = GetComponent<Rigidbody>();
+            
             float dot = Vector3.Dot(rb.velocity.normalized, normal) * rb.velocity.magnitude;
             
-            //Debug.Log(dot);
+            
 
             dot = Mathf.Clamp01(dot);
-            
+            //Debug.Log(dot);
+            rb.velocity = Vector3.Reflect(rb.velocity, normal);
             //Reduce health by a minimum of 1health, max of MaxLife based on dot
             int damage = (int)Mathf.Lerp(1,maxHealth, dot);
 

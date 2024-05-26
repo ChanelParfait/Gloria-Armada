@@ -101,9 +101,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 30
+  currentHealth: 0
   rb: {fileID: 0}
   scoreValue: 50
   fire: 0
+  onFire: 0
+  fireEffectPrefab: {fileID: 0}
   fireInterval: 0
   speed: 8
   referenceSpeed: 0
@@ -538,7 +541,7 @@ PrefabInstance:
     - target: {fileID: 2181406398497661284, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
-      objectReference: {fileID: 24300002, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
+      objectReference: {fileID: 7652226094477299871, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
     - target: {fileID: 4743462779177812946, guid: 836f63f051dba154b9f2e3fd45103664, type: 3}
       propertyPath: maxHealth
       value: 3

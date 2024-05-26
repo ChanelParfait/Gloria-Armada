@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 43273233858047346}
   - component: {fileID: 3689258555490957411}
   - component: {fileID: 3315575242656941838}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: HitParticlePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4918,7 +4918,7 @@ AudioSource:
   m_GameObject: {fileID: 1705471074089252971}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 24300002, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
+  OutputAudioMixerGroup: {fileID: 7652226094477299871, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
   m_audioClip: {fileID: 8300000, guid: 7380de7722bef3c4e933bd4a28f12bb2, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -5017,4 +5017,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
   detatched: 0

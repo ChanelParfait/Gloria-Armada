@@ -4843,6 +4843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
   detatched: 0
 --- !u!1 &1036074900772646115
 GameObject:
@@ -9687,6 +9688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
   detatched: 0
 --- !u!1 &1230038070892675713
 GameObject:
@@ -14531,6 +14533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
   detatched: 0
 --- !u!1 &3966768664029148857
 GameObject:
@@ -19375,6 +19378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
   detatched: 0
 --- !u!1 &4355265953626248377
 GameObject:
@@ -19729,7 +19733,9 @@ MonoBehaviour:
   hasTarget: 0
   onAxes: 0
   shotSpeed: 300
+  targetOffset: {x: 10, y: -10, z: -10}
   zTarget: 0
+  yTarget: 0
   targetAngularSize: 0
   pers: 0
 --- !u!114 &2621917639392063258
@@ -19814,7 +19820,7 @@ AudioSource:
   m_GameObject: {fileID: 4355265953626248377}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7652226094477299871, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -24808,6 +24814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee2723a9a59e3242956cf983fc9b46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps: {fileID: 0}
   detatched: 0
 --- !u!1001 &2465417015494654627
 PrefabInstance:

@@ -33,7 +33,7 @@ public class Actor : MonoBehaviour
             }
         }
     }
-
+    
     protected virtual void Die()
     {
         isDying = true;

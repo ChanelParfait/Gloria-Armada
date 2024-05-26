@@ -1202,7 +1202,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 282e7828be1654a46872c4d94972946e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverScreen: {fileID: 1252248902}
+  damageSound: {fileID: 0}
+  damageAnim: {fileID: 0}
+  deathObj: {fileID: 0}
   life: 6
   maxLife: 6
 --- !u!1001 &170248330
@@ -6809,9 +6811,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 942464414}
-  - {fileID: 1451820846}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &864017072
@@ -6827,14 +6827,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initPerspective: 1
-  anim: {fileID: 942464416}
-  enemySpawner: {fileID: 1704886797}
-  jetControl: {fileID: 0}
+  anim: {fileID: 0}
+  useLERP: 0
+  isRotating: 0
+  enemySpawner: {fileID: 0}
   playerPlane: {fileID: 165006624}
   gameOverPnl: {fileID: 1252248902}
-  youWinPnl: {fileID: 266493969}
-  CurrentHealthTxt: {fileID: 627022314}
+  levelClearPnl: {fileID: 0}
   ScoreTxt: {fileID: 0}
+  timerTxt: {fileID: 0}
+  gameManager: {fileID: 0}
+  damageAnim: {fileID: 0}
+  enemies: []
+  spawnOverTime: 0
   maxDistance: 5
   smoothTime: 0.1
   minHorizontalSpeed: 20
@@ -13521,7 +13526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CanvasScaler: {fileID: 1881772698}
-  m_Camera: {fileID: 963194227}
+  m_Camera: {fileID: 0}
 --- !u!1001 &1890368216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15682,3 +15687,4 @@ SceneRoots:
   - {fileID: 1881772700}
   - {fileID: 178756424}
   - {fileID: 1278701330}
+  - {fileID: 864017071}

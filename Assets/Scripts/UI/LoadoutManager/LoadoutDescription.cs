@@ -14,7 +14,7 @@ public class LoadoutDescription : MonoBehaviour
 
     public void DescScattergun()
     {
-        descText.GetComponent<TextMeshProUGUI>().text = "Scattergun <br> <br>Fires 5 bullets in a moderate spread with limited range that are individually weak, but packs a punch if multiple shots connect.";
+        descText.GetComponent<TextMeshProUGUI>().text = "Scattergun <br> <br>Fires 3 bullets in a moderate spread with limited range that are individually weak, but packs a punch if multiple shots connect.";
     }
 
     public void DescChargeCannon()
@@ -34,7 +34,7 @@ public class LoadoutDescription : MonoBehaviour
 
     public void DescNRGLazer()
     {
-        descText.GetComponent<TextMeshProUGUI>().text = "N.R.G Lazer <br> <br>Hold the special button to fire a beam of energy in the jet's direction. The longer you fire it, the wider and deadlier the beam gets. <br> <br>Caution: User will be unable to steer their jet while the beam is firing.";
+        descText.GetComponent<TextMeshProUGUI>().text = "N.R.G Lazer <br> <br>Hold the special button to fire a beam of energy in the jet's direction. The longer you fire it, the deadlier it gets.";
     }
 
     public void DescStandard()

@@ -493,6 +493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   primaryWeapon: {fileID: 0}
   specialWeapon: {fileID: 0}
+  powerups: 
   isArmed: 1
   playerRB: {fileID: 0}
   test1: {fileID: 1062033948207875801, guid: c2968064a6f387d42ae42e6dc19c3673, type: 3}
@@ -779,9 +780,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 0
-  fireTime: 3
+  currentHealth: 0
+  rb: {fileID: 0}
   scoreValue: 10
   fire: 0
+  onFire: 0
+  fireEffectPrefab: {fileID: 0}
 --- !u!4 &1530821725 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5214197653691540729, guid: c1b7717d19f33d0428793fd10ba9ce66, type: 3}

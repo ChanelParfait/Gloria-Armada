@@ -46,6 +46,29 @@ public class HighScoreManager : MonoBehaviour
         jsonFilePath = Path.Combine(Application.persistentDataPath, "highscores.json");
         CopyDefaultFileIfNotExists();
         LoadHighScores();
+        
+
+        //If the scene is "GameClear" then save the high score from playerPrefs
+        if (SceneManager.GetActiveScene().name == "GameClear"){
+            SaveTotalHighScore();
+        }
+
+        
+
+    }
+
+    void SaveTotalHighScore(){
+        string level = SceneManager.GetActiveScene().name;
+        //Add up the playerPrefs scores and times "Level_x_Score" and "Level_x_Time"
+        int score = 0;
+        float time = 0;
+        for (int i = 1; i <= 4; i++){
+            score += PlayerPrefs.GetInt("Level_" + i + "_Score", 0);
+            time += PlayerPrefs.GetFloat("Level_" + i + "_Time", 0);
+        }
+        string name = PlayerPrefs.GetString("PlayerName", "Player");
+        HighScoreEntry newEntry = new HighScoreEntry { level = level, name = name, score = score, time = time };
+        AddHighScoreEntry(newEntry);
     }
 
     void CopyDefaultFileIfNotExists()
@@ -55,6 +78,7 @@ public class HighScoreManager : MonoBehaviour
             TextAsset defaultJson = Resources.Load<TextAsset>("default_highscores");
             if (defaultJson != null)
             {
+                Debug.Log("Default high score file found, copying to: " + jsonFilePath);
                 File.WriteAllText(jsonFilePath, defaultJson.text);
             }
             else
@@ -95,6 +119,19 @@ public class HighScoreManager : MonoBehaviour
             DisplayCurrentScore(currentHighScoreEntry);
         }
     }
+    
+    void Update(){
+        //If canvas is active, 
+        Canvas canvas = GetComponent<Canvas>();
+        if (canvas.isActiveAndEnabled){
+            //Debug.Log("Canvas enabled");
+            Cursor.lockState = CursorLockMode.None;
+            if (Cursor.visible == false)
+            {
+                Cursor.visible = true;
+            }
+        }
+    }
 
     public void SaveHighScores()
     {
@@ -118,6 +155,10 @@ public class HighScoreManager : MonoBehaviour
     {
         currentHighScoreEntry = newEntry;
         highScoreList.highScores.Add(newEntry);
+        //Debug.Log the player name from the high score
+        Debug.Log("Player Name: " + newEntry.name);
+        //PlayerPrefs name
+        Debug.Log("PlayerPrefsName Name: " + PlayerPrefs.GetString("PlayerName", "Player"));
         SaveHighScores();
         DisplayHighScores();
 
