@@ -127,6 +127,10 @@ public class Projectile : MonoBehaviour
             {
                 lightning.ApplyArcDamage(enemy);
             }
+            if (TryGetComponent<Freeze>(out Freeze freeze))
+            {
+                freeze.ApplyFreeze(enemy);
+            }
             
             if (hitParticle)
             {

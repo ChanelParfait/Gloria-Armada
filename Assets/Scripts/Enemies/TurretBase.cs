@@ -11,8 +11,6 @@ public class TurretBase : EnemyBase
 
     protected float randFireTime;
     protected float timer = 0;
-    
-
 
 
     // Start is called before the first frame update

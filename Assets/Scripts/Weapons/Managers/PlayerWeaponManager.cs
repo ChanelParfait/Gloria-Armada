@@ -52,18 +52,19 @@ public class PlayerWeaponManager : MonoBehaviour
             case PowerupType.BurnDamage:
                 AddProjectileComponent(typeof(Burn));
                 break;
-            // case PowerupType.FreezeShots:
-            //     //
-            //     break;
+            case PowerupType.FreezeShots:
+                AddProjectileComponent(typeof(Freeze));
+                 break;
             // case PowerupType.ExplodingShots:
             //     //
             //     break;
             case PowerupType.LightningChain:
                 AddProjectileComponent(typeof(LightningChain));
                 break;
-            // case PowerupType.SpecialDamageUp:
-            //     //
-            //     break;
+            case PowerupType.SpecialDamageUp:
+                specialWeapon.GetWeaponStats().projectileStats.damage *= 1.25f;
+                Debug.Log("Special Weapon Damage Up");
+                break;
             case PowerupType.SplitShot:
                 AddProjectileComponent(typeof(Split));
                 break;

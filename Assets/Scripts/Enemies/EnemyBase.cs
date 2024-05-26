@@ -25,6 +25,15 @@ public class EnemyBase : Actor
 
     protected GameObject currentFireEffect;
 
+    // Freeze effect variables
+    private bool isFrozen = false;
+    private Coroutine freezeCoroutine;
+    private float originalSpeed;
+    private float originalFireRate;
+
+    public virtual float currentSpeed { get; set; }
+    public virtual float currentFireRate { get; set; }
+
     protected virtual void Awake(){
         LoadFireEffectPrefab();
     }
@@ -113,4 +122,43 @@ public class EnemyBase : Actor
         }
         onFire = false;
     }
+
+    public void SetFrozen(float freezeDuration, float slowAmount)
+    {
+        if (!isFrozen)
+        {
+            isFrozen = true;
+            originalSpeed = currentSpeed;
+            originalFireRate = currentFireRate;
+
+            currentSpeed *= (1 - slowAmount);
+            currentFireRate *= (1 - slowAmount);
+            Debug.Log("Speed: " + currentSpeed);
+            Debug.Log("FireRate: " + currentFireRate);
+
+
+            if (freezeCoroutine != null)
+            {
+                StopCoroutine(freezeCoroutine);
+            }
+            freezeCoroutine = StartCoroutine(FreezeDuration(freezeDuration));
+        }
+        else
+        {
+            // Refresh freeze duration
+            if (freezeCoroutine != null)
+            {
+                StopCoroutine(freezeCoroutine);
+            }
+            freezeCoroutine = StartCoroutine(FreezeDuration(freezeDuration));
+        }
+    }
+    private IEnumerator FreezeDuration(float freezeDuration)
+    {
+        yield return new WaitForSeconds(freezeDuration);
+        currentSpeed = originalSpeed;
+        currentFireRate = originalFireRate;
+        isFrozen = false;
+    }
+
 }

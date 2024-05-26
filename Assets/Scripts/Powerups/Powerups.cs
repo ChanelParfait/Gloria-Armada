@@ -8,10 +8,10 @@ public enum PowerupType {
     FirerateUp,
     BulletSizeUp,
     BurnDamage,
-    // FreezeShots,
+    FreezeShots,
     // ExplodingShots,
     LightningChain,
-    // SpecialDamageUp,
+    SpecialDamageUp,
     SplitShot,
     // APDamage,
     // HomingShots
@@ -53,6 +53,8 @@ public class Powerups : MonoBehaviour
             PowerupType.BurnDamage => burnDamagePrefab,
             PowerupType.SplitShot => splitShotPrefab,
             PowerupType.LightningChain => lightningChainPrefab,
+            // PowerupType.SpecialDamageUp => specialDamageUpPrefab,
+            PowerupType.FreezeShots => freezeShotsPrefab,
             _ => emptyCratePrefab,
         };
 

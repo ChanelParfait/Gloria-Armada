@@ -30,7 +30,7 @@ internal class Vec3PID
 public class EnemyPlane : EnemyBase
 {
     [SerializeField] private float fireInterval = 1;
-    [SerializeField] private int speed = 8;
+    [SerializeField] private float speed = 8f;
     public float referenceSpeed = 0;
     public Vector3 moveDir;
     public Vector3 orientation;
@@ -56,6 +56,18 @@ public class EnemyPlane : EnemyBase
     protected CameraUtils camUtils;
 
     [SerializeField] protected GameObject deathObj;
+
+    public override float currentSpeed
+    {
+        get => speed;
+        set => speed = value;
+    }
+
+    public override float currentFireRate
+    {
+        get => fireInterval;
+        set => fireInterval = value;
+    }
 
     private void OnEnable()
     {
