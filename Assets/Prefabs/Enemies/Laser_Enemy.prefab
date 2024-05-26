@@ -99,9 +99,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 2
+  currentHealth: 0
   rb: {fileID: 0}
   scoreValue: 10
   fire: 0
+  onFire: 0
+  fireEffectPrefab: {fileID: 0}
   fireInterval: 6
   speed: 3
   referenceSpeed: 0
@@ -128,6 +131,7 @@ MonoBehaviour:
       lastError: 0
   targetOffset: {x: 0, y: 0, z: 0}
   deathExplosion: {fileID: 7641901280459977050, guid: 12cd1a8c790828542bcbce48a291aa01, type: 3}
+  powerupManager: {fileID: 0}
   deathObj: {fileID: 0}
 --- !u!82 &3701978883294950984
 AudioSource:
@@ -365,6 +369,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7884464371219309874, guid: a6d92c50672afbd4dac6b276b0bd7ee8, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 7652226094477299871, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

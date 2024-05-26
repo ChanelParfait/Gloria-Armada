@@ -373,6 +373,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss_GunTurret
       objectReference: {fileID: 0}
+    - target: {fileID: 2908060772831393390, guid: bc0f5e4cdcb92a545ac85f96318fb9d0, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 7652226094477299871, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
     - target: {fileID: 5502250573649058086, guid: bc0f5e4cdcb92a545ac85f96318fb9d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -475,6 +479,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss_RocketTurret
       objectReference: {fileID: 0}
+    - target: {fileID: 7424562459163914667, guid: d4e452f72e5a8c04681155a2a41aa43d, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 7652226094477299871, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -625,6 +633,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss_RocketTurret Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 7424562459163914667, guid: d4e452f72e5a8c04681155a2a41aa43d, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 7652226094477299871, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -647,6 +659,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss_GunTurret2
       objectReference: {fileID: 0}
+    - target: {fileID: 2908060772831393390, guid: bc0f5e4cdcb92a545ac85f96318fb9d0, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 7652226094477299871, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
     - target: {fileID: 5502250573649058086, guid: bc0f5e4cdcb92a545ac85f96318fb9d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
