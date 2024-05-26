@@ -7,38 +7,63 @@ using UnityEngine.UI;
 
 public class ButtonManager : MonoBehaviour
 {
-    public TextMeshProUGUI playerNameText;
-    public TMP_InputField playerNameInput;
+    public Text playerNameText;
+    public InputField playerNameInput;
     public GameObject nameEdit;
     string playerName;
 
     void Start()
     {
         nameEdit = GameObject.Find("NameEdit");
-        playerNameText = nameEdit.transform.Find("Text Area/Text").GetComponent<TextMeshProUGUI>();
-        playerNameInput = nameEdit.GetComponent<TMP_InputField>();
+        if (nameEdit == null)
+        {
+            Debug.LogError("NameEdit object not found");
+            return;
+        }
+
+        playerNameInput = nameEdit.GetComponent<InputField>();
+        if (playerNameInput == null)
+        {
+            Debug.LogError("PlayerNameInput component not found");
+            return;
+        }
+
         playerName = PlayerPrefs.GetString("PlayerName", "PLAYER");
         playerNameInput.text = playerName;
+
+        playerNameInput.onValueChanged.AddListener(delegate { OnInputValueChanged(); });
+        playerNameInput.onEndEdit.AddListener(delegate { OnInputEndEdit(); });
+
+        Debug.Log("Start method completed");
     }
 
-    public void QuitGame()
+    void OnInputValueChanged()
     {
-        Application.Quit();
+        Debug.Log("Input value changed: " + playerNameInput.text);
+    }
+
+    void OnInputEndEdit()
+    {
+        Debug.Log("Input end edit: " + playerNameInput.text);
     }
 
     public void SetName()
     {
+        Debug.Log("SetName method called");
         // Remove any characters that aren't letters or numbers
         string inputText = playerNameInput.text; // Access the input field's text
+        Debug.Log("Input Text: " + inputText);
         string sanitizedText = Regex.Replace(inputText, @"[^a-zA-Z0-9]", "");
 
         // Only get the first 6 characters of the sanitized name
         if (sanitizedText.Length <= 1)
         {
-            playerName = "PLAYER";
+            Debug.Log("Name too short");
+            playerName = "PLAYA";
         }
         else if (sanitizedText.Length > 6)
         {
+            Debug.Log("Trimming name");
             playerName = sanitizedText.Substring(0, 6); // Use Substring instead of Remove
         }
         else
@@ -49,7 +74,7 @@ public class ButtonManager : MonoBehaviour
         playerNameInput.text = playerName;
         PlayerPrefs.SetString("PlayerName", playerName);
         string name = PlayerPrefs.GetString("PlayerName", "NULL");
-        Debug.Log("PlayerName: " + name);
+        Debug.Log("PlayerPrefsName: " + name);
         Debug.Log("PlayerName: " + playerName);
     }
 }
