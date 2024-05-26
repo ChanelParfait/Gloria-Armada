@@ -8575,10 +8575,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d1435919890fa40adab369c1f04ab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settingsOpen: 0
+  levelSelectOpen: 0
   pauseMenuUI: {fileID: 276990562}
   gameHUD: {fileID: 1849828312}
   plane: {fileID: 949054471}
   gameOverUI: {fileID: 1841126278}
+  settingsMenu: {fileID: 0}
+  levelSelectMenu: {fileID: 0}
 --- !u!114 &1798830910
 MonoBehaviour:
   m_ObjectHideFlags: 0

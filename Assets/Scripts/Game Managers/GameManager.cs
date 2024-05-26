@@ -59,6 +59,11 @@ public class GameManager : MonoBehaviour
             if (manager){
                 if (PrimaryWeapon != null) manager.SetPrimaryWeapon(PrimaryWeapon);
                 if (SpecialWeapon != null) manager.SetSpecialWeapon(SpecialWeapon);
+                //If DefaultPowerups list is >0, set the default powerups
+                for (int i = 0; i < planeBody.defaultPowerups.Length; i++)
+                {
+                    manager.AddPowerup(planeBody.defaultPowerups[i]);
+                }
             }
         }
         GameObject player = GameObject.FindGameObjectWithTag("Player");

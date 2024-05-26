@@ -78,6 +78,7 @@ public class HighScoreManager : MonoBehaviour
             TextAsset defaultJson = Resources.Load<TextAsset>("default_highscores");
             if (defaultJson != null)
             {
+                Debug.Log("Default high score file found, copying to: " + jsonFilePath);
                 File.WriteAllText(jsonFilePath, defaultJson.text);
             }
             else
@@ -154,6 +155,10 @@ public class HighScoreManager : MonoBehaviour
     {
         currentHighScoreEntry = newEntry;
         highScoreList.highScores.Add(newEntry);
+        //Debug.Log the player name from the high score
+        Debug.Log("Player Name: " + newEntry.name);
+        //PlayerPrefs name
+        Debug.Log("PlayerPrefsName Name: " + PlayerPrefs.GetString("PlayerName", "Player"));
         SaveHighScores();
         DisplayHighScores();
 
