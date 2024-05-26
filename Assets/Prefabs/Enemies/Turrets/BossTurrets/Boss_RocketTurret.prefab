@@ -57,6 +57,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7884464371219309874, guid: 5db059bdcd61580418d7f992609f07f1, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 7652226094477299871, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
+    - target: {fileID: 7884464371219309874, guid: 5db059bdcd61580418d7f992609f07f1, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 1
       objectReference: {fileID: 0}
