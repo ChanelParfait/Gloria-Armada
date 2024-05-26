@@ -14,8 +14,8 @@ public class VolumeSlider : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetVolume(PlayerPrefs.GetFloat("Saved_" + volumeType, 0.5f));
-        RefreshSlider(PlayerPrefs.GetFloat("Saved_" + volumeType, 0.5f));
+        SetVolume(PlayerPrefs.GetFloat("Saved_" + volumeType, 1.0f));
+        RefreshSlider(PlayerPrefs.GetFloat("Saved_" + volumeType, 1.0f));
         
     }
 
