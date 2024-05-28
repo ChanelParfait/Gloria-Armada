@@ -9233,7 +9233,7 @@ PrefabInstance:
     - target: {fileID: 1416248140715569942, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
       propertyPath: playerHealth
       value: 
-      objectReference: {fileID: 1943507423}
+      objectReference: {fileID: 0}
     - target: {fileID: 2364488304444608745, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
       propertyPath: m_WorldSpaceTargetObject
       value: 
@@ -10374,17 +10374,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
---- !u!114 &1943507423 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3337119729129866234, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
-  m_PrefabInstance: {fileID: 1943507422}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1943507425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fb7bf86409900f499368b9f70206844, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1943507424 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 756333059307113752, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
