@@ -6912,7 +6912,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286db6511f380734394144b8ed374f3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNameText: {fileID: 0}
+  playerNameText: {fileID: 771702849}
   playerNameInput: {fileID: 0}
   nameEdit: {fileID: 0}
 --- !u!114 &1027596254
