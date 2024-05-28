@@ -84,9 +84,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 6
+  currentHealth: 0
   rb: {fileID: 0}
   scoreValue: 10
   fire: 0
+  onFire: 0
+  fireEffectPrefab: {fileID: 0}
   fireInterval: 1
   turretMount: {fileID: 0}
   deathExplosion: {fileID: 7641901280459977050, guid: 12cd1a8c790828542bcbce48a291aa01, type: 3}
@@ -146,6 +149,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7502277592070407747, guid: c2968064a6f387d42ae42e6dc19c3673, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 7652226094477299871, guid: eec9f32a0ec7fc749bfb59a8c00b341c, type: 2}
     m_RemovedComponents:
     - {fileID: 3209566285644169230, guid: c2968064a6f387d42ae42e6dc19c3673, type: 3}
     m_RemovedGameObjects: []
@@ -186,7 +193,6 @@ MonoBehaviour:
       lifetime: 3
       size: {x: 1, y: 1, z: 1}
       range: 0
-  projectileComponents: []
   weaponCategory: 0
   isPlayerWeapon: 0
   isPatternFire: 0

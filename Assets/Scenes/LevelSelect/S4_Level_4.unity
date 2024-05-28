@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.43002155, g: 0.58262146, b: 0.8888833, a: 1}
+  m_IndirectSpecularColor: {r: 0.16511223, g: 0.20700431, b: 0.2868659, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7598,6 +7598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 20
+  currentHealth: 0
   hearts:
   - {fileID: 2905513823820263820}
   - {fileID: 2390587498990847157}
@@ -12428,11 +12429,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsOpen: 0
+  levelSelectOpen: 0
   pauseMenuUI: {fileID: 276990562}
   gameHUD: {fileID: 1849828312}
   plane: {fileID: 949054471}
   gameOverUI: {fileID: 1127428021}
   settingsMenu: {fileID: 0}
+  levelSelectMenu: {fileID: 0}
 --- !u!114 &1798830910
 MonoBehaviour:
   m_ObjectHideFlags: 0

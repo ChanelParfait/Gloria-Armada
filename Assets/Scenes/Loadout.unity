@@ -536,7 +536,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1836286449}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadPreviousScene
+        m_MethodName: LoadMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4610,7 +4610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 0}
-  bodyScriptableObject: {fileID: 0}
+  bodyScriptableObject: {fileID: 11400000, guid: b37e01097956564418a269e2a638bb99, type: 2}
   weaponType: 2
   normalSprite: {fileID: 21300000, guid: 4ab445544fb106f468a5873cd2109228, type: 3}
   highlightedSprite: {fileID: 21300000, guid: b50d908b5bb05874cae1a86c4211b767, type: 3}

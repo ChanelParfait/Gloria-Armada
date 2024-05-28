@@ -370,11 +370,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &606878050 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1084848977594486349, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
-  m_PrefabInstance: {fileID: 7911094056301981758}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &822627607
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +401,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 606878050}
+  m_Father: {fileID: 7911094056301981759}
   m_LocalEulerAnglesHint: {x: -90, y: -90, z: -90}
 --- !u!81 &822627609
 AudioListener:
@@ -754,11 +749,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1084848977594486349, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 756333059307113752, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
       insertIndex: -1
       addedObject: {fileID: 822627608}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+--- !u!4 &7911094056301981759 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 756333059307113752, guid: 939e8349ffa7bb14098b8557dc94e1de, type: 3}
+  m_PrefabInstance: {fileID: 7911094056301981758}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8221239058891455558
 PrefabInstance:
   m_ObjectHideFlags: 0

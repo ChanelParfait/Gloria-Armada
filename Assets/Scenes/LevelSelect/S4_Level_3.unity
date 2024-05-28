@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.35591602, g: 0.45773727, b: 0.661875, a: 1}
+  m_IndirectSpecularColor: {r: 0.16511223, g: 0.20700431, b: 0.2868659, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7938,11 +7938,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsOpen: 0
+  levelSelectOpen: 0
   pauseMenuUI: {fileID: 276990562}
   gameHUD: {fileID: 1849828312}
   plane: {fileID: 949054471}
   gameOverUI: {fileID: 1127428021}
   settingsMenu: {fileID: 0}
+  levelSelectMenu: {fileID: 0}
 --- !u!114 &1798830910
 MonoBehaviour:
   m_ObjectHideFlags: 0

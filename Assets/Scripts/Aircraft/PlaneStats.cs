@@ -16,4 +16,6 @@ public class PlaneStats : ScriptableObject
     public float cd = 0.2f;
     public float liftPower = 1.0f;
     public float health = 6.0f;
+
+    public PowerupType[] defaultPowerups;
 }
