@@ -18,6 +18,20 @@ public class GameOverMenu : MonoBehaviour
     void Start()
     {
         levelSelectMenu = GameObject.Find("LevelSelectCanvas");
+        if (levelSelectMenu == null)
+        {
+            //Find by getting scene root and iterating over children
+            Scene scene = SceneManager.GetActiveScene();
+            GameObject[] rootObjects = scene.GetRootGameObjects();
+            foreach (GameObject obj in rootObjects)
+            {
+                if (obj.name == "LevelSelectCanvas")
+                {
+                    levelSelectMenu = obj;
+                    break;
+                }
+            }
+        }
         
     }
 
