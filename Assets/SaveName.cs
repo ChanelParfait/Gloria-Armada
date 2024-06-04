@@ -10,7 +10,13 @@ public class SaveName : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        string name = PlayerPrefs.GetString("PlayerName", "NULL");
+        Debug.Log("NameEdit Start: PlayerPrefsName: " + name);
         nameText.text = PlayerPrefs.GetString("PlayerName", "PLAYER");
+        //Get a reference to the input field component
+        InputField playerNameInput = GetComponent<InputField>();
+        //Set the text of the input field to the saved player name
+        playerNameInput.text = PlayerPrefs.GetString("PlayerName", "PLAYER");
 
         
     }
@@ -44,10 +50,15 @@ public class SaveName : MonoBehaviour
             playerName = sanitizedText;
         }
 
-        text.text = playerName;
+        nameText.text = playerName;
         PlayerPrefs.SetString("PlayerName", playerName);
         string name = PlayerPrefs.GetString("PlayerName", "NULL");
         Debug.Log("PlayerPrefsName: " + inputText);
         Debug.Log("PlayerName: " + playerName);
+
+        //Get a reference to the input field component
+        InputField playerNameInput = GetComponent<InputField>();
+        //Set the text of the input field to the saved player name
+        playerNameInput.text = PlayerPrefs.GetString("PlayerName", "PLAYER");
     }
 }
