@@ -35,12 +35,12 @@ public class EnemyPlane_Physical : EnemyPlane
     {
         yield return StartCoroutine(base.Initialize());
         yield return new WaitForSeconds(2);
-        ap.setAPState(Autopilot.AutopilotState.targetFormation);
+        ap.SetAPState(Autopilot.AutopilotState.targetFormation);
         if (targetObj == null)
         {
             targetObj = GameObject.FindGameObjectWithTag("LevelManager");
         }
-        ap.setTargetObject(targetObj);
+        ap.SetTargetObject(targetObj);
         targetOffset = base.GetTargetOffset();
         ap.targetOffset = targetOffset;
     }

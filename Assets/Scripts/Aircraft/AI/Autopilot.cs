@@ -132,12 +132,12 @@ public class Autopilot : MonoBehaviour
         onAxes = false;
     }
 
-    public void setTargetObject(GameObject target)
+    public void SetTargetObject(GameObject target)
     {
         targetObject = target;
     }
 
-    public void setAPState(AutopilotState apState)
+    public void SetAPState(AutopilotState apState)
     {
         autopilotState = apState;
     }
@@ -281,9 +281,12 @@ public class Autopilot : MonoBehaviour
                             : state == AutopilotState.targetFormation ? FormationWith(targetObject, mainPIDs) : new Vector3(0, 0, 0);
         }
 
+        float gAvoid = 0;
         if (autoArm)
         {
-            AvoidGround();
+            if(AvoidGround() < -0.2f){
+                autopilotDeflection.x = AvoidGround();
+            };
         }
         return autopilotDeflection;
     }
@@ -510,8 +513,9 @@ public class Autopilot : MonoBehaviour
         return -Mathf.Abs(angle);
     }
 
-    private void AvoidGround()
+    private float AvoidGround()
     {
+        float avoidMagnitude = 0;
         if (Physics.Raycast(transform.position, rb.velocity, out RaycastHit hit, 500))
         {
             //Debug.DrawLine(transform.position, hit.point, Color.red);
@@ -524,7 +528,7 @@ public class Autopilot : MonoBehaviour
                 // Get the angle between the velocity and the normal
 
                 // Get the time til we hit the ground
-                float timeToHit = hit.distance / rb.velocity.magnitude;
+                float timeToHit = hit.distance / rb.velocity.magnitude*2;
                 // reflect the vector off the ground from the hit location
                 Vector3 reflected = Vector3.Reflect(rb.velocity * 1 / (timeToHit + float.Epsilon), normal);
                 Vector3 avoidance = hit.point + reflected;
@@ -536,9 +540,11 @@ public class Autopilot : MonoBehaviour
 
                 // rollUpright 
                 //autopilotDeflection.y += Upright();
-                autopilotDeflection.x -= Mathf.Clamp(PIDSolve(error, ref aPitchPID), -1, 1);
+                avoidMagnitude = -Mathf.Clamp(PIDSolve(error, ref aPitchPID), -1, 1);
+                autopilotDeflection.x += avoidMagnitude;
             }
         }
+        return avoidMagnitude;
     }
     #endregion Assists
 
