@@ -21815,6 +21815,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5172202701351025492, guid: 71b893b717f61244d8e68f6f8ea782e8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7114172803067692064, guid: 71b893b717f61244d8e68f6f8ea782e8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7761778561650398634, guid: 71b893b717f61244d8e68f6f8ea782e8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

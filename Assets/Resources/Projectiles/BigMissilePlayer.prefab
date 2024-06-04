@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3389923275831233668}
   - component: {fileID: 2022980878522483157}
   - component: {fileID: 2024443142957549870}
+  - component: {fileID: 1123796822815114191}
   m_Layer: 0
   m_Name: BigMissilePlayer
   m_TagString: PlayerProjectile
@@ -77,6 +78,10 @@ MonoBehaviour:
     range: 0
   projectileRB: {fileID: 2024443142957549870}
   hitParticle: {fileID: 7641901280459977050, guid: edbbaa83de556d840bf013012ee681ee, type: 3}
+  launchSound: {fileID: 0}
+  flybySound: {fileID: 0}
+  engineSound: {fileID: 0}
+  impactSound: {fileID: 0}
 --- !u!54 &2024443142957549870
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -104,6 +109,24 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1123796822815114191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983747372557084855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86629519c8473fc4a803c07f9614fced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  detonationEffect: {fileID: 7641901280459977050, guid: edbbaa83de556d840bf013012ee681ee, type: 3}
+  team: 0
+  radius: 20
+  armingDelay: 1
+  isArmed: 0
 --- !u!1001 &710891952175691812
 PrefabInstance:
   m_ObjectHideFlags: 0

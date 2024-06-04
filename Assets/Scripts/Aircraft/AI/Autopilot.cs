@@ -125,6 +125,12 @@ public class Autopilot : MonoBehaviour
 
     private void UpdatePerspective(int _pers)
     {
+        if (CompareTag("Player")){
+            PlayerPlane p = GetComponent<PlayerPlane>();
+            p.invincible = true;
+            Collider col = GetComponent<Collider>();
+            col.enabled = false;
+        }
         pers = (Perspective)_pers;
         rb.constraints = RigidbodyConstraints.None;
         lastAutopilotState = autopilotState;
@@ -594,7 +600,7 @@ public class Autopilot : MonoBehaviour
             targetVector = new Vector3(60, 0, 0); //As a position
         }
 
-        if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 1 && (rb.velocity.normalized - Vector3.right).magnitude < 1)
+        if (pers == Perspective.Top_Down && !onAxes && Mathf.Abs(y) < 1.0f && (rb.velocity.normalized - Vector3.right).magnitude < 1.0f)
         {
             transform.position.Set(x, 0, z);
             rb.MovePosition(new Vector3(x, 0, z));
@@ -625,6 +631,8 @@ public class Autopilot : MonoBehaviour
             {
                 PlayerPlane playerPlane = GetComponent<PlayerPlane>();
                 playerPlane.invincible = false;
+                Collider col = GetComponent<Collider>();
+                col.enabled = true;
             }
 
         }

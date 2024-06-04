@@ -9860,6 +9860,7 @@ MonoBehaviour:
   destroyTime: 2
   damage: 4
   impulse: 300
+  dealDamageSeparately: 1
   explosionRadius: 50
   audioClip: {fileID: 0}
   audioSource: {fileID: 0}

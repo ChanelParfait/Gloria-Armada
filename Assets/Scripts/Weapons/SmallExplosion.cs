@@ -11,6 +11,8 @@ public class SmallExplosion : MonoBehaviour
 
     public float impulse = 300.0f;
 
+    [SerializeField] private bool dealDamageSeparately = false;  
+
     [SerializeField] float explosionRadius = 13.0f;
 
     [SerializeField] AudioClip audioClip;
@@ -46,14 +48,38 @@ public class SmallExplosion : MonoBehaviour
             float range = (col.gameObject.transform.position - transform.position).magnitude;
             float scaledDamage = damage * Mathf.Clamp01(1 - range / explosionRadius);
 
-            if (col.CompareTag("Player"))
+            if (col.CompareTag("Player") && !dealDamageSeparately)
             {
-                col.GetComponent<PlayerPlane>()?.TakeDamage(scaledDamage);
+                col.GetComponent<PlayerPlane>().TakeDamage(scaledDamage);
                 col.GetComponent<Rigidbody>().AddExplosionForce(impulse, transform.position, explosionRadius, 0, ForceMode.Impulse);
             }
             else if (col.CompareTag("Enemy"))
             {
-                col.GetComponent<EnemyBase>()?.TakeDamage((int)scaledDamage);
+                col.GetComponent<EnemyBase>()?.TakeDamage(scaledDamage * 2);
+            }
+            else if (col.CompareTag("EnemyWreckage")){
+                col.GetComponent<Rigidbody>().AddExplosionForce(impulse/10, transform.position, explosionRadius, 0, ForceMode.Impulse);
+            }
+        }
+
+        if (dealDamageSeparately){
+            SeparatedDamageCollider();
+        }
+    }
+
+    void SeparatedDamageCollider(){
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius/2);
+
+        // Iterate over each collider to apply damage
+        foreach (Collider col in colliders)
+        {
+            float range = (col.gameObject.transform.position - transform.position).magnitude;
+            float scaledDamage = damage * Mathf.Clamp01(1 - range / explosionRadius);
+
+            if (col.CompareTag("Player"))
+            {
+                col.GetComponent<PlayerPlane>().TakeDamage(Mathf.Min(scaledDamage, 1.0f));
+                col.GetComponent<Rigidbody>().AddExplosionForce(impulse, transform.position, explosionRadius, 0, ForceMode.Impulse);
             }
         }
     }
