@@ -188,6 +188,7 @@ public class LevelManager : MonoBehaviour
         PlayerPlane.OnPlayerDeath += GameOver;
         PlayerPlane.OnPlayerDamage += PlayDamageEffect;
         BossEnemy.OnBossDeath += TriggerDelayedWin;
+        MothershipCore.onFinalBossDefeated += TriggerDelayedWin;
 
     }
 
@@ -197,6 +198,8 @@ public class LevelManager : MonoBehaviour
         PlayerPlane.OnPlayerDeath -= GameOver;
         PlayerPlane.OnPlayerDamage -= PlayDamageEffect;
         BossEnemy.OnBossDeath -= TriggerDelayedWin;
+        MothershipCore.onFinalBossDefeated -= TriggerDelayedWin;
+
 
     }
 

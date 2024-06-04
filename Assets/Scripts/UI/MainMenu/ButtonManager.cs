@@ -47,6 +47,12 @@ public class ButtonManager : MonoBehaviour
         Debug.Log("Input end edit: " + playerNameInput.text);
     }
 
+    public void QuitGame()
+    {
+        Debug.Log("QuitGame method called");
+        Application.Quit();
+    }
+
     public void SetName()
     {
         Debug.Log("SetName method called");
