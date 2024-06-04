@@ -365,7 +365,8 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(LerpTime(0, 1.0f));
         //Save this level index as maxLevelComplete
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        int maxLevelComplete = Mathf.Max(PlayerPrefs.GetInt("maxLevelCompleted", 0), currentSceneIndex);
+        //If the current level is greater than the max level completed, set the max level completed to the current level
+        int maxLevelComplete = Mathf.Max(PlayerPrefs.GetInt("MaxLevelCompleted", 0), currentSceneIndex);
         PlayerPrefs.SetInt("MaxLevelCompleted", maxLevelComplete);
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (levelClearPnl == null){
