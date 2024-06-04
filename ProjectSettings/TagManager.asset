@@ -23,6 +23,7 @@ TagManager:
   - LevelManager
   - LevelTrigger
   - EnemyBoss
+  - EnemyWreckage
   layers:
   - Default
   - TransparentFX

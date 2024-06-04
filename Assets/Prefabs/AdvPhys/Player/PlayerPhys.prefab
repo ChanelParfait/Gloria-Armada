@@ -5207,7 +5207,7 @@ MonoBehaviour:
   autoArm: 0
   pitchPID:
     Kp: 1
-    Ki: 0.01
+    Ki: 0.001
     Kd: 0.2
     integral: 0
     lastError: 0
