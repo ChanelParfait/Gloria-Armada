@@ -281,7 +281,6 @@ public class Autopilot : MonoBehaviour
                             : state == AutopilotState.targetFormation ? FormationWith(targetObject, mainPIDs) : new Vector3(0, 0, 0);
         }
 
-        float gAvoid = 0;
         if (autoArm)
         {
             if(AvoidGround() < -0.2f){
