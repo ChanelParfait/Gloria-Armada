@@ -36,6 +36,8 @@ public class PauseMenu : MonoBehaviour
                 levelSelectMenu = obj;
             }
         }
+        settingsOpen = false;
+        levelSelectOpen = false;
         EnsureSettingsButtonListener();
         EnsureLevelSelectBackButtonListener();
     }
@@ -191,7 +193,7 @@ public class PauseMenu : MonoBehaviour
         
         levelSelectOpen = true;
         pauseMenuUI.SetActive(false);
-        levelSelectMenu.GetComponent<Canvas>().enabled = true;  
+        levelSelectMenu.SetActive(true);
         levelSelectMenu.GetComponent<LevelSelection>().UpdateMaxLevelComplete();
     }
 
@@ -199,7 +201,8 @@ public class PauseMenu : MonoBehaviour
     {
         //Closes the level select menu
         levelSelectOpen = false;
+        levelSelectMenu.SetActive(false);
         pauseMenuUI.SetActive(true);
-        levelSelectMenu.GetComponent<Canvas>().enabled = false;
+       
     }
 }

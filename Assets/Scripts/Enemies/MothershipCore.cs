@@ -22,33 +22,39 @@ public class MothershipCore : Actor
 
     // Update is called once per frame
     void Update()
-    {
-        if(CurrentHealth <= (maxHealth / 3) * 1){
-            // set active heart to heart 3
-            SetActiveHeart(3);
-        }
-        else if(CurrentHealth <= (maxHealth / 3) * 2){
-            // set active heart to heart 2
-            SetActiveHeart(2);
-        }
+    {   
+        if(hearts != null){
+            if(CurrentHealth <= (maxHealth / 3) * 1){
+                // set active heart to heart 3
+                SetActiveHeart(3);
+            }
+            else if(CurrentHealth <= (maxHealth / 3) * 2){
+                // set active heart to heart 2
+                SetActiveHeart(2);
+            }
 
-        if(isMoving){
-            rb.velocity = new Vector3(playerPlane.internalVelocity.x + playerPlane.localVelocity.x, 0, 0);
-        }
-        else{
-            if(Vector3.Distance(gameObject.transform.position, playerPlane.gameObject.transform.position) < 60){
-                isMoving = true;
+            if(isMoving){
+                rb.velocity = new Vector3(playerPlane.internalVelocity.x + playerPlane.localVelocity.x, 0, 0);
+            }
+            else{
+                if(Vector3.Distance(gameObject.transform.position, playerPlane.gameObject.transform.position) < 60){
+                    isMoving = true;
+                }
             }
         }
+        
     }
 
 
     private void SetActiveHeart(int index){
-        foreach(GameObject heart in hearts){
-            // disable all hearts
-            heart.SetActive(false);
+        if(hearts.Length > 0 ){
+            foreach(GameObject heart in hearts){
+                // disable all hearts
+                heart.SetActive(false);
+            }
+            hearts[index - 1].SetActive(true);
         }
-        hearts[index - 1].SetActive(true);
+        
 
     }
 
@@ -59,6 +65,7 @@ public class MothershipCore : Actor
         }
         hearts = null;
         onFinalBossDefeated?.Invoke();
+        //Debug.Log("Level Finished");
 
     }
 }

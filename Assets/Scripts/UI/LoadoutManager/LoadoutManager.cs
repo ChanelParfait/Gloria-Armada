@@ -71,7 +71,7 @@ public class LoadoutManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Return)){
             launchButton.onClick.Invoke();
         }
-        if(Input.GetKeyDown(KeyCode.Escape)){
+        if(Input.GetKeyDown(KeyCode.P)){
             escapeButton.onClick.Invoke();
         }
     } 

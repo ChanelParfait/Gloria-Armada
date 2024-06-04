@@ -12,7 +12,7 @@ public class LaserCannon : Weapon
     private float currentCharge;  
     private bool isReloading = false;
     private bool isFiring = false;
-    private int[] damageLevels = {1, 2, 4, 8};
+    private float[] damageLevels = {1, 1.5f, 2};
     private float holdTimer = 0;
 
     public float delayTime = 1;
@@ -146,7 +146,7 @@ public class LaserCannon : Weapon
             weaponStats.projectileStats.damage = damageLevels[3];
         }
         if(laser){
-            laser.UpdateStats(weaponStats.projectileStats, damageLevels.Length);
+            laser.UpdateStats(weaponStats.projectileStats, damageLevels.Length * 2);
         }
     }
 

@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public class SaveName : MonoBehaviour
 {
+    public Text nameText;
     // Start is called before the first frame update
     void Start()
     {
+        nameText.text = PlayerPrefs.GetString("PlayerName", "PLAYER");
+
         
     }
 
