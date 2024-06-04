@@ -6224,7 +6224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8948179567457756911, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 34.599976
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 8948179567457756911, guid: 5726a2a38f3485a4d9d44f78b757691e, type: 3}
       propertyPath: m_ConstrainProportionsScale
