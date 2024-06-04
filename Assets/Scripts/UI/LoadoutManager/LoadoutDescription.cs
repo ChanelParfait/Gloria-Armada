@@ -44,17 +44,17 @@ public class LoadoutDescription : MonoBehaviour
 
     public void DescLight()
     {
-        descText.GetComponent<TextMeshProUGUI>().text = "Light Build <br> <br>Removal of some armor from the jet results in reduction of its overall weight, allowing the user to pilot the vessel with improved speed, better contol and precision.";
+        descText.GetComponent<TextMeshProUGUI>().text = "Light Build <br> <br>A modified body configuration that trades some armor in favor of more precise and responsive flight maneuverability.";
     }
 
     public void DescHeavy()
     {
-        descText.GetComponent<TextMeshProUGUI>().text = "Heavy Build <br> <br>Modifies the jet's equipped weapons to make them more deadly, but such upgrades require additional payload to the jet, causing the vessel to move slower.";
+        descText.GetComponent<TextMeshProUGUI>().text = "Heavy Build <br> <br>A modified body configuration that adds additional payload to increase the jet's armor and firepower, but its weight also makes the aircraft travel slightly slower and is harder to control.";
     }
 
     public void DescMaster()
     {
-        descText.GetComponent<TextMeshProUGUI>().text = "Master Upgrade <br> <br>For ace pilots only. A heavily modified body configuration is applied to the jet, significantly amplifying the jet's capabilities in both mobility and firepower. However, all armor from the vessel will be removed to make space for all the upgrades, meaning a hit from any enemy weapon will result in certain death.";
+        descText.GetComponent<TextMeshProUGUI>().text = "Master Upgrade <br> <br>For ace pilots only. The aircraft is stripped of all of its armor to greatly enhance offensive and mobility capabilities, in exchange for dying in one hit.";
     }
 
     public void DescNone()
