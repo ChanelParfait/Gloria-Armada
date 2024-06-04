@@ -33,11 +33,11 @@ MonoBehaviour:
       area: 1
       position: {x: 4, y: 0, z: 0}
       orientation: {x: 1, y: 0, z: 0}
-  weight: 300
+  weight: 250
   thrust: 1800
   thrustVectoring: 0
-  scaleVelocity: 1
+  scaleVelocity: 0.85
   cd: 0.2
-  liftPower: 1
-  health: 12
+  liftPower: 0.85
+  health: 10
   defaultPowerups: 000000000200000001000000

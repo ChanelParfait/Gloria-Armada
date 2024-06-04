@@ -120,6 +120,15 @@ public class GameOverMenu : MonoBehaviour
     public void QuitToTitle()
     {
         //Restart current scene, and makes sure time isn't stopped when the scene loads
+        GameObject lmobj = GameObject.Find("LevelManager");
+        if (lmobj != null){
+            LevelManager lm = lmobj.GetComponent<LevelManager>();
+            AudioListener listener = Camera.main.GetComponent<AudioListener>();
+            listener.enabled = true;
+            AudioSource src = lm.GetComponent<AudioSource>();
+            lm.AudioTransition(src, listener, new float[] {1,0}, 0.5f);
+        }
+        //Restart current scene, and makes sure time isn't stopped when the scene loads
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
     }

@@ -65,8 +65,8 @@ public class Homing : MonoBehaviour
                 if (fov.visibleTargets[0] != null)
                 {
                     enemy = fov.visibleTargets[0].gameObject;
-                    ap.setTargetObject(enemy);
-                    ap.setAPState(Autopilot.AutopilotState.pointAt);
+                    ap.SetTargetObject(enemy);
+                    ap.SetAPState(Autopilot.AutopilotState.pointAt);
                 }
             }
         }

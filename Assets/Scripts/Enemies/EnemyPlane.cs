@@ -235,7 +235,7 @@ public class EnemyPlane : EnemyBase
         {
             MoveEnemy();
             radarTimer += Time.deltaTime;
-            if (radarTimer > 0.2f)
+            if (radarTimer > 0.05f)
             {
                 AvoidGround();
                 radarTimer = 0;
@@ -288,8 +288,9 @@ public class EnemyPlane : EnemyBase
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 100.0f))
         {
             //If the distance to the ground is less than 10 units, add a force upwards
-            if (hit.distance < 20.0f)
+            if (hit.distance < 20.0f && rb.velocity.y < 0 && hit.collider.gameObject.layer == LayerMask.NameToLayer("Terrain"))
             {
+                Debug.Log("Avoid Ground: Name: " + name + " Hit Distance: " + hit.distance + " Adding Force: " + (20 - hit.distance) * 20.0f * Vector3.up);
                 rb.AddForce((20 - hit.distance) * 20.0f * Vector3.up);
             }
         }

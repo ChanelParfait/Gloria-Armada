@@ -303,18 +303,24 @@ public class LevelManager : MonoBehaviour
         damageAnim.SetTrigger("DamageTaken");
     }
 
+    public void AudioTransition(AudioSource src, AudioListener listener, float[] finalWeights, float transitionTime){
+        AudioMixer sfx_Mix = src.outputAudioMixerGroup.audioMixer;
+        AudioMixerSnapshot[] snapshots = new AudioMixerSnapshot[2];
+        snapshots[0] = sfx_Mix.FindSnapshot("Start");
+        snapshots[1] = sfx_Mix.FindSnapshot("OnDeath");
+        sfx_Mix.TransitionToSnapshots(snapshots, finalWeights, transitionTime);
+    }
+
     private void GameOver(){
+        
+
         //Audio transitions
         AudioListener listener = Camera.main.GetComponent<AudioListener>();
         listener.enabled = true;
         AudioSource src = GetComponent<AudioSource>();
         AudioClip deathSound = src.clip;
         src.PlayOneShot(deathSound);
-        AudioMixer sfx_Mix = src.outputAudioMixerGroup.audioMixer;
-        AudioMixerSnapshot[] snapshots = new AudioMixerSnapshot[2];
-        snapshots[0] = sfx_Mix.FindSnapshot("Start");
-        snapshots[1] = sfx_Mix.FindSnapshot("OnDeath");
-        sfx_Mix.TransitionToSnapshots(snapshots, new float[] {0,1}, 0.5f);
+        AudioTransition(src, listener, new float[] {0,1}, 0.5f);
 
         //Wreckage
         GameObject wreckage = GameObject.FindWithTag("PlayerWreckage");
@@ -436,6 +442,10 @@ public class LevelManager : MonoBehaviour
 
     public void GoToNextLevel(){
         //Find gm instance
+        AudioListener listener = Camera.main.GetComponent<AudioListener>();
+        listener.enabled = true;
+        AudioSource src = GetComponent<AudioSource>();
+        AudioTransition(src, listener, new float[] {1,0}, 0.5f);
 
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
 

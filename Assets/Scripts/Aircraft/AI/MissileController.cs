@@ -48,8 +48,8 @@ public class MissileController : MonoBehaviour
         // TODO: This should get passed by the spawner
         if (enemy)
         {
-            ap.setTargetObject(enemy);
-            ap.setAPState(Autopilot.AutopilotState.pointAt);
+            ap.SetTargetObject(enemy);
+            ap.SetAPState(Autopilot.AutopilotState.pointAt);
         }
         ap.onAxes = true;
         planeSelf.SetThrottle(0.0f);
@@ -131,8 +131,8 @@ public class MissileController : MonoBehaviour
                 if (fov.visibleTargets[0] != null)
                 {
                     enemy = fov.visibleTargets[0].gameObject;
-                    ap.setTargetObject(enemy);
-                    ap.setAPState(Autopilot.AutopilotState.pointAt);
+                    ap.SetTargetObject(enemy);
+                    ap.SetAPState(Autopilot.AutopilotState.pointAt);
                 }
             }
         }
