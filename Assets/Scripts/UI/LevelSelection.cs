@@ -47,11 +47,29 @@ public class LevelSelection : MonoBehaviour
     }
 
     public void GoToTutorial(){
+        GameObject lmobj = GameObject.Find("LevelManager");
+        if (lmobj != null){
+            LevelManager lm = lmobj.GetComponent<LevelManager>();
+            AudioListener listener = Camera.main.GetComponent<AudioListener>();
+            listener.enabled = true;
+            AudioSource src = lm.GetComponent<AudioSource>();
+            lm.AudioTransition(src, listener, new float[] {1,0}, 0.5f);
+        }
         SceneManager.LoadScene("S3_Tutorial");
     }
 
     public void LoadLevel(int levelIndex)
     {
+        //Restart current scene, and makes sure time isn't stopped when the scene loads
+        GameObject lmobj = GameObject.Find("LevelManager");
+        if (lmobj != null){
+            LevelManager lm = lmobj.GetComponent<LevelManager>();
+            AudioListener listener = Camera.main.GetComponent<AudioListener>();
+            listener.enabled = true;
+            AudioSource src = lm.GetComponent<AudioSource>();
+            lm.AudioTransition(src, listener, new float[] {1,0}, 0.5f);
+        }
+
         GameManager gameManager = GameManager.instance;
         if (gameManager == null){
             GameObject gmObject = new GameObject("GameManager");
