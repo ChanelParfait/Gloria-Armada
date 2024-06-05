@@ -69,6 +69,7 @@ public class BossShield : Actor
 
         // reset health to full and revert changes
         CurrentHealth = maxHealth;
+        currentStage = 1;
         isAlive = true;
 
         // reenable shield
