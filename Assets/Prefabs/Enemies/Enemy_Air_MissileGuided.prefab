@@ -101,7 +101,7 @@ MonoBehaviour:
   maxHealth: 3
   currentHealth: 0
   rb: {fileID: 0}
-  scoreValue: 10
+  scoreValue: 15
   fire: 0
   onFire: 0
   fireEffectPrefab: {fileID: 0}

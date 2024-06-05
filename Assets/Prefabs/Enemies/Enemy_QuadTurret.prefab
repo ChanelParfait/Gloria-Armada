@@ -247,7 +247,7 @@ MonoBehaviour:
   maxHealth: 30
   currentHealth: 0
   rb: {fileID: 5356486401159693154}
-  scoreValue: 10
+  scoreValue: 40
   fire: 0
   onFire: 0
   fireEffectPrefab: {fileID: 0}
