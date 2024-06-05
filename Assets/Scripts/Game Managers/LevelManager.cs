@@ -60,6 +60,10 @@ public class LevelManager : MonoBehaviour
 
     //bool isGameOver = false;
 
+    private int minSpawnIndex = 0;
+    private int maxSpawnIndex = 1;
+
+
     void Awake(){
         rb = GetComponent<Rigidbody>();
         currentPerspective = initPerspective;
@@ -171,10 +175,10 @@ public class LevelManager : MonoBehaviour
     void Update()
     {
         if (spawnOverTime){
+
             if (Time.time - lastSpawnTime > spawnInterval){
                 lastSpawnTime = Time.time;
-                int numEnemies = enemySpawner.GetNumEnemies();
-                enemySpawner.SpawnEnemy(SpawnPointName.Random, UnityEngine.Random.Range(0, numEnemies));
+                enemySpawner.SpawnEnemy(SpawnPointName.Random, UnityEngine.Random.Range(minSpawnIndex, maxSpawnIndex + 1));
             }
         }
         levelTimer += Time.deltaTime;
@@ -189,6 +193,8 @@ public class LevelManager : MonoBehaviour
         PlayerPlane.OnPlayerDamage += PlayDamageEffect;
         BossEnemy.OnBossDeath += TriggerDelayedWin;
         MothershipCore.onFinalBossDefeated += TriggerDelayedWin;
+        MothershipCore.onBossStageChange += UpdateSpawnIndexes;
+
 
     }
 
@@ -199,8 +205,16 @@ public class LevelManager : MonoBehaviour
         PlayerPlane.OnPlayerDamage -= PlayDamageEffect;
         BossEnemy.OnBossDeath -= TriggerDelayedWin;
         MothershipCore.onFinalBossDefeated -= TriggerDelayedWin;
+        MothershipCore.onBossStageChange -= UpdateSpawnIndexes;
 
 
+    }
+
+    public void UpdateSpawnIndexes(){
+        if(maxSpawnIndex < enemySpawner.GetNumEnemies()){
+            minSpawnIndex ++;
+            maxSpawnIndex ++;
+        }
     }
 
     void TriggerDelayedWin(){
