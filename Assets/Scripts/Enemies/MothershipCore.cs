@@ -34,7 +34,7 @@ public class MothershipCore : Actor
             }
 
             if(isMoving){
-                rb.velocity = new Vector3(playerPlane.internalVelocity.x + playerPlane.localVelocity.x, 0, 0);
+                rb.velocity = new Vector3(playerPlane.internalVelocity.x + playerPlane.localVelocity.x - 0.1f, 0, 0);
             }
             else{
                 if(Vector3.Distance(gameObject.transform.position, playerPlane.gameObject.transform.position) < 60){
