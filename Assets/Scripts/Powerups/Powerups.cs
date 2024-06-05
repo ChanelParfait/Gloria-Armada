@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum PowerupType {
-    PrimaryDamageUp,
-    BulletSpeedUp,
-    FirerateUp,
-    BulletSizeUp,
+    // PrimaryDamageUp,
+    // BulletSpeedUp,
+    // FirerateUp,
+    // BulletSizeUp,
     BurnDamage,
     FreezeShots,
     // ExplodingShots,
-    LightningChain,
-    SpecialDamageUp,
-    SplitShot,
+    // LightningChain,
+    // SpecialDamageUp,
+    // SplitShot,
     // APDamage,
     // HomingShots
 }
@@ -46,13 +46,13 @@ public class Powerups : MonoBehaviour
         // Set the box mesh to the powerup type
         BoxMesh = powerupType switch
         {
-            PowerupType.PrimaryDamageUp => primaryDamageUpPrefab,
-            PowerupType.BulletSpeedUp => bulletSpeedUpPrefab,
-            PowerupType.FirerateUp => fireRateUpPrefab,
-            PowerupType.BulletSizeUp => bulletSizeUpPrefab,
+            // PowerupType.PrimaryDamageUp => primaryDamageUpPrefab,
+            // PowerupType.BulletSpeedUp => bulletSpeedUpPrefab,
+            // PowerupType.FirerateUp => fireRateUpPrefab,
+            // PowerupType.BulletSizeUp => bulletSizeUpPrefab,
             PowerupType.BurnDamage => burnDamagePrefab,
-            PowerupType.SplitShot => splitShotPrefab,
-            PowerupType.LightningChain => lightningChainPrefab,
+            // PowerupType.SplitShot => splitShotPrefab,
+            // PowerupType.LightningChain => lightningChainPrefab,
             // PowerupType.SpecialDamageUp => specialDamageUpPrefab,
             PowerupType.FreezeShots => freezeShotsPrefab,
             _ => emptyCratePrefab,

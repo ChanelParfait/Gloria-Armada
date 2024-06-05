@@ -153,3 +153,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerWeaponManager: {fileID: 0}
   powerupType: 0
+  emptyCratePrefab: {fileID: 0}
+  primaryDamageUpPrefab: {fileID: 0}
+  bulletSpeedUpPrefab: {fileID: 0}
+  fireRateUpPrefab: {fileID: 0}
+  bulletSizeUpPrefab: {fileID: 0}
+  burnDamagePrefab: {fileID: 0}
+  freezeShotsPrefab: {fileID: 0}
+  explodingShotsPrefab: {fileID: 0}
+  lightningChainPrefab: {fileID: 0}
+  specialDamageUpPrefab: {fileID: 0}
+  splitShotPrefab: {fileID: 0}

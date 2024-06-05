@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PowerupPrefab: {fileID: 6707243512788891348, guid: 9227f77bcdbf769408fb37ed77c321f4, type: 3}
   powerupItems: []
-  dropChance: 20
+  dropChance: 100

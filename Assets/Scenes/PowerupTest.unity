@@ -649,6 +649,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerupManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8694571463313691911, guid: 1df9884301790490bb9aaef6ca2b9daf, type: 3}
+      propertyPath: dropChance
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

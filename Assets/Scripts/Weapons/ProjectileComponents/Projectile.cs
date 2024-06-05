@@ -23,6 +23,9 @@ public class Projectile : MonoBehaviour
     public Rigidbody projectileRB;
     private float startTime;
     public GameObject hitParticle;
+    public GameObject burnParticle;
+    public GameObject freezeParticle;
+
 
     //public bool destroyOnHit = true;
 
@@ -35,6 +38,22 @@ public class Projectile : MonoBehaviour
     AudioSource audioSource;
 
 
+    public void Awake()
+    {
+        if (freezeParticle == null)
+        {
+            freezeParticle = Resources.Load<GameObject>("Freeze_Particles");
+        }
+         if (burnParticle == null)
+        {
+            burnParticle = Resources.Load<GameObject>("Fire_Particles");
+        }
+
+        burnParticle.SetActive(false);
+        freezeParticle.SetActive(false);
+
+
+    }
 
     // Start is called before the first frame update
     protected virtual void Start()
