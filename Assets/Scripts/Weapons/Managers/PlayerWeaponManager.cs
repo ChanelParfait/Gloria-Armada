@@ -52,12 +52,18 @@ public class PlayerWeaponManager : MonoBehaviour
             //     break;
             case PowerupType.BurnDamage:
                 AddProjectileComponent(typeof(Burn));
-                projectile.burnParticle.SetActive(true);
+                if (projectile.burnParticle != null)
+                {
+                    projectile.burnParticle.SetActive(true);
+                }
 
                 break;
             case PowerupType.FreezeShots:
                 AddProjectileComponent(typeof(Freeze));
-                projectile.freezeParticle.SetActive(true);
+                if (projectile.freezeParticle != null)
+                {
+                    projectile.freezeParticle.SetActive(true);
+                }
                 break;
             // case PowerupType.ExplodingShots:
             //     //

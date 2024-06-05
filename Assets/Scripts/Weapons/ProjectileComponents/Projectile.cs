@@ -38,21 +38,34 @@ public class Projectile : MonoBehaviour
     AudioSource audioSource;
 
 
-    public void Awake()
+     public void Awake()
     {
         if (freezeParticle == null)
         {
-            freezeParticle = Resources.Load<GameObject>("Freeze_Particles");
+            GameObject freezePrefab = Resources.Load<GameObject>("Freeze_Particles");
+            if (freezePrefab != null)
+            {
+                freezeParticle = Instantiate(freezePrefab, transform);
+            }
         }
-         if (burnParticle == null)
+
+        if (burnParticle == null)
         {
-            burnParticle = Resources.Load<GameObject>("Fire_Particles");
+            GameObject burnPrefab = Resources.Load<GameObject>("Fire_Particles");
+            if (burnPrefab != null)
+            {
+                burnParticle = Instantiate(burnPrefab, transform);
+            }
         }
 
-        burnParticle.SetActive(false);
-        freezeParticle.SetActive(false);
-
-
+        if (burnParticle != null)
+        {
+            burnParticle.SetActive(false);
+        }
+        if (freezeParticle != null)
+        {
+            freezeParticle.SetActive(false);
+        }
     }
 
     // Start is called before the first frame update
