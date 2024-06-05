@@ -60,8 +60,8 @@ public class LevelManager : MonoBehaviour
 
     //bool isGameOver = false;
 
-    [SerializeField] private int minSpawnIndex = 0;
-    [SerializeField] private int maxSpawnIndex = 1;
+    private int minSpawnIndex = 0;
+    private int maxSpawnIndex = 1;
 
 
     void Awake(){

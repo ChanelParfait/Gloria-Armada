@@ -10,6 +10,16 @@ public class BossShield : Actor
 
 
     [SerializeField] private Collider shieldCollider;
+    private int currentStage = 1;
+
+
+    private void OnEnable(){
+        MothershipCore.onFinalBossDefeated += DestroySelf;
+    }
+
+    private void OnDisable(){
+        MothershipCore.onFinalBossDefeated -= DestroySelf;
+    }
 
     // Start is called before the first frame update
      protected override void Start()
@@ -18,6 +28,7 @@ public class BossShield : Actor
         shieldCollider = GetComponent<Collider>();
         coreCollider = GameObject.FindGameObjectWithTag("EnemyBoss").GetComponent<Collider>();
         coreCollider.enabled = false;
+        SetActiveShield(1);
 
 
     }
@@ -25,24 +36,30 @@ public class BossShield : Actor
     // Update is called once per frame
     void Update()
     {
-        
+        if(shieldGameObjects != null){
+            if(CurrentHealth <= maxHealth / 3 * 1 && currentStage < 3){
+                // set active shield to most damaged model
+                SetActiveShield(3);
+                // set current stage
+                currentStage = 3;
+                
+            }
+            else if(CurrentHealth <= maxHealth / 3 * 2 && currentStage < 2){
+                // set active shield to slightly damaged model
+                SetActiveShield(2);
+                // set current stage
+                currentStage = 2;
+
+            }
+        }
     }
 
     protected override void Die()
     {   
         Debug.Log("Shield Off");
         // when shield reaches zero health 
-            // turn off shield collider temporarily 
-            shieldCollider.enabled = false;
-            coreCollider.enabled = true;
-
-            // enable core collider 
-            // switch to damaged model
-            shieldGameObjects[0].SetActive(false);
-            shieldGameObjects[1].SetActive(true);
-
-
-            StartCoroutine(RefreshShield());
+        DisableShield();
+        StartCoroutine(RefreshShield());
     }
 
     private IEnumerator RefreshShield(){
@@ -53,14 +70,37 @@ public class BossShield : Actor
         // reset health to full and revert changes
         CurrentHealth = maxHealth;
         isAlive = true;
-        Debug.Log("Shield Health: " + CurrentHealth);
 
-        shieldCollider.enabled = true;
-        coreCollider.enabled = false;
-
-        shieldGameObjects[1].SetActive(false);
-        shieldGameObjects[0].SetActive(true);
+        // reenable shield
+        SetActiveShield(1);
     }
+
+    private void DisableShield(){
+        // disable all models
+         if(shieldGameObjects.Length > 0 ){
+            foreach(GameObject shield in shieldGameObjects){
+                shield.SetActive(false);
+            }
+        }
+        // turn off shield collider
+        shieldCollider.enabled = false;
+        // enable core collider 
+        coreCollider.enabled = true;
+    }
+
+    private void SetActiveShield(int index){
+        DisableShield();
+        if(index <= shieldGameObjects.Length){
+            shieldGameObjects[index - 1].SetActive(true);
+            shieldCollider.enabled = true;
+            coreCollider.enabled = false;
+        }
+    }
+
+    private void DestroySelf(){
+         Destroy(gameObject);
+    }
+
 
 
 }
