@@ -53,6 +53,18 @@ PrefabInstance:
       value: PowerCrate
       objectReference: {fileID: 0}
     - target: {fileID: 3215160453535724046, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215160453535724046, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215160453535724046, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215160453535724046, guid: 620b1e7e05a134ff4a75bbfbd6227ff0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
